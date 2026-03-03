@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# manim output
+media/
+videos/
+images/
+Tex/
+texts/
+
+# AI/LLM scratch space
+_scratch/
+_draft_*
+*.tmp
+.cascade/
+.cursor/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+

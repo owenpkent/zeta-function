@@ -1,0 +1,1124 @@
+On the Number of Prime Numbers less than
+a Given Quantity.
+
+(Ueber die Anzahl der Primzahlen unter
+einer gegebenen Gr¨osse.)
+
+Bernhard Riemann
+
+[Monatsberichte der Berliner Akademie,
+November 1859.]
+
+Translated by David R. Wilkins
+
+Preliminary Version: December 1998
+
+On the Number of Prime Numbers less than a
+Given Quantity.
+(Ueber die Anzahl der Primzahlen unter einer
+gegebenen Gr¨osse.)
+
+Bernhard Riemann
+Translated by David R. Wilkins
+Preliminary Version: December 1998
+
+[Monatsberichte der Berliner Akademie, November 1859.]
+Translation c(cid:13) D. R. Wilkins 1998.
+
+I believe that I can best convey my thanks for the honour which the
+Academy has to some degree conferred on me, through my admission as one
+of its correspondents, if I speedily make use of the permission thereby received
+to communicate an investigation into the accumulation of the prime numbers;
+a topic which perhaps seems not wholly unworthy of such a communication,
+given the interest which Gauss and Dirichlet have themselves shown in it
+over a lengthy period.
+
+For this investigation my point of departure is provided by the observation
+
+of Euler that the product
+
+(cid:89)
+
+1
+1 − 1
+ps
+
+=
+
+1
+ns ,
+
+(cid:80)
+
+if one substitutes for p all prime numbers, and for n all whole numbers.
+The function of the complex variable s which is represented by these two
+expressions, wherever they converge, I denote by ζ(s). Both expressions
+converge only when the real part of s is greater than 1; at the same time an
+expression for the function can easily be found which always remains valid.
+On making use of the equation
+
+∞
+
+(cid:90)
+0
+
+e−nxxs−1 dx =
+
+Π(s − 1)
+ns
+
+1
+
+one ﬁrst sees that
+
+Π(s − 1)ζ(s) =
+
+∞
+
+(cid:90)
+0
+
+xs−1 dx
+ex − 1
+
+.
+
+If one now considers the integral
+
+(−x)s−1 dx
+ex − 1
+from +∞ to +∞ taken in a positive sense around a domain which includes
+the value 0 but no other point of discontinuity of the integrand in its interior,
+then this is easily seen to be equal to
+
+(cid:90)
+
+(e−πsi − eπsi)
+
+∞
+
+(cid:90)
+0
+
+xs−1 dx
+ex − 1
+
+,
+
+provided that, in the many-valued function (−x)s−1 = e(s−1) log(−x), the log-
+arithm of −x is determined so as to be real when x is negative. Hence
+
+2 sin πs Π(s − 1)ζ(s) = i
+
+∞
+
+(cid:90)
+∞
+
+(−x)s−1 dx
+ex − 1
+
+,
+
+where the integral has the meaning just speciﬁed.
+
+This equation now gives the value of the function ζ(s) for all complex
+numbers s and shows that this function is one-valued and ﬁnite for all ﬁnite
+values of s with the exception of 1, and also that it is zero if s is equal to a
+negative even integer.
+
+If the real part of s is negative, then, instead of being taken in a pos-
+itive sense around the speciﬁed domain, this integral can also be taken in
+a negative sense around that domain containing all the remaining complex
+quantities, since the integral taken though values of inﬁnitely large modulus
+is then inﬁnitely small. However, in the interior of this domain, the inte-
+grand has discontinuities only where x becomes equal to a whole multiple of
+±2πi, and the integral is thus equal to the sum of the integrals taken in a
+negative sense around these values. But the integral around the value n2πi
+is = (−n2πi)s−1(−2πi), one obtains from this
+
+2 sin πs Π(s − 1)ζ(s) = (2π)s
+
+ns−1((−i)s−1 + is−1),
+
+(cid:80)
+
+thus a relation between ζ(s) and ζ(1 − s), which, through the use of known
+properties of the function Π, may be expressed as follows:
+
+Π (cid:18)
+
+s
+2
+
+− 1(cid:19) π− s
+
+2 ζ(s)
+
+2
+
+remains unchanged when s is replaced by 1 − s.
+
+This property of the function induced me to introduce, in place of Π(s−1),
+1
+ns , whereby one
+
+the integral Π (cid:18)
+obtains a very convenient expression for the function ζ(s). In fact
+
+− 1(cid:19) into the general term of the series
+
+s
+2
+
+(cid:88)
+
+1
+ns Π (cid:18)
+
+s
+2
+
+− 1(cid:19) π− s
+
+2 =
+
+∞
+
+(cid:90)
+0
+
+e−nnπxx
+
+s
+2
+
+−1 dx,
+
+∞
+
+(cid:88)
+1
+
+e−nnπx = ψ(x)
+
+Π (cid:18)
+
+s
+2
+
+− 1(cid:19) π− s
+
+2 ζ(s) =
+
+∞
+
+(cid:90)
+0
+
+ψ(x)x
+
+s
+2
+
+−1 dx,
+
+thus, if one sets
+
+then
+
+or since
+
+2ψ(x) + 1 = x− 1
+
+2 (cid:18)2ψ (cid:18)
+
+1
+x
+
+(cid:19) + 1(cid:19) , (Jacobi, Fund. S. 184)
+
+Π (cid:18)
+
+s
+2
+
+− 1(cid:19) π− s
+
+2 ζ(s) =
+
+∞
+
+(cid:90)
+1
+
+ψ(x)x
+
+s
+2
+
+−1 dx +
+
+∞
+
+(cid:90)
+1
+
+ψ (cid:18)
+
+1
+x
+
+(cid:19) x
+
+s−3
+2 dx
+
++ 1
+2
+
+1
+
+(cid:90)
+0
+
+s−3
+2 − x
+
+s
+2
+
+−1
+
+(cid:16)x
+
+(cid:17) dx
+
+=
+
+1
+s(s − 1)
+
+∞
+
++
+
+(cid:90)
+1
+
+ψ(x) (cid:16)x
+
+s
+2
+
+−1 + x− 1+s
+
+2 (cid:17) dx.
+
+I now set s = 1
+
+2 + ti and
+s
+2
+
+Π (cid:18)
+
+(cid:19) (s − 1)π− s
+
+2 ζ(s) = ξ(t),
+
+so that
+
+or, in addition,
+
+ξ(t) = 1
+2
+
+− (tt + 1
+4 )
+
+∞
+
+(cid:90)
+1
+
+ψ(x)x− 3
+
+4 cos( 1
+
+2 t log x) dx
+
+ξ(t) = 4
+
+∞
+
+(cid:90)
+1
+
+d(x 3
+
+2 ψ(cid:48)(x))
+dx
+
+3
+
+x− 1
+
+4 cos( 1
+
+2 t log x) dx.
+
+This function is ﬁnite for all ﬁnite values of t, and allows itself to be
+developed in powers of tt as a very rapidly converging series. Since, for
+log(1 − p−s)
+a value of s whose real part is greater than 1, log ζ(s) = −
+remains ﬁnite, and since the same holds for the logarithms of the other factors
+of ξ(t), it follows that the function ξ(t) can only vanish if the imaginary part
+2 i and − 1
+of t lies between 1
+2 i. The number of roots of ξ(t) = 0, whose real
+parts lie between 0 and T is approximately
+
+(cid:80)
+
+=
+
+T
+2π
+
+log
+
+T
+2π
+
+− T
+2π
+
+;
+
+(cid:82)
+
+of magnitude of the quantity 1
+
+d log ξ(t), taken in a positive sense around the region
+because the integral
+2 i and − 1
+consisting of the values of t whose imaginary parts lie between 1
+2 i
+and whose real parts lie between 0 and T , is (up to a fraction of the order
+− T (cid:19) i; this integral
+however is equal to the number of roots of ξ(t) = 0 lying within in this
+region, multiplied by 2πi. One now ﬁnds indeed approximately this number
+of real roots within these limits, and it is very probable that all roots are
+real. Certainly one would wish for a stricter proof here; I have meanwhile
+temporarily put aside the search for this after some ﬂeeting futile attempts,
+as it appears unnecessary for the next objective of my investigation.
+
+T ) equal to (cid:18)T log
+
+T
+2π
+
+If one denotes by α all the roots of the equation ξ(α) = 0, one can express
+
+log ξ(t) as
+
+t
+2π
+
+log (cid:18)1 − tt
+αα
+for, since the density of the roots of the quantity t grows with t only as
+
+(cid:19) + log ξ(0);
+
+(cid:80)
+
+log
+
+, it follows that this expression converges and becomes for an inﬁnite t
+
+only inﬁnite as t log t; thus it diﬀers from log ξ(t) by a function of tt, that
+for a ﬁnite t remains continuous and ﬁnite and, when divided by tt, becomes
+inﬁnitely small for inﬁnite t. This diﬀerence is consequently a constant, whose
+value can be determined through setting t = 0.
+
+With the assistance of these methods, the number of prime numbers that
+
+are smaller than x can now be determined.
+
+Let F (x) be equal to this number when x is not exactly equal to a prime
+2 when x is a prime number, so that, for
+
+number; but let it be greater by 1
+any x at which there is a jump in the value in F (x),
+F (x + 0) + F (x − 0)
+2
+
+F (x) =
+
+.
+
+If in the identity
+
+log ζ(s) = −
+
+(cid:80)
+
+log(1 − p−s) =
+
+p−s + 1
+
+p−2s + 1
+
+p−3s + · · ·
+
+2 (cid:80)
+
+3 (cid:80)
+
+(cid:80)
+
+4
+
+one now replaces
+
+p−s by s
+
+∞
+
+(cid:90)
+p
+
+x−s−1 ds,
+
+p−2s by s
+
+∞
+
+(cid:90)
+
+p2
+
+x−s−1 ds, . . . ,
+
+one obtains
+
+if one denotes
+
+by f (x).
+
+log ζ(s)
+s
+
+∞
+
+=
+
+(cid:90)
+1
+
+f (x)x−s−1 dx,
+
+F (x) + 1
+
+2 F (x
+
+1
+
+2 ) + 1
+
+3 F (x
+
+1
+
+3 ) + · · ·
+
+This equation is valid for each complex value a + bi of s for which a > 1.
+
+If, though, the equation
+
+g(s) =
+
+∞
+
+(cid:90)
+0
+
+h(x)x−s d log x
+
+holds within this range, then, by making use of Fourier ’s theorem, one can
+express the function h in terms of the function g. The equation decomposes,
+if h(x) is real and
+
+g(a + bi) = g1(b) + ig2(b),
+
+into the two following:
+
+g1(b) =
+
+∞
+
+(cid:90)
+0
+
+h(x)x−a cos(b log x) d log x,
+
+ig2(b) = −i
+
+∞
+
+(cid:90)
+0
+
+h(x)x−a sin(b log x) d log x.
+
+If one multiplies both equations with
+
+(cos(b log y) + i sin(b log y)) db
+
+and integrates them from −∞ to +∞, then one obtains πh(y)y−α on the
+right hand side in both, on account of Fourier ’s theorems; thus, if one adds
+both equations and multiplies them by iyα, one obtains
+
+a+∞i
+
+g(s)ys ds,
+
+2πih(y) =
+
+(cid:90)
+a−∞i
+
+5
+
+where the integration is carried out so that the real part of s remains constant.
+For a value of y at which there is a jump in the value of h(y), the integral
+takes on the mean of the values of the function h on either side of the jump.
+From the manner in which the function f was deﬁned, we see that it has the
+same property, and hence in full generality
+
+f (y) =
+
+1
+2πi
+
+a+∞i
+
+(cid:90)
+a−∞i
+
+log ζ(s)
+s
+
+ys ds.
+
+One can substitute for log ζ the expression
+
+s
+2
+
+log π − log(s − 1) − log Π (cid:18)
+
+s
+2
+
+(cid:19) +
+
+α log (cid:32)1 +
+
+(cid:80)
+
+2 )2
+
+(s − 1
+αα
+
+(cid:33) + log ξ(0)
+
+found earlier; however the integrals of the individual terms of this expression
+do not converge, when extended to inﬁnity, for which reason it is appropriate
+to convert the previous equation by means of integration by parts into
+
+f (x) = − 1
+2πi
+
+1
+log x
+
+a+∞i
+
+d
+
+(cid:90)
+a−∞i
+
+log ζ(s)
+s
+ds
+
+xs ds
+
+Since
+
+− log Π (cid:18)
+
+s
+2
+
+n=m
+
+(cid:19) = lim (cid:32)
+
+log (cid:18)1 +
+
+(cid:88)
+n=1
+
+s
+2n
+
+(cid:19) − s
+2
+
+log m(cid:33) ,
+
+for m = ∞ and therefore
+
+d
+
+1
+s
+
+−
+
+log Π (cid:18)
+
+ds
+
+s
+2
+
+(cid:19)
+
+1
+s
+
+∞
+
+d
+
+=
+
+(cid:88)
+1
+
+log (cid:18)1 +
+
+ds
+
+s
+2n
+
+(cid:19)
+
+,
+
+it then follows that all the terms of the expression for f (x), with the exception
+of
+
+1
+2πi
+
+1
+log x
+
+take the form
+
+a+∞i
+
+(cid:90)
+a−∞i
+
+1
+ss
+
+log ξ(0)xs ds = log ξ(0),
+
+± 1
+2πi
+
+1
+log x
+
+a+∞i
+
+d (cid:32)
+
+(cid:90)
+a−∞i
+
+1
+s
+
+log (cid:32)1 − s
+β
+
+(cid:33)(cid:33)
+
+ds
+
+xs ds.
+
+6
+
+But now
+
+d (cid:32)
+
+1
+s
+
+log (cid:32)1 − s
+β
+
+(cid:33)(cid:33)
+
+dβ
+
+=
+
+1
+(β − s)β
+
+,
+
+and, if the real part of s is larger than the real part of β,
+
+− 1
+2πi
+
+a+∞i
+
+(cid:90)
+a−∞i
+
+xs ds
+(β − s)β
+
+=
+
+xβ
+β
+
+x
+
+=
+
+(cid:90)
+∞
+
+xβ−1 dx,
+
+or
+
+=
+
+x
+
+(cid:90)
+0
+
+xβ−1 dx,
+
+depending on whether the real part of β is negative or positive. One has as
+a result
+
+1
+2πi
+
+1
+log x
+
+a+∞i
+
+d (cid:32)
+
+(cid:90)
+a−∞i
+
+1
+s
+
+log (cid:32)1 − s
+β
+
+ds
+
+(cid:33)(cid:33)
+
+xs ds
+
+= − 1
+2πi
+
+a+∞i
+
+(cid:90)
+a−∞i
+
+1
+s
+
+log (cid:32)1 − s
+β
+
+(cid:33) xs ds
+
+=
+
+x
+
+(cid:90)
+∞
+
+xβ−1
+log x
+
+dx + const.
+
+in the ﬁrst, and
+
+in the second case.
+
+=
+
+x
+
+(cid:90)
+0
+
+xβ−1
+log x
+
+dx + const.
+
+In the ﬁrst case the constant of integration is determined if one lets the
+real part of β become inﬁnitely negative; in the second case the integral from 0
+to x takes on values separated by 2πi, depending on whether the integration
+is taken through complex values with positive or negative argument, and
+becomes inﬁnitely small, for the former path, when the coeﬃcient of i in the
+value of β becomes inﬁnitely positive, but for the latter, when this coeﬃcient
+becomes inﬁnitely negative. From this it is seen how on the left hand side
+log (cid:32)1 − s
+β
+disappear.
+
+(cid:33) is to be determined in order that the constants of integration
+
+7
+
+Through the insertion of these values in the expression for f (x) one ob-
+
+tains
+
+f (x) = Li(x) −
+
+α
+
+(cid:80)
+
+(cid:16)Li (cid:16)x
+
+1
+2 +αi
+
+(cid:17) + Li (cid:16)x
+
+−αi
+
+1
+2
+
+(cid:17)(cid:17) +
+
+∞
+
+(cid:90)
+x
+
+1
+x2 − 1
+
+dx
+x log x
+
++ log ξ(0),
+
+(cid:80)
+
+α one substitutes for α all positive roots (or roots having a positive
+if in
+real part) of the equation ξ(α) = 0, ordered by their magnitude.
+It may
+easily be shown, by means of a more thorough discussion of the function ξ,
+that with this ordering of terms the value of the series
+
+(cid:80) (cid:16)Li (cid:16)x
+
+1
+2 +αi
+
+(cid:17) + Li (cid:16)x
+
+−αi
+
+1
+2
+
+(cid:17)(cid:17) log x
+
+agrees with the limiting value to which
+
+1
+2πi
+
+a+bi
+
+d
+
+(cid:90)
+a−bi
+
+1
+s (cid:80)
+
+log (cid:32)1 +
+
+2 )2
+
+(s − 1
+αα
+
+(cid:33)
+
+ds
+
+xs ds
+
+converges as the quantity b increases without bound; however when re-
+ordered it can take on any arbitrary real value.
+
+From f (x) one obtains F (x) by inversion of the relation
+
+to obtain the equation
+
+f (x) =
+
+1
+n
+
+(cid:80)
+
+F (cid:16)x
+
+1
+
+n (cid:17) ,
+
+F (x) =
+
+(−1)µ 1
+m
+
+(cid:80)
+
+f (cid:16)x
+
+1
+
+m (cid:17) ,
+
+in which one substitutes for m the series consisting of those natural numbers
+that are not divisible by any square other than 1, and in which µ denotes
+the number of prime factors of m.
+
+If one restricts
+
+α to a ﬁnite number of terms, then the derivative of the
+expression for f (x) or, up to a part diminishing very rapidly with growing x,
+
+(cid:80)
+
+1
+log x
+
+− 2
+
+α cos(α log x)x− 1
+log x
+
+2
+
+(cid:80)
+
+gives an approximating expression for the density of the prime number +
+half the density of the squares of the prime numbers + a third of the density
+of the cubes of the prime numbers etc. at the magnitude x.
+
+8
+
+The known approximating expression F (x) = Li(x) is therefore valid up
+to quantities of the order x 1
+2 and gives somewhat too large a value; because
+the non-periodic terms in the expression for F (x) are, apart from quantities
+that do not grow inﬁnite with x:
+
+Li(x) − 1
+
+2 Li(x
+
+1
+
+2 ) − 1
+
+3 Li(x
+
+1
+
+3 ) − 1
+
+5 Li(x
+
+1
+
+5 ) + 1
+
+6 Li(x
+
+1
+
+6 ) − 1
+
+7 Li(x
+
+1
+
+7 ) + · · ·
+
+Indeed, in the comparison of Li(x) with the number of prime numbers
+less than x, undertaken by Gauss and Goldschmidt and carried through up
+to x = three million, this number has shown itself out to be, in the ﬁrst
+hundred thousand, always less than Li(x); in fact the diﬀerence grows, with
+many ﬂuctuations, gradually with x. But also the increase and decrease in
+the density of the primes from place to place that is dependent on the periodic
+terms has already excited attention, without however any law governing this
+behaviour having been observed. In any future count it would be interesting
+to keep track of the inﬂuence of the individual periodic terms in the expression
+for the density of the prime numbers. A more regular behaviour than that
+of F (x) would be exhibited by the function f (x), which already in the ﬁrst
+hundred is seen very distinctly to agree on average with Li(x) + log ξ(0).
+
+9
+
+
