@@ -29,6 +29,7 @@ _draft_*
 .DS_Store
 Thumbs.db
 desktop.ini
+*.stackdump
 
 # IDE
 .vscode/
