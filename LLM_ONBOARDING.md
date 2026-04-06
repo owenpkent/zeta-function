@@ -7,8 +7,10 @@ Quick reference for AI assistants working on this repository.
 ## Project Overview
 
 **Name:** Riemann Zeta Function — Deep Study Repo
-**Purpose:** Multi-level exploration of the Riemann zeta function and Riemann Hypothesis, from intuitive to research-level, with manim visualizations.
+**Purpose:** Multi-level exploration of the Riemann zeta function and Riemann Hypothesis, from intuitive to research-level, with manim visualizations. **Active ML research direction: using machine learning to discover new mathematics toward proving RH.**
 **Status:** In Development
+
+**START HERE for research:** `docs/research_atlas/README.md` — comprehensive catalog of all approaches, what failed, what's missing, and concrete ML research directions.
 
 ## About the Owner
 
@@ -28,6 +30,7 @@ I'm Owen — a wheelchair user with muscular dystrophy.
 | `README.md` | Project overview, status, structure map |
 | `TODO.md` | Task tracking (`- [ ]` checkbox format) |
 | `docs/` | All written explanations by level |
+| `docs/research_atlas/` | **Master research map** — all approaches, failures, ML directions |
 | `sources/` | PDF → Markdown conversions of primary sources |
 | `visualizations/` | manim animation scripts |
 | `LLM_ONBOARDING.md` | This file |

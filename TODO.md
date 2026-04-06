@@ -21,6 +21,17 @@
 - [ ] **manim scene: ZerosOnCriticalLine** — known non-trivial zeros at Re(s) = 1/2
 - [ ] **manim scene: PrimeConnectionExplainer** — zeta and prime counting function
 
+## ML Research
+
+- [x] **docs/research_atlas/** — master document: all approaches, failures, obstructions, ML research directions
+- [ ] Set up zero data pipeline (Odlyzko tables, LMFDB)
+- [ ] Build ML experiment framework for zero pattern analysis
+- [ ] Implement operator discovery pipeline (parameterized operators + spectral matching)
+- [ ] Implement Weil positivity numerical explorer
+- [ ] Li criterion sequence analysis and prediction
+- [ ] Robin's inequality adversarial search (colossally abundant numbers)
+- [ ] Formalize RH equivalences in Lean 4
+
 ## Backlog
 
 - [ ] Add glossary of terms

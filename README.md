@@ -18,7 +18,8 @@ zeta-function/
 │   ├── 02_graduate/             # Analytic continuation, functional equation
 │   ├── 03_research/             # Current approaches, open problems
 │   ├── implications/            # Why it matters (primes, physics, crypto)
-│   └── solutions/               # Known approaches to the Riemann Hypothesis
+│   ├── solutions/               # Known approaches to the Riemann Hypothesis
+│   └── research_atlas/          # ★ Master research map — all attempts, failures, ML directions
 ├── sources/                     # PDF → Markdown/TXT conversions
 │   ├── riemann_1859_original.md # Riemann's original 1859 paper (translated)
 │   └── ...
@@ -47,6 +48,7 @@ It has been open since 1859. It is one of the Millennium Prize Problems (worth $
 | Undergraduate | `docs/01_undergraduate/` | Calculus, basic complex numbers |
 | Graduate | `docs/02_graduate/` | Complex analysis, real analysis |
 | Research | `docs/03_research/` | Graduate mathematics |
+| **Research Atlas** | `docs/research_atlas/` | **Start here for ML research** — full catalog of approaches, failures, obstructions, and ML directions |
 
 ## Visualizations (manim)
 
