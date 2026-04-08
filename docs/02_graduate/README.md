@@ -143,7 +143,7 @@ A consequence of RH (but weaker):
 **Lindelöf Hypothesis:** For any $\varepsilon > 0$:
 $$\zeta\!\left(\tfrac{1}{2} + it\right) = O(t^\varepsilon) \quad \text{as } t \to \infty$$
 
-Best known unconditional bound: $O(t^{13/84})$ (Bourgain, 2017). RH would give essentially $O(t^\varepsilon)$.
+Best known unconditional bound: $O(t^{53/342})$ (Bourgain, 2017). RH would give essentially $O(t^\varepsilon)$.
 
 ---
 

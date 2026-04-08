@@ -1074,7 +1074,7 @@ otherwise?"
 - **Berry, M.V. & Keating, J.P.** (1999) — The spectral interpretation
 - **Manin, Y.I.** (1995) — Lectures on zeta functions and motives
 - **Connes, A. & Consani, C.** (2011) — Geometry over F_1
-- **Scholze, P.** (2022–) — Condensed mathematics (potential new foundations)
+- **Clausen, D. & Scholze, P.** (2019–) — Condensed mathematics (potential new foundations)
 - **Gaitsgory, D. et al.** (2024) — Proof of geometric Langlands (new tools)
 
 See also: [Research Atlas](../research_atlas/README.md) §4 for the concise

@@ -130,7 +130,7 @@ The **convexity bound**: $|L(1/2+it, \chi)| \ll (q|t|)^{1/4+\varepsilon}$ (from 
 The **Lindelöf Hypothesis**: $|L(1/2+it, \chi)| \ll (q|t|)^\varepsilon$.
 
 **Subconvexity** (current frontier): Break the $1/4$ exponent. Known for many families:
-- $t$-aspect: $|\zeta(1/2+it)| \ll t^{13/84}$ (Bourgain 2017)
+- $t$-aspect: $|\zeta(1/2+it)| \ll t^{53/342}$ (Bourgain 2017)
 - $q$-aspect: Various results via amplification, Voronoi summation
 
 Subconvexity has arithmetic applications (equidistribution, Weyl sums) independent of RH.

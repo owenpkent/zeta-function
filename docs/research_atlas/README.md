@@ -340,7 +340,7 @@ Each equivalent statement is exactly as hard to prove as the original. They redi
 
 **Progress:**
 - **Convexity bound:** $|\zeta(1/2+it)| \ll |t|^{1/4+\varepsilon}$
-- **Best known (Bourgain, 2017):** $|\zeta(1/2+it)| \ll |t|^{13/84+\varepsilon} \approx |t|^{0.1548}$
+- **Best known (Bourgain, 2017):** $|\zeta(1/2+it)| \ll |t|^{53/342+\varepsilon} \approx |t|^{0.1550}$
 - **Lindelof Hypothesis (unproven):** $|\zeta(1/2+it)| \ll |t|^\varepsilon$
 
 **Moment results:**
@@ -688,4 +688,4 @@ Ordered from most tractable (ML could plausibly contribute now) to least tractab
 
 - Davies, A. et al. (2021). "Advancing mathematics by guiding human intuition with AI." *Nature* 600:70-74.
 - Raayoni, G. et al. (2021). "Generating conjectures on fundamental constants with the Ramanujan Machine." *Nature* 590:67-73.
-- He, Y.-H. et al. (2019). "Machine-learning the string landscape." *Phys. Lett. B* 774:564-568.
+- He, Y.-H. et al. (2017). "Machine-learning the string landscape." *Phys. Lett. B* 774:564-568.
