@@ -1,12 +1,12 @@
 # The Riemann Zeta Function — Graduate Level
 
-> **Level:** Graduate — assumes complex analysis (Cauchy's theorem, contour integration, analytic continuation), and real analysis.
+> **Level:** Graduate — assumes [complex analysis](https://en.wikipedia.org/wiki/Complex_analysis) ([Cauchy's theorem](https://en.wikipedia.org/wiki/Cauchy%27s_integral_theorem), [contour integration](https://en.wikipedia.org/wiki/Contour_integration), [analytic continuation](https://en.wikipedia.org/wiki/Analytic_continuation)), and [real analysis](https://en.wikipedia.org/wiki/Real_analysis).
 
 ---
 
 ## 1. Analytic Continuation via the Gamma Function
 
-The **Gamma function** is the key tool for continuing $\zeta(s)$ beyond $\text{Re}(s) > 1$.
+The **[Gamma function](https://en.wikipedia.org/wiki/Gamma_function)** is the key tool for continuing $\zeta(s)$ beyond $\text{Re}(s) > 1$.
 
 $$\Gamma(s) = \int_0^\infty t^{s-1} e^{-t}\, dt \qquad \text{Re}(s) > 0$$
 
@@ -28,11 +28,11 @@ This integral representation is the starting point for analytic continuation.
 
 ### Via the Theta Function
 
-Define the **Jacobi theta function**:
+Define the **[Jacobi theta function](https://en.wikipedia.org/wiki/Jacobi_theta_function)**:
 
 $$\theta(t) = \sum_{n=-\infty}^{\infty} e^{-\pi n^2 t} \qquad t > 0$$
 
-The **Poisson summation formula** gives the functional equation of theta:
+The **[Poisson summation formula](https://en.wikipedia.org/wiki/Poisson_summation_formula)** gives the functional equation of theta:
 
 $$\theta(1/t) = \sqrt{t}\;\theta(t)$$
 
@@ -56,13 +56,13 @@ $$\zeta(s) = 2^s\,\pi^{s-1}\,\sin\!\left(\tfrac{\pi s}{2}\right)\Gamma(1-s)\,\ze
 
 ## 3. The Hadamard Product
 
-Since $\xi(s) = \frac{1}{2}s(s-1)\Lambda(s)$ is an entire function of order 1, the **Hadamard factorization theorem** gives:
+Since $\xi(s) = \frac{1}{2}s(s-1)\Lambda(s)$ is an [entire function](https://en.wikipedia.org/wiki/Entire_function) of order 1, the **[Hadamard factorization theorem](https://en.wikipedia.org/wiki/Weierstrass_factorization_theorem#Hadamard_factorization_theorem)** gives:
 
 $$\xi(s) = e^{A+Bs}\prod_\rho \left(1 - \frac{s}{\rho}\right)e^{s/\rho}$$
 
 where the product runs over all non-trivial zeros $\rho$. Here:
 - $A = \xi(0) = 1/2$
-- $B = \xi'(0)/\xi(0) = -\frac{1}{2}\ln(4\pi) - 1 + \frac{\gamma}{2}$ where $\gamma$ is the Euler–Mascheroni constant
+- $B = \xi'(0)/\xi(0) = -\frac{1}{2}\ln(4\pi) - 1 + \frac{\gamma}{2}$ where $\gamma$ is the [Euler–Mascheroni constant](https://en.wikipedia.org/wiki/Euler%E2%80%93Mascheroni_constant)
 
 Taking the logarithmic derivative:
 
@@ -74,11 +74,11 @@ This **explicit formula** for $\zeta'/\zeta$ encodes all zeros explicitly and is
 
 ## 4. The Explicit Formula for $\pi(x)$
 
-Define the von Mangoldt function $\Lambda(n) = \log p$ if $n = p^k$ (prime power), 0 otherwise.
+Define the [von Mangoldt function](https://en.wikipedia.org/wiki/Von_Mangoldt_function) $\Lambda(n) = \log p$ if $n = p^k$ (prime power), 0 otherwise.
 
-The **Chebyshev function** $\psi(x) = \sum_{n \leq x} \Lambda(n)$ (equivalent to $\pi(x)$ up to lower-order terms).
+The **[Chebyshev function](https://en.wikipedia.org/wiki/Chebyshev_function)** $\psi(x) = \sum_{n \leq x} \Lambda(n)$ (equivalent to $\pi(x)$ up to lower-order terms).
 
-Via Perron's formula and the Hadamard product:
+Via [Perron's formula](https://en.wikipedia.org/wiki/Perron%27s_formula) and the Hadamard product:
 
 $$\psi(x) = x - \sum_\rho \frac{x^\rho}{\rho} - \frac{\zeta'}{\zeta}(0) - \frac{1}{2}\log(1-x^{-2})$$
 
@@ -98,13 +98,13 @@ $$\psi(x) = x + O(\sqrt{x}\,\log^2 x)$$
 
 ## 5. Zero-Free Regions
 
-The **classical zero-free region** (de la Vallée Poussin, 1899):
+The **classical [zero-free region](https://en.wikipedia.org/wiki/Riemann_zeta_function#Zero-free_region)** ([de la Vallée Poussin](https://en.wikipedia.org/wiki/Charles_Jean_de_la_Vall%C3%A9e_Poussin), 1899):
 
 $$\zeta(s) \neq 0 \quad \text{for} \quad \sigma \geq 1 - \frac{c}{\log |t|}, \quad |t| \geq 2$$
 
 for some absolute constant $c > 0$. This is sufficient to prove the PNT with an error term.
 
-**Best known zero-free region** (Vinogradov–Korobov, 1958):
+**Best known zero-free region** ([Vinogradov](https://en.wikipedia.org/wiki/Ivan_Vinogradov)–[Korobov](https://en.wikipedia.org/wiki/Nikolai_Korobov), 1958):
 
 $$\sigma \geq 1 - \frac{c}{(\log |t|)^{2/3}(\log\log|t|)^{1/3}}$$
 
@@ -116,21 +116,21 @@ These zero-free regions are far from the critical line. Getting them to touch $\
 
 Define $N(T) = \#\{\rho : 0 < \text{Im}(\rho) < T\}$, the count of zeros up to height $T$.
 
-**Riemann–von Mangoldt formula:**
+**[Riemann–von Mangoldt formula](https://en.wikipedia.org/wiki/Riemann%E2%80%93von_Mangoldt_formula):**
 
 $$N(T) = \frac{T}{2\pi}\log\frac{T}{2\pi} - \frac{T}{2\pi} + O(\log T)$$
 
 The zeros are countably infinite but densely packed at height $T$: average gap $\sim 2\pi/\log(T/2\pi)$.
 
-**Hardy's theorem (1914):** Infinitely many zeros lie on the critical line.
+**[Hardy](https://en.wikipedia.org/wiki/G._H._Hardy)'s theorem (1914):** Infinitely many zeros lie on the critical line.
 
-**Hardy–Littlewood (1921):** At least $cT$ zeros in $[0,T]$ are on the critical line for some $c > 0$.
+**Hardy–[Littlewood](https://en.wikipedia.org/wiki/John_Edensor_Littlewood) (1921):** At least $cT$ zeros in $[0,T]$ are on the critical line for some $c > 0$.
 
-**Selberg (1942):** A positive proportion of zeros are on the critical line.
+**[Selberg](https://en.wikipedia.org/wiki/Atle_Selberg) (1942):** A positive proportion of zeros are on the critical line.
 
-**Levinson (1974):** At least 1/3 of all zeros are on the critical line.
+**[Levinson](https://en.wikipedia.org/wiki/Norman_Levinson) (1974):** At least 1/3 of all zeros are on the critical line.
 
-**Conrey (1989):** At least 2/5 of all zeros are on the critical line.
+**[Conrey](https://en.wikipedia.org/wiki/J._Brian_Conrey) (1989):** At least 2/5 of all zeros are on the critical line.
 
 **Computational:** All zeros with $|\text{Im}(\rho)| \leq 3 \times 10^{12}$ have $\text{Re}(\rho) = 1/2$ (Platt, 2011).
 
@@ -140,22 +140,22 @@ The zeros are countably infinite but densely packed at height $T$: average gap $
 
 A consequence of RH (but weaker):
 
-**Lindelöf Hypothesis:** For any $\varepsilon > 0$:
+**[Lindelöf Hypothesis](https://en.wikipedia.org/wiki/Lindel%C3%B6f_hypothesis):** For any $\varepsilon > 0$:
 $$\zeta\!\left(\tfrac{1}{2} + it\right) = O(t^\varepsilon) \quad \text{as } t \to \infty$$
 
-Best known unconditional bound: $O(t^{53/342})$ (Bourgain, 2017). RH would give essentially $O(t^\varepsilon)$.
+Best known unconditional bound: $O(t^{53/342})$ ([Bourgain](https://en.wikipedia.org/wiki/Jean_Bourgain), 2017). RH would give essentially $O(t^\varepsilon)$.
 
 ---
 
 ## 8. Random Matrix Theory Connection
 
-Montgomery (1973) computed the **pair correlation** of the imaginary parts of zeros: for test functions $f$,
+[Montgomery](https://en.wikipedia.org/wiki/Hugh_Montgomery_(mathematician)) (1973) computed the **[pair correlation](https://en.wikipedia.org/wiki/Montgomery%27s_pair_correlation_conjecture)** of the imaginary parts of zeros: for test functions $f$,
 
 $$\sum_{\gamma, \gamma'} f(\gamma - \gamma') \sim \int_{-\infty}^\infty f(t)\left[1 - \left(\frac{\sin\pi t}{\pi t}\right)^2\right] dt$$
 
-This is exactly the **pair correlation of eigenvalues of random unitary matrices** (GUE — Gaussian Unitary Ensemble) from random matrix theory.
+This is exactly the **pair correlation of eigenvalues of random unitary matrices** ([GUE — Gaussian Unitary Ensemble](https://en.wikipedia.org/wiki/Random_matrix#Gaussian_ensembles)) from [random matrix theory](https://en.wikipedia.org/wiki/Random_matrix).
 
-Dyson pointed this out to Montgomery immediately. It is one of the deepest unexplained connections in mathematics: **the zeros of $\zeta(s)$ behave like eigenvalues of a random Hermitian matrix.** This is the spectral/operator interpretation of RH.
+[Dyson](https://en.wikipedia.org/wiki/Freeman_Dyson) pointed this out to Montgomery immediately. It is one of the deepest unexplained connections in mathematics: **the zeros of $\zeta(s)$ behave like eigenvalues of a random Hermitian matrix.** This is the spectral/operator interpretation of RH.
 
 ---
 

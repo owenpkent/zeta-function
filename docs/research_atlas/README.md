@@ -33,19 +33,19 @@
 
 ## 1. The Problem Statement
 
-**The Riemann Hypothesis (1859):** All non-trivial zeros of the Riemann zeta function have real part equal to 1/2.
+**The [Riemann Hypothesis](https://en.wikipedia.org/wiki/Riemann_hypothesis) (1859):** All non-trivial zeros of the [Riemann zeta function](https://en.wikipedia.org/wiki/Riemann_zeta_function) have real part equal to 1/2.
 
 The zeta function is defined as:
 
 $$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} \qquad \text{for } \operatorname{Re}(s) > 1$$
 
-Extended to all of $\mathbb{C}$ (except a simple pole at $s=1$) by analytic continuation. The "trivial" zeros are at $s = -2, -4, -6, \ldots$ (understood, uninteresting). The non-trivial zeros lie in the critical strip $0 < \operatorname{Re}(s) < 1$.
+Extended to all of $\mathbb{C}$ (except a simple pole at $s=1$) by [analytic continuation](https://en.wikipedia.org/wiki/Analytic_continuation). The "trivial" zeros are at $s = -2, -4, -6, \ldots$ (understood, uninteresting). The non-trivial zeros lie in the critical strip $0 < \operatorname{Re}(s) < 1$.
 
 **RH claims:** Every non-trivial zero satisfies $\operatorname{Re}(s) = 1/2$ exactly.
 
 **Why it matters:** The zeros of zeta control the distribution of prime numbers through the explicit formula. RH gives the tightest possible error bound on the prime counting function. It also connects to cryptography, quantum physics, random matrix theory, and hundreds of conditional theorems across mathematics.
 
-**Status as of 2025:** Unproven after 165+ years. Over 10 trillion zeros verified computationally. No counterexample. One of the seven Millennium Prize Problems.
+**Status as of 2025:** Unproven after 165+ years. Over 10 trillion zeros verified computationally. No counterexample. One of the seven [Millennium Prize Problems](https://en.wikipedia.org/wiki/Millennium_Prize_Problems).
 
 ---
 
@@ -57,7 +57,7 @@ Each section follows the same structure: **the idea**, **what was tried**, **wha
 
 ### 2.1 Spectral / Hilbert-Polya
 
-**The idea:** Find a self-adjoint operator $H$ on a Hilbert space whose eigenvalues $\{\lambda_n\}$ satisfy: the non-trivial zeros of $\zeta$ are exactly $\{1/2 + i\lambda_n\}$. Since self-adjoint operators have real eigenvalues (spectral theorem), this would immediately prove RH.
+**The idea:** Find a [self-adjoint operator](https://en.wikipedia.org/wiki/Self-adjoint_operator) $H$ on a [Hilbert space](https://en.wikipedia.org/wiki/Hilbert_space) whose eigenvalues $\{\lambda_n\}$ satisfy: the non-trivial zeros of $\zeta$ are exactly $\{1/2 + i\lambda_n\}$. Since self-adjoint operators have real eigenvalues ([spectral theorem](https://en.wikipedia.org/wiki/Spectral_theorem)), this would immediately prove RH.
 
 **What was tried:**
 
@@ -68,13 +68,13 @@ Each section follows the same structure: **the idea**, **what was tried**, **wha
 | Sierra-Townsend | 2008-2011 | Quantum particle in magnetic field on hyperbolic half-plane | Reproduces zero density and GUE statistics; does not prove RH |
 
 **What was learned:**
-- The zeta zeros genuinely *behave* like eigenvalues of a self-adjoint operator. The statistics match GUE (Gaussian Unitary Ensemble) predictions exactly.
-- The Berry-Keating Hamiltonian $H = xp$ has the right classical structure: its periodic orbits correspond to prime powers via the Gutzwiller trace formula.
+- The zeta zeros genuinely *behave* like eigenvalues of a self-adjoint operator. The statistics match [GUE (Gaussian Unitary Ensemble)](https://en.wikipedia.org/wiki/Random_matrix#Gaussian_ensembles) predictions exactly.
+- The [Berry–Keating](https://en.wikipedia.org/wiki/Berry%E2%80%93Keating_conjecture) Hamiltonian $H = xp$ has the right classical structure: its periodic orbits correspond to prime powers via the [Gutzwiller trace formula](https://en.wikipedia.org/wiki/Gutzwiller_trace_formula).
 - Connes' construction is the deepest reformulation: it places the zeros in a natural geometric/algebraic context. But it shifts the problem to proving positivity of a trace.
 - The boundary condition problem for Berry-Keating is not merely technical — different boundary conditions give different spectra. Finding the "right" conditions that produce exactly the zeta zeros is equivalent to the original problem.
 
 **Why it failed:**
-Every spectral construction is missing a **positivity argument**. To conclude that eigenvalues are real, you need the operator to be genuinely self-adjoint (not just formally symmetric). In the function field analogy, this positivity comes from the Riemann-Roch theorem or the Hodge index theorem. No number-field analogue of this positivity has been found.
+Every spectral construction is missing a **positivity argument**. To conclude that eigenvalues are real, you need the operator to be genuinely self-adjoint (not just formally symmetric). In the function field analogy, this positivity comes from the [Riemann–Roch theorem](https://en.wikipedia.org/wiki/Riemann%E2%80%93Roch_theorem) or the [Hodge index theorem](https://en.wikipedia.org/wiki/Hodge_index_theorem). No number-field analogue of this positivity has been found.
 
 **What remains open:**
 - Is there a natural Hilbert space on which the zeros appear as a spectrum?
@@ -86,7 +86,7 @@ Every spectral construction is missing a **positivity argument**. To conclude th
 
 ### 2.2 Arithmetic Geometry / Function Field Analogy
 
-**The idea:** Weil proved RH for curves over finite fields (1948). Deligne proved the full Weil conjectures (1974). These proofs used powerful geometric tools. Can these techniques be "lifted" from function fields to number fields?
+**The idea:** [Weil](https://en.wikipedia.org/wiki/Andr%C3%A9_Weil) proved RH for curves over [finite fields](https://en.wikipedia.org/wiki/Finite_field) (1948). [Deligne](https://en.wikipedia.org/wiki/Pierre_Deligne) proved the full [Weil conjectures](https://en.wikipedia.org/wiki/Weil_conjectures) (1974). These proofs used powerful geometric tools. Can these techniques be "lifted" from function fields to number fields?
 
 **What was tried:**
 
@@ -104,13 +104,13 @@ Every spectral construction is missing a **positivity argument**. To conclude th
 5. This is exactly the RH for function fields
 
 **What was learned:**
-- The analogy between function fields and number fields is deep and structural, not superficial. The explicit formula, functional equation, and Euler product all have precise analogues.
-- The proof for function fields relies on **four pillars**: (i) a compact smooth curve, (ii) etale cohomology with Frobenius action, (iii) Poincare duality, and (iv) positivity from Hodge theory. The number field case is missing all four in their standard forms.
+- The analogy between [function fields](https://en.wikipedia.org/wiki/Function_field_of_an_algebraic_variety) and [number fields](https://en.wikipedia.org/wiki/Algebraic_number_field) is deep and structural, not superficial. The explicit formula, functional equation, and [Euler product](https://en.wikipedia.org/wiki/Euler_product) all have precise analogues.
+- The proof for function fields relies on **four pillars**: (i) a compact smooth curve, (ii) [étale cohomology](https://en.wikipedia.org/wiki/%C3%89tale_cohomology) with [Frobenius](https://en.wikipedia.org/wiki/Frobenius_endomorphism) action, (iii) [Poincaré duality](https://en.wikipedia.org/wiki/Poincar%C3%A9_duality), and (iv) positivity from [Hodge theory](https://en.wikipedia.org/wiki/Hodge_theory). The number field case is missing all four in their standard forms.
 - Weil's explicit formula shows RH is *equivalent* to a positivity condition: a specific quadratic form on test functions must be positive semi-definite. This is the cleanest reformulation but proving it is the entire problem.
 
 **Why it failed:**
 $\operatorname{Spec}(\mathbb{Z})$ is a one-dimensional arithmetic scheme, but it is **not a smooth compact curve over any field**. It lacks:
-- **Compactness:** There's no natural compactification that gives a smooth object. Arakelov geometry provides a partial compactification (adding an "archimedean place") but the resulting object doesn't have the full geometric structure needed.
+- **Compactness:** There's no natural compactification that gives a smooth object. [Arakelov geometry](https://en.wikipedia.org/wiki/Arakelov_theory) provides a partial compactification (adding an "archimedean place") but the resulting object doesn't have the full geometric structure needed.
 - **The right cohomology:** No cohomology theory for $\operatorname{Spec}(\mathbb{Z})$ has been constructed that carries a Frobenius-like endomorphism and satisfies Poincare duality with Hodge positivity.
 - **Frobenius:** In the function field case, Frobenius $x \mapsto x^q$ is a concrete geometric map. For number fields, there's no obvious analogue acting on a geometric object.
 
@@ -124,7 +124,7 @@ $\operatorname{Spec}(\mathbb{Z})$ is a one-dimensional arithmetic scheme, but it
 
 ### 2.3 Random Matrix Theory
 
-**The idea:** The zeros of $\zeta(s)$ have identical statistical properties to eigenvalues of large random unitary matrices (GUE — Gaussian Unitary Ensemble). If this connection can be made rigorous and structural, it might prove RH.
+**The idea:** The zeros of $\zeta(s)$ have identical statistical properties to eigenvalues of large random unitary matrices (GUE — [Gaussian Unitary Ensemble](https://en.wikipedia.org/wiki/Random_matrix#Gaussian_ensembles)). If this connection can be made rigorous and structural, it might prove RH.
 
 **What was tried:**
 
@@ -141,7 +141,7 @@ $\operatorname{Spec}(\mathbb{Z})$ is a one-dimensional arithmetic scheme, but it
 - The statistical match between zeta zeros and GUE eigenvalues is essentially perfect. This is not a rough approximation — it holds for pair correlations, $n$-point correlations, nearest-neighbor spacings, and moment statistics.
 - For families of L-functions over function fields, Katz-Sarnak proved the match rigorously. The symmetry group of the family (unitary, orthogonal, symplectic) determines the zero statistics.
 - The moments of $|\zeta(1/2+it)|$ predicted by random matrix theory have arithmetic corrections ($a_k$, Euler product factors) that encode prime structure. This shows the connection is not purely random — primes matter.
-- Selberg's central limit theorem: $\log|\zeta(1/2+it)|$ is approximately Gaussian with variance $\frac{1}{2}\log\log T$.
+- [Selberg](https://en.wikipedia.org/wiki/Atle_Selberg)'s [central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem): $\log|\zeta(1/2+it)|$ is approximately Gaussian with variance $\frac{1}{2}\log\log T$.
 
 **Why it failed:**
 RMT describes the **distribution** of zeros, not individual positions. RH is a universal quantifier: "**for all** non-trivial zeros, $\operatorname{Re}(\rho) = 1/2$." Statistics can tell you what happens on average or with high probability. They cannot tell you that every single zero, without exception, lies on a particular line. A statistical proof would need to become an exact structural theorem, and that transition has never been achieved.
@@ -171,7 +171,7 @@ RMT describes the **distribution** of zeros, not individual positions. RH is a u
 1. Use the **zero detector**: $-\operatorname{Re}\frac{\zeta'}{\zeta}(\sigma+it) = \sum_\rho \frac{\sigma - \beta}{|\sigma+it-\rho|^2} + \ldots$
 2. This sum is non-negative for $\sigma > 1$, and a zero near $\sigma + it$ makes it large
 3. Combine with trigonometric inequalities like $3 + 4\cos\theta + \cos 2\theta \geq 0$ to force zeros away from the line $\sigma = 1$
-4. Use exponential sum estimates (Vinogradov's method) to control $\zeta$ in the critical strip
+4. Use [exponential sum](https://en.wikipedia.org/wiki/Exponential_sum) estimates ([Vinogradov](https://en.wikipedia.org/wiki/Ivan_Vinogradov)'s method) to control $\zeta$ in the critical strip
 
 **What was learned:**
 - The PNT (1896) was the first major triumph of this approach
@@ -230,7 +230,7 @@ Determining the sign of a number that is smaller than $10^{-11}$ in absolute val
 
 | Year | Height $T$ | Zeros verified | Who | Method |
 |------|-----------|----------------|-----|--------|
-| 1903 | 15 zeros | manual | Gram | Euler-Maclaurin |
+| 1903 | 15 zeros | manual | [Gram](https://en.wikipedia.org/wiki/J%C3%B8rgen_Pedersen_Gram) | [Euler–Maclaurin](https://en.wikipedia.org/wiki/Euler%E2%80%93Maclaurin_formula) |
 | 1936 | 1,041 zeros | hand + machine | Titchmarsh | Riemann-Siegel |
 | 1979 | $2 \times 10^9$ | ~$8 \times 10^8$ | van de Lune, te Riele | Riemann-Siegel |
 | 2001 | $2.4 \times 10^{12}$ | ~$10^{13}$ | van de Lune et al. | Odlyzko-Schonhage |
@@ -241,16 +241,16 @@ Determining the sign of a number that is smaller than $10^{-11}$ in absolute val
 **All computed zeros lie on the critical line.** Not a single exception in 10+ trillion zeros.
 
 **Methods:**
-- **Riemann-Siegel formula:** Efficient approximation of $\zeta(1/2+it)$ for large $t$
-- **Turing's method:** Verifies no zeros are missed between computed values (uses argument principle)
-- **Odlyzko-Schonhage algorithm:** FFT-based, computes $N$ consecutive zeros in $O(N^{1+\varepsilon})$ time
+- **[Riemann–Siegel formula](https://en.wikipedia.org/wiki/Riemann%E2%80%93Siegel_formula):** Efficient approximation of $\zeta(1/2+it)$ for large $t$
+- **[Turing's method](https://en.wikipedia.org/wiki/Alan_Turing#Riemann_hypothesis):** Verifies no zeros are missed between computed values (uses [argument principle](https://en.wikipedia.org/wiki/Argument_principle))
+- **Odlyzko–Schönhage algorithm:** [FFT](https://en.wikipedia.org/wiki/Fast_Fourier_transform)-based, computes $N$ consecutive zeros in $O(N^{1+\varepsilon})$ time
 - **Interval arithmetic (Platt):** Gives rigorous, machine-verified bounds
 
 **What was learned:**
 - Extraordinary empirical evidence for RH
 - Zero spacing statistics match GUE to high precision
 - No "near misses" — zeros don't wander near the edge of the critical strip
-- Gram's law (sign changes at Gram points) holds most of the time but fails occasionally — the failures are themselves structured
+- [Gram's law](https://en.wikipedia.org/wiki/Gram%27s_law) (sign changes at [Gram points](https://en.wikipedia.org/wiki/Gram_point)) holds most of the time but fails occasionally — the failures are themselves structured
 
 **Why it cannot prove RH:**
 Computation verifies finitely many zeros. RH is a statement about infinitely many. Moreover:
@@ -271,21 +271,21 @@ RH has been reformulated in over 300 known equivalent statements. Selected notab
 
 **Analytic equivalences:**
 - **Prime counting:** $|\pi(x) - \operatorname{Li}(x)| \leq \frac{1}{8\pi}\sqrt{x}\ln x$ for all $x \geq 2657$
-- **Mertens function:** $M(x) = \sum_{n \leq x} \mu(n) = O(x^{1/2+\varepsilon})$ for all $\varepsilon > 0$
-- **Liouville function:** $L(x) = \sum_{n \leq x} \lambda(n) = O(x^{1/2+\varepsilon})$
+- **[Mertens function](https://en.wikipedia.org/wiki/Mertens_function):** $M(x) = \sum_{n \leq x} \mu(n) = O(x^{1/2+\varepsilon})$ for all $\varepsilon > 0$
+- **[Liouville function](https://en.wikipedia.org/wiki/Liouville_function):** $L(x) = \sum_{n \leq x} \lambda(n) = O(x^{1/2+\varepsilon})$
 
 **Algebraic equivalences:**
-- **Robin's inequality (1984):** $\sigma(n) < e^\gamma n \ln\ln n$ for all $n > 5040$ (where $\sigma$ = sum-of-divisors, $\gamma$ = Euler-Mascheroni constant)
+- **[Robin's inequality](https://en.wikipedia.org/wiki/Robin%27s_inequality) (1984):** $\sigma(n) < e^\gamma n \ln\ln n$ for all $n > 5040$ (where $\sigma$ = [sum-of-divisors](https://en.wikipedia.org/wiki/Divisor_function), $\gamma$ = [Euler–Mascheroni constant](https://en.wikipedia.org/wiki/Euler%E2%80%93Mascheroni_constant))
 - **Nicolas' inequality:** $\prod_{p \leq p_k} \frac{p}{p-1} > e^\gamma \ln\theta(p_k)$ for all $k$ (where $\theta$ = Chebyshev function)
-- **Lagarias' inequality (2002):** $\sigma(n) \leq H_n + e^{H_n}\ln H_n$ for all $n \geq 1$ (where $H_n$ = $n$-th harmonic number)
+- **Lagarias' inequality (2002):** $\sigma(n) \leq H_n + e^{H_n}\ln H_n$ for all $n \geq 1$ (where $H_n$ = $n$-th [harmonic number](https://en.wikipedia.org/wiki/Harmonic_number))
 
 **Linear algebraic:**
-- **Li's criterion (1997):** RH $\iff$ $\lambda_n = \sum_\rho [1 - (1 - 1/\rho)^n] > 0$ for all $n \geq 1$
+- **[Li's criterion](https://en.wikipedia.org/wiki/Li%27s_criterion) (1997):** RH $\iff$ $\lambda_n = \sum_\rho [1 - (1 - 1/\rho)^n] > 0$ for all $n \geq 1$
 - Certain Hankel matrices built from $\zeta$ values are positive definite
 
 **Positivity:**
 - **Weil positivity:** A specific quadratic form on Schwartz functions is positive semi-definite
-- **Nyman-Beurling (1955):** RH $\iff$ a specific set of functions is dense in $L^2(0,1)$
+- **[Nyman–Beurling](https://en.wikipedia.org/wiki/Nyman%E2%80%93Beurling_criterion) (1955):** RH $\iff$ a specific set of functions is dense in $L^2(0,1)$
 
 **What was learned:**
 - RH is deeply entangled with all of mathematics — number theory, analysis, algebra, linear algebra, probability, approximation theory
@@ -310,16 +310,16 @@ Each equivalent statement is exactly as hard to prove as the original. They redi
 
 **Key structures:**
 
-**Dirichlet L-functions:** $L(s, \chi) = \sum_{n=1}^\infty \chi(n)/n^s$ for Dirichlet characters $\chi$. GRH: all non-trivial zeros have $\operatorname{Re}(s) = 1/2$.
+**[Dirichlet L-functions](https://en.wikipedia.org/wiki/Dirichlet_L-function):** $L(s, \chi) = \sum_{n=1}^\infty \chi(n)/n^s$ for [Dirichlet characters](https://en.wikipedia.org/wiki/Dirichlet_character) $\chi$. GRH: all non-trivial zeros have $\operatorname{Re}(s) = 1/2$.
 
-**The Selberg class (1992):** Axiomatized the properties shared by all "reasonable" L-functions:
+**The [Selberg class](https://en.wikipedia.org/wiki/Selberg_class) (1992):** Axiomatized the properties shared by all "reasonable" L-functions:
 1. Dirichlet series with Euler product
 2. Analytic continuation
 3. Functional equation of Riemann type
 4. Ramanujan hypothesis on coefficients
 5. Polynomial Euler product
 
-**The Langlands program:** Predicts that all automorphic L-functions (from automorphic representations of $GL_n$) are in the Selberg class, and that functoriality relations connect different L-functions. This is the deepest structural framework known.
+**The [Langlands program](https://en.wikipedia.org/wiki/Langlands_program):** Predicts that all [automorphic L-functions](https://en.wikipedia.org/wiki/Automorphic_L-function) (from [automorphic representations](https://en.wikipedia.org/wiki/Automorphic_representation) of $GL_n$) are in the Selberg class, and that functoriality relations connect different L-functions. This is the deepest structural framework known.
 
 **What was learned:**
 - L-functions form a structured family with internal symmetries
@@ -336,7 +336,7 @@ Each equivalent statement is exactly as hard to prove as the original. They redi
 
 ### 2.9 Subconvexity and Moment Methods
 
-**The idea:** Bound the size of $L(1/2+it)$ on the critical line. The Lindelof Hypothesis (consequence of RH) states $|\zeta(1/2+it)| \ll |t|^\varepsilon$. Subconvexity means beating the trivial bound.
+**The idea:** Bound the size of $L(1/2+it)$ on the critical line. The [Lindelöf Hypothesis](https://en.wikipedia.org/wiki/Lindel%C3%B6f_hypothesis) (consequence of RH) states $|\zeta(1/2+it)| \ll |t|^\varepsilon$. [Subconvexity](https://en.wikipedia.org/wiki/Subconvexity) means beating the trivial bound.
 
 **Progress:**
 - **Convexity bound:** $|\zeta(1/2+it)| \ll |t|^{1/4+\varepsilon}$
@@ -468,7 +468,7 @@ Based on the landscape of failures, a proof of RH likely requires some combinati
 
 **Pattern detection at scale:** The zeta function produces enormous amounts of structured numerical data (zero locations, spacing statistics, L-function coefficients, divisor sums). Humans have found patterns (GUE, pair correlation) through inspired guessing. ML can search systematically for patterns that human intuition misses.
 
-**Conjecture generation:** Mathematics advances through conjecture-then-proof. The conjecture step is creative and pattern-driven — well-suited to ML. Examples of ML-generated conjectures in math are already emerging (Ramanujan Machine, DeepMind's knot theory work).
+**Conjecture generation:** Mathematics advances through conjecture-then-proof. The conjecture step is creative and pattern-driven — well-suited to ML. Examples of ML-generated conjectures in math are already emerging ([Ramanujan Machine](https://en.wikipedia.org/wiki/Ramanujan_Machine), DeepMind's knot theory work).
 
 **Exploring high-dimensional spaces:** The space of possible operators, boundary conditions, cohomology theories, and positivity arguments is vast. ML can explore it more efficiently than manual construction.
 
@@ -488,7 +488,7 @@ ML is most likely to contribute by:
 1. **Discovering new conjectures** that humans can then attempt to prove
 2. **Identifying structural patterns** in zero data, L-function families, or arithmetic sequences
 3. **Exploring construction spaces** (operators, boundary conditions, test functions) to find candidates matching known constraints
-4. **Guiding proof search** in formal theorem provers (Lean, Coq, Isabelle)
+4. **Guiding proof search** in formal theorem provers ([Lean](https://en.wikipedia.org/wiki/Lean_(proof_assistant)), [Coq](https://en.wikipedia.org/wiki/Coq_(software)), [Isabelle](https://en.wikipedia.org/wiki/Isabelle_(proof_assistant)))
 5. **Connecting disparate fields** by finding analogies between mathematical structures
 
 ---
@@ -516,7 +516,7 @@ ML is most likely to contribute by:
 
 **Approaches:**
 - Parameterize families of operators on $L^2(\mathbb{R}^+)$ and use ML to optimize boundary conditions to match known zeros
-- Use neural operators (DeepONet, Fourier Neural Operator) to learn the operator from spectral data
+- Use neural operators ([DeepONet](https://en.wikipedia.org/wiki/DeepONet), [Fourier Neural Operator](https://en.wikipedia.org/wiki/Fourier_neural_operator)) to learn the operator from spectral data
 - Search for operators whose trace formulas match the explicit formula
 - Explore quantum Hamiltonians (Berry-Keating variants) with different potentials and boundary conditions
 
@@ -542,7 +542,7 @@ ML is most likely to contribute by:
 - Formalize the requirements (trace formula, Poincare duality, Hodge positivity) as constraints
 - Use ML to search for algebraic structures satisfying these constraints
 - Start with known function field cohomologies and use ML to "deform" them toward the number field case
-- Explore connections to topological data analysis — can persistent homology reveal the "shape" of prime distributions?
+- Explore connections to [topological data analysis](https://en.wikipedia.org/wiki/Topological_data_analysis) — can [persistent homology](https://en.wikipedia.org/wiki/Persistent_homology) reveal the "shape" of prime distributions?
 
 **What success looks like:** A candidate construction satisfying some of the required properties, providing a starting point for rigorous development.
 
@@ -579,7 +579,7 @@ ML is most likely to contribute by:
 | Source | Data | Access |
 |--------|------|--------|
 | Odlyzko's tables | First $10^{13}$+ zeros, high precision | Public (AT&T archive) |
-| LMFDB | Zeros of many L-functions | lmfdb.org |
+| [LMFDB](https://en.wikipedia.org/wiki/L-functions_and_modular_forms_database) | Zeros of many L-functions | lmfdb.org |
 | Platt-Trudgian | Rigorous verification to $T = 3 \times 10^{12}$ | Published papers |
 
 ### 7.2 L-function Data
@@ -587,8 +587,8 @@ ML is most likely to contribute by:
 | Source | Data | Access |
 |--------|------|--------|
 | LMFDB | Dirichlet, elliptic curve, modular form L-functions | lmfdb.org |
-| PARI/GP | Computational number theory library | Open source |
-| SageMath | L-function computation | Open source |
+| [PARI/GP](https://en.wikipedia.org/wiki/PARI/GP) | Computational number theory library | Open source |
+| [SageMath](https://en.wikipedia.org/wiki/SageMath) | L-function computation | Open source |
 
 ### 7.3 Relevant Software
 
@@ -605,7 +605,7 @@ ML is most likely to contribute by:
 - **Robin's inequality**: Verified for all $n \leq 10^{10}$ (at least)
 - **Li's criterion**: $\lambda_n > 0$ verified for $n \leq 10^5$ (approximately)
 - **Mertens function**: Computed extensively; known to satisfy $|M(x)| < \sqrt{x}$ for $x < 10^{16}$ (at least)
-- **Colossally abundant numbers**: The integers where Robin's inequality is tightest — these are the "adversarial examples" for RH from the arithmetic side
+- **[Colossally abundant numbers](https://en.wikipedia.org/wiki/Colossally_abundant_number)**: The integers where Robin's inequality is tightest — these are the "adversarial examples" for RH from the arithmetic side
 
 ---
 

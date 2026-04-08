@@ -6,9 +6,9 @@
 
 ## What's the Big Deal?
 
-Prime numbers — 2, 3, 5, 7, 11, 13, ... — are the atoms of arithmetic. Every whole number is built by multiplying primes together. But the primes themselves seem to appear randomly along the number line. Is there a pattern? Is there a rhythm to them?
+[Prime numbers](https://en.wikipedia.org/wiki/Prime_number) — 2, 3, 5, 7, 11, 13, ... — are the atoms of arithmetic. Every whole number is built by multiplying primes together. But the primes themselves seem to appear randomly along the number line. Is there a pattern? Is there a rhythm to them?
 
-In 1859, Bernhard Riemann found a hidden connection: **the behavior of prime numbers is secretly encoded in a function called the zeta function.** And this function has a deep mystery buried inside it — a mystery no one has solved in over 160 years.
+In 1859, [Bernhard Riemann](https://en.wikipedia.org/wiki/Bernhard_Riemann) found a hidden connection: **the behavior of prime numbers is secretly encoded in a function called the [zeta function](https://en.wikipedia.org/wiki/Riemann_zeta_function).** And this function has a deep mystery buried inside it — a mystery no one has solved in over 160 years.
 
 ---
 
@@ -20,7 +20,7 @@ $$1 + \frac{1}{4} + \frac{1}{9} + \frac{1}{16} + \frac{1}{25} + \cdots$$
 
 That's 1/1² + 1/2² + 1/3² + 1/4² + 1/5² + ...
 
-If you add up all these infinitely many fractions, you get a specific number. (Euler proved it's exactly π²/6 ≈ 1.645.)
+If you add up all these infinitely many fractions, you get a specific number. ([Euler](https://en.wikipedia.org/wiki/Leonhard_Euler) proved it's exactly π²/6 ≈ 1.645.)
 
 The **zeta function** generalizes this. Instead of squaring, you raise each number to a power *s*:
 
@@ -32,7 +32,7 @@ For s = 2, you get π²/6. For s = 3, 4, 5, ... you get other specific numbers. 
 
 ## The Surprising Twist: Going Into Imaginary Territory
 
-Here's where it gets wild. Mathematicians can ask: what if *s* isn't a regular number? What if it's a **complex number** — a mix of a real part and an "imaginary" part?
+Here's where it gets wild. Mathematicians can ask: what if *s* isn't a regular number? What if it's a **[complex number](https://en.wikipedia.org/wiki/Complex_number)** — a mix of a real part and an "imaginary" part?
 
 Think of complex numbers as coordinates on a 2D plane. Instead of just moving left/right on a number line, you can also move up/down.
 
@@ -64,7 +64,7 @@ It sounds almost simple. But:
 - No one has found a counterexample.
 - No one has proven it must be true.
 
-It has been open since **1859**. It is one of the seven **Millennium Prize Problems**, carrying a **$1,000,000 prize** for a proof.
+It has been open since **1859**. It is one of the seven **[Millennium Prize Problems](https://en.wikipedia.org/wiki/Millennium_Prize_Problems)**, carrying a **$1,000,000 prize** for a proof.
 
 ---
 

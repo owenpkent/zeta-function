@@ -62,13 +62,13 @@ thing that makes them all the same approach.**
 
 ### 2.1 It Must See Arithmetic and Geometry Simultaneously
 
-**The problem:** In the function field world (where RH is proved), there is a
-literal geometric object — a curve over a finite field — whose shape *is* the
+**The problem:** In the [function field](https://en.wikipedia.org/wiki/Function_field_of_an_algebraic_variety) world (where RH is proved), there is a
+literal geometric object — a curve over a [finite field](https://en.wikipedia.org/wiki/Finite_field) — whose shape *is* the
 number theory. The zeros of its zeta function are topological features of this
 curve. You can "see" the hypothesis.
 
 For the integers, there is no such object. $\operatorname{Spec}(\mathbb{Z})$
-is a one-dimensional scheme, but it is **non-compact, has no Frobenius, and
+is a one-dimensional [scheme](https://en.wikipedia.org/wiki/Scheme_(mathematics)), but it is **non-compact, has no [Frobenius](https://en.wikipedia.org/wiki/Frobenius_endomorphism), and
 lacks the geometric richness** that makes the function field proof work.
 
 ```
@@ -129,16 +129,16 @@ and building the mathematical language that makes this visible.
 
 - **Weil positivity:** RH ⟺ a quadratic form on test functions is positive
   semi-definite
-- **Li's criterion:** RH ⟺ an infinite sequence of real numbers $\lambda_n$
+- **[Li's criterion](https://en.wikipedia.org/wiki/Li%27s_criterion):** RH ⟺ an infinite sequence of real numbers $\lambda_n$
   are all positive
-- **Robin's inequality:** RH ⟺ $\sigma(n) < e^\gamma n \ln\ln n$ for $n > 5040$
+- **[Robin's inequality](https://en.wikipedia.org/wiki/Robin%27s_inequality):** RH ⟺ $\sigma(n) < e^\gamma n \ln\ln n$ for $n > 5040$
   (a positivity of "headroom" in the divisor function)
 - **Self-adjointness:** RH ⟺ a spectral operator has only real eigenvalues
   (i.e., the imaginary part is "positively" zero)
 
 All of these are different faces of the same underlying positivity. In the
-function field proof, positivity comes from **intersection theory on algebraic
-surfaces** — ultimately from the Hodge index theorem, which says that the
+function field proof, positivity comes from **[intersection theory](https://en.wikipedia.org/wiki/Intersection_theory) on algebraic
+surfaces** — ultimately from the [Hodge index theorem](https://en.wikipedia.org/wiki/Hodge_index_theorem), which says that the
 intersection pairing on a surface has a specific signature.
 
 ```
@@ -242,7 +242,7 @@ TWO WORLDS, ONE MYSTERY
 object that is *simultaneously* arithmetic and spectral. Not an analogy, not
 a dictionary between the two worlds, but a single object that *is* both.
 
-The closest existing idea: Connes' noncommutative geometry of the adèle class
+The closest existing idea: [Connes](https://en.wikipedia.org/wiki/Alain_Connes)' [noncommutative geometry](https://en.wikipedia.org/wiki/Noncommutative_geometry) of the [adèle](https://en.wikipedia.org/wiki/Ad%C3%A8le_ring) class
 space, where the space itself is arithmetic (built from primes) and carries a
 natural spectral theory (operators on $L^2$ spaces). But the positivity proof
 within Connes' framework remains missing — the framework reveals the connection
@@ -257,7 +257,7 @@ but doesn't yet close it.
 - Their spacing matches GUE to extraordinary precision
 - 100% of zeros (in density) lie on the critical line
 - Over $10^{13}$ individual zeros have been verified on the critical line
-- The de Bruijn-Newman constant is within $10^{-11}$ of zero
+- The [de Bruijn–Newman constant](https://en.wikipedia.org/wiki/De_Bruijn%E2%80%93Newman_constant) is within $10^{-11}$ of zero
 
 None of this proves RH, because RH is about *every single zero*, including
 hypothetical ones at height $10^{10^{100}}$ that we could never compute.
@@ -309,9 +309,9 @@ must provide this reason.
 
 **The problem:** There is an aesthetic criterion in mathematics that the "right"
 proof of a theorem feels inevitable — it reveals *why* the theorem is true,
-not just *that* it's true. Wiles' proof of Fermat's Last Theorem, while
-incredibly deep, ultimately made people feel that the modularity of elliptic
-curves was the "real reason" behind $a^n + b^n = c^n$ having no solutions.
+not just *that* it's true. [Wiles' proof of Fermat's Last Theorem](https://en.wikipedia.org/wiki/Wiles%27s_proof_of_Fermat%27s_Last_Theorem), while
+incredibly deep, ultimately made people feel that the [modularity of elliptic
+curves](https://en.wikipedia.org/wiki/Modularity_theorem) was the "real reason" behind $a^n + b^n = c^n$ having no solutions.
 
 A correct framework for RH should similarly reveal *why* the zeros are on the
 critical line.
@@ -462,15 +462,15 @@ NEEDED STATE: Unified Continent
 The history of mathematics suggests the new framework won't come from nowhere.
 It will likely:
 
-1. **Extend an existing theory past its current limits.** Étale cohomology was
-   an extension of classical cohomology. Arakelov geometry extends algebraic
+1. **Extend an existing theory past its current limits.** [Étale cohomology](https://en.wikipedia.org/wiki/%C3%89tale_cohomology) was
+   an extension of classical [cohomology](https://en.wikipedia.org/wiki/Cohomology). [Arakelov geometry](https://en.wikipedia.org/wiki/Arakelov_theory) extends algebraic
    geometry. The breakthrough extends something we already have in a direction
    nobody expected to be possible.
 
-2. **Reveal that two known things are secretly the same.** Galois theory
+2. **Reveal that two known things are secretly the same.** [Galois theory](https://en.wikipedia.org/wiki/Galois_theory)
    revealed that field extensions and symmetry groups are the same. The
-   Langlands program is revealing that automorphic forms and Galois
-   representations are the same. The breakthrough reveals that some pair of
+   [Langlands program](https://en.wikipedia.org/wiki/Langlands_program) is revealing that [automorphic forms](https://en.wikipedia.org/wiki/Automorphic_form) and [Galois
+   representations](https://en.wikipedia.org/wiki/Galois_representation) are the same. The breakthrough reveals that some pair of
    mathematical structures are secretly identical.
 
 3. **Take a physical intuition and make it rigorous.** Berry-Keating's
@@ -948,7 +948,7 @@ $\operatorname{Spec}(\mathbb{Z})$ lives naturally in such a world — it
 might require ∞-categorical or derived algebraic geometry tools that didn't
 exist when Deninger formulated his program.
 
-Potential connection: **Condensed mathematics** (Clausen-Scholze) provides
+Potential connection: **[Condensed mathematics](https://en.wikipedia.org/wiki/Condensed_mathematics)** ([Clausen](https://en.wikipedia.org/wiki/Dustin_Clausen)–[Scholze](https://en.wikipedia.org/wiki/Peter_Scholze)) provides
 new ways to do analysis using algebraic structures, potentially bridging the
 discrete-continuous divide.
 
@@ -965,7 +965,7 @@ The new mathematics might be *suggested* by ML and then developed by humans.
 ### 6.4 From Number Theory Itself: Langlands and Beyond
 
 The Langlands program is the most ambitious current program in number theory,
-connecting automorphic forms to Galois representations. A full Langlands
+connecting automorphic forms to Galois representations. The [geometric Langlands](https://en.wikipedia.org/wiki/Geometric_Langlands_correspondence) variant was recently resolved. A full Langlands
 correspondence would prove GRH for automorphic L-functions. While the
 full program is far from complete, advances in it (especially geometric
 Langlands, recently resolved by Gaitsgory et al.) might provide unexpected
