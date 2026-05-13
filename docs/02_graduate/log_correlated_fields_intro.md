@@ -87,25 +87,41 @@ The zeta line matches the 1D log-correlated line exactly. That match is the empi
 
 ---
 
-## 5. What This Has to Do With the Riemann Hypothesis
+## 5. The Primes-Zeros Duality
 
-Honest answer: very little, directly.
+Two dual Fourier-like expansions sit at the heart of zeta:
 
-- The log-correlated picture is about **typical** $t$: averages and maxima as $t$ is sampled uniformly in a long interval. RH is a statement about **every** $t$ where $\zeta = 0$.
-- A sharp moment estimate from this picture is a sharper [Keating–Snaith](https://en.wikipedia.org/wiki/Keating%E2%80%93Snaith_conjecture)-style bound. Such bounds are consequences of RH, not equivalents.
-- The full [Lindelof Hypothesis](https://en.wikipedia.org/wiki/Lindel%C3%B6f_hypothesis), the boundary case for size bounds, is strictly weaker than RH.
+$$\log|\zeta(\tfrac{1}{2}+it)| \;\approx\; \sum_p \frac{\cos(t \log p)}{\sqrt{p}}, \qquad \frac{\psi(e^u) - e^u}{e^{u/2}} \;\approx\; -\sum_\rho \frac{e^{i u \gamma_\rho}}{\rho}.$$
 
-What the picture **does** give:
+The first comes from the [Euler product](https://en.wikipedia.org/wiki/Euler_product) and writes $\log|\zeta|$ on the critical line as a sum over **primes**, with frequencies $\log p$ and amplitudes $1/\sqrt{p}$. The second is the Riemann [explicit formula](https://en.wikipedia.org/wiki/Explicit_formulae_for_L-functions) and writes the normalized prime fluctuation as a sum over **zeros** $\rho = \tfrac{1}{2} + i\gamma_\rho$, with frequencies $\gamma_\rho$ and amplitudes $1/|\rho|$.
 
-- An explanation, beyond statistics, of *why* zeta on the critical line is so well-behaved.
-- A genuine rigorous coupling between zeta and a [Gaussian multiplicative chaos](https://en.wikipedia.org/wiki/Liouville_quantum_gravity#Gaussian_multiplicative_chaos) limit object on mesoscopic scales (Saksman, Webb 2020).
-- New theorems about zeta. The FHK first and second order are now proved, partly through work that grew out of GFF / branching random walk technology.
+So primes appear as frequencies on one side, zeros as frequencies on the other. Both expansions are spectral representations of $\zeta(s)$. The duality is real but mediated through $\zeta$: it is not the case that primes and zeros are "two coordinates on the same object." The unifying object is $\zeta$ itself; primes determine $\zeta$ via the Euler product, and zeros are properties of the resulting analytic function.
 
-So this is a structural reformulation of **consequences** of RH-like behavior, not a stepping stone to a proof.
+Both expansions converge only distributionally and need smoothing for rigorous statements. The log-correlated behavior we have been discussing emerges from the *interference pattern* of the prime cosines in the first sum, and equivalently from the interference of the zero exponentials in the second.
 
 ---
 
-## 6. Where to Go From Here
+## 6. What This Has to Do With the Riemann Hypothesis
+
+The duality from §5 holds **whether or not RH is true**. RH is a separate statement about *where* the zero frequencies sit. Four levels of connection:
+
+**Level 1 (unconditional, proven 1896).** No zeros on $\mathrm{Re}(s) = 1$ is equivalent to the [Prime Number Theorem](https://en.wikipedia.org/wiki/Prime_number_theorem): $\pi(x) \sim x/\log x$. The leading $1/\log x$ density of primes does not need RH.
+
+**Level 2 (this is RH).** Each zero $\rho = \beta + i\gamma$ contributes a fluctuation of size $x^\beta/|\rho|$ to $\psi(x) - x$. A zero with $\beta > 1/2$ dominates $\sqrt{x}$ at large $x$. So:
+
+$$\text{RH} \;\iff\; |\psi(x) - x| = O\!\big(\sqrt{x}\,\log^2 x\big) \;\iff\; \text{every zero-frequency mode decays at exactly the rate } \sqrt{x}.$$
+
+In Fourier-dual language: RH is the statement that the zero side of $\zeta$ is **one-dimensional**, all amplitudes decaying at the same rate. This is what forces the prime-side fluctuations to be as small as they could possibly be.
+
+**Level 3 (mostly unconditional, where the multifractal lives).** Selberg's CLT, the $\tfrac{1}{2}\log\log T$ variance, the universality across heights observed in our [E1 experiment](../../experiments/multifractal/README.md), the Saksman-Webb GMC coupling: theorems, mostly without needing RH. Sharper statements ([Keating-Snaith](https://en.wikipedia.org/wiki/Keating%E2%80%93Snaith_conjecture) moments, the FHK constant $-\tfrac{3}{4}$) are conjectures compatible with both RH and non-RH worlds. The multifractal structure on the critical line is a **downstream consequence**, not an RH-equivalent: it would still exist if some zero were off the line, with localized perturbations near its height.
+
+**Level 4 (RH again, structural form).** [Weil's reformulation](https://en.wikipedia.org/wiki/Weil%27s_explicit_formula): RH is equivalent to a quadratic form on Schwartz functions being positive semi-definite. [Li's criterion](https://en.wikipedia.org/wiki/Li%27s_criterion): RH is equivalent to an infinite sequence of real numbers being positive. So RH is fundamentally a **positivity** statement, not a spectral one. The multifractal/log-correlated picture gives access to *size* and *oscillation* but does not naturally produce positivity. That is why the spectral approaches cannot close the gap.
+
+**Bottom line.** The log-correlated machinery is on the right side of the duality (the zero side, viewed from the critical line) and is consistent with RH, but cannot test it. Distinguishing a world with RH from a world where some zero has $\beta = 0.51$ would require uniform-in-$t$ estimates that current multifractal tools do not provide. This is the atlas's *bridge gap* (§3.5) and *exactness gap* (§3.3).
+
+---
+
+## 7. Where to Go From Here
 
 | To learn... | Read... |
 |---|---|

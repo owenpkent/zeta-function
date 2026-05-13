@@ -49,6 +49,8 @@ The atlas entries below cover each separately.
 
 A multifractal moment bound on $|\zeta|^{2q}$ is a sharper [Keating–Snaith](https://en.wikipedia.org/wiki/Keating%E2%80%93Snaith_conjecture)-style estimate. Such bounds are *consequences* of RH, not equivalents. The [Lindelof Hypothesis](https://en.wikipedia.org/wiki/Lindel%C3%B6f_hypothesis) itself, the boundary case of these size bounds, is strictly weaker than RH. There is no known mechanism by which a $\tau(q)$ or $D(\alpha)$ bound constrains the placement of any individual zero. The proofs operate in the typical-$t$ regime, while RH-relevant bounds need to be uniform in $t$.
 
+The deeper reason: the prime-zero Fourier duality (see [`../02_graduate/log_correlated_fields_intro.md`](../02_graduate/log_correlated_fields_intro.md) §5) holds whether or not RH is true. The multifractal lives on the *spectral side* of that duality. RH is a separate statement about *where* the zero frequencies sit (all on $\mathrm{Re}(s) = 1/2$, equivalently all amplitudes decay at exactly the rate $\sqrt{x}$ on the prime side). Spectral structure is downstream of that placement, not equivalent to it. Worse, RH in its sharpest form (Weil, Li) is a **positivity** statement, and multifractal analysis gives access to size and oscillation but not naturally to positivity. That gap is structural, not just technical.
+
 **What remains open:**
 
 See `../03_research/extreme_values_and_log_correlated_fields.md` §10. Most tractable: numerical verification of the FHK second-order constant against zero data from Odlyzko or [LMFDB](https://www.lmfdb.org/). Least tractable: leveraging GMC machinery to tighten *uniform* upper bounds on $|\zeta(\tfrac{1}{2}+it)|$.
