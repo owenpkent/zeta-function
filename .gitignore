@@ -36,3 +36,7 @@ desktop.ini
 .vscode/
 .idea/
 
+# experiment outputs
+experiments/**/_cache/
+experiments/**/*.png
+
