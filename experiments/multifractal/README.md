@@ -80,7 +80,15 @@ The noise floor for spurious multifractality in this pipeline is $\Delta\alpha \
 
 **First-run findings (x in [100, 1e7], N = 8192, order 3).** Singularity-spectrum width $\Delta\alpha \approx 2.8$, well above the E0 noise floor of 0.05. Real multifractal signal. But $h(q) > 1$ for $q \ge 0$ and $h(q)$ blows up to $\sim 3.5$ at $q = -4$. Diagnostic: $Y(u)$ is not a stationary-noise-like series. By the explicit formula, $Y(u) \approx -\sum_\rho e^{i u \gamma_\rho}/\rho$ is a quasi-periodic sum of low-zero oscillations ($\gamma_1 \approx 14.13$, $\gamma_2 \approx 21.02$, ...) plus a slowly-growing log-correlated tail. MFDFA on a bounded oscillating signal lands outside its assumed regime, which is why $h(q) > 1$. The width signal is real; the precise spectrum is not yet meaningful.
 
-**Next iterations for cleaner E3 results:** (a) feed MFDFA the increments $\Delta Y$ instead of $Y$; (b) compute $Y$ on short windows at large $u$ and average across windows (the prime-side analogue of Saksman-Webb mesoscopic sampling); (c) subtract the first 100 low-zero contributions and re-analyze the residual.
+**Second iteration: increments $\Delta Y$.** Tested by feeding MFDFA the discrete differences of $Y$ instead of values. Result: $h(q=2) = 0.29$, $\Delta\alpha = 6.0$. Worse than the values run: differentiation widened the spectrum and shifted it to small $\alpha$, away from E1's $\alpha \in [1.0, 3.0]$ range. The values version is the right object after all; the issue is not differentiation order.
+
+**The real obstruction.** At $x_{\max} = 10^7$, the explicit formula sum $Y(u) \approx -\sum_\rho e^{i u \gamma_\rho}/\rho$ is dominated by the first $\sim$10 low zeros whose amplitudes $1/|\rho|$ are largest. These produce a quasi-periodic signal, not a log-correlated one. The log-correlated GMC regime that E1 measures on the critical line is what you get when *many* zeros at *comparable* scale contribute coherently. To probe that regime on the prime side, the natural moves are:
+
+1. **Smoothed psi.** Convolve $\psi(x) - x$ with a Gaussian kernel of bandwidth matched to a target zeta height $T$. The smoothing suppresses the leading low-zero terms and exposes the high-zero log-correlated tail.
+2. **Much larger $x_{\max}$.** $x_{\max} = 10^{12}$ would put $\sim 10^{11}$ primes in the sieve and let many more zeros contribute. Memory and time-prohibitive without a streaming sieve.
+3. **Mesoscopic windows on $Y$ at large $u$.** Pick $u_0$ large, take a short window of $Y$ around $u_0$, run MFDFA per window, average across many $u_0$. Direct prime-side analogue of E1.
+
+Approach 1 is the cleanest next move and the most directly aligned with the Saksman-Webb mesoscopic GMC theorem.
 
 ## Status as of first run
 
@@ -89,7 +97,7 @@ The noise floor for spurious multifractality in this pipeline is $\Delta\alpha \
 | E0 | yes | Pipeline calibrated. Noise floor $\Delta\alpha \approx 0.05$. |
 | E1 | yes | Striking universality. Spectrum width $\Delta\alpha \approx 2.05$ stable to within 1% across $T = 10^4, 10^6, 10^8$. $h(q=2) \approx 1.5$. |
 | E2 | yes | Code works; sampling too sparse for FHK fit. Per-center maxes consistent with Gumbel fluctuations but $\text{sem} \approx 0.45$ per height swamps the second-order signal. Needs 30+ centers per height across $T = 10^4$ to $10^{12}$. |
-| E3 | yes | Real multifractal signal ($\Delta\alpha \approx 2.8$). Stationarity issue ($h(q) > 1$). Needs mesoscopic windowing or increment analysis. |
+| E3 | yes | Values: $\Delta\alpha \approx 2.8$, $\alpha$ range overlaps E1. Increments: tested, made it worse. The duality is detectable but the regimes do not match: at $x_{\max} = 10^7$, the prime-side signal is dominated by a handful of low-zero oscillations, not the log-correlated GMC regime E1 reaches on the critical line. Closing the gap requires $x_{\max} \gtrsim 10^{12}$ or a smoothed $\psi$ with bandwidth matched to a target zeta height. |
 
 ### E1 result in detail
 
