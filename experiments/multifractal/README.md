@@ -87,9 +87,23 @@ The noise floor for spurious multifractality in this pipeline is $\Delta\alpha \
 | experiment | run | result |
 |---|---|---|
 | E0 | yes | Pipeline calibrated. Noise floor $\Delta\alpha \approx 0.05$. |
-| E1 | no | Coded, untested. Expected runtime: tens of minutes on a laptop. |
-| E2 | no | Coded, untested. Expected runtime: tens of minutes; cached on rerun. |
+| E1 | yes | Striking universality. Spectrum width $\Delta\alpha \approx 2.05$ stable to within 1% across $T = 10^4, 10^6, 10^8$. $h(q=2) \approx 1.5$. |
+| E2 | yes | Code works; sampling too sparse for FHK fit. Per-center maxes consistent with Gumbel fluctuations but $\text{sem} \approx 0.45$ per height swamps the second-order signal. Needs 30+ centers per height across $T = 10^4$ to $10^{12}$. |
 | E3 | yes | Real multifractal signal ($\Delta\alpha \approx 2.8$). Stationarity issue ($h(q) > 1$). Needs mesoscopic windowing or increment analysis. |
+
+### E1 result in detail
+
+| $T$ | $h(q=2)$ | $\Delta\alpha$ |
+|---|---|---|
+| $10^4$ | 1.51 | 2.04 |
+| $10^6$ | 1.50 | 2.06 |
+| $10^8$ | 1.46 | 2.07 |
+
+The near-perfect collapse of $h(q)$ and $D(\alpha)$ curves across 4 orders of magnitude in $T$ is the **observable signature of log-correlated universality**: the multifractal spectrum of $\log|\zeta(\tfrac{1}{2}+it)|$ on unit windows does not depend on the height. This is the Fyodorov-Hiary-Keating prediction expressed in MFDFA coordinates. $h(q=2) \approx 1.5$ reflects MFDFA's cumsum step applied to a roughly-stationary log-correlated signal (compare fGn with $H = 0.5$, which gives $h = 0.5$; integrating gives $h = 1.5$).
+
+### E2 caveat
+
+To extract the FHK second-order constant $-\tfrac{3}{4}$, the natural setup is at least 6 heights $T = 10^4, 10^5, \ldots, 10^{12}$ with $\ge 30$ random centers each. That gives $\text{sem} \approx 0.16$ per height versus a target signal of $\sim 0.3$ in $\log\log\log T$. The current 4-centers-per-height setup is a feasibility test, not a science run.
 
 ## What we are NOT testing
 

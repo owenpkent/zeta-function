@@ -48,8 +48,9 @@ def sample_log_zeta_window(T_center, window=1.0, num_points=2048, prec=30, use_c
     half = window / 2.0
     ts = np.linspace(T_center - half, T_center + half, int(num_points))
     log_abs = np.empty(ts.size, dtype=float)
+    half_mp = mp.mpf("0.5")
     for k, t in enumerate(ts):
-        z = mp.zeta(mp.mpc("0.5", mp.mpf(repr(t))))
+        z = mp.zeta(mp.mpc(half_mp, mp.mpf(float(t))))
         log_abs[k] = float(mp.log(abs(z)))
 
     np.savez_compressed(path, ts=ts, log_abs=log_abs)
