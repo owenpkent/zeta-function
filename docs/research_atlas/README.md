@@ -8,6 +8,21 @@
 
 ---
 
+## Experimental Companion
+
+This atlas has a companion experimental thread in [`experiments/`](../../experiments/) organized around testing the four candidate RH proof architectures from [`docs/solutions/README.md`](../solutions/README.md) §8. The plan and status are in [`experiments/PROOF_ARCHITECTURES_PLAN.md`](../../experiments/PROOF_ARCHITECTURES_PLAN.md). Current state:
+
+| Architecture | Status | Key result |
+|---|---|---|
+| **3: Direct positivity** (Weil / Li) | 3A, 3B, 3C, 3D complete | Small-n Li-positivity does NOT distinguish zeta from Davenport-Heilbronn (3B). The Weil quadratic form via Gram-matrix eigenvalue analysis IS a wrong-approach detector: $M^{DH}$ has negative eigenvalues, witness deepens with basis size (3C, 3D). |
+| **1: Spectral** (Hilbert-Polya) | 1A complete | Berry-Keating $H = (xp+px)/2$ discretization gives constant spectral density $L/(2\pi)$, vs zeta's logarithmically growing density $\log(T/2\pi)/(2\pi)$. Fixed-domain discretization cannot match the zeta density globally. |
+| **4: Analytic** (zero-free regions) | 4B complete | LP solution for max $c_1$ in non-negative trig polynomials saturates the Fejér bound $\cos(\pi/(n+2))$. The classical $3 + 4\cos + \cos 2$ polynomial is sub-optimal at degree 2 ($c_1/c_0 = 2/3$ vs $\sqrt 2/2$). Improves constants but not the exponent. |
+| **2: Arithmetic-geometric** (Deninger / $\mathbb{F}_1$) | 2B complete | Weil RH verified for $E: y^2 = x^3 + x + 1$ over $\mathbb{F}_5$: Frobenius eigenvalues at $\alpha = -1.5 \pm \sqrt{11}/2 \, i$ with $\|\alpha\|^2 = 5$ exactly; point counts match Weil formula at $k=1, ..., 6$. The lift to $\mathbb{Z}$ requires constructing the analogous cohomology, Poincaré duality, and Hodge index theorem — all open. |
+
+The companion uses the **Davenport-Heilbronn L-function** (functional equation, no Euler product, known off-line zeros at $\rho \approx 0.808 + 85.7i$) as a structural wrong-approach detector throughout: any RH-style method that does not distinguish zeta from D-H is wrong.
+
+---
+
 ## Table of Contents
 
 1. [The Problem Statement](#1-the-problem-statement)
