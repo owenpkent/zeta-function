@@ -65,6 +65,49 @@ so $|w_\rho| \approx 1 - 4.2 \times 10^{-5}$. The off-line contribution to $\lam
 - `e3b_dh_li.npz`: arrays of $\lambda_n$ for both, $|w|$ diagnostics, per-zero contributions
 - `e3b_dh_li.png`: 4-panel plot (|w| distribution, $\lambda_n$ comparison, difference, per-zero contributions at $n = 100$)
 
-## 3C, 3D, 3E
+## 3C: Weil quadratic form on Mellin-symmetric test functions
 
-Planned per the [project plan](../PROOF_ARCHITECTURES_PLAN.md). 3C and 3D depend on a working Weil-quadratic-form evaluator (to be built in `e3c_weil_form.py`); 3E is a literature-and-analysis task connecting Li coefficients to the de Bruijn-Newman constant.
+**Status:** complete; wrong-approach detector found via Gram-matrix extension.
+
+### 3C.1: parameterized sweep ([e3c_weil_form.py](e3c_weil_form.py))
+
+**Method:** test family $\Phi_b(s) = 2\sinh((s - \tfrac{1}{2})\log b) / (s - \tfrac{1}{2})$. Symmetric under $s \to 1-s$. On the critical line, $\Phi_b(\tfrac{1}{2} + i\gamma) = 2\sin(\gamma\log b)/\gamma$, real. Off the critical line, complex. The quadratic form is $W(b) := \sum_\rho \Phi_b(\rho)^2$.
+
+**Findings (T_max = 200, b sweep over $[1.1, 100]$, 50 values):**
+
+| Quantity | Range |
+|---|---|
+| $W_\zeta(b)$ | $[0.043, 0.113]$ (always positive) |
+| $W_{DH}(b)$ | $[0.116, 0.549]$ (always positive) |
+| D-H off-line zero contribution alone | $[-6.4 \times 10^{-3}, +1.0 \times 10^{-2}]$ |
+| Sign changes of off-line contribution over $b$ sweep | 22 |
+| Off-line / total ratio | up to $\sim 2\%$ |
+
+**Conclusion:** off-line zeros DO contribute negatively for some $b$, but in the simple one-parameter $\Phi_b$ family the on-line contribution dominates by a factor of $\sim 50$. The sweep alone does not produce $W_{DH}(b) < 0$.
+
+### 3C.2: Gram-matrix extension ([e3c2_weil_gram.py](e3c2_weil_gram.py))
+
+**Method:** pick a basis grid $\{b_1, \ldots, b_K\}$. Any linear combination $\hat f = \sum_k c_k \Phi_{b_k}$ gives $W(\vec c) = \vec c^\top M \vec c$ where $M_{jk} = \sum_\rho 2\,\mathrm{Re}(\Phi_{b_j}(\rho)\Phi_{b_k}(\rho))$. Eigenvalue analysis: $M^\zeta$ is the Gram matrix of REAL vectors $\{\Phi_{b_k}(\rho)\}_k$ over zeros $\rho$, hence positive semi-definite. $M^{DH}$ has complex contributions from off-line zeros and may have negative eigenvalues.
+
+**Findings (K = 30 basis points, $b \in [1.1, 1000]$, T_max = 200):**
+
+| Quantity | $M^\zeta$ | $M^{DH}$ |
+|---|---|---|
+| Eigenvalue range | $[3.7 \times 10^{-3}, 0.69]$ | $[-0.0913, 4.78]$ |
+| Negative eigenvalues | 0 (PSD) | 2 (witness) |
+
+**Witness vector** $\vec c$ (smallest-eigenvalue eigenvector of $M^{DH}$):
+
+- $W_{DH}(\vec c) = -0.0913 < 0$ — violates Weil positivity
+- $W_\zeta(\vec c) = +0.0918 \geq 0$ — consistency check passes
+- Magnitudes essentially equal, signs opposite
+
+**This is the wrong-approach detector in finite-dimensional form.** Any RH-style argument that would prove $W(\hat f) \geq 0$ uniformly over $\hat f$ in the span of $\{\Phi_{b_k}\}$ for D-H is wrong: we have a finite-computation finite-dimensional witness that it fails.
+
+The mechanism: on-line zeros contribute $\Phi_b(\rho) \in \mathbb{R}$, so they form a real Gram structure (automatically PSD). Off-line zeros contribute $\Phi_b(\rho) \in \mathbb{C}$, breaking the real-vector structure and permitting indefinite eigenvalues.
+
+## 3D, 3E
+
+3D (gradient/ML search for adversarial $f$) is now partially subsumed: the eigenvalue analysis IS the optimal adversarial search in the linear-combination basis. The remaining task is to extend the basis (richer test functions, or non-linear parameterizations) and to study how the witness changes as the basis grows.
+
+3E (Li / de Bruijn-Newman relationship) is a literature-and-analysis task; deferred.
