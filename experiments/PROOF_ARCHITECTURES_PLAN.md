@@ -2,6 +2,31 @@
 
 > Companion to [`docs/solutions/README.md`](../docs/solutions/README.md) and the four-level framing in [`docs/02_graduate/log_correlated_fields_intro.md`](../docs/02_graduate/log_correlated_fields_intro.md) §6. This document is the test plan; the code lives in [`experiments/_shared/`](_shared/) plus per-architecture subdirectories.
 
+## Current status (snapshot)
+
+| Item | Status | Detail |
+|---|---|---|
+| Phase 0 shared infrastructure | ✅ | [`_shared/`](_shared/): LFunction interface, zeta, Davenport-Heilbronn, smoke test 5/5 |
+| Arch 3A (zeta Li coefficients) | ✅ | Positivity confirmed for $n = 1, \ldots, 500$; truncation-limited at zero-sum |
+| Arch 3B (D-H Li per-zero diagnostic) | ✅ | Central negative result: small-n Li positivity does NOT distinguish zeta from D-H |
+| Arch 3C (Weil quadratic form + Gram) | ✅ | Wrong-approach detector witness: $M^{DH}$ has negative eigenvalues, $W_{DH}(\vec c) < 0 < W_\zeta(\vec c)$ |
+| Arch 3D (witness scaling) | ✅ | Witness deepens with K, stable in T_max once first off-line zero is included |
+| Arch 3B-extension (xi-derivative Li) | ⏳ | Pending; would reach $n \sim 25{,}000$ to witness D-H negativity directly |
+| Arch 3E (Li / de Bruijn-Newman) | ⏳ | Pending; literature-and-analysis |
+| Arch 1A (Berry-Keating discretization) | ✅ | All eigenvalues at $\Im E = -1/2$; density mismatch with zeta documented |
+| Arch 1B (Sierra-Townsend) | ⏳ | Pending |
+| Arch 1C (operators on D-H) | ⏳ | Pending |
+| Arch 1D (Connes literature) | ⏳ | Pending |
+| Arch 4A (Vinogradov-Korobov) | ⏳ | Pending; literature |
+| Arch 4B (non-negative trig polys) | ✅ | LP saturates Fejér bound $\cos(\pi/(n+2))$; classical $3+4\cos+\cos 2$ is sub-optimal at degree 2 |
+| Arch 4C (conditional improvements) | ⏳ | Pending; literature |
+| Arch 4D (new auxiliary inequalities) | ⏳ | Pending; research direction |
+| Arch 2A (Weil-proof diff table) | ⏳ | Pending; literature |
+| Arch 2B (worked example, E/F_5) | ✅ | $\alpha = -1.5 \pm i\sqrt{11}/2$, $|\alpha|^2 = 5$; point counts match Weil formula at $k = 1, \ldots, 6$ |
+| Arch 2C (F_1 / Arakelov survey) | ⏳ | Pending; literature |
+| Arch 2D (Deninger micro-target) | ⏳ | Pending |
+| Cross-cut: Selberg-class comparison | ⏳ | Pending |
+
 ---
 
 ## Premise

@@ -2,15 +2,18 @@
 
 Quick reference for AI assistants working on this repository.
 
+> **For project-specific technical context** (the four proof architectures, the Davenport-Heilbronn discipline, file-naming conventions, the LFunction interface, math style), see [`CLAUDE.md`](CLAUDE.md). This file focuses on the human-side context: about the owner, tech stack, and conventions.
+
 ---
 
 ## Project Overview
 
 **Name:** Riemann Zeta Function — Deep Study Repo
-**Purpose:** Multi-level exploration of the Riemann zeta function and Riemann Hypothesis, from intuitive to research-level, with manim visualizations. **Active ML research direction: using machine learning to discover new mathematics toward proving RH.**
-**Status:** In Development
+**Purpose:** Multi-level exploration of the Riemann zeta function and Riemann Hypothesis, from intuitive to research-level, with manim visualizations and a computational experimental thread organized around testing the four candidate RH proof architectures.
 
-**START HERE for research:** `docs/research_atlas/README.md` — comprehensive catalog of all approaches, what failed, what's missing, and concrete ML research directions.
+**START HERE for research strategy:** [`docs/research_atlas/README.md`](docs/research_atlas/README.md) — comprehensive catalog of all approaches, what failed, what's missing, with a companion section pointing to the experiments.
+
+**START HERE for experiments:** [`experiments/PROOF_ARCHITECTURES_PLAN.md`](experiments/PROOF_ARCHITECTURES_PLAN.md) — the test plan with current status per architecture.
 
 ## About the Owner
 
@@ -27,11 +30,14 @@ I'm Owen — a wheelchair user with muscular dystrophy.
 
 | File | Purpose |
 |------|---------|
+| `CLAUDE.md` | Project technical context (architectures, conventions, LFunction interface) |
 | `README.md` | Project overview, status, structure map |
 | `TODO.md` | Task tracking (`- [ ]` checkbox format) |
 | `docs/` | All written explanations by level |
-| `docs/research_atlas/` | **Master research map** — all approaches, failures, ML directions |
-| `sources/` | PDF → Markdown conversions of primary sources |
+| `docs/research_atlas/` | Master research map; all approaches, failures, ML directions |
+| `experiments/` | Computational experimental thread (four proof architectures) |
+| `experiments/PROOF_ARCHITECTURES_PLAN.md` | The test plan with current status per architecture |
+| `sources/` | Source PDFs and their text conversions |
 | `visualizations/` | manim animation scripts |
 | `LLM_ONBOARDING.md` | This file |
 
@@ -44,17 +50,25 @@ zeta-function/
 ├── docs/
 │   ├── 00_intuitive/            # No math required
 │   ├── 01_undergraduate/        # Calculus + complex numbers
-│   ├── 02_graduate/             # Complex analysis
-│   ├── 03_research/             # Frontier approaches
+│   ├── 02_graduate/             # Complex analysis, log-correlated fields, four-level RH framing
+│   ├── 03_research/             # Frontier approaches, extreme values
 │   ├── implications/            # Why RH matters
-│   └── solutions/               # Known proof attempts/approaches
-├── sources/                     # Converted PDFs
+│   ├── solutions/               # Known proof attempts/approaches
+│   └── research_atlas/          # Master research map
+├── experiments/
+│   ├── PROOF_ARCHITECTURES_PLAN.md
+│   ├── _shared/                 # LFunction interface, zeta, Davenport-Heilbronn control
+│   ├── positivity/              # Arch 3 (Li coefficients, Weil quadratic form)
+│   ├── spectral/                # Arch 1 (Berry-Keating discretization)
+│   ├── zero_free/               # Arch 4 (non-negative trig polynomial LP)
+│   ├── arithmetic_geometric/    # Arch 2 (worked Weil example over F_5)
+│   └── multifractal/            # Log-correlated field experiments (pre-existing)
+├── sources/                     # Source PDFs and text conversions
 ├── visualizations/              # manim scenes
 │   ├── 01_series_intro/
 │   ├── 02_complex_plane/
-│   ├── 03_analytic_continuation/
-│   ├── 04_critical_strip/
-│   └── 05_zeros/
+│   └── ...
+├── CLAUDE.md
 ├── README.md
 ├── TODO.md
 └── LLM_ONBOARDING.md
