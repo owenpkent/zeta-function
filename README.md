@@ -1,10 +1,6 @@
 # Riemann Zeta Function — Deep Study Repo
 
-A comprehensive, multi-level exploration of the Riemann Zeta Function and the Riemann Hypothesis: from intuitive visual understanding through graduate-level analysis to the frontier of current research.
-
-## Status
-
-**In Development** — Building out documentation, visualizations, and PDF conversions.
+A multi-level exploration of the Riemann Zeta Function and the Riemann Hypothesis: from intuitive visual understanding through graduate-level analysis to the frontier of current research. Includes a computational experimental thread organized around testing the four candidate RH proof architectures.
 
 ## What's Here
 
@@ -15,21 +11,24 @@ zeta-function/
 ├── docs/                        # All written explanations
 │   ├── 00_intuitive/            # No math required — visual, conceptual
 │   ├── 01_undergraduate/        # Calculus, complex numbers, series
-│   ├── 02_graduate/             # Analytic continuation, functional equation
-│   ├── 03_research/             # Current approaches, open problems
+│   ├── 02_graduate/             # Analytic continuation, functional equation,
+│   │                            #   log-correlated fields, four-level RH framing
+│   ├── 03_research/             # Current approaches, extreme values
 │   ├── implications/            # Why it matters (primes, physics, crypto)
 │   ├── solutions/               # Known approaches to the Riemann Hypothesis
 │   └── research_atlas/          # ★ Master research map — all attempts, failures, ML directions
-├── sources/                     # PDF → Markdown/TXT conversions
-│   ├── riemann_1859_original.md # Riemann's original 1859 paper (translated)
-│   └── ...
+├── experiments/                 # ★ Computational thread; proof-architecture tests
+│   ├── PROOF_ARCHITECTURES_PLAN.md
+│   ├── _shared/                 # LFunction interface, zeta, Davenport-Heilbronn control
+│   ├── positivity/              # Arch 3 (Li coefficients, Weil quadratic form)
+│   ├── spectral/                # Arch 1 (Berry-Keating discretization)
+│   ├── zero_free/               # Arch 4 (non-negative trig polynomial LP)
+│   ├── arithmetic_geometric/    # Arch 2 (worked Weil-curves example over F_5)
+│   └── multifractal/            # Log-correlated field experiments (pre-existing)
+├── sources/                     # Original PDFs and their converted text
 ├── visualizations/              # manim animation scripts
-│   ├── 01_series_intro/
-│   ├── 02_complex_plane/
-│   ├── 03_analytic_continuation/
-│   ├── 04_critical_strip/
-│   └── 05_zeros/
-└── LLM_ONBOARDING.md            # AI assistant quick-reference
+├── CLAUDE.md                    # Project context for AI assistants
+└── LLM_ONBOARDING.md            # User context + tech stack
 ```
 
 ## The Question
@@ -56,29 +55,47 @@ Built with [manim](https://github.com/3b1b/manim) (3Blue1Brown's animation engin
 
 See `visualizations/README.md` for setup and how to render each scene.
 
-## Source PDFs → Markdown
+## Source PDFs
 
-Original source documents are in the repo root as PDFs. Converted/annotated versions live in `sources/`.
+Original source PDFs and their converted text versions live in `sources/`.
+
+## Experimental thread
+
+See [`experiments/PROOF_ARCHITECTURES_PLAN.md`](experiments/PROOF_ARCHITECTURES_PLAN.md) for the test plan. Four candidate RH proof architectures (spectral, arithmetic-geometric, direct positivity, analytic) with the Davenport-Heilbronn L-function as a structural wrong-approach detector throughout. One concrete experiment per architecture is implemented; Arch 3 (positivity) is the deepest, including a Gram-matrix wrong-approach detector witness for Davenport-Heilbronn.
+
+Smoke test:
+```powershell
+python -m experiments._shared.smoke_test
+```
 
 ## Status
 
 | Area | Status |
 |------|--------|
 | Repo structure | ✅ Complete |
-| PDF conversions | 🔄 In Progress |
-| Intuitive docs | 🔄 In Progress |
-| Undergraduate docs | 🔄 In Progress |
-| Graduate docs | ⏳ Planned |
-| Research docs | ⏳ Planned |
-| Implications docs | ⏳ Planned |
-| Solutions/approaches | ⏳ Planned |
-| manim visualizations | 🔄 In Progress |
+| Solutions / approach catalog | ✅ `docs/solutions/` |
+| Research atlas | ✅ `docs/research_atlas/` |
+| Graduate docs (incl. log-correlated, four-level framing) | ✅ Substantial |
+| Experiments — Phase 0 infrastructure | ✅ Complete |
+| Experiments — Arch 3 (positivity) | ✅ 3A-3D complete; 3E pending |
+| Experiments — Arch 1 (spectral) | ✅ 1A complete; 1B-1D pending |
+| Experiments — Arch 4 (zero-free regions) | ✅ 4B complete; 4A, 4C, 4D pending |
+| Experiments — Arch 2 (arithmetic-geometric) | ✅ 2B complete; 2A, 2C, 2D pending |
+| Intuitive / undergraduate docs | 🔄 In progress |
+| PDF text conversions | 🔄 In progress |
+| manim visualizations | 🔄 In progress |
 
-## Quick Start (manim)
+## Quick Start
 
 ```powershell
+# Set up environment
 python -m venv venv
 .\venv\Scripts\Activate.ps1
-pip install manim
+pip install -r requirements.txt
+
+# Smoke test the experimental framework
+python -m experiments._shared.smoke_test
+
+# manim scene
 manim -pql visualizations/01_series_intro/series_intro.py ZetaSeriesIntro
 ```

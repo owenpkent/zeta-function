@@ -2,7 +2,7 @@
 
 Original PDFs and their converted/annotated text versions.
 
-## PDFs in Repo Root
+## PDFs
 
 | File | Description |
 |------|-------------|
@@ -18,7 +18,7 @@ Original PDFs and their converted/annotated text versions.
 pip install pdfminer.six
 python -c "
 from pdfminer.high_level import extract_text
-text = extract_text('../Wilkins-translation.pdf')
+text = extract_text('Wilkins-translation.pdf')
 with open('wilkins_translation.txt', 'w', encoding='utf-8') as f:
     f.write(text)
 print('Done')
@@ -30,7 +30,7 @@ print('Done')
 pip install pypdf
 python -c "
 from pypdf import PdfReader
-reader = PdfReader('../Wilkins-translation.pdf')
+reader = PdfReader('Wilkins-translation.pdf')
 text = '\n'.join(p.extract_text() for p in reader.pages)
 with open('wilkins_translation.txt', 'w', encoding='utf-8') as f:
     f.write(text)
