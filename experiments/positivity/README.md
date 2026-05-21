@@ -106,8 +106,38 @@ so $|w_\rho| \approx 1 - 4.2 \times 10^{-5}$. The off-line contribution to $\lam
 
 The mechanism: on-line zeros contribute $\Phi_b(\rho) \in \mathbb{R}$, so they form a real Gram structure (automatically PSD). Off-line zeros contribute $\Phi_b(\rho) \in \mathbb{C}$, breaking the real-vector structure and permitting indefinite eigenvalues.
 
-## 3D, 3E
+## 3D: scaling of the witness ([e3d_scaling.py](e3d_scaling.py))
 
-3D (gradient/ML search for adversarial $f$) is now partially subsumed: the eigenvalue analysis IS the optimal adversarial search in the linear-combination basis. The remaining task is to extend the basis (richer test functions, or non-linear parameterizations) and to study how the witness changes as the basis grows.
+**Status:** complete. The witness is robust and scales with basis size.
 
-3E (Li / de Bruijn-Newman relationship) is a literature-and-analysis task; deferred.
+**K scaling** (basis size, fixed $T_{\max} = 200$):
+
+| $K$ | $\lambda_{\min}(M^\zeta)$ | $\lambda_{\min}(M^{DH})$ |
+|---|---|---|
+| 10 | $+0.022$ | $+0.011$ (no witness yet) |
+| 20 | $+9.8 \times 10^{-3}$ | $-0.024$ (first witness) |
+| 30 | $+3.7 \times 10^{-3}$ | $-0.091$ |
+| 50 | $+6.5 \times 10^{-5}$ | $-0.091$ |
+| 75 | $+6.7 \times 10^{-9}$ | $-0.164$ |
+| 100 | $-1 \times 10^{-16}$ | $-0.370$ |
+| 150 | $-3 \times 10^{-16}$ | $-0.599$ |
+
+The witness in $M^{DH}$ DEEPENS as $K$ grows (the adversarial linear combination becomes more effective). $M^\zeta$ trends toward singularity as the basis becomes redundant (the $\Phi_b$ functions span only a rank-bounded subspace of entire-function values at zeros), but remains PSD within numerical noise.
+
+**T_max scaling** (fixed $K = 30$):
+
+| $T_{\max}$ | D-H off-line zeros | $\lambda_{\min}(M^{DH})$ |
+|---|---|---|
+| 50 | 0 | $\sim 0$ (M^DH trivially PSD; no off-line yet) |
+| 100 | 2 | $-0.095$ |
+| 150 | 4 | $-0.094$ |
+| 200 | 8 | $-0.091$ |
+| 300 | 10 | $-0.088$ |
+
+The witness appears as soon as the first off-line zero ($\gamma = 85.7$) is included, then stabilizes. Adding more on-line zeros doesn't dilute the signature, and adding more off-line zeros doesn't significantly compound it (the first off-line pair is already enough).
+
+**Structural conclusion (3A-3D):** The Weil quadratic form with Gram-matrix eigenvalue analysis IS a valid wrong-approach detector for D-H, in stark contrast to small-n Li positivity (3B), which fails. The witness arises from a finite-dimensional spectral test in a basis of test functions, and its magnitude scales meaningfully with basis size while remaining stable under zero-count changes.
+
+## 3E
+
+Literature-and-analysis task connecting Li coefficients to the de Bruijn-Newman constant; deferred.
