@@ -337,6 +337,95 @@ For D-H, the analog Dirichlet sum uses $b_n^{DH}$ which oscillates in sign. Sign
 
 **For D-H itself**, $W_{DH}(b) > 0$ holds for the test functions we examined despite D-H violating RH. This is because the boxcar $\Phi_b$ family doesn't satisfy Weil's "additional conditions" $\int g \, dx/x = \int g \, dx = 0$, so the simple negativity criterion doesn't apply directly. The off-line D-H zeros DO contribute negatively to $W_{DH}$ in principle, but for the boxcar family they're dominated by the on-line contribution. (3C.2's Gram matrix construction was specifically designed to test the additional-condition subspace, which is where the off-line zeros' signature shows up — and they did.)
 
+## 3H: Weil-form duality for $\chi_3$ — refining the cancellation thesis ([e3h_chi3_prime_side.py](e3h_chi3_prime_side.py))
+
+**Status:** complete. **Third data point reveals the cancellation tightness is a feature of $\zeta$'s pole at $s = 1$, not of Euler products in general.**
+
+**Motivation.** 3G suggested "tight cancellation comes from the Euler product" based on the $\zeta$ vs D-H comparison. But $\chi_3$ ALSO has an Euler product — does it show tight cancellation like $\zeta$, or mild like D-H?
+
+**Method.** Same Fourier-form explicit formula as 3G, with:
+
+- Coefficients on prime powers only (Euler product): $a_n = \Lambda(n) \chi_3(n)$ where $\chi_3(p) = +1$ if $p \equiv 1 \pmod 3$, $-1$ if $p \equiv 2 \pmod 3$, $0$ if $p = 3$.
+- No boundary terms ($\chi_3$ has no pole at $s = 1$).
+- Gamma kernel: $\Psi_{\chi_3}(t) = \log(3/\pi) + \mathrm{Re}\, \psi(\tfrac{3}{4} + \tfrac{it}{2})$ (conductor 3, odd character, same digamma argument as D-H).
+
+$$W_{\chi_3}(b) = -2 \sum_{p^k < b^2} \tfrac{\log p \cdot \chi_3(p^k)}{p^{k/2}} (2 \log b - k \log p) + \tfrac{1}{2\pi} \int |\Phi_b|^2 \Psi_{\chi_3}(t)\, dt.$$
+
+**Findings ($T_{\max}^{\rm zero} = 200$, $b \in [6, 20]$):**
+
+| $b$ | $W_{\rm zero}^{\chi_3}$ | $W_{\rm prime}^{\chi_3}$ | $-$prime sum | gamma int | rel diff |
+|---|---|---|---|---|---|
+| 6.00 | $+0.290$ | $+0.299$ | $+3.10$ | $-2.80$ | $-2.8\%$ |
+| 8.11 | $+0.296$ | $+0.303$ | $+3.78$ | $-3.48$ | $-2.6\%$ |
+| 14.80 | $+0.213$ | $+0.220$ | $+5.06$ | $-4.84$ | $-3.0\%$ |
+| 20.00 | $+0.239$ | $+0.247$ | $+5.77$ | $-5.52$ | $-3.2\%$ |
+
+Zero/prime agreement to $<4\%$ across the range, better than D-H (10-30%) because $\chi_3$ has no off-line zeros to complicate truncation.
+
+**The three-L-function comparison:**
+
+| L-function | Pole | Coefficient sign | Largest comp ($b=20$) | $\lvert W \rvert$ | Cancellation ratio |
+|---|---|---|---|---|---|
+| $\zeta$ | at $s = 1$ | $\Lambda(n) \geq 0$ all positive | $144$ (boundary) | $0.1$ | $\sim 10^{-3}$ |
+| $\chi_3$ | none | $\Lambda(n) \chi_3(n) \in \{\pm 1, 0\}$ | $5.77$ (prime sum) | $0.24$ | $\sim 4 \times 10^{-2}$ |
+| D-H | none | $b_n^{DH}$ oscillating, no $\Lambda$ structure | $2.83$ (Dirichlet sum) | $0.31$ | $\sim 1.3 \times 10^{-1}$ |
+
+**Revised structural finding:** the tight cancellation is **specifically a feature of $\zeta$'s pole at $s = 1$**, not of Euler products in general. The mechanism:
+
+- $\zeta$'s pole forces a large positive boundary term $8(b^{1/2} - b^{-1/2})^2 \sim b$.
+- $\zeta$'s positive Λ(n) forces a large positive prime sum (no internal cancellation).
+- The cancellation between these two large terms is what's tight to $\sim 10^{-3}$.
+
+For all OTHER Selberg-class L-functions (Dirichlet, Hecke, automorphic), no pole means no boundary, and the prime sum has internal cancellation (from the character or coefficient signs). The "explicit formula gymnastics" required to prove Weil positivity for those L-functions is qualitatively easier — there's no pole-prime cancellation to control.
+
+**Implication: $\zeta$ is exceptionally hard among L-functions for the Weil-form route.** The analytic obstruction for $\zeta$'s RH is genuinely sharper than for other Selberg-class L-functions. This is consistent with the historical pattern: Dirichlet L-functions and modular L-functions have been heavily studied, with many partial RH results (positive proportion of zeros on line, etc.), while $\zeta$ itself sits at the apex of difficulty.
+
+**What this might mean for the path forward.** If $\chi_3$'s prime-side bound is achievable unconditionally (e.g., via Siegel-Walfisz-style estimates for primes in arithmetic progressions, which use less than full PNT-strength), then we might have an unconditional proof of $W_{\chi_3}(b) \geq 0$ for the relevant test function family. This wouldn't prove RH for $\zeta$, but it would establish RH for $\chi_3$. (Strong claim — needs verification.) Whether this can be lifted back to $\zeta$ via a deformation argument is open.
+
+## 3I: Is the χ_3 unconditional path actually open? ([e3i_chi3_unconditional.py](e3i_chi3_unconditional.py))
+
+**Status:** complete. **The path is blocked by the same circularity that blocks ζ.** Tested numerically and analytically.
+
+**Method.** Take the χ_3 prime sum at b ∈ [10, 100]. Apply the Siegel-Walfisz bound $|\psi(x, \chi_3)| \leq C x \exp(-c\sqrt{\log x})$ via partial summation against the boxcar test kernel $\phi(u) = (2\log b - \log u)/\sqrt u$. Compare the resulting upper bound on |prime_sum| to the |gamma_int| (which is what -prime_sum must exceed for W ≥ 0).
+
+**Findings:**
+
+| $b$ | actual prime_sum | $\lvert$gamma_int$\rvert$ | S-W bound on $\lvert$prime_sum$\rvert$ | ratio (bound/required) |
+|---|---|---|---|---|
+| 10 | $-4.14$ | $3.95$ | $130$ | $33\times$ |
+| 25 | $-6.27$ | $6.02$ | $326$ | $54\times$ |
+| 65 | $-8.39$ | $8.19$ | $772$ | $94\times$ |
+| 100 | $-9.37$ | $9.17$ | $1121$ | $122\times$ |
+
+**The ratio (bound / required) grows with $b$**, not shrinks. The unconditional Siegel-Walfisz bound becomes *relatively* worse as $b$ increases. By $b = 100$, the bound is 122× too loose to certify positivity.
+
+**Why partial summation loses the cancellation.** The prime sum decomposes as
+$$\text{prime}\_\text{sum} = \text{boundary at } u = 2 + \int_2^{b^2} \psi(u, \chi_3)\, \phi'(u)\, du$$
+where $\phi'(u) = -(2 + 2\log b - \log u)/(2u^{3/2})$. Bounding $|\psi(u, \chi_3)| \leq A(u)$ pointwise gives
+$$|\text{prime}\_\text{sum}| \leq |\text{boundary}| + \int_2^{b^2} A(u) \frac{2\log b}{u^{3/2}}\, du.$$
+But pointwise bounding $|\psi|$ **kills the oscillation** that makes the weighted prime sum small. The smooth kernel against $\psi$ has its own explicit formula bringing zeros back in. To get a tight bound on the *weighted* prime sum, you need to control the *zeros* of $L(s, \chi_3)$ — which is GRH for $\chi_3$, precisely what we're trying to prove.
+
+**The same obstruction at different scales.** For both $\zeta$ and $\chi_3$, the unconditional bound is loose by factor $\sim 30$–$100$ relative to the required margin:
+
+| L-function | Required margin | Available unconditional precision | Gap (factor) |
+|---|---|---|---|
+| $\zeta$ | $\sim 0.07\%$ (cancellation ratio) | $\sim 1/(\log x)^3 \approx 0.5\%$ | $\sim 7$ |
+| $\chi_3$ | $\sim 4\%$ | S-W via partial summation $\sim 5\text{-}10\times$ at $b \in [10, 100]$ | $\sim 30$–$100$ |
+
+Strangely, the ζ gap is *smaller* in factor terms, but the prime sum's growth and the available bounds also differ. Both are blocked.
+
+**Conclusion: the χ_3 path is BLOCKED by the same circularity as ζ.** The "mild cancellation for non-pole L-functions" observation doesn't translate to an achievable unconditional proof. The route through Weil positivity to RH (for any Selberg-class L-function, not just ζ) requires zero-distribution-strength input, which IS RH.
+
+**Honest revision of 3H's "implication for the path forward":** my earlier suggestion that χ_3 might be unconditionally accessible via Siegel-Walfisz was wrong. The cancellation tightness differs between ζ and χ_3 by ~100×, but the gap between unconditional bound and required margin is similar in factor — both are blocked.
+
+**What this leaves.** The Weil-form route to RH (for any L-function in the Selberg class) is structurally blocked by the same wall: you need GRH-strength control on prime sums, and unconditional Siegel-Walfisz / PNT are far too loose. The structural advantage of mild cancellation (no pole, no all-positive Λ) doesn't yield to current technology.
+
+This is the cleanest negative result of the session. It identifies WHERE the wall sits (at the gap between Siegel-Walfisz and GRH-strength bounds) and confirms the wall isn't an artifact of ζ specifically — it's a feature of *all* L-functions with non-trivial zeros.
+
+## 3E
+
+Literature-and-analysis task connecting Li coefficients to the de Bruijn-Newman constant; deferred.
+
 ## 3E
 
 Literature-and-analysis task connecting Li coefficients to the de Bruijn-Newman constant; deferred.

@@ -81,17 +81,25 @@ $$W(b) = \underbrace{8(b^{1/2} - b^{-1/2})^2}_{\text{boundary}} - 2\sum_{p^k < b
 
 **Why this is the analytic obstruction.** A proof of Weil positivity from the prime side requires bounding $\sum \Lambda(n) n^{-1/2} (2 \log b - \log n)_+$ from above by the boundary $+$ constants $+$ gamma integral, *without using zero locations*. The best unconditional PNT (Vinogradov-Korobov) gives $\psi(x) - x = O(x \exp(-c (\log x)^{3/5}))$, an error of order $x$. The cancellation we observed has margin $\sim 0.1\%$ of the component magnitudes. The PNT error is far too loose. Improving it to a power-saving error term ($\psi(x) - x = O(x^\theta)$ for $\theta < 1$) is *equivalent* (up to bookkeeping) to a zero-free region with that exponent. To break Weil positivity's analytic obstruction one needs a fundamentally new way to bound the prime sum — Bombieri's "variational approach" (2003), Connes' trace-formula construction, and Deninger's motivic cohomology are three ongoing programs aimed at this.
 
-**The D-H discipline test (3G, complete).** D-H has no Euler product, so the analog "prime sum" becomes a Dirichlet sum over all $n$ with coefficients $b_n^{DH}$ (not $\Lambda(n)$). The b_n^{DH} oscillate in sign (b_2 ≈ +0.2, b_3 ≈ -0.3, b_4 ≈ -1.4, b_6 ≈ +1.9, b_9 ≈ -2.3, ...), partially cancelling within the sum. Result: D-H components are **100× smaller** than $\zeta$'s, and the cancellation is **100× looser**:
+**Three L-functions tested (3G, 3H).** The cross-comparison sharpens the picture:
 
-| | $\zeta$ at $b = 20$ | D-H at $b = 20$ |
-|---|---|---|
-| Largest component | $144$ (boundary) | $2.83$ (Dirichlet sum) |
-| $\lvert W \rvert$ | $0.1$ | $0.3$ |
-| Cancellation $\lvert W \rvert / \lvert \text{largest} \rvert$ | $\sim 10^{-3}$ | $\sim 10^{-1}$ |
+| L-function | Pole at $s = 1$ | Coefficient sign | Largest comp ($b=20$) | $\lvert W \rvert$ | Cancellation ratio |
+|---|---|---|---|---|---|
+| $\zeta$ | YES | $\Lambda(n) \geq 0$ all positive | $144$ (boundary) | $0.1$ | $\sim 10^{-3}$ |
+| $\chi_3$ | no | $\Lambda(n) \chi_3(n) \in \{\pm 1, 0\}$ | $5.77$ (prime sum) | $0.24$ | $\sim 4 \times 10^{-2}$ |
+| D-H | no | $b_n^{DH}$ oscillating, no $\Lambda$ structure | $2.83$ (Dirichlet sum) | $0.31$ | $\sim 1.3 \times 10^{-1}$ |
 
-**The tight cancellation we observed for $\zeta$ is genuinely a feature of the Euler product**, not a generic feature of L-functions with FE. The mechanism is now identifiable: $\Lambda(n) \geq 0$ for all $n$ (from the Euler product) forces the prime sum to grow unboundedly with $b$, requiring the boundary $8(b^{1/2}-b^{-1/2})^2$ (which is non-zero precisely because $\zeta$ has a pole at $s=1$) to cancel it. For D-H, oscillating $b_n^{DH}$ self-cancel within the Dirichlet sum, no boundary needed.
+**The tight cancellation is specifically a feature of $\zeta$'s pole at $s = 1$, not of Euler products in general.** $\chi_3$ also has an Euler product but no pole and shows mild cancellation comparable to D-H, not tight cancellation like $\zeta$. The mechanism: $\zeta$'s pole forces a large positive boundary $\sim b^{1/2}$; $\Lambda(n) \geq 0$ forces a large positive prime sum; the tight cancellation between these two is what we observe at $\sim 10^{-3}$. For all other Selberg-class L-functions (which are entire), no pole means no boundary, and the prime sum has internal cancellation from the character.
 
-**Implication for the RH route.** Any analytic argument that proves $W(b) \geq 0$ for $\zeta$ unconditionally must handle the "all-positive $\Lambda(n)$ vs all-positive boundary" cancellation specifically. This is essentially a strong-form PNT statement. Decoupling the prime sum from the boundary (so that the prime sum's growth is independently controlled) is what would close the route, and that's exactly what zero-free region improvements try to do. The reason RH-route via Weil positivity is hard is now visible: you can't escape PNT-strength constraints on $\psi(x)$.
+**The χ_3 unconditional path tested (3I): blocked by the same wall.** I conjectured in 3H that χ_3's mild cancellation might be unconditionally achievable via Siegel-Walfisz-strength estimates. **3I verifies this is wrong.** The Siegel-Walfisz bound on $|\psi(x, \chi_3)|$, applied via partial summation against the boxcar test kernel, is too loose by factor 33× at $b = 10$, growing to 122× at $b = 100$. The ratio gets *worse* as $b$ grows.
+
+**Why:** partial summation kills the cancellation that makes the weighted prime sum small. To get a tight bound on the weighted prime sum, you'd need to control the *zeros* of $L(s, \chi_3)$ — which is GRH for $\chi_3$, what we're trying to prove. Same circularity as ζ.
+
+**The wall isn't ζ-specific; it's a feature of all Selberg-class L-functions.** Even with mild cancellation, the gap between current unconditional bounds and required margin is factor 30-100 for χ_3 (vs factor ~5-10 for ζ). Both are blocked by the same circularity: you need GRH-strength input to bound prime sums tightly enough.
+
+**Implication for the RH route.** Among Selberg-class L-functions, **ζ is exceptionally hard for the Weil-form route** at the level of cancellation tightness. But for ALL of them (ζ, Dirichlet L's, modular L's), the unconditional path through Weil positivity hits the same fundamental wall — getting tighter control on $\psi(x, \chi)$ unconditionally than current Siegel-Walfisz-strength bounds. This is consistent with the historical pattern: many partial results (positive proportion of zeros on line, Levinson-Conrey for ζ and χ_3 alike), but no path through full Weil positivity for any non-trivial L-function. The Weil-form route is structurally blocked across the Selberg class.
+
+**The path forward must avoid the partial-summation step entirely.** Either work directly with the L-function (Connes' adèle class space, Deninger's cohomology) without going through the prime sum, OR find a positivity certificate that doesn't require the prime sum to be bounded *tightly* (sum-of-squares decomposition for the Weil form, as in Bombieri's variational approach).
 
 ---
 
