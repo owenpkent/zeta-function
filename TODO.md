@@ -44,6 +44,7 @@
 - [x] Arch 2A R2.5: Λ-blueprint hybrid proposal (see experiments/arithmetic_geometric/2A_R2_5_lambda_blueprints.md)
 - [x] Arch 2A R3: Connes-Consani K1 analysis (see experiments/arithmetic_geometric/2A_R3_connes_positivity.md)
 - [x] Arch 2A R3.5: no-shortcut theorem for NCG approaches (see experiments/arithmetic_geometric/2A_R3_5_K1_universality.md)
+- [x] Arch 2A R3.6: deep dive on Connes-Consani arithmetic site / hyperrings / characteristic-one geometry (see experiments/arithmetic_geometric/2A_R3_6_arithmetic_site.md) — all formulations probably fail K1; Connes-Consani (xi)-(xiii) sharpened from 🟡 to ❌
 
 ### Pre-existing experiments
 
@@ -68,6 +69,7 @@
 - [x] Arch 2A R3: Connes-Consani K1 analysis (see experiments/arithmetic_geometric/2A_R3_connes_positivity.md). Three positivity conjectures analyzed; C1 and C2 are RH-equivalent (K1 fail); C3 is K1-uncertain. Connes / Connes-Consani (xi)-(xiii) moves from ❌ to 🟡 in the scorecard.
 - [ ] Arch 2A R4: explore hybrid candidates (Borger Frobenius + Connes trace formula)
 - [ ] Arch 2A R5: investigate prismatic cohomology (Bhatt-Morrow-Scholze 2018-) as the cohomology for Spec(W(ℤ)) in Borger's framework — could unlock constraints (iv)-(vii) simultaneously
+- [ ] Arch 2A R3.6.3 (surfaced by R3.6): investigate whether Connes-Consani machinery (arithmetic site, hyperrings, characteristic-one geometry) can serve as INFRASTRUCTURE for the geometric route — even though its positivity formulations fail K1, the topos-theoretic / sheaf-theoretic tools might support intersection theory on a constructed surface
 - [ ] Arch 2E (numerical probe): Adams-operation spectrum vs zeta zeros — does Borger's psi_p have zeta-zero-like spectrum at small p?
 
 ## Open — docs and visualizations
