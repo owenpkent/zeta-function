@@ -70,6 +70,29 @@ None of these were probed by 4D / 4D.2. The "single-coefficient at uniform degre
 
 Arch 2B verified the Weil RH for the elliptic curve $E: y^2 = x^3 + x + 1$ over $\mathbb{F}_5$ exactly: Frobenius eigenvalues $\alpha = -3/2 \pm i\sqrt{11}/2$, $|\alpha|^2 = 5$, and $|C(\mathbb{F}_{5^k})|$ matches the Weil formula at $k = 1, \ldots, 6$ by brute-force point counting. This is not "evidence for RH"; it is RH for that curve, proved. The Weil/Deligne machinery works because curves over $\mathbb{F}_q$ have a cohomology with Poincaré duality and a Hodge index theorem (positivity). The open question is whether an analogous structure exists for $\mathrm{Spec}(\mathbb{Z})$ (Deninger, $\mathbb{F}_1$ programs). 2B is the only architecture in our set where the proof template actually closes; the other three architectures' obstructions all reduce, in different ways, to "we don't have the cohomology over $\mathbb{Z}$ that we have over $\mathbb{F}_q$."
 
+### 7. The Weil-form duality is computable, and the cancellation structure on the prime side reveals where the analytic obstruction lives.
+
+For $\zeta$, Weil positivity $W(b) = \sum_\rho \Phi_b(\rho)^2 \geq 0$ can be computed from either the zero side (the sum over $\rho$) or from the prime side via Bombieri's explicit formula:
+$$W(b) = \underbrace{8(b^{1/2} - b^{-1/2})^2}_{\text{boundary}} - 2\sum_{p^k < b^2} \tfrac{\log p}{p^{k/2}}(2\log b - k\log p) - (\log 4\pi + \gamma_E)\cdot 2\log b - \int_1^\infty \tfrac{f(x) + f(1/x)/x - 2f(1)/x}{x - 1/x}dx.$$
+
+3F verifies the two sides agree to $<2\%$ at $T_{\max} = 1000$, $b \geq 14$, with the residual error matching the expected $O((\log T)/(\pi T))$ truncation. The framework is correctly implemented.
+
+**The cancellation structure.** At $b = 20$, the four prime-side components are $+144, -120, -19, -5$, summing to $\sim 0.1$. The prime sum cancels 83% of the boundary; the constant and gamma integral together cancel most of the remainder. Each component is $O(10^2)$ relative to $W$ of $O(10^{-1})$ — three orders of magnitude of cancellation.
+
+**Why this is the analytic obstruction.** A proof of Weil positivity from the prime side requires bounding $\sum \Lambda(n) n^{-1/2} (2 \log b - \log n)_+$ from above by the boundary $+$ constants $+$ gamma integral, *without using zero locations*. The best unconditional PNT (Vinogradov-Korobov) gives $\psi(x) - x = O(x \exp(-c (\log x)^{3/5}))$, an error of order $x$. The cancellation we observed has margin $\sim 0.1\%$ of the component magnitudes. The PNT error is far too loose. Improving it to a power-saving error term ($\psi(x) - x = O(x^\theta)$ for $\theta < 1$) is *equivalent* (up to bookkeeping) to a zero-free region with that exponent. To break Weil positivity's analytic obstruction one needs a fundamentally new way to bound the prime sum — Bombieri's "variational approach" (2003), Connes' trace-formula construction, and Deninger's motivic cohomology are three ongoing programs aimed at this.
+
+**The D-H discipline test (3G, complete).** D-H has no Euler product, so the analog "prime sum" becomes a Dirichlet sum over all $n$ with coefficients $b_n^{DH}$ (not $\Lambda(n)$). The b_n^{DH} oscillate in sign (b_2 ≈ +0.2, b_3 ≈ -0.3, b_4 ≈ -1.4, b_6 ≈ +1.9, b_9 ≈ -2.3, ...), partially cancelling within the sum. Result: D-H components are **100× smaller** than $\zeta$'s, and the cancellation is **100× looser**:
+
+| | $\zeta$ at $b = 20$ | D-H at $b = 20$ |
+|---|---|---|
+| Largest component | $144$ (boundary) | $2.83$ (Dirichlet sum) |
+| $\lvert W \rvert$ | $0.1$ | $0.3$ |
+| Cancellation $\lvert W \rvert / \lvert \text{largest} \rvert$ | $\sim 10^{-3}$ | $\sim 10^{-1}$ |
+
+**The tight cancellation we observed for $\zeta$ is genuinely a feature of the Euler product**, not a generic feature of L-functions with FE. The mechanism is now identifiable: $\Lambda(n) \geq 0$ for all $n$ (from the Euler product) forces the prime sum to grow unboundedly with $b$, requiring the boundary $8(b^{1/2}-b^{-1/2})^2$ (which is non-zero precisely because $\zeta$ has a pole at $s=1$) to cancel it. For D-H, oscillating $b_n^{DH}$ self-cancel within the Dirichlet sum, no boundary needed.
+
+**Implication for the RH route.** Any analytic argument that proves $W(b) \geq 0$ for $\zeta$ unconditionally must handle the "all-positive $\Lambda(n)$ vs all-positive boundary" cancellation specifically. This is essentially a strong-form PNT statement. Decoupling the prime sum from the boundary (so that the prime sum's growth is independently controlled) is what would close the route, and that's exactly what zero-free region improvements try to do. The reason RH-route via Weil positivity is hard is now visible: you can't escape PNT-strength constraints on $\psi(x)$.
+
 ---
 
 ## Per-architecture summary of what is open
