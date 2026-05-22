@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import mpmath as mp
 
-from experiments._shared import zeta_L, DavenportHeilbronn
+from experiments._shared import zeta_L, DavenportHeilbronn, chi3_L, chi4_L
 
 
 def check(label, ok, info=""):
@@ -113,6 +113,61 @@ def test_dh_offline_zero():
     return ok_any and ok_loc
 
 
+def test_dirichlet_known_values():
+    print("Test 6: Dirichlet L-functions at known special values")
+    mp.mp.dps = 30
+    # L(2, chi_4) = Catalan's constant G
+    val4_2 = chi4_L.evaluate(mp.mpc(2)).real
+    ok_g = check(
+        "L(2, chi_4) = Catalan",
+        float(abs(val4_2 - mp.catalan)) < 1e-25,
+        f"got {val4_2}, expected {mp.catalan}",
+    )
+    # L(3, chi_4) = pi^3 / 32
+    val4_3 = chi4_L.evaluate(mp.mpc(3)).real
+    expected = mp.pi ** 3 / 32
+    ok_pi3 = check(
+        "L(3, chi_4) = pi^3/32",
+        float(abs(val4_3 - expected)) < 1e-25,
+        f"got {val4_3}, expected {expected}",
+    )
+    return ok_g and ok_pi3
+
+
+def test_dirichlet_functional_equation():
+    print("Test 7: Dirichlet L-functions satisfy functional equation with W = +1")
+    mp.mp.dps = 30
+    ok_all = True
+    for L in (chi3_L, chi4_L):
+        res_p, res_m = L.functional_equation_residual(mp.mpc("0.3", "5.0"))
+        ok = float(abs(res_p)) < 1e-25 and float(abs(res_m)) > 1e-3
+        ok_all = ok_all and check(
+            f"{L.name}: |res(W=+1)| < 1e-25 << |res(W=-1)|",
+            ok,
+            f"W=+1: {float(abs(res_p)):.2e}, W=-1: {float(abs(res_m)):.2e}",
+        )
+    return ok_all
+
+
+def test_dirichlet_first_zeros():
+    print("Test 8: Dirichlet L-functions first zeros match LMFDB")
+    mp.mp.dps = 30
+    # LMFDB: chi_3 first zeros at gamma ~ 8.03974, 11.24921, 15.70462
+    zs = chi3_L.zeros(T_max=20, prec=30, scan_step=0.25)
+    expected_chi3 = [8.039737165225, 11.249206234526, 15.704619356106]
+    ok_all = True
+    for k, exp in enumerate(expected_chi3):
+        if k >= len(zs):
+            ok_all = ok_all and check(f"chi_3 zero #{k+1}", False, "not found")
+            continue
+        diff = float(abs(zs[k].imag - exp))
+        ok = diff < 1e-6
+        ok_all = ok_all and check(
+            f"chi_3 zero #{k+1} = {exp:.10f}", ok, f"got {float(zs[k].imag):.10f}, diff {diff:.2e}"
+        )
+    return ok_all
+
+
 def main():
     results = [
         test_zeta_evaluation(),
@@ -120,6 +175,9 @@ def main():
         test_dh_dirichlet(),
         test_dh_functional_equation(),
         test_dh_offline_zero(),
+        test_dirichlet_known_values(),
+        test_dirichlet_functional_equation(),
+        test_dirichlet_first_zeros(),
     ]
     print()
     n_pass = sum(results)

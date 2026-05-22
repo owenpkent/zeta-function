@@ -8,10 +8,14 @@ the Davenport-Heilbronn control with identical code paths.
 from .lfunction import LFunction
 from .zeta import ZetaLFunction, zeta as zeta_L
 from .davenport_heilbronn import DavenportHeilbronn
+from .dirichlet_l import DirichletL, chi3_L, chi4_L
 
 __all__ = [
     "LFunction",
     "ZetaLFunction",
     "zeta_L",
     "DavenportHeilbronn",
+    "DirichletL",
+    "chi3_L",
+    "chi4_L",
 ]
