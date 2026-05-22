@@ -88,6 +88,8 @@ My reading of the recent Connes-Consani papers (admittedly partial): they make s
 
 **Verdict**: C3 is currently **🟡** with respect to K1. Distinguishing "genuinely independent" from "RH-equivalent in disguise" requires more technical work than I can complete here.
 
+**Update from R3.5**: a "no-shortcut theorem" for NCG frameworks ([2A_R3_5_K1_universality.md](2A_R3_5_K1_universality.md)) suggests C3 likely also fails K1 (sharpening this 🟡 verdict toward ❌). The argument: any trace-formula NCG framework with a standard spectral identification has positivity ⟺ RH. C3 fits this framework if its precise formulation involves a trace identity and standard spectrum, which most Connes-Consani statements do. So C3's K1 status, while currently labeled 🟡 for caution, is probably ❌ under the R3.5 analysis.
+
 ### 2.4 Summary K1 table for Connes-Consani
 
 | Conjecture | K1 status | Notes |

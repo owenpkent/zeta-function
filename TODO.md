@@ -43,6 +43,7 @@
 - [x] Arch 2A R2: fiber product computation in Borger and Lorscheid (see experiments/arithmetic_geometric/2A_R2_fiber_product.md + companion dossiers 2A_borger_dossier.md, 2A_lorscheid_dossier.md)
 - [x] Arch 2A R2.5: Λ-blueprint hybrid proposal (see experiments/arithmetic_geometric/2A_R2_5_lambda_blueprints.md)
 - [x] Arch 2A R3: Connes-Consani K1 analysis (see experiments/arithmetic_geometric/2A_R3_connes_positivity.md)
+- [x] Arch 2A R3.5: no-shortcut theorem for NCG approaches (see experiments/arithmetic_geometric/2A_R3_5_K1_universality.md)
 
 ### Pre-existing experiments
 
