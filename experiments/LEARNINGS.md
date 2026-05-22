@@ -20,7 +20,18 @@ This closes LEARNINGS open question #5. The detector is robust at large K, and t
 
 **K-doubling deepening rate.** The absolute min eig grows from $-0.37$ at $K = 100$ to $-4.04$ at $K = 1000$: factor $10.9 \approx K^{1/2}$ in absolute terms. Per K-doubling step: $\{2.06, 1.57, 1.68, 1.50, 1.33\}$. This is consistent with $|\lambda_{\min}| \sim K \cdot |\text{rel min}|$ (since $\lambda_{\max}$ grows linearly with $K$ and rel min is constant).
 
-**Architectural implication.** The detector's signal structure is finite-dimensional and combinatorial: one negative eigenvalue per off-line pair, with fixed signal strength. This raises a natural next question: if one ran D-H at higher $T_{\max}$ (revealing more off-line zero pairs), would the negative-eigenvalue count grow accordingly? The framework predicts YES, with the count tracking the number of off-line pairs below $T_{\max}$.
+**Architectural implication.** The detector's signal structure is finite-dimensional and combinatorial: one negative eigenvalue per off-line pair, with fixed signal strength. This raises a natural next question: if one ran D-H at higher $T_{\max}$ (revealing more off-line zero pairs), would the negative-eigenvalue count grow accordingly?
+
+**3D.4 confirms YES** (T_max scaling). At $T_{\max} = 200$ D-H has 4 distinct off-line $\gamma$'s in UHP (at heights $\sim 85.7, 114.2, 166.5, 176.7$); at $T_{\max} = 300$ a 5th off-line pair appears at $\gamma \approx 240.4$. The negative eigenvalue count of $M^{DH}$ tracks exactly:
+
+| $T_{\max}$ | # distinct off-line $\gamma$'s | $n_{\rm neg}$ (measured) | rel min eig |
+|---|---|---|---|
+| $200$ | $4$ | $4$ (MATCH) | $-2.599 \times 10^{-2}$ |
+| $300$ | $5$ | $5$ (MATCH) | $-2.599 \times 10^{-2}$ |
+
+The structural prediction "$n_{\rm neg} = $ # off-line $\gamma$'s in UHP up to $T_{\max}$" holds. Additionally, the relative min eigenvalue is identical at both $T_{\max}$ values (to 4 sig figs), confirming the signal strength is dimension-independent across both $K$ (3D.3) and $T_{\max}$ (3D.4). Selberg-class L-functions ($\zeta, \chi_3, \chi_4$) stay PSD to floating-point noise at both $T_{\max}$ tested. This closes the architectural picture of the wrong-approach detector: **the Gram-matrix detector is structurally counting off-line zero pairs**, with fixed per-pair signal strength of $\sim 2.6\%$ of $\lambda_{\max}$.
+
+Extension to $T_{\max} > 300$ is bottlenecked by the D-H zero finder (uncached zeros at $T_{\max} = 500$ exceeded 10 min runtime in my testing) and was not pursued; the prediction is expected to hold trivially given the structural picture.
 
 ### 1. Level 4 (positivity) is the only level that's been shown to actually discriminate $\zeta$ from D-H computationally.
 
