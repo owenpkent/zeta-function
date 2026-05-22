@@ -242,26 +242,32 @@ This closes LEARNINGS open question #5: the detector remains a clean test at $K 
 
 **Method.** For each $T_{\max}$: (a) count distinct off-line $\gamma$'s (rounded to 3 decimals to merge near-equal); (b) compute the Gram matrix at $K = 300$ basis vectors; (c) count negative eigenvalues below threshold $10^{-10} \lambda_{\max}$; (d) verify prediction match.
 
-**Findings ($K = 300$, $T_{\max} \in \{200, 300\}$):**
+**Findings ($K = 300$, $T_{\max} \in \{200, 300, 350\}$):**
 
 | L-function | $T_{\max}$ | total zeros | off-line $\gamma$'s (UHP) | $n_{\rm neg}$ | rel min eig | verdict |
 |---|---|---|---|---|---|---|
 | $\zeta$ | $200$ | $79$ | $0$ | $0$ | $-9.6 \times 10^{-17}$ | PSD |
 | $\zeta$ | $300$ | $138$ | $0$ | $0$ | $-1.4 \times 10^{-16}$ | PSD |
+| $\zeta$ | $350$ | $169$ | $0$ | $0$ | $-8.3 \times 10^{-17}$ | PSD |
 | $\chi_3$ | $200$ | $114$ | $0$ | $0$ | $-1.2 \times 10^{-16}$ | PSD |
 | $\chi_3$ | $300$ | $187$ | $0$ | $0$ | $-9.3 \times 10^{-17}$ | PSD |
 | $\chi_4$ | $200$ | $122$ | $0$ | $0$ | $-1.6 \times 10^{-16}$ | PSD |
 | $\chi_4$ | $300$ | $203$ | $0$ | $0$ | $-5.6 \times 10^{-17}$ | PSD |
 | **D-H** | **$200$** | **$69$** | **$4$** | **$4$** (MATCH) | **$-2.599 \times 10^{-2}$** | indefinite |
 | **D-H** | **$300$** | **$107$** | **$5$** | **$5$** (MATCH) | **$-2.599 \times 10^{-2}$** | indefinite |
+| **D-H** | **$350$** | **$129$** | **$7$** | **$7$** (MATCH) | **$-2.599 \times 10^{-2}$** | indefinite |
 
-**The new off-line $\gamma$ at $T_{\max} = 300$:** $\gamma \approx 240.40$ (the fifth D-H off-line zero pair). Adding this pair raises the neg count from 4 → 5, exactly tracking the prediction.
+**New off-line $\gamma$ values revealed by increasing $T_{\max}$:**
+- $T_{\max} = 200 \to 300$: adds $\gamma \approx 240.4$ (1 new pair, total 5)
+- $T_{\max} = 300 \to 350$: adds $\gamma \approx 320.9$ and $\gamma \approx 331.0$ (2 new pairs, total 7)
+
+**Non-trivial test at $T_{\max} = 350$**: the increment is +2 from $T_{\max} = 300$, so the prediction has to hit exactly $n_{\rm neg} = 7$ (not just "$\geq 6$" or "monotonically larger"). It does. This is the strongest validation of the prediction so far.
 
 **Two findings:**
 
-**1. Prediction confirmed: $n_{\rm neg}(M^{DH}) = $ # off-line $\gamma$'s in UHP.** Going from $T_{\max} = 200$ (4 off-line $\gamma$'s) to $T_{\max} = 300$ (5 off-line $\gamma$'s, the new one near $\gamma = 240.4$), the detector's negative-eigenvalue count tracks exactly. The architectural picture is validated: **the Gram-matrix detector is structurally counting off-line zero pairs via its eigenvalue spectrum**.
+**1. Prediction confirmed: $n_{\rm neg}(M^{DH}) = $ # off-line $\gamma$'s in UHP.** Three data points: $T_{\max} = 200$ (4 → 4), $T_{\max} = 300$ (5 → 5, single increment), $T_{\max} = 350$ (7 → 7, **double increment**). The double-increment test at $T_{\max} = 350$ is non-trivial: the prediction must hit exactly $n_{\rm neg} = 7$, not just "monotonically larger than 5." It does. **The architectural picture is validated: the Gram-matrix detector is structurally counting off-line zero pairs via its eigenvalue spectrum**, with one negative eigenvalue per pair.
 
-**2. Relative min eigenvalue is $T_{\max}$-invariant.** At both $T_{\max} = 200$ and $T_{\max} = 300$: rel min = $-2.599 \times 10^{-2}$, identical to 4 significant digits. The signal strength is dimension-independent and now also $T_{\max}$-independent. The $-2.62\%$ asymptotic constant from 3D.3 (at $T_{\max} = 200$ across $K \in [300, 1000]$) extends to $T_{\max} = 300$ as well.
+**2. Relative min eigenvalue is $T_{\max}$-invariant.** Across $T_{\max} \in \{200, 300, 350\}$: rel min = $-2.599 \times 10^{-2}$, identical to 4 significant digits at all three values. The signal strength is dimension-independent (3D.3) AND $T_{\max}$-independent (3D.4). The $-2.6\%$ asymptotic constant is a universal feature of D-H, not specific to any $K$ or $T_{\max}$.
 
 **Selberg-class consistency.** $\zeta$, $\chi_3$, $\chi_4$ stay PSD to floating-point noise ($\sim 10^{-16}$) across both $T_{\max}$ values. No false positives.
 

@@ -219,7 +219,7 @@ def run(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--T-maxs", type=float, nargs="+",
-                        default=[200.0, 300.0])
+                        default=[200.0, 300.0, 350.0])
     parser.add_argument("--K", type=int, default=300)
     parser.add_argument("--prec", type=int, default=30)
     args = parser.parse_args()
