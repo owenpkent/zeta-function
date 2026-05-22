@@ -40,6 +40,7 @@
 - [x] Arch 2B: Weil RH for E: y^2 = x^3 + x + 1 over F_5 verified end-to-end
 - [x] Arch 2A: Weil-proof diff table + 17-constraint spec + candidate evaluation framework (see experiments/arithmetic_geometric/2A_weil_proof_diff.md and 2A_candidate_evaluation.md)
 - [x] Arch 2A R1: D-H exclusion sharpening for the six scored candidates (see experiments/arithmetic_geometric/2A_R1_DH_exclusion.md)
+- [x] Arch 2A R2: fiber product computation in Borger and Lorscheid (see experiments/arithmetic_geometric/2A_R2_fiber_product.md)
 
 ### Pre-existing experiments
 
@@ -59,7 +60,7 @@
 - [ ] Arch 2C: survey state of F_1 / Arakelov-cohomology programs as of 2025 (use the scorecard structure from 2A_candidate_evaluation.md)
 - [ ] Arch 2D: identify the smallest open conjecture in Deninger's program worth targeting
 - [x] Arch 2A R1: sharpen D-H exclusion (constraint xvii) for each of the six scored candidates (see experiments/arithmetic_geometric/2A_R1_DH_exclusion.md — all six pass K2 by construction; K2 safety conditional on Selberg conjecture)
-- [ ] Arch 2A R2: explicitly compute Spec(Z) x_F1 Spec(Z) in Borger / Lorscheid frameworks (constraint ii)
+- [x] Arch 2A R2: compute Spec(Z) x_F1 Spec(Z) in Borger / Lorscheid (see experiments/arithmetic_geometric/2A_R2_fiber_product.md — Borger: Spec(W(Z)) via big Witt ring; Lorscheid: blueprint (Z × Z, doubled relations); both 🟡 on (ii), intersection theory still open)
 - [ ] Arch 2A R3: identify whether Connes-Consani positivity conjecture fails kill criterion K1 (RH-equivalence)
 - [ ] Arch 2A R4: explore hybrid candidates (Borger Frobenius + Connes trace formula)
 - [ ] Arch 2E (numerical probe): Adams-operation spectrum vs zeta zeros — does Borger's psi_p have zeta-zero-like spectrum at small p?

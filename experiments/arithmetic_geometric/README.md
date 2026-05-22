@@ -73,7 +73,7 @@ Operationalizes the 17-constraint list from `2A_weil_proof_diff.md §5` into a w
 
 **Next steps** (per §V of the evaluation doc):
 - ~~**R1**: Sharpen the D-H exclusion check (xvii) for each candidate.~~ ✅ **Complete** ([2A_R1_DH_exclusion.md](2A_R1_DH_exclusion.md)). All six candidates pass kill criterion K2: D-H is excluded by construction (linear combinations are not geometric operations). K2 safety is conditional on the Selberg conjecture.
-- **R2**: Explicitly compute the fiber product $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ in Borger / Lorscheid frameworks (constraint ii)
+- ~~**R2**: Explicitly compute the fiber product $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ in Borger / Lorscheid frameworks.~~ ✅ **Complete** ([2A_R2_fiber_product.md](2A_R2_fiber_product.md)). Borger gives Spec(W(ℤ)) via the big Witt ring; Lorscheid gives the blueprint (ℤ × ℤ, doubled relations). Both produce non-trivial surface-like objects (constraint (ii) → 🟡 for both, sharpened from ⏳). Neither has developed intersection theory on the resulting surface — the deeper constraints (vi, xi) remain open.
 - **R3**: Identify whether Connes-Consani's positivity conjecture is RH-equivalent (kill criterion K1) or has an independent constructive proof candidate
 - **R4**: Explore hybrid candidates — the "Borger Frobenius + Connes trace formula" hybrid is the most promising on paper
 
