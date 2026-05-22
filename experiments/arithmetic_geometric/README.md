@@ -71,9 +71,9 @@ Operationalizes the 17-constraint list from `2A_weil_proof_diff.md §5` into a w
 
 **Key finding from current scoring**: no existing candidate has even a partial ✅ on (xi-xiii) — the Hodge index positivity provable without RH input. This is universally open across all six candidates and is the central construction problem.
 
-**Suggested next steps** (per §V of the evaluation doc):
-- **R1**: Sharpen the D-H exclusion check (xvii) for each candidate (mostly bookkeeping; lowest-hanging fruit)
-- **R2**: Explicitly compute the fiber product $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ in Borger / Lorscheid frameworks
+**Next steps** (per §V of the evaluation doc):
+- ~~**R1**: Sharpen the D-H exclusion check (xvii) for each candidate.~~ ✅ **Complete** ([2A_R1_DH_exclusion.md](2A_R1_DH_exclusion.md)). All six candidates pass kill criterion K2: D-H is excluded by construction (linear combinations are not geometric operations). K2 safety is conditional on the Selberg conjecture.
+- **R2**: Explicitly compute the fiber product $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ in Borger / Lorscheid frameworks (constraint ii)
 - **R3**: Identify whether Connes-Consani's positivity conjecture is RH-equivalent (kill criterion K1) or has an independent constructive proof candidate
 - **R4**: Explore hybrid candidates — the "Borger Frobenius + Connes trace formula" hybrid is the most promising on paper
 

@@ -332,14 +332,16 @@ Below, the major candidates as of $\sim$2025. Scoring is a working draft and ref
 
 | Candidate | (i)-(iii) Base | (iv)-(vii) Cohomology | (viii)-(x) Frobenius | (xi)-(xiii) Positivity | (xiv)-(xvii) Tests |
 |---|---|---|---|---|---|
-| Deitmar | ✅ ✅ ✅ | ❌ — — — | — — — | — — — | ✅ ❌ ❌ ⏳ |
-| Lorscheid | ✅ 🟡 ✅ | 🟡 ⏳ ⏳ ⏳ | ⏳ ⏳ ⏳ | ❌ ❌ ❌ | ✅ ⏳ ⏳ ⏳ |
-| Borger | ✅ ⏳ ✅ | 🟡 ⏳ ⏳ ⏳ | 🟡 ⏳ 🟡 | ⏳ ⏳ ⏳ | ✅ ⏳ ⏳ ⏳ |
-| Connes | 🟡 ❌ 🟡 | ✅ 🟡 🟡 ❌ | ✅ ✅ ✅ | ❌ ❌ ❌ | 🟡 ✅ 🟡 🟡 |
-| Deninger | 🟡 ⏳ ✅ | 🟡 🟡 ⏳ ⏳ | 🟡 🟡 🟡 | ⏳ ⏳ ⏳ | ✅ ⏳ ⏳ ⏳ |
-| Connes-Consani | 🟡 🟡 🟡 | 🟡 ⏳ ⏳ ⏳ | ✅ ✅ ✅ | ❌ ❌ ❌ | 🟡 🟡 🟡 ⏳ |
+| Deitmar | ✅ ✅ ✅ | ❌ — — — | — — — | — — — | ✅ ❌ ❌ ✅ |
+| Lorscheid | ✅ 🟡 ✅ | 🟡 ⏳ ⏳ ⏳ | ⏳ ⏳ ⏳ | ❌ ❌ ❌ | ✅ ⏳ ⏳ ✅ |
+| Borger | ✅ ⏳ ✅ | 🟡 ⏳ ⏳ ⏳ | 🟡 ⏳ 🟡 | ⏳ ⏳ ⏳ | ✅ ⏳ ⏳ ✅ |
+| Connes | 🟡 ❌ 🟡 | ✅ 🟡 🟡 ❌ | ✅ ✅ ✅ | ❌ ❌ ❌ | 🟡 ✅ 🟡 ✅ |
+| Deninger | 🟡 ⏳ ✅ | 🟡 🟡 ⏳ ⏳ | 🟡 🟡 🟡 | ⏳ ⏳ ⏳ | ✅ ⏳ ⏳ ✅ |
+| Connes-Consani | 🟡 🟡 🟡 | 🟡 ⏳ ⏳ ⏳ | ✅ ✅ ✅ | ❌ ❌ ❌ | 🟡 🟡 🟡 ✅ |
 
 No candidate has even a partial ✅ on (xi-xiii) — the Hodge index positivity. This is the universally open constraint.
+
+**The (xvii) column** was sharpened by R1 (see [2A_R1_DH_exclusion.md](2A_R1_DH_exclusion.md)): all six candidates now ✅ on D-H exclusion, with the underlying reason being that D-H's defining feature (linear combination → no Euler product) is not constructible within any geometric framework. Linear combinations are analytic operations on Dirichlet series, not geometric operations on schemes / Λ-rings / foliated spaces / adelic spaces. The candidates pass K2 by construction.
 
 ## IV. Methodology notes
 
@@ -418,7 +420,7 @@ Putting the scorecard together, the open gaps are:
 
 The natural next-step research directions, ranked by tractability:
 
-- **R1**: Sharpen (xvii) for each candidate. For each, write down what L-functions the framework predicts RH for, and verify D-H is excluded. This is mostly bookkeeping and should be doable in moderate effort. **Lowest-hanging fruit on the evaluation side.**
+- ~~**R1**: Sharpen (xvii) for each candidate.~~ **Complete** ([2A_R1_DH_exclusion.md](2A_R1_DH_exclusion.md)). All six candidates pass K2 (D-H exclusion). The structural reason: D-H's defining feature (linear combination of $L(s, \chi)$'s without Euler product) is not constructible within any geometric framework. Linear combination is an analytic operation on Dirichlet series, not a geometric operation on the underlying objects. The candidates are K2-safe under the Selberg conjecture; if Selberg fails (i.e., some Euler-product L-function has off-line zeros), K2 becomes a live concern, but no such counterexample is known.
 - **R2**: Compute (ii) explicitly for one of the $\mathbb{F}_1$ candidates. Specifically, compute $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ in Borger / Lorscheid frameworks, identify its dimension, and check whether it has intersection-theoretic structure.
 - **R3**: For Connes-Consani, identify whether the noncommutative positivity conjecture is K1 (RH-equivalent) or whether it has an independent constructive proof candidate. This is the hardest but most important.
 - **R4**: Explore hybrid candidates (per IV.2). The "Borger Frobenius + Connes trace formula" hybrid is the most promising on paper.
