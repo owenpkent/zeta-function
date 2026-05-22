@@ -42,6 +42,7 @@
 - [x] Arch 2A R1: D-H exclusion sharpening for the six scored candidates (see experiments/arithmetic_geometric/2A_R1_DH_exclusion.md)
 - [x] Arch 2A R2: fiber product computation in Borger and Lorscheid (see experiments/arithmetic_geometric/2A_R2_fiber_product.md + companion dossiers 2A_borger_dossier.md, 2A_lorscheid_dossier.md)
 - [x] Arch 2A R2.5: Λ-blueprint hybrid proposal (see experiments/arithmetic_geometric/2A_R2_5_lambda_blueprints.md)
+- [x] Arch 2A R3: Connes-Consani K1 analysis (see experiments/arithmetic_geometric/2A_R3_connes_positivity.md)
 
 ### Pre-existing experiments
 
@@ -63,7 +64,7 @@
 - [x] Arch 2A R1: sharpen D-H exclusion (constraint xvii) for each of the six scored candidates (see experiments/arithmetic_geometric/2A_R1_DH_exclusion.md — all six pass K2 by construction; K2 safety conditional on Selberg conjecture)
 - [x] Arch 2A R2: compute Spec(Z) x_F1 Spec(Z) in Borger / Lorscheid (see experiments/arithmetic_geometric/2A_R2_fiber_product.md — Borger: Spec(W(Z)) via big Witt ring; Lorscheid: blueprint (Z × Z, doubled relations); both 🟡 on (ii), intersection theory still open)
 - [x] Arch 2A R2.5: sketch the Λ-blueprint hybrid framework as a research proposal (see experiments/arithmetic_geometric/2A_R2_5_lambda_blueprints.md). Predicted scorecard 8 ✅ / 4 🟡 / 5 ⏳ if developed. Still needs rigorous definition, categorical verification, fiber product computation — thesis-level project.
-- [ ] Arch 2A R3: identify whether Connes-Consani positivity conjecture fails kill criterion K1 (RH-equivalence)
+- [x] Arch 2A R3: Connes-Consani K1 analysis (see experiments/arithmetic_geometric/2A_R3_connes_positivity.md). Three positivity conjectures analyzed; C1 and C2 are RH-equivalent (K1 fail); C3 is K1-uncertain. Connes / Connes-Consani (xi)-(xiii) moves from ❌ to 🟡 in the scorecard.
 - [ ] Arch 2A R4: explore hybrid candidates (Borger Frobenius + Connes trace formula)
 - [ ] Arch 2A R5: investigate prismatic cohomology (Bhatt-Morrow-Scholze 2018-) as the cohomology for Spec(W(ℤ)) in Borger's framework — could unlock constraints (iv)-(vii) simultaneously
 - [ ] Arch 2E (numerical probe): Adams-operation spectrum vs zeta zeros — does Borger's psi_p have zeta-zero-like spectrum at small p?
