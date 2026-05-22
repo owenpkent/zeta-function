@@ -61,6 +61,8 @@ A step-by-step trace of Weil's RH proof for curves over $\mathbb{F}_q$, paired w
 
 **Conclusion**: Architecture 2's obstruction is *constructive*, not analytic. Weil's strategy (Lefschetz + Poincaré + Hodge index) is well understood; what's missing is the underlying object on which to instantiate it. Three programs (Connes, Deninger, $\mathbb{F}_1$) each address one corner of the obstruction triangle; none has assembled all three.
 
+**§4-5 in the document**: expanded analysis of why the obstruction is constructive (with cross-cut to Arch 3's analytic circularity wall — the analytic and geometric obstructions are two views of the same missing positivity), and a list of 17 specific characteristics that the missing mathematics would have to deliver: a base scheme below $\mathbb{Z}$ (i-iii), a cohomology theory on the surface $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ with Poincaré duality and Künneth (iv-vii), a Frobenius substitute with spectrum at zeta zeros (viii-x), a Hodge index positivity certificate provable without RH input (xi-xiii), and four test cases the construction must pass (xiv-xvii, including correctly excluding Davenport-Heilbronn).
+
 ## 2C, 2D
 
 - **2C** (state of $\mathbb{F}_1$ / Arakelov programs as of 2025): literature review; deferred.
