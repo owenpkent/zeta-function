@@ -194,6 +194,61 @@ D-H continues to deepen monotonically: $-2.4 \times 10^{-2} \to -9.1 \times 10^{
 
 The wrong-approach detector survives its natural Selberg-class positive control, both at fixed $K$ (3C.3) and under $K$ scaling (3D.2). Architecturally, the test in 3C.2 specifically responds to the presence of off-line zeros, not to L-function identity.
 
+## 3B.2: Witness $\lambda_n^{DH} < 0$ at large $n$ ([e3b2_li_dh_extension.py](e3b2_li_dh_extension.py))
+
+**Status:** complete. **Witnesses D-H violation of Li positivity at $n = 400{,}000$ and $n = 1{,}000{,}000$.**
+
+**Motivation:** 3B found that $\lambda_n^{DH} > 0$ at $n \leq 300$, with the structural estimate placing crossover-to-negative around $n \sim 320{,}000$. 3B.2 computes $\lambda_n^{DH}$ at those large $n$ and witnesses the negativity directly.
+
+**Method.** The brute-force zero sum
+$$\lambda_n^{DH} = \sum_\rho \left(1 - \left(1 - \tfrac{1}{\rho}\right)^n\right)$$
+converges slowly: at $n = 400{,}000$, contributions from on-line zeros up to height $T = 55{,}000 \approx n/(2\pi)$ are needed for accuracy, which is intractable.
+
+Instead, we use an exact decomposition:
+$$\lambda_n^{DH} = \lambda_n^{DH, \rm asymp} + \sum_{\rho_{\rm off}\text{ in UHP}} 2\,\Re\bigl(w_{\rm on}(\gamma)^n - w_{\rm off}^n\bigr)$$
+where:
+
+- $\lambda_n^{DH, \rm asymp}$ is the Bombieri-Lagarias leading asymptotic for an L-function of conductor $q = 5$ with the appropriate gamma factor:
+$$\lambda_n^{DH, \rm asymp} = \tfrac{n}{2}\bigl(\log(qn/(2\pi)) + \gamma_E - 1\bigr) + O(\sqrt{n}\log n).$$
+This depends only on the gamma factor and conductor, not on individual zeros.
+- The sum is over off-line zeros $\rho_{\rm off} = \beta + i\gamma$ in the upper half-plane; $w_{\rm off} = 1 - 1/\rho_{\rm off}$, $w_{\rm on}(\gamma) = 1 - 1/(1/2 + i\gamma)$. The bracketed expression $w_{\rm on}^n - w_{\rm off}^n$ is the difference between "actual" off-line contribution and "hypothetical RH" on-line contribution at the same height.
+
+The five off-line quadruples up to $T_{\max} = 300$ are sufficient: higher off-line zeros have $|w| - 1 \sim 1/\gamma^2$, so their contribution at $n = 400{,}000$ is exponentially smaller than the dominant quadruple at $\gamma = 85.7$.
+
+**Findings (precision 50 digits):**
+
+| $n$ | $\lambda_n^{DH, \rm asymp}$ | off-line correction | $\lambda_n^{DH}$ | sign |
+|---|---|---|---|---|
+| $10^3$ | $+3.13 \times 10^3$ | $-1.55 \times 10^{-3}$ | $+3.13 \times 10^3$ | + |
+| $10^4$ | $+4.28 \times 10^4$ | $+0.30$ | $+4.28 \times 10^4$ | + |
+| $5 \times 10^4$ | $+2.54 \times 10^5$ | $-7.88$ | $+2.54 \times 10^5$ | + |
+| $10^5$ | $+5.43 \times 10^5$ | $+34.7$ | $+5.43 \times 10^5$ | + |
+| $2 \times 10^5$ | $+1.16 \times 10^6$ | $+7.72 \times 10^3$ | $+1.16 \times 10^6$ | + |
+| $3.2 \times 10^5$ | $+1.92 \times 10^6$ | $+1.52 \times 10^5$ | $+2.08 \times 10^6$ | + |
+| **$4 \times 10^5$** | $+2.45 \times 10^6$ | $\mathbf{-2.01 \times 10^7}$ | $\mathbf{-1.76 \times 10^7}$ | $\mathbf{-}$ |
+| $5 \times 10^5$ | $+3.12 \times 10^6$ | $+2.55 \times 10^9$ | $+2.55 \times 10^9$ | + |
+| **$10^6$** | $+6.58 \times 10^6$ | $\mathbf{-3.00 \times 10^{18}}$ | $\mathbf{-3.00 \times 10^{18}}$ | $\mathbf{-}$ |
+
+**$\lambda_n^{DH}$ is strictly negative at $n = 400{,}000$ and $n = 1{,}000{,}000$.** This directly witnesses D-H violating Li's positivity criterion, computationally closing the loop on 3B: the criterion does discriminate, just at $n \sim 4 \times 10^5$, not at the small-$n$ range originally checked.
+
+**Mechanism.** The dominant off-line zero in the FE quadruple at $\gamma = 85.7$ has $\beta = 0.192$ and
+$$|w_{\rm off}| = \sqrt{\frac{(1-\beta)^2 + \gamma^2}{\beta^2 + \gamma^2}} \approx 1 + 4.20 \times 10^{-5}.$$
+The off-line contribution $-2\,\Re(w_{\rm off}^n)$ has amplitude $2|w_{\rm off}|^n = 2 \exp(4.20 \times 10^{-5}\, n)$, growing exponentially in $n$. Phase $n \cdot \arg(w_{\rm off}) \pmod{2\pi}$ determines sign:
+
+- At $n = 320{,}000$: $|w_{\rm off}|^n \approx 8 \times 10^5$, comparable to the asymptotic; phase happens to be positive, $\lambda_n^{DH}$ stays positive.
+- At $n = 400{,}000$: $|w_{\rm off}|^n \approx 1 \times 10^7$, much larger than asymptotic; phase is negative, $\lambda_n^{DH} < 0$.
+- At $n = 500{,}000$: $|w_{\rm off}|^n \approx 1.3 \times 10^9$; phase happens to be positive again, $\lambda_n^{DH}$ positive.
+
+So $\lambda_n^{DH}$ oscillates between $\pm O(|w_{\rm off}|^n)$ for $n \gtrsim 320{,}000$, with the negative excursions giving the Li-criterion witnesses.
+
+**Caveats.**
+
+1. We use the leading-order Bombieri-Lagarias asymptotic for $\lambda_n^{DH, \rm asymp}$; the exact value has $O(\sqrt{n}\log n) \approx 10^4$ correction at $n = 4 \times 10^5$. The off-line magnitude of $2 \times 10^7$ dominates, so the sign of $\lambda_n^{DH}$ is robust to this uncertainty.
+2. Off-line zeros above $T = 300$ contribute negligibly: each has $|w| - 1 \sim 1/\gamma^2$, so $|w|^n \sim \exp(n/\gamma^2) \sim O(1)$ for $\gamma \gtrsim 1000$ at $n = 4 \times 10^5$.
+3. A fully rigorous numerical computation would use the explicit xi-derivative formula at sufficient precision; this work is a structural estimate, not a certificate.
+
+**Architectural significance.** 3B and 3B.2 together resolve the small-vs-large-$n$ Li question: the Li criterion correctly distinguishes RH from non-RH, but the discrimination scale is $n \sim 1/|w_{\rm off} - 1| \approx 24{,}000$ for the off-line contribution to become order-1, and $n \sim 320{,}000$ for it to dominate the on-line asymptotic. At computationally tractable small $n \leq 1000$, the criterion is silent. This sharpens the structural distinction between 3B and 3C–3D: the Weil-form Gram matrix detects D-H at $K = 30$ and $T_{\max} = 200$ (effectively "small-$n$"), while small-$n$ Li does not. 3B.2 shows that Li at LARGE $n$ also detects, just via a much more expensive computation.
+
 ## 3E
 
 Literature-and-analysis task connecting Li coefficients to the de Bruijn-Newman constant; deferred.

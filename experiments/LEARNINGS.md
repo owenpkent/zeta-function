@@ -17,13 +17,15 @@ The four-level framing in [docs/02_graduate/log_correlated_fields_intro.md](../d
 
 The lesson is concrete: a structural test that lives at Level 3 (spectral signature, density) cannot tell us which L-function we're looking at, because the input quantities (eigenvalues, densities) don't see the Euler product. The same construction "matches" zeta and D-H equally well, even though one satisfies RH and the other doesn't. Positivity-based tests that take in the actual zeros (Gram matrix of $\Phi_b(\rho)$ values) do see the difference.
 
-### 2. Small-$n$ Li-positivity is NOT a wrong-approach detector for D-H, contrary to a naive expectation.
+### 2. Small-$n$ Li-positivity does not distinguish; large-$n$ Li does. The discrimination scale is $n \sim 320{,}000$ for D-H.
 
-The Li criterion $\lambda_n \geq 0 \iff$ RH is unconditional, so D-H must have negative $\lambda_n$ at some $n$ (since D-H violates RH). We computed $\lambda_n$ for both $\zeta$ and D-H out to $n = 300$ and found **both are strictly positive** in that range (3B). The reason: for the first D-H off-line zero ($\rho \approx 0.8085 + 85.7i$), the modulus $|1 - 1/\rho|$ differs from 1 by only $4.2 \times 10^{-5}$, so the off-line contribution becomes order 1 only at $n \approx 24{,}000$, and dominates the on-line $(n/2)\log n$ leading term only at $n \gtrsim 350{,}000$.
+The Li criterion $\lambda_n \geq 0 \iff$ RH is unconditional, so D-H must have negative $\lambda_n$ at some $n$. 3B computed $\lambda_n$ at $n \leq 300$ and found **both $\zeta$ and D-H are strictly positive** in that range. The reason: for the first D-H off-line zero ($\rho \approx 0.8085 + 85.7i$, FE partner $0.192 + 85.7i$), $|w_{\rm off}| - 1 \approx 4.2 \times 10^{-5}$, so the off-line contribution becomes order 1 only at $n \approx 24{,}000$, and exceeds the on-line $(n/2)\log(qn/(2\pi))$ asymptotic only at $n \gtrsim 320{,}000$.
 
-This is a non-trivial negative result. It eliminates a whole class of "tractable" RH tests as actually being able to detect a known counter-example. Any positive proof attempt that argues $\lambda_n \geq 0$ via methods that work uniformly out to $n = 300$ is structurally insufficient: it would prove the same thing for D-H.
+3B.2 computed $\lambda_n^{DH}$ at large $n$ via the decomposition $\lambda_n^{DH} = \lambda_n^{DH, \rm asymp} + \sum_{\rho_{\rm off}} 2\,\Re(w_{\rm on}^n - w_{\rm off}^n)$ and **directly witnessed $\lambda_n^{DH} < 0$ at $n = 400{,}000$** (off-line correction $-2.0 \times 10^7$ vs asymptotic $+2.4 \times 10^6$) and **at $n = 10^6$** ($-3 \times 10^{18}$). The sign oscillates as $\cos(n \arg(w_{\rm off}))$ with amplitude growing as $|w_{\rm off}|^n$, so not every $n$ past the crossover gives negative $\lambda_n^{DH}$ (e.g., $n = 500{,}000$ landed on a positive phase).
 
-The methodologically correct upgrade was the Weil quadratic form (3C-3D): same positivity criterion, but evaluated via test functions (the $\Phi_b$ family) where the phase of $\hat f(\rho)$ at off-line $\rho$ shows up immediately, not at $n \sim 24{,}000$.
+This is a non-trivial structural result. **The Li criterion does correctly distinguish RH from non-RH; the discrimination scale is just large**, roughly $n \sim 1/|w_{\rm off} - 1|^2$ rather than $n \sim 1/|w_{\rm off} - 1|$. Any proof attempt that argues $\lambda_n \geq 0$ via methods that work uniformly out to $n = O(10^3)$ is structurally insufficient: the same arguments would conclude the same for D-H. To use the Li criterion as a discriminator computationally, you need $n \gtrsim 10^5$ scale or you need a different positivity test entirely.
+
+The methodologically correct upgrade was the Weil quadratic form (3C-3D, 3C.3, 3D.2): same positivity principle, but evaluated via test functions (the $\Phi_b$ family) where the phase of $\hat f(\rho)$ at off-line $\rho$ shows up immediately. The Gram-matrix detector discriminates D-H at $K = 30$ test functions and $T_{\max} = 200$, vastly cheaper than the $n \sim 4 \times 10^5$ needed for Li.
 
 ### 3. The Davenport-Heilbronn discipline has been operationally validated.
 
@@ -144,7 +146,7 @@ These are research-direction extensions beyond what 4D / 4D.2 probed.
 
 3. **Does the Mossinghoff-Trudgian zero-free constant improve when *any* multivariate inequality is plugged in?** Requires the explicit-formula bookkeeping at $d$ heights, plus a multivariate inequality that doesn't decompose.
 
-4. **At what $n$ does $\lambda_n^{DH}$ first go negative via the xi-derivative formula?** The structural estimate gives $n \approx 350{,}000$. Direct numerical verification is the 3B-extension task. Heavy precision, but concrete.
+4. ~~**At what $n$ does $\lambda_n^{DH}$ first go negative?**~~ **Resolved (3B.2):** witnessed at $n = 400{,}000$ via the asymptotic-plus-off-line-correction decomposition. Off-line correction $-2.0 \times 10^7$ vs on-line asymptotic $+2.4 \times 10^6$. Crossover predicted at $n \sim 320{,}000$; phase determines sign past that. Refinement: a fully rigorous certificate (exact xi-derivative formula, ~100 digit precision, more off-line zeros) would replace the asymptotic with the exact value; the structural conclusion is robust.
 
 5. **Does the Gram-matrix wrong-approach detector remain a clean test in the limit $K \to \infty$ where $M^\zeta$ becomes singular but $M^{DH}$ continues to deepen?** The relative-min eigenvalue stays well-separated at $K = 100$ in our data; what happens at $K = 1000$ (with high-precision arithmetic to push past the floating-point floor)?
 

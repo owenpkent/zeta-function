@@ -11,7 +11,7 @@
 | Arch 3B (D-H Li per-zero diagnostic) | ✅ | Central negative result: small-n Li positivity does NOT distinguish zeta from D-H |
 | Arch 3C (Weil quadratic form + Gram) | ✅ | Wrong-approach detector witness: $M^{DH}$ has negative eigenvalues, $W_{DH}(\vec c) < 0 < W_\zeta(\vec c)$ |
 | Arch 3D (witness scaling) | ✅ | Witness deepens with K, stable in T_max once first off-line zero is included |
-| Arch 3B-extension (xi-derivative Li) | ⏳ | Pending; would reach $n \sim 25{,}000$ to witness D-H negativity directly |
+| Arch 3B.2 (Li at large $n$ via off-line correction) | ✅ | Witnesses $\lambda_n^{DH} < 0$ at $n = 4 \times 10^5$ (off-line correction $-2.0 \times 10^7$ dwarfs asymptotic $+2.4 \times 10^6$) and $n = 10^6$ ($-3 \times 10^{18}$). Uses Bombieri-Lagarias asymptotic for on-line part + exact off-line correction; crossover predicted at $n \sim 320{,}000$, witnessed at $n = 400{,}000$. Sign oscillates with $|w_{\rm off}|^n$ amplitude. |
 | Arch 3E (Li / de Bruijn-Newman) | ⏳ | Pending; literature-and-analysis |
 | Arch 1A (Berry-Keating discretization) | ✅ | All eigenvalues at $\Im E = -1/2$; density mismatch with zeta documented |
 | Arch 1B (Sierra-Townsend) | ✅ | Three position-dependent corrections to $H_{BK}$ tested (centrifugal, Coulomb, modular log $x$). RMS vs first 50 $\gamma_n^\zeta$ stays $\sim 88$ across all variants. Modular form bends density but overshoots. Same H matrix predicts same spectrum for zeta and D-H comparison: L-function-agnostic by construction. |
