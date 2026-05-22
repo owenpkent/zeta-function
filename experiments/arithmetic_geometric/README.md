@@ -46,8 +46,22 @@ This is the gap that Arch 2 must cross. The reason it remains stuck for 70+ year
 - `e2b_elliptic_curve_fp.npz`: point counts, $a_p$, Frobenius eigenvalues
 - `e2b_elliptic_curve_fp.png`: two panels (eigenvalues on Weil circle, point-count deviation vs Weil bound)
 
-## 2A, 2C, 2D
+## 2A: The Weil-proof diff table ([2A_weil_proof_diff.md](2A_weil_proof_diff.md))
 
-- **2A** (Weil-proof step-by-step diff table over $\mathbb{F}_q$ vs $\mathbb{Z}$): substantial literature work; planned next.
+**Status:** complete. Companion to 2B.
+
+A step-by-step trace of Weil's RH proof for curves over $\mathbb{F}_q$, paired with what the analogous structure would need to be over $\mathrm{Spec}(\mathbb{Z})$ and which pieces are missing. The proof's structural shape is **Lefschetz + Poincaré duality + Hodge index theorem**; over $\mathbb{Z}$, all three pieces are either missing or have only partial analogues:
+
+| Step | Over $\mathbb{F}_q$ | Over $\mathrm{Spec}(\mathbb{Z})$ |
+|---|---|---|
+| Lefschetz fixed-point | Geometric Frobenius $F_q$ on $C$; eigenvalues on $H^1$ give zeros of $Z(C, T)$ | **No geometric Frobenius** on $\mathrm{Spec}(\mathbb{Z})$. Connes/Deninger propose substitutes (flow on adèle class space / foliated space) but none has been built. |
+| Finite-dim cohomology | $H^1(C, \mathbb{Q}_\ell)$, dim $2g$, $\ell$-adic | Cohomology with the right spectrum (infinite-dim, matching infinitely many zeta zeros) is conjectural |
+| Poincaré duality | Non-degenerate pairing on $C \times C$ | We have the consequence ($\xi(s) = \xi(1-s)$) but no underlying cohomology pairing |
+| Hodge index theorem | Intersection-theoretic positivity on $C \times C$ | **MISSING.** No "surface" $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ in any rigorous sense, hence no Hodge index analogue. Weil positivity on the analytic side gives the right shape but is essentially equivalent to RH (the Arch 3 circularity wall). |
+
+**Conclusion**: Architecture 2's obstruction is *constructive*, not analytic. Weil's strategy (Lefschetz + Poincaré + Hodge index) is well understood; what's missing is the underlying object on which to instantiate it. Three programs (Connes, Deninger, $\mathbb{F}_1$) each address one corner of the obstruction triangle; none has assembled all three.
+
+## 2C, 2D
+
 - **2C** (state of $\mathbb{F}_1$ / Arakelov programs as of 2025): literature review; deferred.
-- **2D** (smallest open conjecture in Deninger's program to target): planned after 2A.
+- **2D** (smallest open conjecture in Deninger's program to target): planned after 2C.

@@ -155,9 +155,21 @@ The d=2 → d=3 jump nearly doubles the gap (25 pp); the d=3 → d=4 jump adds l
 
 **What this MIGHT mean for the broader picture.** The sub-linear growth of the LP-vs-tensor gap with $d$ suggests that the bivariate LP (4E.2) already captures most of the available LP-vs-tensor gap. Going to higher dimensions yields diminishing returns. If a future application uses d-variate non-negativity in a context where the structural lemma does NOT apply (multi-zero coupling, constrained domain, polynomial-ideal SOS), the d-variate gap is the relevant figure of merit, but the d=2 result already captures more than half of what's achievable.
 
-### 6. The arithmetic-geometric architecture is the only one that has produced an actual RH theorem in our experiments.
+### 6. The arithmetic-geometric architecture is the only one that has produced an actual RH theorem in our experiments — and 2A pins down precisely why.
 
-Arch 2B verified the Weil RH for the elliptic curve $E: y^2 = x^3 + x + 1$ over $\mathbb{F}_5$ exactly: Frobenius eigenvalues $\alpha = -3/2 \pm i\sqrt{11}/2$, $|\alpha|^2 = 5$, and $|C(\mathbb{F}_{5^k})|$ matches the Weil formula at $k = 1, \ldots, 6$ by brute-force point counting. This is not "evidence for RH"; it is RH for that curve, proved. The Weil/Deligne machinery works because curves over $\mathbb{F}_q$ have a cohomology with Poincaré duality and a Hodge index theorem (positivity). The open question is whether an analogous structure exists for $\mathrm{Spec}(\mathbb{Z})$ (Deninger, $\mathbb{F}_1$ programs). 2B is the only architecture in our set where the proof template actually closes; the other three architectures' obstructions all reduce, in different ways, to "we don't have the cohomology over $\mathbb{Z}$ that we have over $\mathbb{F}_q$."
+Arch 2B verified the Weil RH for the elliptic curve $E: y^2 = x^3 + x + 1$ over $\mathbb{F}_5$ exactly: Frobenius eigenvalues $\alpha = -3/2 \pm i\sqrt{11}/2$, $|\alpha|^2 = 5$, and $|C(\mathbb{F}_{5^k})|$ matches the Weil formula at $k = 1, \ldots, 6$ by brute-force point counting. This is not "evidence for RH"; it is RH for that curve, proved.
+
+**2A** ([2A_weil_proof_diff.md](../experiments/arithmetic_geometric/2A_weil_proof_diff.md)) traces the proof step by step against $\mathrm{Spec}(\mathbb{Z})$. The proof's structural shape — **Lefschetz fixed-point + Poincaré duality + Hodge index theorem** — works for curves over $\mathbb{F}_q$ because all three pieces exist on the SAME object (the surface $C \times C$). Over $\mathrm{Spec}(\mathbb{Z})$, each piece is either missing entirely or available only in a partial form:
+
+- **Lefschetz**: requires a geometric Frobenius endomorphism. $\mathrm{Spec}(\mathbb{Z})$ has none; Connes proposes the $\mathbb{R}^*_+$-action on the adèle class space and Deninger proposes a real-time flow on a hypothetical foliated space, but neither object has been built.
+- **Poincaré duality**: requires a non-degenerate cohomological pairing on $\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$, which in turn requires a "base below $\mathbb{Z}$" (traditionally called $\mathbb{F}_1$). The functional equation $\xi(s) = \xi(1-s)$ gives the consequence at the L-function level but not the underlying cohomology pairing.
+- **Hodge index theorem**: requires a 2-dimensional geometric object (the surface $C \times C$ in the function-field case). Without the surface $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$, no analogue. The Arch 3 finding (#7, the Weil-form duality circularity) is the analytic shadow of this missing geometric positivity.
+
+**The single-sentence diagnosis**: Architecture 2's obstruction is constructive, not analytic — the proof template is well-understood, but the underlying object on which to instantiate it has not been built. The three programs (Connes, Deninger, $\mathbb{F}_1$) each address one corner of the obstruction triangle (Frobenius / surface / positivity respectively), but no single program has assembled all three.
+
+**Cross-cut to Arch 3 (positivity).** Arch 3 probes the (c) Hodge-index slot analytically rather than geometrically (Weil positivity on test functions). Arch 3F-3I (the Weil-form duality experiments) found that the analytic version hits a circularity wall: any unconditional proof requires GRH-strength input. This is consistent with 2A's diagnosis — the analytic shadow inherits the circularity of the missing geometric positivity. **The analytic and geometric obstructions are the same obstruction, viewed from two sides.**
+
+2B is the only architecture in our set where the proof template actually closes; the other three architectures' obstructions all reduce, in different ways, to "we don't have the cohomology over $\mathbb{Z}$ that we have over $\mathbb{F}_q$."
 
 ### 7. The Weil-form duality is computable, and the cancellation structure on the prime side reveals where the analytic obstruction lives.
 
@@ -198,12 +210,13 @@ $$W(b) = \underbrace{8(b^{1/2} - b^{-1/2})^2}_{\text{boundary}} - 2\sum_{p^k < b
 
 1A + 1B + 1C closed the door on the BK family and ST-style modifications. The remaining direction (1D, Connes adèle class space) is a literature/theory task, not numerical. No further Arch 1 numerical experiment is expected to produce new structural information.
 
-### Arch 2 (arithmetic-geometric): the open frontier is literature-and-construction work.
+### Arch 2 (arithmetic-geometric): the open frontier is literature-and-construction work; 2A has now mapped it.
 
-2B (worked example over $\mathbb{F}_5$) is one of the strongest results we have, but it doesn't move toward $\mathrm{Spec}(\mathbb{Z})$. The natural next steps are all reading/writing:
-- 2A (Weil-proof diff table): what does Weil use over $\mathbb{F}_q$ that we lack over $\mathbb{Z}$?
-- 2C (state of the $\mathbb{F}_1$ / Arakelov programs as of 2025).
-- 2D (smallest open conjecture in Deninger's program that would be a meaningful step).
+2B (worked example over $\mathbb{F}_5$) is one of the strongest results we have, but it doesn't move toward $\mathrm{Spec}(\mathbb{Z})$. **2A** (Weil-proof diff table, complete) traces precisely what Weil's proof uses (Lefschetz + Poincaré + Hodge index, all on the surface $C \times C$) and what would be needed over $\mathrm{Spec}(\mathbb{Z})$. Diagnosis: Architecture 2's obstruction is *constructive* — the proof template is well-understood, but the underlying object hasn't been built. The three programs (Connes, Deninger, $\mathbb{F}_1$) each address one corner of the obstruction triangle but none has assembled all three on a single object. See [2A_weil_proof_diff.md](../experiments/arithmetic_geometric/2A_weil_proof_diff.md) for the full step-by-step table.
+
+Remaining literature tasks:
+- **2C** (state of the $\mathbb{F}_1$ / Arakelov programs as of 2025): survey current definitions and partial results.
+- **2D** (smallest open conjecture in Deninger's program): identify a meaningful target shorter than full RH.
 
 These are not "experiments" in the numerical sense.
 
@@ -282,7 +295,7 @@ Remaining open directions (NOT closed by 4E.3, NOT in the restriction route):
 Of the four architectures:
 
 - **Arch 1 (spectral)** is closed at the numerical-experiment level. We've shown the simple constructions are L-function-blind; further progress requires Connes-style theory.
-- **Arch 2 (arithmetic-geometric)** has produced the strongest individual result (Weil RH for one curve over $\mathbb{F}_5$, proved). The path to $\mathrm{Spec}(\mathbb{Z})$ is literature/construction work, not experimental.
+- **Arch 2 (arithmetic-geometric)** has produced the strongest individual result (Weil RH for one curve over $\mathbb{F}_5$, proved). 2A completes the diff-table analysis: the obstruction over $\mathrm{Spec}(\mathbb{Z})$ is *constructive*, not analytic — Weil's proof template needs a Frobenius substitute, a surface $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$, and a Hodge index positivity on that surface; the three corresponding programs (Connes, Deninger, $\mathbb{F}_1$) each address one corner but no single program has assembled all three. The path forward is construction work.
 - **Arch 3 (positivity)** has the most extensive experimental support: small-$n$ Li-positivity confirmed for $\zeta$ (but not a discrimination test); Weil-form-via-Gram-matrix works as a wrong-approach detector; Selberg-class cross-cut validates direction-selectivity. The next experimental step (xi-derivative Li at $n \sim 350{,}000$) is heavy but well-defined.
 - **Arch 4 (analytic)** has a refined picture from 4D/4D.2 + 4E + 4E.2 + 4E.3 + 4E.4: single-coefficient multivariate Fejér LPs decompose to tensor products, but the balanced-diagonal-sum LP $\max c_{1,1} + \alpha c_{2,2}$ at bidegree $(2, 2)$ does NOT — peak gap +25.00% at $\alpha = 3$. The trivariate extension (4E.4) DOUBLES the gap to +51.29% at $\alpha = 3.25, N = 2, d = 3$, fitting the pattern $\sim (d-1) \times 25\%$. **However (4E.3)**: the d-variate C-S gap does NOT improve the Mossinghoff-Trudgian zero-free region constant for any $d$, neither numerically nor structurally. The C-S and MT figures of merit are incompatible: any d-variate non-neg polynomial restricted to a line is bounded by 1D Fejér at matched effective degree, so the d-variate restriction approach to MT is structurally capped. To actually improve the zero-free region via multivariate inequalities requires constrained-domain LP, multi-zero coupling, or polynomial-ideal SOS (queued as 4E.5-4E.7).
 
