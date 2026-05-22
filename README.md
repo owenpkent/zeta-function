@@ -77,9 +77,9 @@ python -m experiments._shared.smoke_test
 | Research atlas | ✅ `docs/research_atlas/` |
 | Graduate docs (incl. log-correlated, four-level framing) | ✅ Substantial |
 | Experiments — Phase 0 infrastructure | ✅ Complete |
-| Experiments — Arch 3 (positivity) | ✅ 3A-3D complete; 3E pending |
-| Experiments — Arch 1 (spectral) | ✅ 1A complete; 1B-1D pending |
-| Experiments — Arch 4 (zero-free regions) | ✅ 4B complete; 4A, 4C, 4D pending |
+| Experiments — Arch 3 (positivity) | ✅ 3A-3D, 3B.2, 3F-3I complete; 3E pending |
+| Experiments — Arch 1 (spectral) | ✅ 1A, 1B, 1C complete; 1D pending |
+| Experiments — Arch 4 (zero-free regions) | ✅ 4B, 4D, 4D.2, 4E, 4E.2 complete; 4A, 4C, 4E.3 pending |
 | Experiments — Arch 2 (arithmetic-geometric) | ✅ 2B complete; 2A, 2C, 2D pending |
 | Intuitive / undergraduate docs | 🔄 In progress |
 | PDF text conversions | 🔄 In progress |

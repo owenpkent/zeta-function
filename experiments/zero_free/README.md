@@ -109,6 +109,129 @@ where $q_1$ is the raw coefficient of $\cos(\alpha)$ in the 1D Fejér optimum. *
 
 Genuinely new multivariate inequalities would require a different LP structure: weighted objectives that don't reduce to single-coefficient maximization, or constraints that couple the variables (e.g., $P \geq 0$ only on a specific submanifold of $(\theta_1, \ldots, \theta_d)$-space).
 
+## 4E: Off-diagonal and balanced-sum bivariate LPs ([e4e_offdiag_lp.py](e4e_offdiag_lp.py))
+
+**Status:** complete. **Genuinely new 2D inequality found: the LP for max $c_{1,1} + c_{2,2}$ at bidegree (N, N) exceeds the best tensor-product witness by up to 12% at $N = 2$, with LP-optimal coefficient matrix of full rank $N + 1$.** This refines (and partially overturns) the 4D conclusion: single-coefficient LPs decompose, but balanced-sum LPs do not.
+
+**Motivation.** 4D / 4D.2 showed that the LP for max $c_{1, \ldots, 1}$ at bidegree $(N, \ldots, N)$ saturates the tensor product $Q(\theta_1) \cdots Q(\theta_d)$. That conclusion was for a *single-coefficient* objective. The natural question (LEARNINGS open #2): does the decomposition extend to (a) off-diagonal single coefficients $c_{j,k}$ with $(j, k) \neq (1, 1)$, or (b) sum-of-coefficient objectives like $c_{1,1} + c_{2,2}$?
+
+**Method.** Three families of LPs at bidegree $(N, N)$ for $N \in \{2, 3, 4, 5\}$ in raw-coefficient convention $P(\theta, \phi) = \sum_{0 \leq j, k \leq N} c_{j,k} \cos(j\theta) \cos(k\phi) \geq 0$ with $c_{0,0} = 1$:
+
+- **Test A:** max $c_{j,k}$ for $(j, k) \in \{(1,1), (1,2), (2,1), (2,2)\}$
+- **Test B:** max $c_{1,1} + c_{2,2}$
+- **Test C:** max $c_{1,2} + c_{2,1}$
+
+Sampled on $M_{2D} = 200$ per direction (40,000 constraints) so the LP is converged: $P_{\min}$ on verification grid is $\sim 10^{-12}$ to $10^{-16}$ (floating-point feasibility).
+
+**Tensor-product bound (Cauchy-Schwarz).** For any sum-objective with weight matrix $W$ and asymmetric tensor witness $P = Q(\theta) R(\phi)$ giving $c_{j,k} = q_j r_k$:
+
+$$\sum_{j,k} W_{j,k}\, q_j r_k \leq \sigma_{\max}(W)\, \|q\|_2\, \|r\|_2 \leq \sigma_{\max}(W)\, \max_Q \|q_S\|_2^2$$
+
+where $S$ is the support of $W$ and $\|q_S\|_2 = \sqrt{\sum_{j \in S}q_j^2}$. For Tests B and C, $W$ has $\sigma_{\max} = 1$ and the bound reduces to $\max_Q (q_1^2 + q_2^2)$ over 1D nonneg deg-$N$ polynomials with $q_0 = 1$. Computed numerically by sweeping the LP objective $\cos(\alpha)\, q_1 + \sin(\alpha)\, q_2$ over angles and taking the max of (LP value)$^2$.
+
+**Findings ($M_{2D} = 200$):**
+
+| Test | $N$ | LP value | Tensor bound | LP $-$ tensor | rank | $\sigma_2 / \sigma_1$ |
+|---|---|---|---|---|---|---|
+| A: max $c_{1,1}$ | 2 | $2.0000$ | $2.0000$ (asymm) | $-10^{-15}$ | 1 | $7.6 \times 10^{-13}$ |
+| A: max $c_{1,2}$ | 2 | $1.4142$ | $1.4142$ (asymm) | $0$ | 1 | $1.3 \times 10^{-14}$ |
+| A: max $c_{2,2}$ | 5 | $2.0020$ | $2.0000$ (asymm) | $+2 \times 10^{-3}$ | 1 | $1.9 \times 10^{-13}$ |
+| **B: max $c_{1,1} + c_{2,2}$** | **2** | **$2.5616$** | **$2.2857 = 16/7$** | **$+0.276$ (+12.1%)** | **3** | **$0.752$** |
+| B: max $c_{1,1} + c_{2,2}$ | 3 | $3.4905$ | $3.4826$ | $+8 \times 10^{-3}$ (+0.2%) | 4 | $0.426$ |
+| B: max $c_{1,1} + c_{2,2}$ | 4 | $4.4904$ | $4.4304$ | $+0.060$ (+1.4%) | 5 | $0.780$ |
+| B: max $c_{1,1} + c_{2,2}$ | 5 | $5.1449$ | $5.1420$ | $+0.003$ (+0.1%) | 6 | $0.773$ |
+| C: max $c_{1,2} + c_{2,1}$ | 2 | $2.0000$ | $2.2857$ | $-0.286$ | 3 | $0.104$ |
+| C: max $c_{1,2} + c_{2,1}$ | 3 | $3.1029$ | $3.4826$ | $-0.380$ | 3 | $0.009$ |
+
+**Interpretation.**
+
+1. **Test A: single-coefficient LPs decompose universally.** For all $(j, k) \in \{(1,1), (1,2), (2,1), (2,2)\}$ and all $N$, the LP-optimal $c_{j,k}$ matrix is rank 1 and the LP value matches the asymmetric tensor product $(\max q_j)(\max q_k)$. This extends 4D's "max $c_{1,1}$ decomposes" to "max of any single coefficient decomposes."
+
+2. **Test B: balanced-diagonal-sum LP exceeds tensor product.** The LP-optimal $c_{j,k}$ matrix is **full rank** ($N+1$) with $\sigma_2/\sigma_1 \in [0.43, 0.78]$, stable under grid refinement (M_2D = 60, 120, 200 all give consistent rank). For $N = 2$, the LP value $2.5616$ is provably $12.1\%$ larger than the Cauchy-Schwarz tensor bound $16/7 \approx 2.286$: **the optimal bivariate polynomial is genuinely 2D, not a tensor product or a convex sum-of-tensor-products that maintains the C-S bound**.
+
+3. **The 12% gap at $N = 2$ is the structural finding.** It demonstrates that the simple "LP decomposes" intuition fails as soon as the objective mixes two coefficients in a balanced way. The improvement decays at higher $N$ (12% → 0.2% → 1.4% → 0.1%), suggesting the tensor product becomes nearly optimal as the polynomial degree grows.
+
+4. **Test C: off-diagonal-sum LP does NOT exceed tensor.** Despite the LP-optimal $c_{j,k}$ matrix having rank $> 1$ for all $N$, the LP value is **strictly less than** the C-S tensor bound. The rank $> 1$ is an LP-vertex degeneracy: a tensor product witness achieves the same value. So Test C confirms that "rank $> 1$" alone is not sufficient for new content; the LP value must exceed the tensor bound.
+
+**LP-optimal polynomial at $N = 2$ (Test B), coefficient matrix:**
+
+$$c = \begin{pmatrix} 1 & 0 & 0.621 \\ 0 & 1.940 & 0 \\ 0.621 & 0 & 0.621 \end{pmatrix}$$
+
+with singular values $(1.94, 1.46, 0.16)$. The zeros at $c_{j,k}$ for odd $j + k$ reflect a parity symmetry of the optimal polynomial under $(\theta, \phi) \to (\theta + \pi, \phi + \pi)$.
+
+**Comparison to the symmetric tensor optimum at $N = 2$.** The maximizer of $q_1^2 + q_2^2$ over 1D nonneg deg-2 polys has $(q_1, q_2) = (4\sqrt 6/7, 4/7) \approx (1.40, 0.57)$ (giving sum $16/7$), with the polynomial $Q = |R|^2$ where $R(z) = \sqrt{1/7}(\sqrt 2 + \sqrt 3 z + \sqrt 2 z^2)$. The LP-optimal $P$ has $c_{1,1} = 1.94 \approx q_1^2$ (similar) but $c_{2,2} = 0.62$ which is larger than the symmetric tensor's $q_2^2 = 16/49 \approx 0.33$. The bivariate LP trades a slight $c_{1,1}$ loss for a substantial $c_{2,2}$ gain unavailable to any single 1D polynomial.
+
+**Does this translate to a new zero-free region bound?** Not directly. Translating a bivariate auxiliary inequality $P(\theta, \phi) \geq 0$ into a constraint on zero locations requires the explicit-formula bookkeeping at two independent heights $t, t'$ (Heath-Brown / Pintz style), with the LP coefficients $c_{j,k}$ weighing terms at heights $jt \pm kt'$. The 12% improvement on the auxiliary inequality could, in principle, improve the Mossinghoff-Trudgian-style zero-free constant when combined with the right two-height functional. Working out the explicit-formula bookkeeping for this 2D inequality is the natural follow-up (4E.2 or a successor experiment).
+
+**What 4E updates in the prior conclusion.** 4D/4D.2 concluded "the d-variate LP decomposes; no new auxiliary inequality." That conclusion is true *for single-coefficient objectives*. For balanced sum-of-diagonal objectives, the LP does not decompose, and a genuinely new 2D inequality exists. The corrected statement: **the family of single-coefficient LPs decomposes; the family of sum-of-coefficient LPs at small $N$ does not**.
+
+**Output:**
+- `e4e_offdiag_lp.npz`: LP values, tensor bounds, SVD ranks, coefficient matrices, q_max table
+- `e4e_offdiag_lp.png`: LP-vs-tensor comparison, rank diagnostic, summary panel
+
+## 4E.2: alpha-sweep + extended diagonal sum ([e4e2_sum_sweep.py](e4e2_sum_sweep.py))
+
+**Status:** complete. **The 4E +12.1% finding at $\alpha = 1$ is a single point on a curve that peaks at +25.00% for $\alpha = 3$ (N=2), and the gap is 8.66x larger for the 3-term sum at N=3 (+1.98%) vs the 2-term sum (+0.23%). The non-decomposition is sharper than 4E suggested.**
+
+**Motivation.** 4E showed that the LP for max $c_{1,1} + c_{2,2}$ exceeds the C-S tensor bound by 12.1% at $N = 2$. Two natural extensions: (a) sweep the coefficient weight $\alpha$ in $\max c_{1,1} + \alpha c_{2,2}$ to find where the gap peaks; (b) test if adding a third diagonal term ($c_{3,3}$) at higher bidegree enlarges the gap.
+
+**Method.** 
+
+- (a) For $N = 2$, sweep $\alpha$ over 27 values in $[0, 10]$. Solve LP for $\max c_{1,1} + \alpha c_{2,2}$ at $M_{2D} = 200$. Compute C-S tensor bound $\max_Q (q_1^2 + \alpha q_2^2)$ via 1D LP sweep over angle $\theta$ (objective $\cos\theta \cdot q_1 + \sin\theta \sqrt{\alpha}\cdot q_2$, take $\max_\theta$ of squared LP value).
+
+- (b) For $N = 3$, solve LP for $\max c_{1,1} + c_{2,2} + c_{3,3}$ vs $\max c_{1,1} + c_{2,2}$. Tensor bound for 3-term sum: $\max_Q (q_1^2 + q_2^2 + q_3^2)$ via sphere-direction sweep ($60 \times 30$ grid on $S^2$, 1800 LP solves).
+
+**Findings (a): alpha sweep at $N = 2$.**
+
+| $\alpha$ | LP value | Tensor bound | Gap (%) |
+|---|---|---|---|
+| 0.0 | $2.0000$ | $2.0000$ ($q_1^2$) | $0.0\%$ |
+| 0.5 | $2.2656$ | $2.1333 = 16/7.5$ | $+6.2\%$ |
+| **1.0** | **$2.5616$** | **$2.2857 = 16/7$** | **$+12.1\%$** |
+| 2.0 | $3.2361$ | $2.6666 = 16/6$ | $+21.4\%$ |
+| 2.75 | $3.8026$ | $3.0476$ | $+24.8\%$ |
+| **3.0** | **$4.0000$** | **$3.2000 = 16/5$** | **$+25.00\%$** (peak) |
+| 3.5 | $4.4086$ | $3.5556$ | $+24.0\%$ |
+| 4.0 | $4.8300$ | $4.0000$ | $+20.8\%$ |
+| 5.0 | $5.7046$ | $5.0000$ | $+14.1\%$ |
+| 10.0 | $10.3871$ | $10.0000$ | $+3.9\%$ |
+
+The relative gap follows a smooth curve: starts at 0% ($\alpha = 0$, pure $c_{1,1}$, decomposes), rises monotonically to peak +25% at $\alpha = 3$, decays toward 0% as $\alpha \to \infty$ (asymptotically pure $c_{2,2}$). The analytical tensor bound formula in this range is $16/(8 - \alpha)$ (derived from the Fejér-Riesz parameterization).
+
+**Structure at the peak ($\alpha = 3$, $N = 2$).** LP-optimal coefficient matrix has clean rational form:
+
+$$c = \frac{1}{5}\begin{pmatrix} 5 & 0 & 4 \\ 0 & 8 & 0 \\ 4 & 0 & 4 \end{pmatrix}, \quad c_{1,1} + 3 c_{2,2} = \frac{8 + 12}{5} = 4 = \frac{5}{4} \cdot \frac{16}{5}.$$
+
+In product-to-sum form on $(u, v) = (\theta + \phi, \theta - \phi)$ coordinates:
+$$5\, P(\theta, \phi) = 5 + 4\cos u + 4\cos v + 8\cos u \cos v + 2\cos 2u + 2\cos 2v.$$
+
+The polynomial does NOT factor as $f(u) g(v)$: the $\cos 2u, \cos 2v$ terms appear without their "tensor" partners $\cos 2u \cos v, \cos u \cos 2v$, ruling out any product structure $(1 + p\cos u + q \cos 2u)(1 + r \cos v + s \cos 2v)$. This is the algebraic source of the +25% gap: the LP polynomial contains a genuinely 2D coupling unavailable to tensor products.
+
+**Findings (b): 3-term diagonal sum at $N = 3$.**
+
+| Objective | LP value | Tensor bound | Gap |
+|---|---|---|---|
+| $c_{1,1} + c_{2,2}$ at $N = 3$ | $3.4905$ | $3.4826$ | $+0.23\%$ |
+| $c_{1,1} + c_{2,2} + c_{3,3}$ at $N = 3$ | $3.6816$ | $3.6101$ | $+1.98\%$ |
+
+Adding the third diagonal term enlarges the gap by **8.66x**. LP-optimal coefficient matrix for the 3-term has rank 4 (full) with $\sigma_2 / \sigma_1 \approx 0.54$. This suggests the gap-vs-tensor structure is not a one-off at $(N, \text{2-term})$; richer objective families produce richer non-decomposition.
+
+**Significance.** Three combined observations from 4E + 4E.2:
+
+1. The non-decomposition is family-dependent and weight-dependent. Different objectives within the "diagonal sum" family give different gaps, peaking at +25% (4E.2.a) rather than the 12% of the equal-weight case (4E).
+2. Adding more diagonal terms increases the gap (4E.2.b: 8.66x improvement going from 2-term to 3-term at $N = 3$).
+3. The optimum at the peak ($\alpha = 3$, $N = 2$) has CLEAN RATIONAL COEFFICIENTS, suggesting an underlying closed-form structure worth deriving analytically.
+
+**What this leaves open.**
+
+- A larger search over the bidegree-objective space (not just diagonal sums but arbitrary linear combinations of $c_{j,k}$) might reveal even bigger gaps. The 4E.2 alpha sweep is a 1-parameter family; a 2-parameter family is the natural next step.
+- Closed-form derivation of the $\alpha = 3$, $N = 2$ optimum: the clean rationals suggest the optimal $P$ is constructible algebraically. If derivable, the construction may generalize to other peaks.
+- Translation to zero-free regions: the 25% improvement on the auxiliary inequality has not yet been plugged into the Heath-Brown / Pintz explicit-formula bookkeeping. This is the natural 4E.3 follow-up.
+
+**Output:**
+- `e4e2_sum_sweep.npz`: alpha grid, LP/tensor values, 3-term result, coefficient matrices
+- `e4e2_sum_sweep.png`: LP and tensor vs $\alpha$, relative-gap curve, 2-term vs 3-term bar chart
+
 ## 4A, 4C
 
 - **4A** (Vinogradov-Korobov reproduction): substantial literature work; deferred.

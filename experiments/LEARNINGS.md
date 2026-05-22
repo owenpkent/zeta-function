@@ -42,29 +42,31 @@ The full Arch 1 result (1A + 1B + 1C) provides a quantitative version of "Hilber
 
 What this rules out is **strong**: no fixed-domain discretization of any operator of the form $H = (xp + px)/2 + V(x)$ (for any $V$) can prove RH, because the same H matrix is L-function-agnostic. The only viable spectral directions are constructions whose H matrix encodes the Euler product (or equivalent arithmetic input), like Connes' adèle class space (1D), which is the deferred-literature task.
 
-### 5. Multivariate Fejér LP decomposes: the d-variate problem is just the d-th power of 1D Fejér. (CORRECTED.)
+### 5. Single-coefficient multivariate Fejér LPs decompose; balanced-sum LPs do not. (REFINED via 4E.)
 
-4D-ii and 4D.2 numerically establish, to LP grid precision at $d = 2$ and $d = 3$:
-$$\max c_{1, 1, \ldots, 1} = \left(2\cos\!\left(\frac{\pi}{N+2}\right)\right)^d = (q_1^{1D}(N))^d$$
-for the LP over non-negative trig polynomials of $d$-degree $(N, \ldots, N)$ in $d$ variables, with $c_{0, \ldots, 0} = 1$, where $c_{j_1, \ldots, j_d}$ is the *raw* coefficient of $\cos(j_1\theta_1) \cdots \cos(j_d\theta_d)$ in $P$ and $q_1^{1D}(N) = 2\cos(\pi/(N+2))$ is the raw coefficient of $\cos(\alpha)$ in the 1D Fejér optimum $Q$ (renormalized so $q_0 = 1$).
+4D-ii and 4D.2 established the *single-coefficient* decomposition: max $c_{1, \ldots, 1}$ at $d$-degree $(N, \ldots, N)$ saturates the tensor product. 4E (e4e_offdiag_lp.py) generalizes the question and finds the picture is family-dependent.
 
-**The LP-optimal coefficient matrix is rank-1.** Empirically extracting the LP solutions at $d = 2$, $N = 1, \ldots, 4$, the $c_{j,k}$ matrix factors as $c_{j,k} = q_j q_k$ exactly, where $Q(\alpha) = \sum_j q_j \cos(j\alpha)$ is the 1D Fejér optimum. The LP-optimal $P(\theta, \phi)$ is just the tensor product $Q(\theta) Q(\phi)$. The same holds at $d = 3$ within LP grid precision.
+**Single-coefficient family decomposes.** For 4D/4D.2 and 4E Test A combined:
+$$\max c_{j_1, \ldots, j_d} = \prod_{i=1}^d (\max_Q q_{j_i}) = \prod_i q_{j_i}^{1D}(N)$$
+at $d$-degree $(N, \ldots, N)$, for any $(j_1, \ldots, j_d)$. The LP-optimal coefficient tensor is rank 1, and the LP value equals the asymmetric tensor product of independently chosen 1D optima. For $d = 2$, $j = k = 1$: $q_1^{1D}(N) = 2\cos(\pi/(N+2))$ (Fejér).
 
-**The d-variate problem decomposes.** The LP value equals the tensor-product value:
-$$\max_{P \geq 0} c_{1,\ldots,1} = \max_{Q \geq 0} q_1^d = (q_1^{1D}(N))^d.$$
-There is **no new auxiliary inequality** at this LP family. The "d-variate" inequality $P(t_1 \log p, \ldots, t_d \log p) \geq 0$ that the LP would produce is simply the product of $d$ copies of the 1D Fejér inequality evaluated at $d$ different heights, which carries no more information than the 1D inequality itself.
+**Balanced-sum-of-diagonal family does NOT decompose, and the gap is weight-dependent.** For the objective $c_{1,1} + \alpha c_{2,2}$ at bidegree $(N, N) = (2, 2)$, 4E (at $\alpha = 1$) and 4E.2 (alpha sweep) together establish that the LP value strictly exceeds the Cauchy-Schwarz tensor bound $16/(8 - \alpha)$ over the range $\alpha \in (0, 8]$, with relative gap peaking at $+25.00\%$ for $\alpha = 3$:
 
-**This is a corrected interpretation.** An earlier version of this section claimed a "factor-of-$2^d$ advantage" of the LP over a "factorized witness." That comparison was a convention error: the comparison was made against $(c_1^{4B})^d = \cos^d(\pi/(N+2))$ (the Fejér optimum in 4B's $P = c_0 + 2\sum c_k \cos$ convention), but the proper tensor-product witness in the LP's raw-coefficient convention gives $(2 c_1^{4B})^d = (q_1^{1D})^d$. Once aligned, LP and tensor product coincide.
+$$\max\, c_{1,1} + 3 c_{2,2}\,(\text{LP}) = 4.0000 \quad > \quad \max_Q (q_1^2 + 3 q_2^2) = \tfrac{16}{5} = 3.2000.$$
 
-**Methodological lesson.** When comparing LP optima against an analytic witness, the coefficient conventions of the two must be identical, or the comparison is meaningless. Specifically: the 1D Fejér theorem statement "max $c_1 = \cos(\pi/(n+2))$" is in 4B's $P = c_0 + 2\sum c_k \cos$ convention; the raw coefficient of $\cos(\alpha)$ in the optimum polynomial $Q$ is $q_1 = 2 c_1$.
+The original 4E finding ($\alpha = 1$, +12.1%) is a single point on this curve. Other findings: gap peaks smoothly at $\alpha = 3$ then decays; **3-term diagonal sum** $c_{1,1} + c_{2,2} + c_{3,3}$ at bidegree $(3,3)$ gives gap +1.98%, an **8.66x increase** over the 2-term sum at the same bidegree (+0.23%). The LP-optimal coefficient matrix is full rank $N+1$ with $\sigma_2/\sigma_1 \in [0.43, 0.78]$, robust across grid resolutions.
 
-**What this leaves open.** The LP family we ran maximizes a single coefficient $c_{1, \ldots, 1}$. Genuine multivariate inequalities with new structure might come from:
+**Closed-form structure at the peak.** At $\alpha = 3$, $N = 2$, the LP-optimal coefficient matrix has clean rational entries: $c_{1,1} = 8/5, c_{2,2} = c_{0,2} = c_{2,0} = 4/5$, parity structure $c_{j,k} = 0$ for $j + k$ odd. In $(u, v) = (\theta + \phi, \theta - \phi)$ coordinates, $5 P = 5 + 4\cos u + 4 \cos v + 8 \cos u \cos v + 2 \cos 2u + 2 \cos 2v$, which contains $\cos 2u, \cos 2v$ without their tensor partners $\cos 2u \cos v, \cos u \cos 2v$ — algebraically ruling out factorization. The clean rationals suggest a closed-form derivation of this optimum is possible.
 
-  - **Different objectives**: e.g., $\max c_{1,1} + c_{2,2}$, or weighted combinations encoding the prime-power weights from the explicit formula.
-  - **Different constraints**: e.g., requiring $P(t_1, t_2) \geq 0$ only on a specific subset of $(t_1, t_2)$ space corresponding to "consistent" heights from a fixed zero location.
-  - **Heath-Brown / Pintz coupling**: inequalities that depend on the prime $p$ through $t_i \log p$ in a non-tensor-product way, with cross-prime structure.
+**Off-diagonal-sum family does NOT exceed tensor either.** For $c_{1,2} + c_{2,1}$ at bidegree $(N, N)$ (Test C), the LP value is **strictly less than** the Cauchy-Schwarz tensor bound. The LP-optimal $c_{j,k}$ matrix has rank $> 1$ but this is an LP-vertex degeneracy: a tensor product witness achieves the same LP value.
 
-None of these were probed by 4D / 4D.2. The "single-coefficient at uniform degree" LP family decomposes, and that's the message.
+**The corrected structural statement.** The 4D claim "the d-variate LP decomposes; no new auxiliary inequality" is true for *single-coefficient* objectives at uniform degree, and even for *some* sum objectives (like Test C's $c_{1,2} + c_{2,1}$). It is **false** for the balanced-diagonal-sum objective $c_{1,1} + c_{2,2}$: the LP value at $N = 2$ exceeds the tensor bound by 12%, and the optimal polynomial is genuinely 2D.
+
+**Earlier convention error remains.** The original 4D-ii narrative had a separate convention bug (comparing $(c_1^{4B})^d$ vs $(2 c_1^{4B})^d = (q_1^{1D})^d$); that bug is fixed in [4D's writeup](../zero_free/README.md#4D). 4E's finding is independent of the convention question: it's about which LP objectives produce rank-1 vs full-rank solutions and whether the LP exceeds the tensor bound.
+
+**Methodological lesson.** "Does the LP decompose?" is answered by two diagnostics combined: (1) rank of the LP-optimal coefficient matrix via SVD, and (2) comparison of the LP value to a Cauchy-Schwarz-derived tensor product bound. Rank $> 1$ alone is not sufficient (Test C has rank $> 1$ but LP value matches tensor bound, so the LP has a rank-1 optimal solution that the solver missed). The pair "rank $> 1$ AND LP > tensor bound" is the right test for genuine new content.
+
+**What this leaves open.** The 12% improvement at $N = 2$ is on the auxiliary inequality, not yet on the zero-free region constant. Translating it to a Mossinghoff-Trudgian-style bound requires the explicit-formula bookkeeping at two independent heights $t, t'$, with the LP coefficients $c_{j,k}$ weighting $-\Re \zeta'/\zeta(\sigma + i(jt \pm kt'))$ terms. This is the natural 4E.2 follow-up. The other open directions from the original 4D remain: constrained-domain LP (e.g., $P \geq 0$ only on a submanifold corresponding to a hypothetical off-line zero), and Heath-Brown-style cross-prime coupling.
 
 ### 6. The arithmetic-geometric architecture is the only one that has produced an actual RH theorem in our experiments.
 
@@ -122,16 +124,16 @@ These are not "experiments" in the numerical sense.
 
 The Gram-matrix detector works as a wrong-approach detector and survives Selberg-class cross-cuts. The framework has been validated. The remaining open computational task is: actually exhibit $\lambda_n^{DH} < 0$ for some $n$ around $350{,}000$ via the xi-derivative formula (3B-extension). This is heavy ($\geq 100$-digit precision and careful cancellation control) but would close the loop on the small-$n$ Li result. It is **not** required to validate Arch 3 — the Gram-matrix detector already does that — but it would be a direct demonstration of where the Li criterion goes negative for D-H.
 
-### Arch 4 (analytic): the simple $d$-variate LP decomposes; new auxiliary inequalities need a different structure.
+### Arch 4 (analytic): single-coefficient $d$-variate LPs decompose, but balanced-sum LPs produce new 2D inequalities (4E).
 
-4B closed the 1D Fejér question (LP saturates the classical bound). 4D-ii and 4D.2 confirmed that the natural $d$-variate generalization (LP for max $c_{1, \ldots, 1}$ on non-neg trig polys of uniform degree $(N, \ldots, N)$) decomposes: the LP optimum is exactly the tensor product of 1D Fejér optima, equivalent to applying the 1D inequality at $d$ heights and multiplying. No new content.
+4B closed the 1D Fejér question. 4D-ii and 4D.2 confirmed that single-coefficient $d$-variate LPs (max $c_{1, \ldots, 1}$ at uniform degree) decompose. 4E **refines the picture**: while single-coefficient objectives universally decompose (Test A: max $c_{j,k}$ for any $(j,k)$ saturates the asymmetric tensor product), the balanced-diagonal-sum objective $c_{1,1} + c_{2,2}$ does NOT decompose: LP value exceeds the Cauchy-Schwarz tensor bound by 12% at $N = 2$ and stays above the bound at $N = 3, 4, 5$, with full-rank LP-optimal coefficient matrix.
 
-To find a genuinely new auxiliary inequality, the LP needs to be reformulated. The promising directions all involve breaking the "max single coefficient at uniform degree" symmetry:
-- Maximize a weighted combination of $c_{j,k}$ coefficients corresponding to the prime-power weights from the explicit formula at two heights.
-- Constrain $P(t_1, t_2) \geq 0$ only on the locus where $(t_1, t_2)$ comes from a single hypothetical off-line zero (i.e., $t_1 = \gamma$, $t_2 = 2\gamma$ for an off-line zero $\beta + i\gamma$).
-- Heath-Brown-style coupling: cross-prime cross-height inequalities.
+This is a genuinely new 2D auxiliary inequality not derivable from 1D Fejér applied at two heights. Whether the 12% improvement translates into an improved Mossinghoff-Trudgian zero-free constant requires the explicit-formula bookkeeping at two independent heights (Heath-Brown / Pintz framework) and is the natural 4E.2 follow-up.
 
-These are research-direction extensions beyond what 4D / 4D.2 probed.
+Remaining open directions:
+- Constrain $P(t_1, t_2) \geq 0$ only on the locus from a hypothetical off-line zero (i.e., $t_1 = \gamma$, $t_2 = 2\gamma$ for $\beta + i\gamma$ off-line).
+- Heath-Brown-style cross-prime coupling: inequalities depending non-tensor-product-wise on $t_i \log p$ across primes.
+- Higher-degree balanced sums: $c_{1,1} + c_{2,2} + c_{3,3} + \ldots$ at bidegree $(N, N)$ for $N$ small.
 
 4A (Vinogradov-Korobov reproduction) and 4C (conditional improvements) remain literature tasks.
 
@@ -173,9 +175,9 @@ These are research-direction extensions beyond what 4D / 4D.2 probed.
 
 1. ~~**Does the 4D 2D-LP factor-of-4 result generalize to higher dimensions?**~~ ~~**Resolved (4D.2):** confirmed at $d = 3$.~~ **Resolved differently:** the "factor-of-$2^d$ advantage" was a convention error. The d-variate LP for max $c_{1,\ldots,1}$ at uniform degree $(N,\ldots,N)$ decomposes: the optimum is the tensor product $Q(\theta_1) \cdots Q(\theta_d)$ where $Q$ is the 1D Fejér optimum, giving $\max c_{1,\ldots,1} = (2\cos(\pi/(N+2)))^d = (q_1^{1D})^d$. No new inequality.
 
-2. **What LP family WOULD produce a genuinely new multivariate auxiliary inequality?** The simple "max single coefficient at uniform degree" family decomposes. Options to probe: (a) max of weighted combinations of $c_{j,k}$ coefficients corresponding to prime-power weights from the explicit formula; (b) constraints restricting $P \geq 0$ to a subset of $(t_1, t_2)$ corresponding to a single hypothetical off-line zero; (c) Heath-Brown-style cross-prime coupling.
+2. ~~**What LP family WOULD produce a genuinely new multivariate auxiliary inequality?**~~ **Resolved (4E + 4E.2):** the balanced-diagonal-sum family $c_{1,1} + \alpha c_{2,2}$ at bidegree $(2, 2)$ produces 2D inequalities not derivable from tensor products, with relative gap to the C-S tensor bound varying as $\alpha$ varies and peaking at +25.00% for $\alpha = 3$. Extension to higher bidegree with more diagonal terms (4E.2.b: $c_{1,1} + c_{2,2} + c_{3,3}$ at $N = 3$) increases the gap by 8.66x relative to the 2-term version at the same bidegree. The off-diagonal-sum $c_{1,2} + c_{2,1}$ does NOT exceed tensor bound. Remaining sub-directions: (a) constrained-domain LPs; (b) Heath-Brown cross-prime coupling; (c) closed-form derivation of the $\alpha = 3$ peak optimum.
 
-3. **Does the Mossinghoff-Trudgian zero-free constant improve when *any* multivariate inequality is plugged in?** Requires the explicit-formula bookkeeping at $d$ heights, plus a multivariate inequality that doesn't decompose.
+3. **Does the Mossinghoff-Trudgian zero-free constant improve when the 4E/4E.2 2D inequality is plugged in?** Requires the explicit-formula bookkeeping at two independent heights $t, t'$, with LP coefficients $c_{j,k}$ weighting $-\Re \zeta'/\zeta(\sigma + i(jt \pm kt'))$ terms. The +25% auxiliary-inequality improvement at $\alpha = 3$, $N = 2$ is the best candidate input. Tracked as a 4E.3 follow-up.
 
 4. ~~**At what $n$ does $\lambda_n^{DH}$ first go negative?**~~ **Resolved (3B.2):** witnessed at $n = 400{,}000$ via the asymptotic-plus-off-line-correction decomposition. Off-line correction $-2.0 \times 10^7$ vs on-line asymptotic $+2.4 \times 10^6$. Crossover predicted at $n \sim 320{,}000$; phase determines sign past that. Refinement: a fully rigorous certificate (exact xi-derivative formula, ~100 digit precision, more off-line zeros) would replace the asymptotic with the exact value; the structural conclusion is robust.
 
@@ -192,7 +194,7 @@ Of the four architectures:
 - **Arch 1 (spectral)** is closed at the numerical-experiment level. We've shown the simple constructions are L-function-blind; further progress requires Connes-style theory.
 - **Arch 2 (arithmetic-geometric)** has produced the strongest individual result (Weil RH for one curve over $\mathbb{F}_5$, proved). The path to $\mathrm{Spec}(\mathbb{Z})$ is literature/construction work, not experimental.
 - **Arch 3 (positivity)** has the most extensive experimental support: small-$n$ Li-positivity confirmed for $\zeta$ (but not a discrimination test); Weil-form-via-Gram-matrix works as a wrong-approach detector; Selberg-class cross-cut validates direction-selectivity. The next experimental step (xi-derivative Li at $n \sim 350{,}000$) is heavy but well-defined.
-- **Arch 4 (analytic)** confirmed in 4D/4D.2 that the natural multivariate Fejér LP decomposes: max single-cross-coefficient $c_{1,\ldots,1}$ at uniform degree $(N,\ldots,N)$ saturates the tensor-product $Q(\theta_1) \cdots Q(\theta_d)$ with $Q$ the 1D Fejér optimum. No new auxiliary inequality from this LP family. New inequalities, if any, must come from a different LP structure (weighted objectives or coupled constraints) or from outside the trig-polynomial framework entirely.
+- **Arch 4 (analytic)** has a refined picture from 4D/4D.2 + 4E + 4E.2: single-coefficient multivariate Fejér LPs decompose to tensor products, but the weighted-diagonal-sum LP $\max c_{1,1} + \alpha c_{2,2}$ at bidegree $(2, 2)$ does NOT — peak gap +25.00% at $\alpha = 3$, with the LP-optimal $P$ having clean rational coefficients suggesting a closed-form. Extending to 3-term sums at $N = 3$ multiplies the gap by 8.66x. Whether the +25% improvement translates into a new zero-free region constant requires the Heath-Brown / Pintz explicit-formula bookkeeping at two independent heights (the 4E.3 follow-up).
 
 The structural message of the experiments: **only Arch 2 has the cohomology/positivity coupling that closes RH-style arguments in the function-field case; only Arch 3 has a positivity test that distinguishes Selberg-class L-functions from non-Euler-product look-alikes computationally; Arch 1 and Arch 4, on the numerical evidence here, do not close RH by themselves.**
 

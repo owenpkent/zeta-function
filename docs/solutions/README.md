@@ -86,10 +86,12 @@ Directly push the known zero-free region $\sigma \geq 1 - c/(\log|t|)^{2/3}$ all
 
 **Progress since 1958:** Essentially **none** on improving the exponent $2/3$. This is a major obstacle — the methods seem to have a ceiling.
 
-The difficulty is that the zero-free region is proved using **log-free zero density estimates** and the **zero detector** $-\text{Re}\frac{\zeta'}{\zeta}(\sigma+it) = \sum_\rho \frac{\sigma-\beta}{|\sigma+it-\rho|^2} + \ldots$ The available inequalities (like $3+4\cos\theta+\cos 2\theta \geq 0$) that drive the classical method cannot be improved beyond a certain point.
+The difficulty is that the zero-free region is proved using **log-free zero density estimates** and the **zero detector** $-\text{Re}\frac{\zeta'}{\zeta}(\sigma+it) = \sum_\rho \frac{\sigma-\beta}{|\sigma+it-\rho|^2} + \ldots$ The available 1D inequalities (like $3+4\cos\theta+\cos 2\theta \geq 0$, optimized at higher degree by Fejér's $\cos(\pi/(n+2))$ bound) cannot be improved beyond a certain point.
+
+**Experimental finding (4E / 4E.2):** in the multivariate setting at bidegree $(2,2)$, the LP for $\max c_{1,1} + 3 c_{2,2}$ produces a non-negative bivariate trig polynomial whose objective value exceeds the Cauchy-Schwarz tensor bound by +25%. The LP-optimal has clean rational coefficients and a structural non-factorization in $(\theta+\phi, \theta-\phi)$ coordinates. This is the first multivariate trig-polynomial inequality in the project's experimental thread that's not derivable from 1D Fejér via tensor product. Whether it translates into a zero-free region constant improvement is an open follow-up requiring Heath-Brown / Pintz two-height explicit-formula bookkeeping.
 
 ### The Obstacle
-The "barrier" at $2/3$ in the Vinogradov–Korobov exponent appears to be a genuine obstruction, not just a technical limitation. New ideas beyond the classical zero-detector approach would be needed.
+The "barrier" at $2/3$ in the Vinogradov–Korobov exponent appears to be a genuine obstruction, not just a technical limitation. New ideas beyond the classical zero-detector approach would be needed. The 4E/4E.2 multivariate finding hints there may be additional room in the 2D trig-polynomial regime not previously explored.
 
 ---
 
