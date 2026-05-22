@@ -228,6 +228,25 @@ R2 was concrete (compute a specific object) but didn't progress the central cons
 
 R2 produced one upgrade (Borger's (ii) from ⏳ to 🟡), plus a refined picture of what Lorscheid's existing 🟡 means. The central obstruction remains the Hodge index positivity slot.
 
+## 8.5 Companion dossiers
+
+The R2 analysis is summary-level. For full per-candidate analyses see:
+
+- [2A_borger_dossier.md](2A_borger_dossier.md) — Borger's Λ-ring framework: origins in K-theory, formal definition, Adams operations, Witt vector adjunction, what the framework predicts about ζ, strengths and limitations, active research questions, combinability with other candidates, and per-constraint scorecard with what would close each open item.
+
+- [2A_lorscheid_dossier.md](2A_lorscheid_dossier.md) — Lorscheid's blueprint framework: origins in the Tits-Weyl program, blueprints as "rings with partial addition," the blueprint surface, recovery of function-field RH, strengths and limitations, and the most-promising hybrid direction (Λ-blueprints).
+
+**The key insight from the dossiers**: Borger and Lorscheid have complementary strengths:
+
+- **Borger** is strong on (viii) Frobenius (Adams operations built in) but weak on (ii) surface structure (Spec(W(ℤ)) is conceptually heavy).
+- **Lorscheid** is strong on (i)-(iii) base/surface (blueprints clean, fiber product 2-dim) but weak on (viii) Frobenius (no built-in Adams operations).
+
+**A natural hybrid: Λ-blueprints.** A blueprint enriched with commuting Adams operations satisfying the Fermat-Frobenius condition. This would inherit Lorscheid's clean surface structure AND Borger's built-in Frobenius. As of my knowledge, no published work has explicitly developed Λ-blueprints, but the construction is categorically natural and would address more than half of the open 17-constraint slots in a single move.
+
+**R2.5 (suggested)**: develop the Λ-blueprint framework. Define a Λ-blueprint as (B, B^•, {ψ_p}) where (B, B^•) is a blueprint and {ψ_p} are commuting blueprint endomorphisms satisfying ψ_p(x) ≡ x^p mod B^•(p) (with the appropriate blueprint version of Fermat). Verify ℤ has a canonical Λ-blueprint structure (likely yes, by combining ℤ's blueprint and Λ structures). Compute the fiber product in Λ-blueprints: this should give something resembling Spec(W(ℤ)) with blueprint relations.
+
+This is more substantial than R2 itself but is the natural next research direction surfaced by the comparison.
+
 ## 9. Next-step R3 / R4 in light of R2
 
 R2 informs the priority of R3 and R4:
