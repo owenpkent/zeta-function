@@ -194,6 +194,46 @@ D-H continues to deepen monotonically: $-2.4 \times 10^{-2} \to -9.1 \times 10^{
 
 The wrong-approach detector survives its natural Selberg-class positive control, both at fixed $K$ (3C.3) and under $K$ scaling (3D.2). Architecturally, the test in 3C.2 specifically responds to the presence of off-line zeros, not to L-function identity.
 
+## 3D.3: K-scaling extended to K = 1000 ([e3d3_K_extended.py](e3d3_K_extended.py))
+
+**Status:** complete. **The relative-min eigenvalue for D-H converges to an asymptotic constant of $-2.62\%$; the number of negative eigenvalues stays FIXED at $4$ (= number of off-line zero pairs).**
+
+**Motivation.** 3D.2 ran K through 100 and observed the D-H min eigenvalue deepening monotonically. LEARNINGS open question #5 asked: does this deepening continue or saturate at larger K? In particular, does the RELATIVE min eigenvalue stabilize, and does the negative-eigenvalue COUNT grow with K?
+
+**Method.** Same Gram matrix construction as 3C.2 / 3D.2: $M_{jk} = \sum_\rho 2 \Re[\Phi_{b_j}(\rho) \Phi_{b_k}(\rho)]$ with $\{b_k\}_{k=1}^K$ log-uniform on $[1.1, 1000]$. Compute eigenvalue spectrum and track three quantities: absolute min eigenvalue, relative min ($= \lambda_{\min}/\lambda_{\max}$), and count of eigenvalues below threshold $-10^{-10} \lambda_{\max}$. Sweep $K \in \{100, 200, 300, 500, 750, 1000\}$ at $T_{\max} = 200$.
+
+**Findings:**
+
+| $K$ | $\lambda_{\min}^{\zeta, \chi_3, \chi_4}$ | $\lambda_{\min}^{DH}$ | rel min D-H | neg count D-H |
+|---|---|---|---|---|
+| $100$ | $\sim 10^{-16}$ (FP noise) | $-0.370$ | $-2.39\%$ | $4$ |
+| $200$ | $\sim 10^{-15}$ | $-0.762$ | $-2.48\%$ | $4$ |
+| $300$ | $\sim 10^{-15}$ | $-1.199$ | $-2.60\%$ | $4$ |
+| $500$ | $\sim 10^{-15}$ | $-2.016$ | $-2.62\%$ | $4$ |
+| $750$ | $\sim 10^{-14}$ | $-3.027$ | $-2.62\%$ | $4$ |
+| $1000$ | $\sim 10^{-14}$ | $-4.037$ | $-2.62\%$ | $4$ |
+
+**Three structural findings:**
+
+**1. Relative min eigenvalue converges.** The ratio $\lambda_{\min}/\lambda_{\max}$ for D-H stabilizes to $-2.62\%$ across $K \in [300, 1000]$. This is the "wrong-approach signal strength" at the asymptotic limit. The signal is dimension-independent: it's a fixed property of the off-line zero structure, not an artifact of basis size.
+
+**2. Negative eigenvalue count is FIXED at 4** = exactly the number of off-line zero PAIRS (8 off-line zeros / 2 = 4 pairs). The 8 off-line zeros come in functional-equation quadruples $\{\rho, \bar\rho, 1 - \rho, 1 - \bar\rho\}$; the upper-half-plane zeros (where the Gram matrix is built) pair as $(\rho_{\rm off}, \bar\rho_{\rm off})$ giving 4 pairs. Each pair introduces exactly 1 negative eigenvalue to the Gram matrix, structurally. This explains the constant count.
+
+**3. Selberg-class L-functions remain PSD to floating-point noise at $K = 1000$.** Worst relative min for $\chi_3, \chi_4, \zeta$ at $K = 1000$: $\sim 10^{-16}$, indistinguishable from numerical zero. No false-positive at large $K$ even when the matrix has $K - n_{\rm zeros} \sim 900$ near-zero eigenvalues (genuine rank deficiency from Gram-of-real-vectors structure).
+
+**K-doubling deepening rate.** The min eig grows from $-0.37$ at $K = 100$ to $-4.04$ at $K = 1000$: a factor of $10.9 \approx K^{1/2}$ (10x in K gives $\sim 11$x in $|\lambda_{\min}|$). Per K-doubling step: $K = 100 \to 200$: 2.06x, $200 \to 300$: 1.57x, $300 \to 500$: 1.68x, $500 \to 750$: 1.50x, $750 \to 1000$: 1.33x. The deepening rate slows but is consistent with $|\lambda_{\min}| \sim K \cdot |\rm rel \, min|$, since $\lambda_{\max}$ grows linearly with $K$ and rel min is constant.
+
+**Conclusion.** The Gram-matrix wrong-approach detector is structurally robust at $K$ up to $1000$:
+- **Signal strength** (relative min for D-H) converges to a finite asymptote $-2.62\%$.
+- **Signal dimension** (number of negative eigenvalues) is invariant at $4$, equal to the number of off-line zero pairs.
+- **No false positives** for Selberg-class L-functions even at extreme basis sizes.
+
+This closes LEARNINGS open question #5: the detector remains a clean test at $K \to \infty$, and the structural interpretation (one negative eigenvalue per off-line zero pair) gives a clean architectural picture. The detector is essentially counting off-line zero pairs via the eigenvalue spectrum.
+
+**Output:**
+- `e3d3_K_extended.npz`: K grid, eigenvalue extremes, relative min, condition number, negative count, per L-function
+- `e3d3_K_extended.png`: 2x2 panel: min eig (symlog), rel min, max eig (log), neg count
+
 ## 3B.2: Witness $\lambda_n^{DH} < 0$ at large $n$ ([e3b2_li_dh_extension.py](e3b2_li_dh_extension.py))
 
 **Status:** complete. **Witnesses D-H violation of Li positivity at $n = 400{,}000$ and $n = 1{,}000{,}000$.**

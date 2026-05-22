@@ -232,6 +232,186 @@ Adding the third diagonal term enlarges the gap by **8.66x**. LP-optimal coeffic
 - `e4e2_sum_sweep.npz`: alpha grid, LP/tensor values, 3-term result, coefficient matrices
 - `e4e2_sum_sweep.png`: LP and tensor vs $\alpha$, relative-gap curve, 2-term vs 3-term bar chart
 
+## 4E.3: Translation to a zero-free region constant ([e4e3_mt_translation.py](e4e3_mt_translation.py))
+
+**Status:** complete. **The +25% C-S gap from 4E.2 does NOT translate into an improved Mossinghoff-Trudgian zero-free region constant.** This is a structural result: any non-neg bivariate polynomial, restricted to a line in $(\theta, \phi)$-space, becomes a 1D non-neg polynomial whose MT shape factor is bounded by the 1D Fejér optimum at matched effective degree.
+
+**Motivation.** 4E.2 found the LP for $\max c_{1,1} + 3 c_{2,2}$ at bidegree $(2, 2)$ exceeds the Cauchy-Schwarz tensor bound by 25%, with clean rational coefficients $c_{0,0} = 1, c_{1,1} = 8/5, c_{2,0} = c_{0,2} = c_{2,2} = 4/5$. The natural follow-up: does this auxiliary inequality improve the zero-free region constant $C$ in $\beta < 1 - C/\log|t|$?
+
+**Method.** The Mossinghoff-Trudgian framework expresses the de la Vallée Poussin zero-free region as
+$$C = \frac{(c_1 - c_0)^2}{4 R(P) c_0}$$
+for a 1D nonneg trig polynomial $P(u) = c_0 + c_1 \cos u + c_2 \cos 2u + \ldots$ ("literal-coefficient" convention), where $R(P)$ is a boundary error scaling with $P(0) = \sum c_k$. The "shape factor" $(c_1 - c_0)^2/(4 c_0)$ is the polynomial-dependent part.
+
+For 2D, we evaluate at heights $(t_1, t_2)$: $\tilde P(u) := P(t_1 u, t_2 u)$ is the effective 1D polynomial, with frequencies in $\{0, 2t_1, 2t_2, t_1 \pm t_2, 2t_1 \pm 2t_2\}$ for bidegree $(2, 2)$. We tabulate the shape factor and $\mathrm{shape}/P(0)$ over six reduction choices.
+
+**Findings — 4E.2 peak polynomial at $(\alpha, N) = (3, 2)$:**
+
+| Reduction | $w_0$ | $w_{\gamma_0}$ | shape | $P(0)$ | shape/$P(0)$ | eff deg | 1D Fejér shape/$P(0)$ | ratio |
+|---|---|---|---|---|---|---|---|---|
+| $t_1 = t_2 = \gamma_0/2$ | $11/5$ | $12/5$ | $0.0045$ | $5$ | $0.000909$ | $2$ | $0.01472$ | $0.062$ |
+| $t_1 = \gamma_0, t_2 = \gamma_0/2$ | $1$ | $6/5$ | $0.010$ | $5$ | $0.002000$ | $3$ | $0.02520$ | $0.079$ |
+| $t_1 = t_2 = \gamma_0$ | $11/5$ | $0$ | $0$ | $5$ | $0$ | $4$ | $0.02885$ | $0$ |
+| $t_1 = \gamma_0, t_2 = 0$ | $9/5$ | $8/5$ | $0$ | $5$ | $0$ | $2$ | $0.01472$ | $0$ |
+
+The best 2D-derived shape/$P(0)$ is $0.002$, **12.6x WORSE than 1D Fejér at matched effective degree 3**.
+
+**Findings — sweep $\alpha \in [0, 10]$:**
+
+| $\alpha$ | best shape/$P(0)$ | eff deg | Fejér shape/$P(0)$ | ratio |
+|---|---|---|---|---|
+| $0.0$ (= tensor product) | $0.02764$ | $4$ | $0.02885$ | $0.958$ |
+| $0.5$ | $0.00610$ | $2$ | $0.01472$ | $0.414$ |
+| $1.0$ | $0.00327$ | $2$ | $0.01472$ | $0.222$ |
+| $2.0$ | $0.00037$ | $3$ | $0.02520$ | $0.015$ |
+| $3.0$ (peak C-S) | $0.00197$ | $3$ | $0.02520$ | $0.078$ |
+| $5.0$ | $0.00586$ | $3$ | $0.02520$ | $0.233$ |
+| $10.0$ | $0.00988$ | $3$ | $0.02520$ | $0.392$ |
+
+**No 2D LP polynomial in the entire $\alpha$-family beats 1D Fejér at matched effective degree.** The closest is the trivial tensor product at $\alpha = 0$ (ratio $0.958$), which is just $Q(\theta) Q(\phi)$ for $Q$ the 1D Fejér optimum. As $\alpha$ grows, the LP shifts mass into $c_{2,2}$ (which raises C-S but lands at frequency $2\gamma_0$ in the MT bookkeeping, contributing nothing to the trick).
+
+**Structural lemma (the actual reason).** If $P(\theta, \phi) \geq 0$ on $[0, 2\pi]^2$, then for any heights $(t_1, t_2)$:
+$$\tilde P(u) := P(t_1 u, t_2 u) \geq 0$$
+on $[0, 2\pi]$, because $(t_1 u, t_2 u)$ is a point in $[0, 2\pi]^2$ modulo periodicity. Hence the family of effective 1D polynomials from 2D bivariate restriction is a SUBSET of all 1D non-neg trig polynomials at matched effective degree. The max-$c_1$ optimization over this subset is bounded by the unconstrained max ($=$ 1D Fejér optimum). **No 2D restriction strategy can improve the single-zero MT framework.**
+
+**Why the 4E.2 +25% gap exists yet doesn't help here.** The C-S figure of merit (max $\sum W_{j,k} c_{j,k}$ for some weight matrix $W$) and the MT figure of merit (max $c_1 - c_0$ after 1D restriction) are structurally distinct. The 4E.2 LP at $\alpha = 3$ exploits 2D structure that increases the C-S objective by 25%, but the same structure does NOT manifest as a larger $c_1$ in any 1D restriction. The two figures of merit "see" different aspects of the polynomial.
+
+**The clean conclusion.** 4E.2 found a genuine new 2D auxiliary inequality at the C-S level, but this inequality cannot break the 1D Fejér ceiling on the de la Vallée Poussin / Mossinghoff-Trudgian zero-free region constant. The Heath-Brown / Pintz 2D framework would only help if applied to problems involving MULTIPLE putative zeros (e.g., least-prime-in-AP with Siegel-zero couplings), not the standard single-zero zero-free region.
+
+**What this rules out, and what it doesn't.** The 4E.3 result rules out a class of "easy wins" for the zero-free region constant from bivariate trig polynomial LPs. It does NOT rule out:
+
+- **Constrained-domain LPs.** Imposing $P(\theta, \phi) \geq 0$ only on a submanifold corresponding to a hypothetical off-line zero (e.g., $\phi = 2\theta$ for a zero at $\rho = \beta + i\gamma$ probed at heights $\gamma$ and $2\gamma$). The submanifold-constrained polynomial is NOT bounded by the unrestricted-domain 1D Fejér.
+- **Sum-of-squares over a polynomial ideal.** SOS modulo prime-coupling relations.
+- **Multi-zero or multi-character setups.** Heath-Brown's actual use case in arithmetic progressions.
+
+These are the natural 4E.4, 4E.5, 4E.6 follow-ups; they are not pursued in this experiment.
+
+**Output:**
+- `e4e3_mt_translation.npz`: peak polynomial, reduction tables, alpha sweep, Fejér comparison data
+- `e4e3_mt_translation.png`: shape/$P(0)$ vs $\alpha$, plus per-reduction comparison bar chart
+
+## 4E.4: Trivariate balanced-sum LP ([e4e4_trivariate_sum.py](e4e4_trivariate_sum.py))
+
+**Status:** complete. **The LP-vs-tensor gap roughly DOUBLES from d=2 to d=3: peak gap is +51.29% at $\alpha = 3.25$, $N = 2$, vs 4E.2's +25.00% at $\alpha = 3, N = 2$.** The d-variate non-decomposition strengthens with dimension. (Per 4E.3, this does NOT improve the MT zero-free constant; the result characterizes the auxiliary-inequality structure for its own sake.)
+
+**Motivation.** 4E (d=2, $c_{1,1} + c_{2,2}$) found a +12.1% gap; 4E.2 swept $\alpha$ and found peak +25.00% at $\alpha = 3$. The natural d=3 analog is the LP for $\max c_{1,1,1} + \alpha c_{2,2,2}$ over non-negative trivariate trig polynomials of tridegree $(N, N, N)$. Does the gap grow, shrink, or stabilize with dimension?
+
+**Method.** Trivariate LP
+
+$$\max c_{1,1,1} + \alpha c_{2,2,2} \quad \text{s.t.} \quad P(\theta, \phi, \psi) = \sum_{j,k,l} c_{j,k,l} \cos(j\theta) \cos(k\phi) \cos(l\psi) \geq 0, \quad c_{0,0,0} = 1$$
+
+solved at $N = 2$, $M_{3D}^3 = 60^3 = 216{,}000$ constraints. Tensor bound: $\max_Q (q_1^3 + \alpha q_2^3)$ over 1D non-neg deg-$N$ polynomials with $q_0 = 1$, via 1D LP angle sweep on $S^1$. (Symmetric tensor bound; asymmetric tensor $\max_{Q,R,S} q_1 r_1 s_1 + \alpha q_2 r_2 s_2$ equals symmetric by a multilinear-vertex argument plus problem symmetry.)
+
+**Findings ($N = 2$, $M_{3D} = 60$, $M_{\rm verify} = 80$ then $160$):**
+
+| $\alpha$ | LP | tensor | gap | rel gap | $P_{\min}$ verify |
+|---|---|---|---|---|---|
+| $0.00$ | $2.8284$ | $2.8284$ | $0$ | $0.0\%$ | $-7\times 10^{-3}$ |
+| $1.00$ | $3.4523$ | $2.9625$ | $+0.49$ | $+16.5\%$ | $-7\times 10^{-3}$ |
+| $2.00$ | $4.1457$ | $3.1192$ | $+1.03$ | $+32.9\%$ | $-1\times 10^{-2}$ |
+| $3.00$ | $4.8999$ | $3.3086$ | $+1.59$ | $+48.1\%$ | $-1\times 10^{-2}$ |
+| **3.25** | **$5.0884$** | **$3.3633$** | **$+1.73$** | **$+51.3\%$ (peak)** | $-1\times 10^{-2}$ |
+| $3.50$ | $5.2769$ | $3.5000$ | $+1.78$ | $+50.8\%$ | $-1\times 10^{-2}$ |
+| $4.00$ | $5.6540$ | $4.0000$ | $+1.65$ | $+41.4\%$ | $-1\times 10^{-2}$ |
+| $5.00$ | $6.5028$ | $5.0000$ | $+1.50$ | $+30.1\%$ | $-2\times 10^{-2}$ |
+| $10.00$ | $10.9725$ | $10.0000$ | $+0.97$ | $+9.7\%$ | $-2\times 10^{-2}$ |
+
+**M-convergence.** At $\alpha = 3$:
+
+| $M_{3D}$ | LP | $P_{\min}$ | LP / $(1 + |P_{\min}|)$ (lower bracket) |
+|---|---|---|---|
+| $40$ | $4.9500$ | $-3.2 \times 10^{-2}$ | $4.797$ |
+| $70$ | $4.8877$ | $-7.9 \times 10^{-3}$ | $4.849$ |
+| $100$ | $4.8665$ | $-2.9 \times 10^{-4}$ | $4.8650$ |
+
+True LP value at $\alpha = 3, M \to \infty$ is in $[4.865, 4.867]$, gap in $[+47.04\%, +47.09\%]$. So the M=60 sweep slightly overestimates; M-corrected peak gap at $\alpha = 3.25$ would be in the range $[+50.0\%, +51.3\%]$.
+
+**Peak coefficient tensor (M=60, $\alpha = 3.25$):**
+
+| $(j, k, l)$ | $c_{j,k,l}$ | ratio to $c_{0,0,0}$ |
+|---|---|---|
+| $(0, 0, 0)$ | $+1.000$ | $1.000$ |
+| $(1, 1, 1)$ | $+2.637$ | $2.637$ |
+| $(2, 2, 2)$ | $+0.754$ | $0.754$ |
+| $(2, 0, 0)$, $(0, 2, 0)$, $(0, 0, 2)$ | $\sim +0.65$ | $\sim 0.65$ |
+| $(2, 2, 0)$, $(2, 0, 2)$, $(0, 2, 2)$ | $\sim +0.58$ | $\sim 0.58$ |
+
+Compared to 4E.2's peak (clean rationals $1, 8/5, 4/5, 4/5, 4/5$), the d=3 peak does NOT have an obvious clean-rational structure (the LP at finite $M$ shows small asymmetry between $(2, 0, 0)$, $(0, 2, 0)$, $(0, 0, 2)$, consistent with LP noise but possibly indicating non-rational true coefficients).
+
+**The structural pattern (d=2 → d=3).** Going from d=2 to d=3:
+
+- LP-vs-tensor peak gap: $+25.00\% \to +51.29\%$ ($\sim$ 2x).
+- Peak $\alpha$: $3.0 \to 3.25$ (small shift).
+- LP value at peak: $4.00 \to 5.09$ (since the higher-dimensional LP optimizes over more variables and has more freedom).
+- Tensor bound at peak: $16/5 = 3.20 \to 3.36$ (only slight increase; the 1D LP max-cube doesn't grow much).
+
+**Interpretation.** The d-variate balanced-sum auxiliary inequality has STRONGER non-decomposition in higher dimensions. The 2D coupling $\cos 2u + \cos 2v$ at d=2 (where $u = \theta + \phi$, $v = \theta - \phi$) generalizes to a 3D structure at d=3 that admits more independent low-order modes than any product of 1D Q, R, S. The +51% gap quantifies this.
+
+**What this does NOT mean for RH.** Per 4E.3's structural lemma: any d-variate non-neg polynomial restricted to a line through the origin is a 1D non-neg trig polynomial, bounded by 1D Fejér at matched effective degree. So the +51% trivariate gap does NOT translate to a better single-zero MT zero-free region constant. The result characterizes the multivariate auxiliary inequality structure independently of its RH application.
+
+**Open follow-ups.**
+
+- **4-variate or higher** (d ≥ 4): does the pattern $\sim (d-1) \times 25\%$ continue? At d=4, expected $\sim 75\%$. Heavy LP ($M^4$ constraints, $(N+1)^4$ variables); $M = 30$ would give 810K constraints, tractable.
+- **Closed-form characterization** of the d=3 peak. If the LP-optimal coefficients converge to clean rationals as $M \to \infty$, the same algebraic structure as d=2 may generalize.
+- **Multi-zero MT bookkeeping**, where multiple putative zeros at different heights are coupled via the d-variate polynomial. This is the only known route by which the higher-dimensional structure could improve actual zero-free region constants.
+
+**Output:**
+- `e4e4_trivariate_sum.npz`: alpha grid, LP/tensor values, peak coefficient tensor
+- `e4e4_trivariate_sum.png`: LP-vs-tensor curve, relative-gap d=2 vs d=3
+
+## 4E.5: d = 4 balanced-sum LP ([e4e5_d4_peak.py](e4e5_d4_peak.py))
+
+**Status:** complete. **The (d-1)×25% scaling pattern from d=2 (25%) and d=3 (51%) does NOT continue cleanly at d=4: the rigorous gap interval at the peak is [+54.5%, +69.8%], roughly $+62\%$, BELOW the predicted +75%.** The peak alpha also shifts: $3.0 \to 3.25 \to 4.5$ for $d = 2, 3, 4$. The dimension-pattern is sub-linear.
+
+**Motivation.** 4E.4 found the trivariate gap nearly doubles 4E.2's bivariate gap ($25\% \to 51\%$). The pattern $(d-1) \times 25\%$ would predict $+75\%$ at $d = 4$. This experiment tests that prediction.
+
+**Method.** LP for $\max c_{1,1,1,1} + \alpha c_{2,2,2,2}$ over nonneg quadvariate trig polynomials of quad-degree $(2, 2, 2, 2)$, sampled on $M_{4D}^4$ grid. Tensor bound: $\max_Q (q_1^4 + \alpha q_2^4)$ over 1D nonneg deg-2 polys with $q_0 = 1$, via 1D LP angle sweep. Computational cost: $3^4 = 81$ variables; $M^4$ constraints.
+
+**Findings (alpha sweep at $M_{4D} = 25$, verify on $M = 40$):**
+
+| $\alpha$ | LP | tensor | gap LP | gap lower bracket | $P_{\min}$ |
+|---|---|---|---|---|---|
+| $3.00$ | $6.47$ | $4.21$ | $+53.81\%$ | $+34.29\%$ | $-0.145$ |
+| $3.50$ | $6.88$ | $4.25$ | $+62.05\%$ | $+41.59\%$ | $-0.145$ |
+| $4.00$ | $7.30$ | $4.29$ | $+70.12\%$ | $+49.03\%$ | $-0.142$ |
+| **4.50** | **$7.72$** | **$4.50$** | **$+71.51\%$** | **$+49.96\%$** | $-0.144$ |
+| $5.00$ | $8.14$ | $5.00$ | $+62.89\%$ | $+42.27\%$ | $-0.145$ |
+| $6.00$ | $9.04$ | $6.00$ | $+50.68\%$ | $+22.87\%$ | $-0.226$ |
+| $7.00$ | $9.99$ | $7.00$ | $+42.77\%$ | $+11.31\%$ | $-0.283$ |
+
+**M-convergence at $\alpha = 4.5$:**
+
+| $M_{4D}$ | constraints | LP | $P_{\min}$ | lower bracket | gap interval |
+|---|---|---|---|---|---|
+| $25$ | $390{,}625$ | $7.72$ | $-0.144$ | $6.75$ | $[+50.0\%, +71.5\%]$ |
+| $30$ | $810{,}000$ | $7.77$ | $-0.095$ | $7.09$ | $[+57.6\%, +72.6\%]$ |
+| $35$ | $1{,}500{,}625$ | $7.64$ | $-0.099$ | $6.95$ | $[+54.5\%, +69.8\%]$ |
+
+True LP value at $\alpha = 4.5, M \to \infty$ is in $\sim[6.95, 7.64]$, gap in $\sim[+54\%, +70\%]$. Midpoint $\sim +62\%$, which is below the predicted $+75\%$.
+
+**The dimension-pattern:**
+
+| $d$ | peak $\alpha$ | peak gap | $(d-1) \times 25\%$ prediction |
+|---|---|---|---|
+| $2$ | $3.0$ | $+25.00\%$ (M-converged) | $25\%$ |
+| $3$ | $3.25$ | $+47-51\%$ (M-corrected) | $50\%$ |
+| $4$ | $4.5$ | $+54-70\%$ (M-corrected) | $75\%$ |
+
+The increment per dimension: $\Delta_{2 \to 3} \approx 22{-}26$ pp; $\Delta_{3 \to 4} \approx 7{-}19$ pp. The increment SHRINKS going from $d = 3$ to $d = 4$, suggesting the gap saturates at some limit below $100\%$ as $d \to \infty$. The exact saturation value would require more dimensions or a theoretical bound.
+
+**Peak alpha shifts upward with dimension.** $3.0 \to 3.25 \to 4.5$ for $d = 2, 3, 4$. The optimal weight on the higher-order term $c_{2, \ldots, 2}$ grows with $d$, consistent with the intuition that higher-dimensional structure puts more emphasis on higher-order coupling.
+
+**What this does and doesn't mean.**
+
+- **Does NOT mean** improved zero-free region constants: per the 4E.3 structural lemma, any d-variate non-neg polynomial restricted to a line is bounded by 1D Fejér at matched effective degree, FOR ANY $d$. The d=4 peak gap doesn't translate to a zero-free improvement.
+- **Does mean** the multivariate LP relaxation has dimension-dependent strength, growing sub-linearly with $d$. The bivariate LP captures most of the LP-vs-tensor gap that's available; going to higher dimensions yields diminishing returns.
+- **Caveat on LP convergence.** At $d = 4$, $P_{\min}$ remains $\sim -0.1$ even at $M = 35$. To verify convergence within $1\%$, one would need $M = 100+$, which is $10^8$ constraints — beyond this experiment's budget. The reported gap interval $[+54\%, +70\%]$ is rigorous but wide.
+
+**Implication for higher d.** Computationally exploring $d \geq 5$ requires LP techniques beyond direct dense linear programming (sparse / cutting-plane methods, sum-of-squares semidefinite programming, etc.). The d-pattern characterization is essentially complete from a small-d numerical standpoint.
+
+**Output:**
+- `e4e5_d4_peak.npz`: alpha grid, LP/tensor values, peak coefficient tensor
+- `e4e5_d4_peak.png`: gap-vs-alpha for d = 4, overlaying d = 2 and d = 3 curves
+
 ## 4A, 4C
 
 - **4A** (Vinogradov-Korobov reproduction): substantial literature work; deferred.

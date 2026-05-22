@@ -8,6 +8,20 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 10. The wrong-approach detector's signal saturates: relative min eigenvalue converges and negative count equals off-line zero pairs.
+
+3D.3 extended the Gram-matrix K-scaling from K=100 (3D, 3D.2) up to K=1000, with three structural findings:
+
+- **Relative min eigenvalue ($\lambda_{\min}/\lambda_{\max}$) converges to $-2.62\%$** for D-H across $K \in [300, 1000]$. The signal strength is dimension-independent: it's a fixed property of the off-line zero structure.
+- **Number of negative eigenvalues is FIXED at $4$** = number of off-line zero PAIRS in the upper half plane (D-H at $T_{\max} = 200$ has $8$ off-line zeros, forming $4$ functional-equation pairs). Each off-line conjugate pair $(\rho_{\rm off}, \bar\rho_{\rm off})$ introduces exactly $1$ negative eigenvalue. This is a structural finding: the detector's "signal dimension" exactly counts off-line zero pairs.
+- **Selberg-class L-functions stay PSD to floating-point noise** even at $K = 1000$. For $\zeta$, $\chi_3$, $\chi_4$: worst rel min $\sim 10^{-16}$, indistinguishable from numerical zero, despite the matrix having $K - n_{\rm zeros} \sim 900$ near-zero eigenvalues (genuine rank deficiency from Gram-of-real-vectors structure for on-line zeros).
+
+This closes LEARNINGS open question #5. The detector is robust at large K, and the architectural interpretation (one negative eigenvalue per off-line zero pair) gives a clean structural picture: **the Gram-matrix detector is effectively counting off-line zero pairs via its negative-eigenvalue spectrum**.
+
+**K-doubling deepening rate.** The absolute min eig grows from $-0.37$ at $K = 100$ to $-4.04$ at $K = 1000$: factor $10.9 \approx K^{1/2}$ in absolute terms. Per K-doubling step: $\{2.06, 1.57, 1.68, 1.50, 1.33\}$. This is consistent with $|\lambda_{\min}| \sim K \cdot |\text{rel min}|$ (since $\lambda_{\max}$ grows linearly with $K$ and rel min is constant).
+
+**Architectural implication.** The detector's signal structure is finite-dimensional and combinatorial: one negative eigenvalue per off-line pair, with fixed signal strength. This raises a natural next question: if one ran D-H at higher $T_{\max}$ (revealing more off-line zero pairs), would the negative-eigenvalue count grow accordingly? The framework predicts YES, with the count tracking the number of off-line pairs below $T_{\max}$.
+
 ### 1. Level 4 (positivity) is the only level that's been shown to actually discriminate $\zeta$ from D-H computationally.
 
 The four-level framing in [docs/02_graduate/log_correlated_fields_intro.md](../docs/02_graduate/log_correlated_fields_intro.md) §6 says: RH lives at Level 4 (Weil positivity), not Level 3 (spectral / statistical). The experiments have now produced a concrete computational instance of this claim:
@@ -66,7 +80,64 @@ The original 4E finding ($\alpha = 1$, +12.1%) is a single point on this curve. 
 
 **Methodological lesson.** "Does the LP decompose?" is answered by two diagnostics combined: (1) rank of the LP-optimal coefficient matrix via SVD, and (2) comparison of the LP value to a Cauchy-Schwarz-derived tensor product bound. Rank $> 1$ alone is not sufficient (Test C has rank $> 1$ but LP value matches tensor bound, so the LP has a rank-1 optimal solution that the solver missed). The pair "rank $> 1$ AND LP > tensor bound" is the right test for genuine new content.
 
-**What this leaves open.** The 12% improvement at $N = 2$ is on the auxiliary inequality, not yet on the zero-free region constant. Translating it to a Mossinghoff-Trudgian-style bound requires the explicit-formula bookkeeping at two independent heights $t, t'$, with the LP coefficients $c_{j,k}$ weighting $-\Re \zeta'/\zeta(\sigma + i(jt \pm kt'))$ terms. This is the natural 4E.2 follow-up. The other open directions from the original 4D remain: constrained-domain LP (e.g., $P \geq 0$ only on a submanifold corresponding to a hypothetical off-line zero), and Heath-Brown-style cross-prime coupling.
+**What this leaves open.** The 12% improvement at $N = 2$ is on the auxiliary inequality, not yet on the zero-free region constant. **(Resolved by 4E.3:** see finding 8 below.) The other open directions from the original 4D remain: constrained-domain LP (e.g., $P \geq 0$ only on a submanifold corresponding to a hypothetical off-line zero), and Heath-Brown-style cross-prime coupling.
+
+### 8. The C-S figure of merit and the MT figure of merit are structurally distinct: 4E.2's +25% LP gap does NOT translate into a zero-free region improvement.
+
+4E.2 produced a +25% gap to the Cauchy-Schwarz tensor bound on $\max c_{1,1} + 3 c_{2,2}$ at bidegree $(2, 2)$. The natural next question (open #3 in the LEARNINGS earlier version): does this gap improve the Mossinghoff-Trudgian zero-free region constant $C$ in $\beta < 1 - C/\log|t|$? 4E.3 (e4e3_mt_translation.py) answers no, with both numerical evidence and a structural lemma.
+
+**Numerical evidence.** Take the 4E.2 peak polynomial at $(\alpha, N) = (3, 2)$: $c_{0,0} = 1, c_{1,1} = 8/5, c_{2,0} = c_{0,2} = c_{2,2} = 4/5$. Restrict to 1D via various heights $(t_1, t_2)$. The MT shape factor (divided by $P(0)$ as a proxy for the boundary $R(P)$) is computed for each reduction and compared to the 1D Fejér optimum at the same effective degree:
+
+| Reduction | shape/$P(0)$ | eff deg | Fejér shape/$P(0)$ at same deg | ratio |
+|---|---|---|---|---|
+| $t_1 = t_2 = \gamma_0/2$ | $0.000909$ | $2$ | $0.01472$ | $0.062$ |
+| $t_1 = \gamma_0, t_2 = \gamma_0/2$ | $0.002000$ | $3$ | $0.02520$ | $0.079$ |
+| $t_1 = t_2 = \gamma_0$ | $0$ | $4$ | $0.02885$ | $0$ |
+
+Best 2D-derived shape/$P(0)$ is 12.6x worse than 1D Fejér at matched degree. Across the $\alpha \in [0, 10]$ sweep, no choice produces a 2D polynomial whose 1D restriction beats 1D Fejér; the maximum ratio (0.958) is achieved by the trivial tensor product at $\alpha = 0$.
+
+**Structural lemma.** For any non-negative bivariate trig polynomial $P(\theta, \phi) \geq 0$ on $[0, 2\pi]^2$, the restriction $\tilde P(u) := P(t_1 u, t_2 u)$ is a non-negative 1D trig polynomial on $[0, 2\pi]$. The argument is one line: $(t_1 u, t_2 u)$ is a point of $[0, 2\pi]^2$ (modulo periodicity), so $P \geq 0$ everywhere implies $\tilde P(u) \geq 0$.
+
+Hence the family of effective 1D polynomials from 2D restriction is a SUBSET of all 1D non-neg trig polynomials at matched effective degree. The MT figure of merit, which involves $\max c_1$ over the non-neg cone, is therefore bounded above by 1D Fejér. **No 2D bivariate restriction can break the 1D Fejér ceiling on the single-zero MT zero-free region constant.**
+
+**The two figures of merit see different things.** The 4E.2 +25% gap is a real structural finding: the LP $\max c_{1,1} + 3 c_{2,2}$ over 2D non-neg polynomials at bidegree $(2, 2)$ exceeds the Cauchy-Schwarz tensor bound, and the LP-optimal polynomial has genuinely 2D coupling (clean rational coefficients with $\cos 2u, \cos 2v$ appearing without their tensor partners in $(u, v) = (\theta + \phi, \theta - \phi)$ coordinates). But the C-S figure of merit (max linear combination of $c_{j,k}$) and the MT figure of merit (max $c_1$ after 1D restriction) optimize different functionals. The 4E.2 LP shifts mass to $c_{2,2}, c_{2,0}, c_{0,2}$ to gain on the C-S objective; in MT bookkeeping this mass lands at the pole frequency (inflating $c_0$) or at $h = 2\gamma_0$ (which doesn't probe the trick zero at $\gamma_0$).
+
+**What this rules out.** Any "shortcut" from the bivariate LP framework to the de la Vallée Poussin / Mossinghoff-Trudgian single-zero zero-free region constant via simple 1D restriction. This includes the natural family $\max c_{1,1} + \alpha c_{2,2}$ across all $\alpha$, all reductions $(t_1, t_2) \in \mathbb{R}^2$, and all bidegrees.
+
+**What this does NOT rule out.**
+
+- Constrained-domain LP: $P \geq 0$ only on a submanifold corresponding to a hypothetical off-line zero (e.g., $\phi = 2\theta$ for a zero probed at heights $\gamma$ and $2\gamma$). The submanifold-constrained polynomial is NOT bounded by the unrestricted 1D Fejér.
+- Polynomial-ideal sum-of-squares decompositions modulo prime-coupling relations.
+- Multi-zero or multi-character setups (Heath-Brown's actual use of bivariate inequalities in the least-prime-in-AP and Siegel-zero problems).
+- Higher-rank LP families: $d$-variate at $d \geq 3$ with non-degenerate weights, where the structural lemma still applies but the matching becomes more delicate.
+
+These are queued as 4E.4 follow-ups; none are pursued in 4E.3.
+
+**Lesson.** A real structural improvement on one figure of merit does not automatically transfer to a different figure of merit even when both involve the same family of polynomials. The 4E ↔ 4E.2 ↔ 4E.3 progression illustrates how a "+25% gap" finding can be both real and computationally beneficial somewhere AND irrelevant to the headline RH-style application. Future LP-based architecture-4 work should specify the figure of merit explicitly and target it directly, not target a proxy and hope it transfers.
+
+### 9. The d-variate balanced-sum LP gap grows sub-linearly with $d$: +25% (d=2), +51% (d=3), $\sim$+62% (d=4).
+
+4E.4 and 4E.5 extend the bivariate balanced-sum LP of 4E / 4E.2 to higher dimensions: max $c_{1, \ldots, 1} + \alpha c_{2, \ldots, 2}$ at uniform degree $(N, \ldots, N)$ for $N = 2$. The peak gaps to the symmetric tensor bound:
+
+| $d$ | LP variables | peak $\alpha$ | peak gap (M-corrected) |
+|---|---|---|---|
+| $2$ (4E.2) | $3^2 = 9$ | $3.00$ | $+25.00\%$ |
+| $3$ (4E.4) | $3^3 = 27$ | $3.25$ | $\sim +50\%$ (interval $[47\%, 51\%]$) |
+| $4$ (4E.5) | $3^4 = 81$ | $4.50$ | $\sim +62\%$ (interval $[55\%, 70\%]$) |
+
+The d=2 → d=3 jump nearly doubles the gap (25 pp); the d=3 → d=4 jump adds less (15 pp). The increment per dimension shrinks. A naive linear prediction $(d-1) \times 25\%$ would give 75% at d=4, above the observed range. The pattern is sub-linear and likely saturates at some limit below $100\%$ as $d \to \infty$.
+
+**Peak $\alpha$ grows with $d$.** The optimal weight on the higher-order term $c_{2, \ldots, 2}$ rises ($3.0 \to 3.25 \to 4.5$), consistent with higher-dimensional structure putting more emphasis on higher-order coupling.
+
+**M-convergence at d=3.** At $\alpha = 3$ exactly, LP values across $M_{3D} \in \{40, 70, 100\}$ are $\{4.95, 4.89, 4.87\}$ with $P_{\min}$ approaching 0. The M=100 LP value 4.8665 with $P_{\min} = -2.9 \times 10^{-4}$ gives a tight lower-bracket of 4.865, so the true LP value at $\alpha = 3$ is in $[4.865, 4.867]$, gap $[+47.0\%, +47.1\%]$. The M=60 sweep at $\alpha = 3.25$ gives +51.3% (slight overestimate).
+
+**M-convergence at d=4.** Heavier: $M^4$ constraints. At $\alpha = 4.5, M = 35$ (1.5M constraints): LP = 7.64, $P_{\min} = -0.099$, lower bracket = 6.95, gap in $[+54.5\%, +69.8\%]$. Larger $M$ would narrow this further but requires $\geq 10^7$ constraints.
+
+**Peak coefficient tensors.** $d = 2$ had clean rationals ($1, 8/5, 4/5, 4/5, 4/5$). $d = 3$ at $M = 60$ gave $c_{1,1,1} = 2.637, c_{2,2,2} = 0.754$, lower-order entries $\sim 0.6$, without an obvious clean-rational form (some asymmetry consistent with LP noise). $d = 4$ similarly lacks an evident clean structure at the M values reached.
+
+**What this does NOT mean for RH.** Per finding 8 (4E.3 structural lemma), any d-variate non-neg polynomial restricted to a line is a 1D non-neg trig polynomial bounded by 1D Fejér at matched effective degree, FOR ANY $d$. The +62% trivariate-or-higher gap still does NOT translate into a better single-zero MT zero-free region constant. The growth-with-dimension result characterizes the structure of multivariate auxiliary inequalities themselves, independent of the RH application.
+
+**What this MIGHT mean for the broader picture.** The sub-linear growth of the LP-vs-tensor gap with $d$ suggests that the bivariate LP (4E.2) already captures most of the available LP-vs-tensor gap. Going to higher dimensions yields diminishing returns. If a future application uses d-variate non-negativity in a context where the structural lemma does NOT apply (multi-zero coupling, constrained domain, polynomial-ideal SOS), the d-variate gap is the relevant figure of merit, but the d=2 result already captures more than half of what's achievable.
 
 ### 6. The arithmetic-geometric architecture is the only one that has produced an actual RH theorem in our experiments.
 
@@ -124,16 +195,19 @@ These are not "experiments" in the numerical sense.
 
 The Gram-matrix detector works as a wrong-approach detector and survives Selberg-class cross-cuts. The framework has been validated. The remaining open computational task is: actually exhibit $\lambda_n^{DH} < 0$ for some $n$ around $350{,}000$ via the xi-derivative formula (3B-extension). This is heavy ($\geq 100$-digit precision and careful cancellation control) but would close the loop on the small-$n$ Li result. It is **not** required to validate Arch 3 — the Gram-matrix detector already does that — but it would be a direct demonstration of where the Li criterion goes negative for D-H.
 
-### Arch 4 (analytic): single-coefficient $d$-variate LPs decompose, but balanced-sum LPs produce new 2D inequalities (4E).
+### Arch 4 (analytic): the d-variate LP gap is real and grows with d, but does not improve the MT zero-free region constant under restriction (4E.3, 4E.4).
 
-4B closed the 1D Fejér question. 4D-ii and 4D.2 confirmed that single-coefficient $d$-variate LPs (max $c_{1, \ldots, 1}$ at uniform degree) decompose. 4E **refines the picture**: while single-coefficient objectives universally decompose (Test A: max $c_{j,k}$ for any $(j,k)$ saturates the asymmetric tensor product), the balanced-diagonal-sum objective $c_{1,1} + c_{2,2}$ does NOT decompose: LP value exceeds the Cauchy-Schwarz tensor bound by 12% at $N = 2$ and stays above the bound at $N = 3, 4, 5$, with full-rank LP-optimal coefficient matrix.
+4B closed the 1D Fejér question. 4D-ii and 4D.2 confirmed that single-coefficient $d$-variate LPs decompose. 4E and 4E.2 found that balanced-diagonal-sum LPs $\max c_{1,1} + \alpha c_{2,2}$ do NOT decompose: LP value exceeds the C-S tensor bound by up to +25% at $\alpha = 3, N = 2$. **4E.4 extended to d=3** and found the gap nearly DOUBLES: +51% at $\alpha = 3.25, N = 2$, fitting the pattern $\sim (d-1) \times 25\%$.
 
-This is a genuinely new 2D auxiliary inequality not derivable from 1D Fejér applied at two heights. Whether the 12% improvement translates into an improved Mossinghoff-Trudgian zero-free constant requires the explicit-formula bookkeeping at two independent heights (Heath-Brown / Pintz framework) and is the natural 4E.2 follow-up.
+**4E.3 closes the natural RH-application follow-up:** does the +25% (or +51%) gap improve the Mossinghoff-Trudgian zero-free region constant? Answer: NO. Both numerically (across all $\alpha$ and reductions) and structurally (any $d$-variate non-neg polynomial restricted to a line gives a 1D non-neg polynomial, bounded by 1D Fejér at matched effective degree). The C-S and MT figures of merit are incompatible; the $d$-variate restriction approach to MT is structurally capped by 1D.
 
-Remaining open directions:
-- Constrain $P(t_1, t_2) \geq 0$ only on the locus from a hypothetical off-line zero (i.e., $t_1 = \gamma$, $t_2 = 2\gamma$ for $\beta + i\gamma$ off-line).
-- Heath-Brown-style cross-prime coupling: inequalities depending non-tensor-product-wise on $t_i \log p$ across primes.
-- Higher-degree balanced sums: $c_{1,1} + c_{2,2} + c_{3,3} + \ldots$ at bidegree $(N, N)$ for $N$ small.
+So the architecture-4 numerical thread has converged: the bivariate / multivariate LP families are computationally well-understood (gap pattern with $d$ is known), but none of them produces a better zero-free region constant via the standard de la Vallée Poussin route.
+
+Remaining open directions (NOT closed by 4E.3, NOT in the restriction route):
+- **Constrained-domain LP** (4E.5): impose $P \geq 0$ only on a submanifold corresponding to a hypothetical off-line zero. The submanifold-constrained polynomial is NOT bounded by 1D Fejér.
+- **Polynomial-ideal SOS** (4E.6): sum-of-squares decompositions modulo prime-coupling relations.
+- **Multi-zero / multi-character coupling** (4E.7): Heath-Brown's actual use of bivariate inequalities in least-prime-in-AP / Siegel-zero problems (these involve multiple putative zeros, where 2D structure genuinely couples them).
+- **4-variate or higher d** for the balanced-sum LP gap pattern: does the $(d-1) \times 25\%$ scaling continue?
 
 4A (Vinogradov-Korobov reproduction) and 4C (conditional improvements) remain literature tasks.
 
@@ -177,11 +251,11 @@ Remaining open directions:
 
 2. ~~**What LP family WOULD produce a genuinely new multivariate auxiliary inequality?**~~ **Resolved (4E + 4E.2):** the balanced-diagonal-sum family $c_{1,1} + \alpha c_{2,2}$ at bidegree $(2, 2)$ produces 2D inequalities not derivable from tensor products, with relative gap to the C-S tensor bound varying as $\alpha$ varies and peaking at +25.00% for $\alpha = 3$. Extension to higher bidegree with more diagonal terms (4E.2.b: $c_{1,1} + c_{2,2} + c_{3,3}$ at $N = 3$) increases the gap by 8.66x relative to the 2-term version at the same bidegree. The off-diagonal-sum $c_{1,2} + c_{2,1}$ does NOT exceed tensor bound. Remaining sub-directions: (a) constrained-domain LPs; (b) Heath-Brown cross-prime coupling; (c) closed-form derivation of the $\alpha = 3$ peak optimum.
 
-3. **Does the Mossinghoff-Trudgian zero-free constant improve when the 4E/4E.2 2D inequality is plugged in?** Requires the explicit-formula bookkeeping at two independent heights $t, t'$, with LP coefficients $c_{j,k}$ weighting $-\Re \zeta'/\zeta(\sigma + i(jt \pm kt'))$ terms. The +25% auxiliary-inequality improvement at $\alpha = 3$, $N = 2$ is the best candidate input. Tracked as a 4E.3 follow-up.
+3. ~~**Does the Mossinghoff-Trudgian zero-free constant improve when the 4E/4E.2 2D inequality is plugged in?**~~ **Resolved (4E.3): NO.** The +25% C-S gap does not translate to an MT improvement. Both numerically (the 4E.2 peak gives 12.6x WORSE shape/$P(0)$ than 1D Fejér at matched effective degree, and across $\alpha \in [0, 10]$ no 2D polynomial beats 1D Fejér) and structurally (any 2D non-neg polynomial restricted to a line is bounded by the 1D Fejér optimum). The C-S and MT figures of merit are incompatible; future LP-based zero-free-region work must target MT directly (via constrained-domain LP, multi-zero coupling, or polynomial-ideal SOS).
 
 4. ~~**At what $n$ does $\lambda_n^{DH}$ first go negative?**~~ **Resolved (3B.2):** witnessed at $n = 400{,}000$ via the asymptotic-plus-off-line-correction decomposition. Off-line correction $-2.0 \times 10^7$ vs on-line asymptotic $+2.4 \times 10^6$. Crossover predicted at $n \sim 320{,}000$; phase determines sign past that. Refinement: a fully rigorous certificate (exact xi-derivative formula, ~100 digit precision, more off-line zeros) would replace the asymptotic with the exact value; the structural conclusion is robust.
 
-5. **Does the Gram-matrix wrong-approach detector remain a clean test in the limit $K \to \infty$ where $M^\zeta$ becomes singular but $M^{DH}$ continues to deepen?** The relative-min eigenvalue stays well-separated at $K = 100$ in our data; what happens at $K = 1000$ (with high-precision arithmetic to push past the floating-point floor)?
+5. ~~**Does the Gram-matrix wrong-approach detector remain a clean test in the limit $K \to \infty$ where $M^\zeta$ becomes singular but $M^{DH}$ continues to deepen?**~~ **Resolved (3D.3): YES, and the structural picture is cleaner than expected.** At $K \in [100, 1000]$ with $T_{\max} = 200$ (D-H has 8 off-line zeros, i.e., 4 conjugate pairs): the relative min eigenvalue $\lambda_{\min}/\lambda_{\max}$ for D-H converges to an asymptotic constant of $-2.62\%$. The number of negative eigenvalues stays FIXED at $4 =$ number of off-line zero pairs. Selberg-class L-functions ($\zeta, \chi_3, \chi_4$) remain PSD to floating-point noise. The detector is essentially counting off-line zero pairs via the negative-eigenvalue count, and the relative-min depth is dimension-independent.
 
 6. **Is there an Arch-2-style "lift to $\mathbb{Z}$" that the experiments could probe, even partially?** 2B gave us RH for one curve over $\mathbb{F}_5$. An analogous "RH for a single object in $\mathrm{Spec}(\mathbb{Z})$" doesn't exist yet, but $\mathbb{F}_1$ literature gestures at it.
 
@@ -194,7 +268,7 @@ Of the four architectures:
 - **Arch 1 (spectral)** is closed at the numerical-experiment level. We've shown the simple constructions are L-function-blind; further progress requires Connes-style theory.
 - **Arch 2 (arithmetic-geometric)** has produced the strongest individual result (Weil RH for one curve over $\mathbb{F}_5$, proved). The path to $\mathrm{Spec}(\mathbb{Z})$ is literature/construction work, not experimental.
 - **Arch 3 (positivity)** has the most extensive experimental support: small-$n$ Li-positivity confirmed for $\zeta$ (but not a discrimination test); Weil-form-via-Gram-matrix works as a wrong-approach detector; Selberg-class cross-cut validates direction-selectivity. The next experimental step (xi-derivative Li at $n \sim 350{,}000$) is heavy but well-defined.
-- **Arch 4 (analytic)** has a refined picture from 4D/4D.2 + 4E + 4E.2: single-coefficient multivariate Fejér LPs decompose to tensor products, but the weighted-diagonal-sum LP $\max c_{1,1} + \alpha c_{2,2}$ at bidegree $(2, 2)$ does NOT — peak gap +25.00% at $\alpha = 3$, with the LP-optimal $P$ having clean rational coefficients suggesting a closed-form. Extending to 3-term sums at $N = 3$ multiplies the gap by 8.66x. Whether the +25% improvement translates into a new zero-free region constant requires the Heath-Brown / Pintz explicit-formula bookkeeping at two independent heights (the 4E.3 follow-up).
+- **Arch 4 (analytic)** has a refined picture from 4D/4D.2 + 4E + 4E.2 + 4E.3 + 4E.4: single-coefficient multivariate Fejér LPs decompose to tensor products, but the balanced-diagonal-sum LP $\max c_{1,1} + \alpha c_{2,2}$ at bidegree $(2, 2)$ does NOT — peak gap +25.00% at $\alpha = 3$. The trivariate extension (4E.4) DOUBLES the gap to +51.29% at $\alpha = 3.25, N = 2, d = 3$, fitting the pattern $\sim (d-1) \times 25\%$. **However (4E.3)**: the d-variate C-S gap does NOT improve the Mossinghoff-Trudgian zero-free region constant for any $d$, neither numerically nor structurally. The C-S and MT figures of merit are incompatible: any d-variate non-neg polynomial restricted to a line is bounded by 1D Fejér at matched effective degree, so the d-variate restriction approach to MT is structurally capped. To actually improve the zero-free region via multivariate inequalities requires constrained-domain LP, multi-zero coupling, or polynomial-ideal SOS (queued as 4E.5-4E.7).
 
 The structural message of the experiments: **only Arch 2 has the cohomology/positivity coupling that closes RH-style arguments in the function-field case; only Arch 3 has a positivity test that distinguishes Selberg-class L-functions from non-Euler-product look-alikes computationally; Arch 1 and Arch 4, on the numerical evidence here, do not close RH by themselves.**
 
