@@ -38,7 +38,7 @@
 - [x] Arch 4E.4: trivariate balanced-sum LP — gap +51% at alpha=3.25, N=2 (doubles bivariate)
 - [x] Arch 4E.5: d=4 balanced-sum LP — gap [+55%, +70%] at alpha=4.5, N=2 (sub-linear scaling)
 - [x] Arch 2B: Weil RH for E: y^2 = x^3 + x + 1 over F_5 verified end-to-end
-- [x] Arch 2A: Weil-proof diff table (literature deliverable, see experiments/arithmetic_geometric/2A_weil_proof_diff.md)
+- [x] Arch 2A: Weil-proof diff table + 17-constraint spec + candidate evaluation framework (see experiments/arithmetic_geometric/2A_weil_proof_diff.md and 2A_candidate_evaluation.md)
 
 ### Pre-existing experiments
 
@@ -55,8 +55,13 @@
 - [ ] Arch 4E.6: constrained-domain LP — impose P ≥ 0 only on a hypothetical-off-line-zero submanifold (the only LP direction not bounded by 1D Fejér per 4E.3's structural lemma)
 - [ ] Arch 4E.7: multi-zero MT bookkeeping — Heath-Brown-style coupling for least-prime-in-AP or Siegel-zero problems
 - [ ] Arch 4E.8: polynomial-ideal sum-of-squares decompositions for the Weil quadratic form
-- [ ] Arch 2C: survey state of F_1 / Arakelov-cohomology programs as of 2025
+- [ ] Arch 2C: survey state of F_1 / Arakelov-cohomology programs as of 2025 (use the scorecard structure from 2A_candidate_evaluation.md)
 - [ ] Arch 2D: identify the smallest open conjecture in Deninger's program worth targeting
+- [ ] Arch 2A R1 (lowest-hanging): sharpen D-H exclusion (constraint xvii) for each of the six scored candidates
+- [ ] Arch 2A R2: explicitly compute Spec(Z) x_F1 Spec(Z) in Borger / Lorscheid frameworks (constraint ii)
+- [ ] Arch 2A R3: identify whether Connes-Consani positivity conjecture fails kill criterion K1 (RH-equivalence)
+- [ ] Arch 2A R4: explore hybrid candidates (Borger Frobenius + Connes trace formula)
+- [ ] Arch 2E (numerical probe): Adams-operation spectrum vs zeta zeros — does Borger's psi_p have zeta-zero-like spectrum at small p?
 
 ## Open — docs and visualizations
 

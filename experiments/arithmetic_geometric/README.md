@@ -63,6 +63,20 @@ A step-by-step trace of Weil's RH proof for curves over $\mathbb{F}_q$, paired w
 
 **§4-5 in the document**: expanded analysis of why the obstruction is constructive (with cross-cut to Arch 3's analytic circularity wall — the analytic and geometric obstructions are two views of the same missing positivity), and a list of 17 specific characteristics that the missing mathematics would have to deliver: a base scheme below $\mathbb{Z}$ (i-iii), a cohomology theory on the surface $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ with Poincaré duality and Künneth (iv-vii), a Frobenius substitute with spectrum at zeta zeros (viii-x), a Hodge index positivity certificate provable without RH input (xi-xiii), and four test cases the construction must pass (xiv-xvii, including correctly excluding Davenport-Heilbronn).
 
+## 2A: Candidate evaluation methodology ([2A_candidate_evaluation.md](2A_candidate_evaluation.md))
+
+**Status:** complete (living document).
+
+Operationalizes the 17-constraint list from `2A_weil_proof_diff.md §5` into a workable evaluation framework: precise checkable predicates for each constraint, a standardized submission template for proposing new candidate constructions, current scorecards for the six major candidates (Deitmar, Lorscheid, Borger, Connes, Deninger, Connes-Consani), and methodology notes on weighting, combinability of candidates, and four sharpened kill criteria.
+
+**Key finding from current scoring**: no existing candidate has even a partial ✅ on (xi-xiii) — the Hodge index positivity provable without RH input. This is universally open across all six candidates and is the central construction problem.
+
+**Suggested next steps** (per §V of the evaluation doc):
+- **R1**: Sharpen the D-H exclusion check (xvii) for each candidate (mostly bookkeeping; lowest-hanging fruit)
+- **R2**: Explicitly compute the fiber product $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ in Borger / Lorscheid frameworks
+- **R3**: Identify whether Connes-Consani's positivity conjecture is RH-equivalent (kill criterion K1) or has an independent constructive proof candidate
+- **R4**: Explore hybrid candidates — the "Borger Frobenius + Connes trace formula" hybrid is the most promising on paper
+
 ## 2C, 2D
 
 - **2C** (state of $\mathbb{F}_1$ / Arakelov programs as of 2025): literature review; deferred.

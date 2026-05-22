@@ -237,7 +237,11 @@ The list above is striking for what it doesn't ask for. The new mathematics does
 
 What it does need is **a new geometric / cohomological object** that simultaneously satisfies (i)-(xiii), with the test cases (xiv)-(xvii) as consistency checks.
 
-### 5.7 The shape of the solution, if there is one
+### 5.7 Companion document: candidate evaluation methodology
+
+[2A_candidate_evaluation.md](2A_candidate_evaluation.md) operationalizes this 17-constraint list into a workable scoring framework: checkable predicates for each constraint, a standardized submission template, current scorecards for the six major candidates (Deitmar, Lorscheid, Borger, Connes, Deninger, Connes-Consani), kill criteria for ruling out bad candidates, and methodology notes on candidate combinability. **Universal current finding**: no candidate has even a partial ✅ on (xi-xiii), the Hodge index positivity. This is the central open construction problem.
+
+### 5.8 The shape of the solution, if there is one
 
 Putting the constraints together, the missing mathematics — whatever its eventual form — has to be a single object (call it the "arithmetic surface" or whatever) that:
 

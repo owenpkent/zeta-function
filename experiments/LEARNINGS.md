@@ -159,13 +159,19 @@ The d=2 → d=3 jump nearly doubles the gap (25 pp); the d=3 → d=4 jump adds l
 
 Arch 2B verified the Weil RH for the elliptic curve $E: y^2 = x^3 + x + 1$ over $\mathbb{F}_5$ exactly: Frobenius eigenvalues $\alpha = -3/2 \pm i\sqrt{11}/2$, $|\alpha|^2 = 5$, and $|C(\mathbb{F}_{5^k})|$ matches the Weil formula at $k = 1, \ldots, 6$ by brute-force point counting. This is not "evidence for RH"; it is RH for that curve, proved.
 
-**2A** ([2A_weil_proof_diff.md](../experiments/arithmetic_geometric/2A_weil_proof_diff.md)) traces the proof step by step against $\mathrm{Spec}(\mathbb{Z})$. The proof's structural shape — **Lefschetz fixed-point + Poincaré duality + Hodge index theorem** — works for curves over $\mathbb{F}_q$ because all three pieces exist on the SAME object (the surface $C \times C$). Over $\mathrm{Spec}(\mathbb{Z})$, each piece is either missing entirely or available only in a partial form:
+**2A** traces the proof step by step against $\mathrm{Spec}(\mathbb{Z})$. The two companion docs:
+- [2A_weil_proof_diff.md](../experiments/arithmetic_geometric/2A_weil_proof_diff.md): the diff itself + §4 expansion + §5 list of 17 constraints the missing mathematics must satisfy
+- [2A_candidate_evaluation.md](../experiments/arithmetic_geometric/2A_candidate_evaluation.md): checkable predicates for each constraint + submission template for new candidates + scorecards for the six major existing candidates (Deitmar, Lorscheid, Borger, Connes, Deninger, Connes-Consani) + kill criteria
+
+The proof's structural shape — **Lefschetz fixed-point + Poincaré duality + Hodge index theorem** — works for curves over $\mathbb{F}_q$ because all three pieces exist on the SAME object (the surface $C \times C$). Over $\mathrm{Spec}(\mathbb{Z})$, each piece is either missing entirely or available only in a partial form:
 
 - **Lefschetz**: requires a geometric Frobenius endomorphism. $\mathrm{Spec}(\mathbb{Z})$ has none; Connes proposes the $\mathbb{R}^*_+$-action on the adèle class space and Deninger proposes a real-time flow on a hypothetical foliated space, but neither object has been built.
 - **Poincaré duality**: requires a non-degenerate cohomological pairing on $\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$, which in turn requires a "base below $\mathbb{Z}$" (traditionally called $\mathbb{F}_1$). The functional equation $\xi(s) = \xi(1-s)$ gives the consequence at the L-function level but not the underlying cohomology pairing.
 - **Hodge index theorem**: requires a 2-dimensional geometric object (the surface $C \times C$ in the function-field case). Without the surface $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$, no analogue. The Arch 3 finding (#7, the Weil-form duality circularity) is the analytic shadow of this missing geometric positivity.
 
 **The single-sentence diagnosis**: Architecture 2's obstruction is constructive, not analytic — the proof template is well-understood, but the underlying object on which to instantiate it has not been built. The three programs (Connes, Deninger, $\mathbb{F}_1$) each address one corner of the obstruction triangle (Frobenius / surface / positivity respectively), but no single program has assembled all three.
+
+**The universal scorecard finding** (from `2A_candidate_evaluation.md`): scored against the 17 specific constraints, the six major candidates collectively cover the Frobenius slot (constraints viii-x, especially Connes and Borger) and the base slot (i-iii, especially Deitmar and Lorscheid), but **no candidate has even a partial ✅ on the Hodge index positivity slot (xi-xiii)**. The deepest open problem is constructing a positivity certificate on the (hypothetical) surface $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ that is provable WITHIN the new framework, not requiring RH as input. Most "RH proofs" in the literature fail kill criterion K1: they reduce RH to a different positivity statement that is morally RH-equivalent rather than providing an independent constructive proof.
 
 **Cross-cut to Arch 3 (positivity).** Arch 3 probes the (c) Hodge-index slot analytically rather than geometrically (Weil positivity on test functions). Arch 3F-3I (the Weil-form duality experiments) found that the analytic version hits a circularity wall: any unconditional proof requires GRH-strength input. This is consistent with 2A's diagnosis — the analytic shadow inherits the circularity of the missing geometric positivity. **The analytic and geometric obstructions are the same obstruction, viewed from two sides.**
 
@@ -210,15 +216,24 @@ $$W(b) = \underbrace{8(b^{1/2} - b^{-1/2})^2}_{\text{boundary}} - 2\sum_{p^k < b
 
 1A + 1B + 1C closed the door on the BK family and ST-style modifications. The remaining direction (1D, Connes adèle class space) is a literature/theory task, not numerical. No further Arch 1 numerical experiment is expected to produce new structural information.
 
-### Arch 2 (arithmetic-geometric): the open frontier is literature-and-construction work; 2A has now mapped it.
+### Arch 2 (arithmetic-geometric): the open frontier is literature-and-construction work; 2A has now mapped it and provided an evaluation framework.
 
-2B (worked example over $\mathbb{F}_5$) is one of the strongest results we have, but it doesn't move toward $\mathrm{Spec}(\mathbb{Z})$. **2A** (Weil-proof diff table, complete) traces precisely what Weil's proof uses (Lefschetz + Poincaré + Hodge index, all on the surface $C \times C$) and what would be needed over $\mathrm{Spec}(\mathbb{Z})$. Diagnosis: Architecture 2's obstruction is *constructive* — the proof template is well-understood, but the underlying object hasn't been built. The three programs (Connes, Deninger, $\mathbb{F}_1$) each address one corner of the obstruction triangle but none has assembled all three on a single object. See [2A_weil_proof_diff.md](../experiments/arithmetic_geometric/2A_weil_proof_diff.md) for the full step-by-step table.
+2B (worked example over $\mathbb{F}_5$) is one of the strongest results we have, but it doesn't move toward $\mathrm{Spec}(\mathbb{Z})$. **2A** is complete and consists of two companion documents:
 
-Remaining literature tasks:
-- **2C** (state of the $\mathbb{F}_1$ / Arakelov programs as of 2025): survey current definitions and partial results.
+- [2A_weil_proof_diff.md](../experiments/arithmetic_geometric/2A_weil_proof_diff.md) — the diff itself, the constructive-obstruction analysis (§4), and the 17-constraint specification of what the missing mathematics must deliver (§5).
+- [2A_candidate_evaluation.md](../experiments/arithmetic_geometric/2A_candidate_evaluation.md) — the methodology: checkable predicates per constraint, submission template for new candidates, scorecards for six major candidates, kill criteria.
+
+Diagnosis: Architecture 2's obstruction is *constructive* — the proof template is well-understood, but the underlying object hasn't been built. The three programs (Connes, Deninger, $\mathbb{F}_1$ variants) each address one corner of the obstruction triangle but none has assembled all three on a single object. The universal scorecard finding: no candidate has even a partial ✅ on the Hodge index positivity slot (xi-xiii). This is the central open construction problem.
+
+Remaining literature tasks (informed by the evaluation framework):
+- **R1** (lowest-hanging fruit per 2A_candidate_evaluation §V): sharpen the D-H exclusion check (xvii) for each candidate. Bookkeeping but valuable.
+- **R2**: explicitly compute the fiber product $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$ in Borger / Lorscheid.
+- **R3** (hardest): identify whether Connes-Consani's positivity conjecture is kill-criterion K1 (RH-equivalent) or has an independent constructive proof candidate.
+- **R4**: explore hybrid candidates — the "Borger Frobenius + Connes trace formula" hybrid is most promising on paper.
+- **2C** (state of the $\mathbb{F}_1$ / Arakelov programs as of 2025): the framework supports this naturally — write up the survey using the scorecard structure.
 - **2D** (smallest open conjecture in Deninger's program): identify a meaningful target shorter than full RH.
 
-These are not "experiments" in the numerical sense.
+These are not "experiments" in the numerical sense, but they now have a defined methodology and evaluation criteria.
 
 ### Arch 3 (positivity): the framework is robust; an open computational frontier exists (the $n \sim 350{,}000$ Li negativity).
 
