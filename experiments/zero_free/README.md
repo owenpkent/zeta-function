@@ -454,6 +454,37 @@ None of these is "LP over a subset." 4E.6 narrows the open landscape to these th
 - `e4e6_constrained_lp.npz`: all four setups' LP values, baselines, hit-bound flags
 - `e4e6_constrained_lp.png`: four-panel summary plot, including Setup D's convergence-to-1.0 trace
 
+## 4E.7: Multi-zero MT LP ([e4e7_multi_zero_lp.py](e4e7_multi_zero_lp.py), [.md](e4e7_multi_zero_lp.md))
+
+**Status:** complete. **Multi-zero LP escape from 4E.3 is real at the shape-factor level but produces rank-1 LP optima at naive objectives.** Sharpens the picture started by 4E.6.
+
+**Setup:** postulate $d$ putative zeros at independent heights $\gamma_1, \ldots, \gamma_d$. The relevant polynomial is multivariate $P(\theta_1, \ldots, \theta_d) = \sum c_{j_1, \ldots, j_d} \cos(j_1 \theta_1) \cdots \cos(j_d \theta_d) \ge 0$ with constraint set the full $d$-torus $[0, 2\pi]^d$. **4E.3's lemma applies only to 1D line restrictions** — full $d$-torus non-negativity is structurally different.
+
+**Two-zero shape factor:**
+
+| $N$ | $q_1^2 = $ max $c_{1,1}$ | $\lambda_{1,1} = (q_1^2 - 1)^2 / 4$ | $\lambda_1^2$ (naive independent) | ratio |
+|---|---|---|---|---|
+| 2 | 2.000 | 0.2500 | 0.0018 | **137×** |
+| 3 | 2.618 | 0.6545 | 0.0091 | **72×** |
+| 4 | 3.000 | 1.0000 | 0.0179 | **56×** |
+
+The joint MT-like shape factor is structurally much larger than two independent single-zero applications would give.
+
+**Rank diagnostics:** the LP-optimal polynomial for max $c_{1,1}$ is rank-1 (= tensor product $Q(\theta) Q(\phi)$ with $Q$ the 1D Fejér optimum). Same for balanced-sum LP $\max c_{1,0} + c_{0,1} + \alpha c_{1,1}$: rank-1 at all tested $\alpha \in \{0, 0.5, 1, 2, 3, 5\}$. Same for Heath-Brown-style $a(c_{1,0} + c_{0,1}) + b c_{1,1}$ across $(a, b)$ sweep. **Naive multi-zero objectives DO NOT exceed the tensor bound.** The 2D LP's strength (per 4E.2) requires HIGHER harmonics like $c_{2,2}$ — first-harmonic-only multi-zero objectives decompose.
+
+**Verdict.** The multi-zero LP escape from 4E.3 is real at the shape-factor level (per Finding 1 above) but does not produce non-tensor LP optima at first-harmonic objectives. A genuine multi-zero MT improvement for RH on zeta would require:
+- Combining this LP with the higher-harmonic LP gain (4E.2's +25% rank-2 win via $c_{1,1} + \alpha c_{2,2}$).
+- Explicit Heath-Brown bookkeeping (Heath-Brown 1992 §3, Pintz 1976).
+- Careful tracking of $R(P)$ for the 2D polynomial.
+
+This is research-grade combination beyond this experiment. The translation to a zero-free region constant for ASYMPTOTIC RH on zeta is also constrained by Riemann-von Mangoldt: at height $T$, consecutive zeros are spaced $\sim 2\pi/\log T$ apart, so multi-zero MT applies tightly only at finite height. Heath-Brown / Pintz multi-zero results give constant-factor improvements for FINITE-RANGE problems (least prime in AP, Siegel zeros for specific moduli) where multiple zeros at controlled distances are postulated by the problem setup.
+
+**Cross-cut to 4E.6**: both 4E.6 (constrained-domain) and 4E.7 (multi-zero) are LP-based escape routes from 4E.3's line-restriction lemma. 4E.6 collapsed entirely; 4E.7 produces a real shape-factor improvement but bounded by tensor decomposition. The remaining LP-escape direction is **4E.8 (polynomial-ideal SOS via Putinar/Schmüdgen)** which requires SDP not LP and could give structurally different bounds.
+
+**Output:**
+- `e4e7_multi_zero_lp.npz`: single-zero / two-zero / balanced-sum / Heath-Brown data
+- `e4e7_multi_zero_lp.png`: three-panel summary (single-zero shape vs N, joint vs independent log-scale, balanced-sum LP sweep)
+
 ## 4A, 4C
 
 - **4A** (Vinogradov-Korobov reproduction): substantial literature work; deferred.

@@ -60,7 +60,7 @@ zeta-function/
 │   ├── _shared/                 # LFunction interface, zeta, Davenport-Heilbronn control
 │   ├── positivity/              # Arch 3 (Li coefficients, Weil quadratic form, Gram-matrix detector at K=1000 and T_max=350)
 │   ├── spectral/                # Arch 1 (Berry-Keating discretization, Sierra-Townsend variants)
-│   ├── zero_free/               # Arch 4 (non-negative trig polynomial LP, multivariate balanced-sum LPs up to d=4, MT translation)
+│   ├── zero_free/               # Arch 4 (non-negative trig polynomial LP, multivariate balanced-sum LPs up to d=4, MT translation, constrained-domain LP, multi-zero LP)
 │   ├── arithmetic_geometric/    # Arch 2 (worked Weil example over F_5; 2A evaluation framework with R1-R5 follow-ups, dossiers, hybrid proposals; 2E Adams-spectrum probe)
 │   ├── multifractal/            # Log-correlated field experiments (pre-existing)
 │   ├── LEARNINGS.md             # Cross-cutting findings synthesis

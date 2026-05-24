@@ -8,6 +8,33 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 13. Multi-zero MT LP gives a real shape-factor improvement but rank-1 LP optima at naive objectives: the higher-harmonic structure of 4E.2 is needed for a non-trivial multi-zero MT win.
+
+4E.7 ([e4e7_multi_zero_lp.py](zero_free/e4e7_multi_zero_lp.py), [.md](zero_free/e4e7_multi_zero_lp.md)) tests the second proposed escape from 4E.3's line-restriction lemma identified by 4E.6: postulate multiple putative zeros at independent heights, so the LP becomes multivariate with full $d$-torus non-negativity (4E.3 lemma doesn't directly apply).
+
+**Result, two layers:**
+
+**(Real win at shape-factor level)** The joint two-zero shape factor $\lambda_{1,1} = (q_1^2 - 1)^2 / 4$ is STRICTLY LARGER than $\lambda_1^2$ (naive two-independent-zero MT). Ratios at $N = 2, 3, 4$: 137×, 72×, 56×. This reflects the "zeros interact in the explicit-formula sum" effect that motivates Heath-Brown / Pintz multi-zero MT.
+
+**(But rank-1 LP optima)** The LP-optimal polynomial for max $c_{1,1}$ at bidegree $(N, N)$ is rank-1 (tensor product $Q(\theta) Q(\phi)$), with LP value $= q_1^2$ exactly (per 4D-ii). Balanced-sum LP $\max c_{1,0} + c_{0,1} + \alpha c_{1,1}$ and Heath-Brown-style $a(c_{1,0} + c_{0,1}) + b c_{1,1}$ also rank-1 across all tested $(\alpha)$ and $(a, b)$. **Naive multi-zero objectives DO NOT exceed the tensor bound at the LP-value level.**
+
+**The synthesis**: a non-trivial multi-zero MT improvement requires combining:
+1. **Higher-harmonic LP gain** (4E.2's +25% rank-2 win via $c_{1,1} + \alpha c_{2,2}$): non-tensor 2D structure exists at higher harmonics.
+2. **Multi-zero MT bookkeeping** (Heath-Brown 1992, Pintz 1976): the explicit-formula manipulation that translates the LP value to a zero-free region constant.
+
+This combination is research-grade work beyond the experiment.
+
+**Translation to zero-free region for asymptotic RH**: Riemann-von Mangoldt density gives consecutive-zero spacing $\sim 2\pi / \log T$ at height $T$, so multi-zero MT applies tightly only at finite height. Heath-Brown / Pintz get constant-factor improvements for FINITE-RANGE problems (Siegel zeros, least prime in AP) where multiple zeros at controlled distances are postulated. For asymptotic RH on zeta, multi-zero MT could improve the **constant** but not the **scaling** $1/\log T$.
+
+**Cross-cut to 4E.6**: both 4E.6 (constrained-domain) and 4E.7 (multi-zero) are LP-based escape routes from 4E.3 identified in finding #12. 4E.6 collapsed entirely. 4E.7 gives a real shape-factor improvement but bounded by tensor decomposition at naive objectives. **The remaining LP-escape direction is 4E.8 (polynomial-ideal SOS via Putinar/Schmüdgen)** which requires SDP not LP — structurally different machinery, the only remaining open route.
+
+**Methodological pattern (extending finding #12)**: the structural lemma (4E.3) is robust under multiple escape attempts:
+- Naïve domain relaxation (4E.6): full collapse.
+- Multi-zero LP (4E.7): real shape-factor win, but tensor-product LP optima.
+- Polynomial-ideal SOS (4E.8 open): the qualitatively-distinct machinery remaining.
+
+Each subsequent escape attempt is structurally further from the original LP. The pattern is: "the more LP-like the escape, the smaller its eventual win against 4E.3."
+
 ### 12. The MT 1D-Fejér ceiling is robust under naïve domain relaxation: constrained-domain LP is not a separate escape route.
 
 4E.6 ([e4e6_constrained_lp.py](zero_free/e4e6_constrained_lp.py), [.md](zero_free/e4e6_constrained_lp.md)) tests the proposed escape from 4E.3's structural lemma: relax the non-negativity constraint $P \ge 0$ to a subset $\Omega \subset [0, 2\pi]^d$ (the "constrained-domain LP"). The 4E.3 lemma's proof relies on full non-negativity, so a domain restriction *might* break the line-restriction-to-1D-Fejér argument.
