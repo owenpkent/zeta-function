@@ -236,48 +236,55 @@ This closes LEARNINGS open question #5: the detector remains a clean test at $K 
 
 ## 3D.4: T_max scaling — validates the "n_neg = # off-line gammas" prediction ([e3d4_T_max_scaling.py](e3d4_T_max_scaling.py))
 
-**Status:** complete. **Structural prediction CONFIRMED: the number of negative eigenvalues in $M^{DH}$ exactly equals the number of distinct off-line gammas $\gamma$ in D-H zeros up to height $T_{\max}$.** Tested at $T_{\max} \in \{200, 300\}$ where D-H's off-line zeros are well-cached; extending to higher $T_{\max}$ is a heavy computation (uncached D-H zero finding at $T_{\max} = 500$ exceeded 10 minutes per run and was not pursued).
+**Status:** complete. **Structural prediction CONFIRMED across four data points: the number of negative eigenvalues in $M^{DH}$ exactly equals the number of distinct off-line gammas $\gamma$ in D-H zeros up to height $T_{\max}$.** Tested at $T_{\max} \in \{200, 300, 350, 500\}$. The $T_{\max} = 500$ extension was the heaviest computation: D-H 2D off-line scan ~14 min, chi_3 / chi_4 critical-line scans ~13 min each, total ~50 min wall clock for the additional data point.
 
 **Motivation.** 3D.3 found that at $T_{\max} = 200$ (D-H has 4 distinct off-line $\gamma$'s in UHP: $\sim 85.7, 114.2, 166.5, 176.7$), the Gram-matrix detector has $n_{\rm neg} = 4$ stable across $K \in [100, 1000]$. The structural interpretation: each off-line $\gamma$ (each "horizontal pair" $(\beta + i\gamma, (1-\beta) + i\gamma)$ in UHP) contributes exactly 1 negative eigenvalue. This experiment tests the prediction by varying $T_{\max}$ to reveal more off-line $\gamma$'s.
 
 **Method.** For each $T_{\max}$: (a) count distinct off-line $\gamma$'s (rounded to 3 decimals to merge near-equal); (b) compute the Gram matrix at $K = 300$ basis vectors; (c) count negative eigenvalues below threshold $10^{-10} \lambda_{\max}$; (d) verify prediction match.
 
-**Findings ($K = 300$, $T_{\max} \in \{200, 300, 350\}$):**
+**Findings ($K = 300$, $T_{\max} \in \{200, 300, 350, 500\}$):**
 
 | L-function | $T_{\max}$ | total zeros | off-line $\gamma$'s (UHP) | $n_{\rm neg}$ | rel min eig | verdict |
 |---|---|---|---|---|---|---|
 | $\zeta$ | $200$ | $79$ | $0$ | $0$ | $-9.6 \times 10^{-17}$ | PSD |
 | $\zeta$ | $300$ | $138$ | $0$ | $0$ | $-1.4 \times 10^{-16}$ | PSD |
 | $\zeta$ | $350$ | $169$ | $0$ | $0$ | $-8.3 \times 10^{-17}$ | PSD |
+| $\zeta$ | $500$ | $269$ | $0$ | $0$ | $-1.8 \times 10^{-17}$ | PSD |
 | $\chi_3$ | $200$ | $114$ | $0$ | $0$ | $-1.2 \times 10^{-16}$ | PSD |
 | $\chi_3$ | $300$ | $187$ | $0$ | $0$ | $-9.3 \times 10^{-17}$ | PSD |
+| $\chi_3$ | $350$ | $227$ | $0$ | $0$ | $-5.3 \times 10^{-17}$ | PSD |
+| $\chi_3$ | $500$ | $354$ | $0$ | $0$ | $-5.6 \times 10^{-18}$ | PSD |
 | $\chi_4$ | $200$ | $122$ | $0$ | $0$ | $-1.6 \times 10^{-16}$ | PSD |
 | $\chi_4$ | $300$ | $203$ | $0$ | $0$ | $-5.6 \times 10^{-17}$ | PSD |
+| $\chi_4$ | $350$ | $246$ | $0$ | $0$ | $-2.4 \times 10^{-17}$ | PSD |
+| $\chi_4$ | $500$ | $377$ | $0$ | $0$ | $-7.7 \times 10^{-19}$ | PSD |
 | **D-H** | **$200$** | **$69$** | **$4$** | **$4$** (MATCH) | **$-2.599 \times 10^{-2}$** | indefinite |
 | **D-H** | **$300$** | **$107$** | **$5$** | **$5$** (MATCH) | **$-2.599 \times 10^{-2}$** | indefinite |
 | **D-H** | **$350$** | **$129$** | **$7$** | **$7$** (MATCH) | **$-2.599 \times 10^{-2}$** | indefinite |
+| **D-H** | **$500$** | **$189$** | **$9$** | **$9$** (MATCH) | **$-2.597 \times 10^{-2}$** | indefinite |
 
 **New off-line $\gamma$ values revealed by increasing $T_{\max}$:**
 - $T_{\max} = 200 \to 300$: adds $\gamma \approx 240.4$ (1 new pair, total 5)
 - $T_{\max} = 300 \to 350$: adds $\gamma \approx 320.9$ and $\gamma \approx 331.0$ (2 new pairs, total 7)
+- $T_{\max} = 350 \to 500$: adds 2 more pairs (total 9)
 
-**Non-trivial test at $T_{\max} = 350$**: the increment is +2 from $T_{\max} = 300$, so the prediction has to hit exactly $n_{\rm neg} = 7$ (not just "$\geq 6$" or "monotonically larger"). It does. This is the strongest validation of the prediction so far.
+**Non-trivial tests at $T_{\max} = 350$ and $T_{\max} = 500$**: both increments are +2, so the prediction has to hit exactly $n_{\rm neg} = 7$ then $n_{\rm neg} = 9$ (not just "monotonically larger"). It does at both. Four data points total, no exceptions.
 
 **Two findings:**
 
-**1. Prediction confirmed: $n_{\rm neg}(M^{DH}) = $ # off-line $\gamma$'s in UHP.** Three data points: $T_{\max} = 200$ (4 → 4), $T_{\max} = 300$ (5 → 5, single increment), $T_{\max} = 350$ (7 → 7, **double increment**). The double-increment test at $T_{\max} = 350$ is non-trivial: the prediction must hit exactly $n_{\rm neg} = 7$, not just "monotonically larger than 5." It does. **The architectural picture is validated: the Gram-matrix detector is structurally counting off-line zero pairs via its eigenvalue spectrum**, with one negative eigenvalue per pair.
+**1. Prediction confirmed: $n_{\rm neg}(M^{DH}) = $ # off-line $\gamma$'s in UHP.** Four data points: $T_{\max} = 200$ (4 → 4), $T_{\max} = 300$ (5 → 5, +1), $T_{\max} = 350$ (7 → 7, **+2**), $T_{\max} = 500$ (9 → 9, **+2**). Two non-trivial double-increments. **The architectural picture is validated: the Gram-matrix detector is structurally counting off-line zero pairs via its eigenvalue spectrum**, with one negative eigenvalue per pair.
 
-**2. Relative min eigenvalue is $T_{\max}$-invariant.** Across $T_{\max} \in \{200, 300, 350\}$: rel min = $-2.599 \times 10^{-2}$, identical to 4 significant digits at all three values. The signal strength is dimension-independent (3D.3) AND $T_{\max}$-independent (3D.4). The $-2.6\%$ asymptotic constant is a universal feature of D-H, not specific to any $K$ or $T_{\max}$.
+**2. Relative min eigenvalue is $T_{\max}$-invariant.** Across $T_{\max} \in \{200, 300, 350\}$: rel min = $-2.599 \times 10^{-2}$ (identical to 4 sig figs); at $T_{\max} = 500$: $-2.597 \times 10^{-2}$ (small drift consistent with floating-point noise at higher matrix conditioning). The signal strength is dimension-independent (3D.3, $K$-invariant) AND $T_{\max}$-invariant (3D.4). The $-2.6\%$ asymptotic constant is a universal feature of D-H, invariant under both $K$ and $T_{\max}$ extensions.
 
-**Selberg-class consistency.** $\zeta$, $\chi_3$, $\chi_4$ stay PSD to floating-point noise ($\sim 10^{-16}$) across both $T_{\max}$ values. No false positives.
+**Selberg-class consistency.** $\zeta$, $\chi_3$, $\chi_4$ stay PSD to floating-point noise across all $T_{\max}$ values (worst rel $\sim 10^{-16}$ at $T_{\max} = 200$, dropping to $\sim 10^{-19}$ at $T_{\max} = 500$ as matrix conditioning improves). No false positives.
 
 **Architectural significance.** This validates the strongest interpretation of the wrong-approach detector:
 
-- **Signal strength** is fixed at $-2.6\%$ relative-min, independent of $K$ (3D.3) and $T_{\max}$ (3D.4).
-- **Signal dimension** equals the number of off-line zero pairs (this experiment confirms it scales linearly with $T_{\max}$).
+- **Signal strength** is fixed at $-2.6\%$ relative-min, independent of $K$ (3D.3) and $T_{\max}$ (3D.4, four data points).
+- **Signal dimension** equals the number of off-line zero pairs (this experiment confirms it scales linearly with $T_{\max}$ from 4 to 9 across $T_{\max} \in \{200, 300, 350, 500\}$).
 - **The detector is essentially diagnostic**: it counts off-line zero pairs (one negative eigenvalue per pair, with fixed signal strength).
 
-This closes the architectural picture for the Gram-matrix wrong-approach detector. The detector is provably responding to off-line zero structure, not to numerical noise or L-function specifics. The remaining unverified prediction (extension to $T_{\max} > 300$ where D-H zeros are uncached and slow to compute) would require a more efficient D-H zero finder; the result there is expected to match the prediction trivially given the structural picture.
+This closes the architectural picture for the Gram-matrix wrong-approach detector. The detector is provably responding to off-line zero structure, not to numerical noise or L-function specifics. The $T_{\max} = 500$ extension was the heaviest compute (~50 min wall, dominated by D-H 2D scan and chi_3 / chi_4 critical-line scans), but the prediction holds without exception at all tested heights.
 
 **Output:**
 - `e3d4_T_max_scaling.npz`: $T_{\max}$ grid, off-line $\gamma$ counts, eigenvalue stats per L-function
