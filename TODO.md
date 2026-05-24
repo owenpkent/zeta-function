@@ -62,7 +62,7 @@
 - [ ] Arch 1D: Connes adèle-class space literature review
 - [ ] Arch 4A: Vinogradov-Korobov reproduction; localize where the 2/3 exponent appears
 - [ ] Arch 4C: map conditional-improvement landscape (Heath-Brown, Pintz, Ford)
-- [ ] Arch 4E.6: constrained-domain LP — impose P ≥ 0 only on a hypothetical-off-line-zero submanifold (the only LP direction not bounded by 1D Fejér per 4E.3's structural lemma)
+- [x] Arch 4E.6: constrained-domain LP — impose P ≥ 0 only on a hypothetical-off-line-zero submanifold (see experiments/zero_free/e4e6_constrained_lp.py + .md). Tested four formulations (K-point, arc-removal, zero-constrained, trick-at-off-line-height). All collapse to Fejér / full-non-negativity ceiling at well-resolved parameters; apparent gains are LP-unbounded artifacts or sparse-sampling artifacts. **4E.3's lemma is robust under naive domain relaxation.** Genuine escape requires Heath-Brown multi-zero coupling (4E.7), Bombieri variational SOS, or polynomial-ideal SOS (4E.8) — qualitatively different machinery beyond LP-over-a-subset.
 - [ ] Arch 4E.7: multi-zero MT bookkeeping — Heath-Brown-style coupling for least-prime-in-AP or Siegel-zero problems
 - [ ] Arch 4E.8: polynomial-ideal sum-of-squares decompositions for the Weil quadratic form
 - [ ] Arch 2C: survey state of F_1 / Arakelov-cohomology programs as of 2025 (use the scorecard structure from 2A_candidate_evaluation.md)

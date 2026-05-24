@@ -8,6 +8,34 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 12. The MT 1D-Fejér ceiling is robust under naïve domain relaxation: constrained-domain LP is not a separate escape route.
+
+4E.6 ([e4e6_constrained_lp.py](zero_free/e4e6_constrained_lp.py), [.md](zero_free/e4e6_constrained_lp.md)) tests the proposed escape from 4E.3's structural lemma: relax the non-negativity constraint $P \ge 0$ to a subset $\Omega \subset [0, 2\pi]^d$ (the "constrained-domain LP"). The 4E.3 lemma's proof relies on full non-negativity, so a domain restriction *might* break the line-restriction-to-1D-Fejér argument.
+
+**Result**: it doesn't. Four natural formulations were tested:
+
+| Setup | Constraint | Behavior |
+|---|---|---|
+| A | $P(\theta_k) \ge 0$ at $K$ evenly-spaced points | hits $c_{\rm bound}$ for $K \le N$; recovers Fejér for $K \gg N$ |
+| B | $P \ge 0$ on $[0, 2\pi] \setminus (\theta_0 - \delta, \theta_0 + \delta)$ | $\equiv$ Fejér for small $\delta$; hits $c_{\rm bound}$ with huge negative excursions for large $\delta$ |
+| C | $P \ge 0$ at $\theta_k = \gamma_k \log p \bmod 2\pi$ for $K$ on-line zeros | recovers Fejér as $K \to \infty$ (Weyl equidistribution) |
+| D | constrain at on-line zeros, max $P$ at off-line trick frequency | apparent gain decays to 1.000 as $K \to \infty$ (sparse-sampling artifact) |
+
+Setup D, the most MT-faithful formulation, gives apparent gains over the full-non-negativity baseline that decay monotonically with $K$: at $N=8$, $K=50$ gives ratio 1.90, $K=400$ gives 1.000. Pure sparse-sampling, not structural.
+
+**Why each formulation fails the same way**: the MT explicit-formula sum runs over **all** zeros of $\zeta$. Relaxing the test polynomial's non-negativity to a subset means losing the inequality $\sum_\rho f(\rho) \ge 0$ unless we have separate control over the on-line zeros' contributions — and that control is essentially RH-strength input.
+
+**This sharpens 4E.3's structural lemma**: the MT geometric structure resists not just 1D line-restriction (4E.3) but also naïve domain relaxation (4E.6). The "1D Fejér ceiling" on the single-zero MT shape factor is robust under both.
+
+**Genuine escape routes (open)**: 
+1. **Heath-Brown multi-zero coupling** (Arch 4E.7 open) — multiple putative zeros at different heights. The line-restriction lemma applies only to a single line direction, so multi-zero couplings can in principle escape.
+2. **Bombieri variational SOS** — allow small negativity, control $L^2$ norm via a quadratic-programming penalty.
+3. **Polynomial-ideal SOS** (Arch 4E.8 open) — non-negativity over algebraic variety via Putinar/Schmüdgen.
+
+None is "LP over a subset of the torus." 4E.6 narrows the open landscape to these three qualitatively distinct routes.
+
+**Methodological pattern (worth re-using)**: the structural lemma's robustness signals where the genuine open machinery lives. When a naïve relaxation collapses to the original ceiling, the next steps require *changing the type of inequality*, not just its support. This pattern recurs across architectures: see also LEARNINGS #11 (bare $\psi_p$ collapses; need cohomology), LEARNINGS #7 (Weil-form analytic cancellation collapses; need new positivity certificate).
+
 ### 11. Bare $\psi_p$ on concrete Λ-rings has no zeta-zero-like spectrum: cohomology is what does the lifting.
 
 2E ([e2e_adams_spectrum.py](arithmetic_geometric/e2e_adams_spectrum.py), writeup [2E_adams_spectrum_probe.md](arithmetic_geometric/2E_adams_spectrum_probe.md)) tests R5's structural hypothesis directly by computing the spectrum of the Adams operations $\psi_p$ on four concrete Λ-ring substrates:

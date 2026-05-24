@@ -412,6 +412,48 @@ The increment per dimension: $\Delta_{2 \to 3} \approx 22{-}26$ pp; $\Delta_{3 \
 - `e4e5_d4_peak.npz`: alpha grid, LP/tensor values, peak coefficient tensor
 - `e4e5_d4_peak.png`: gap-vs-alpha for d = 4, overlaying d = 2 and d = 3 curves
 
+## 4E.6: Constrained-domain LP ([e4e6_constrained_lp.py](e4e6_constrained_lp.py), [.md](e4e6_constrained_lp.md))
+
+**Status:** complete. **Negative result, sharpening 4E.3.** Tests the proposed escape from 4E.3's structural lemma: relax $P \ge 0$ to a subset $\Omega \subset [0, 2\pi]^d$ instead of the full torus.
+
+**Four formulations tested:**
+
+| Setup | Constraint | Behavior |
+|---|---|---|
+| A: K-point | $P(\theta_k) \ge 0$ at $K$ evenly-spaced points | $K \le N$: hits $c_{\rm bound}$ (artifact); $K \gg N$: recovers Fejér |
+| B: arc-removal | $P \ge 0$ on $[0, 2\pi] \setminus (\theta_0 - \delta, \theta_0 + \delta)$ | small $\delta$: $\equiv$ Fejér; large $\delta$: hits $c_{\rm bound}$ |
+| C: zero-constrained | $P \ge 0$ at $\theta_k = \gamma_k \log p \bmod 2\pi$ for first $K$ on-line zeros | recovers Fejér as $K \to \infty$ (Weyl equidistribution) |
+| D: trick at off-line | constrain at on-line zero $\theta$'s, max $P$ at off-line frequency | apparent gain decays to 1.0 as $K \to \infty$ (sparse-sampling artifact) |
+
+**Quantitative confirmation, Setup D at $N=8$:**
+
+| $K$ | LP $P(\theta_{\rm trick})$ | full-non-neg max | ratio |
+|---|---|---|---|
+| 50 | 9.30 | 4.89 | 1.900 |
+| 100 | 4.97 | 4.89 | 1.016 |
+| 200 | 4.90 | 4.89 | 1.002 |
+| 400 | 4.89 | 4.89 | 1.000 |
+| 649 | 4.89 | 4.89 | 1.000 |
+
+The ratio decays monotonically to 1.000 as $K$ grows. The "gain" at finite $K$ is purely from sparse sampling, not a structural escape from the Fejér ceiling.
+
+**Verdict.** The naïve constrained-domain LP is not a separate route. Every formulation either:
+- (a) is under-constrained and hits the coefficient bound,
+- (b) produces unphysical $P$ (large negativity in relaxed region, breaking the MT inequality),
+- (c) recovers the Fejér / full-non-negativity ceiling as the constraint set densifies, or
+- (d) collapses into one of the above when made physically meaningful.
+
+**This sharpens 4E.3's structural lemma.** The MT geometric structure resists not just 1D line-restriction (4E.3) but also naïve domain relaxation. To break the single-zero MT shape factor ceiling via 2D inequalities requires *qualitatively different* machinery:
+- **Heath-Brown multi-zero coupling** (Arch 4E.7 open): multiple putative zeros at different heights.
+- **Bombieri variational SOS** (Arch 4E.8 partial overlap): allow small negativity, control $L^2$ norm.
+- **Polynomial-ideal SOS** (Arch 4E.8): non-negativity over algebraic variety via Putinar/Schmüdgen.
+
+None of these is "LP over a subset." 4E.6 narrows the open landscape to these three structurally distinct routes.
+
+**Output:**
+- `e4e6_constrained_lp.npz`: all four setups' LP values, baselines, hit-bound flags
+- `e4e6_constrained_lp.png`: four-panel summary plot, including Setup D's convergence-to-1.0 trace
+
 ## 4A, 4C
 
 - **4A** (Vinogradov-Korobov reproduction): substantial literature work; deferred.
