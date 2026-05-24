@@ -118,6 +118,12 @@ Ratios span $[0.50, 1.67]$, spread by factor $3.35$.
 
 The numerical experiments in 1A-1C do not produce such a construction. They confirm the Connes-style structural obstruction at a quantitative level.
 
-## 1D
+## 1D: Connes adèle class space (literature review)
 
-Connes adèle class space (literature task): deferred.
+**Status:** complete as literature review ([1d_connes_adele_literature.md](1d_connes_adele_literature.md)). A rigorous numerical 1D experiment (finite-rank discretization of Connes' adèle class space) was not pursued because the central spectral identification is conjectural and beyond finite-dim numerics.
+
+**Summary**: 1A-1C exhausted the naïve position-momentum spectral discretization within Arch 1 — all variants are L-function-agnostic. Connes' adèle class space $S_\mathbb{Q} = \mathbb{A}_\mathbb{Q} / \mathbb{Q}^*$ is the natural "second-level" Hilbert-Pólya construction WITH arithmetic content (the Euler product enters via per-prime $\mathbb{Q}_p$ factors). The $\mathbb{R}_+^*$-action's generator $H$ is the conjectural Hilbert-Pólya Hamiltonian; the conjecture spectrum$(H) = \{\gamma_n\}$ remains unproven.
+
+The 1D literature review documents what Connes' framework adds beyond the operators of 1A-1C, what would be needed for a rigorous numerical implementation (research-grade work), and how the construction integrates with Arch 2 (geometric) and Arch 3 (positivity, K1-blocked per R3.5).
+
+**Cross-cut**: deep dive on Connes from the Arch 2 (geometric) angle is in [2A_connes_dossier.md](../arithmetic_geometric/2A_connes_dossier.md). 1D is the Arch 1 (spectral) angle.

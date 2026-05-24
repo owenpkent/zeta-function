@@ -59,7 +59,7 @@
 - [ ] Arch 3B-extension (rigorous): direct xi-derivative Li computation for D-H at n ~ 4 x 10^5 with ~100-digit precision (3B.2 used asymptotic + off-line correction; the rigorous version replaces the asymptotic)
 - [ ] Arch 3D.3 extension: test prediction "neg count = # off-line pairs" by going to T_max = 500 where D-H has more off-line pairs
 - [ ] Arch 3E: quantify the Li / de Bruijn-Newman relationship (literature)
-- [ ] Arch 1D: Connes adèle-class space literature review
+- [x] Arch 1D: Connes adèle-class space literature review (see experiments/spectral/1d_connes_adele_literature.md). Complements 2A_connes_dossier.md from the Arch 1 angle. A rigorous numerical experiment requires research-grade work and the central spectral identification is conjectural.
 - [ ] Arch 4A: Vinogradov-Korobov reproduction; localize where the 2/3 exponent appears
 - [ ] Arch 4C: map conditional-improvement landscape (Heath-Brown, Pintz, Ford)
 - [x] Arch 4E.6: constrained-domain LP — impose P ≥ 0 only on a hypothetical-off-line-zero submanifold (see experiments/zero_free/e4e6_constrained_lp.py + .md). Tested four formulations (K-point, arc-removal, zero-constrained, trick-at-off-line-height). All collapse to Fejér / full-non-negativity ceiling at well-resolved parameters; apparent gains are LP-unbounded artifacts or sparse-sampling artifacts. **4E.3's lemma is robust under naive domain relaxation.** Genuine escape requires Heath-Brown multi-zero coupling (4E.7), Bombieri variational SOS, or polynomial-ideal SOS (4E.8) — qualitatively different machinery beyond LP-over-a-subset.
