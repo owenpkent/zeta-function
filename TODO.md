@@ -58,7 +58,7 @@
 
 - [ ] Arch 3B-extension (rigorous): direct xi-derivative Li computation for D-H at n ~ 4 x 10^5 with ~100-digit precision (3B.2 used asymptotic + off-line correction; the rigorous version replaces the asymptotic)
 - [ ] Arch 3D.3 extension: test prediction "neg count = # off-line pairs" by going to T_max = 500 where D-H has more off-line pairs
-- [ ] Arch 3E: quantify the Li / de Bruijn-Newman relationship (literature)
+- [x] Arch 3E: quantify the Li / de Bruijn-Newman relationship (literature). See experiments/positivity/3e_li_de_bruijn_newman.md. Both are positivity reformulations of RH: Li discrete (sequence), dBN continuous ($\Lambda = 0$ ⟺ RH per Rodgers-Tao 2018 + Newman 1976). Current dBN bounds: $0 \le \Lambda \le 0.22$. Both confirm the project's "marginal positivity" picture (LEARNINGS #7) — RH is just barely true, no room for soft proofs.
 - [x] Arch 1D: Connes adèle-class space literature review (see experiments/spectral/1d_connes_adele_literature.md). Complements 2A_connes_dossier.md from the Arch 1 angle. A rigorous numerical experiment requires research-grade work and the central spectral identification is conjectural.
 - [ ] Arch 4A: Vinogradov-Korobov reproduction; localize where the 2/3 exponent appears
 - [ ] Arch 4C: map conditional-improvement landscape (Heath-Brown, Pintz, Ford)

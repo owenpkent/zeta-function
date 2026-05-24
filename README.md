@@ -77,7 +77,7 @@ python -m experiments._shared.smoke_test
 | Research atlas | ✅ `docs/research_atlas/` |
 | Graduate docs (incl. log-correlated, four-level framing) | ✅ Substantial |
 | Experiments — Phase 0 infrastructure | ✅ Complete |
-| Experiments — Arch 3 (positivity) | ✅ 3A-3D, 3B.2, 3D.2-3D.4, 3F-3I complete; 3E pending |
+| Experiments — Arch 3 (positivity) | ✅ 3A-3D, 3B.2, 3D.2-3D.4, 3E (literature), 3F-3I complete |
 | Experiments — Arch 1 (spectral) | ✅ 1A, 1B, 1C, 1D complete (1D as literature review of Connes adèle class space) |
 | Experiments — Arch 4 (zero-free regions) | ✅ 4B, 4D, 4D.2, 4E, 4E.2-4E.7 complete (4E.6: MT 1D-Fejér ceiling robust under domain relaxation; 4E.7: multi-zero LP gives 55-137× shape-factor improvement but rank-1 LP optima at naive objectives); 4A, 4C, 4E.8 pending |
 | Experiments — Arch 2 (arithmetic-geometric) | ✅ 2A, 2B, 2E complete (2A includes R1-R5 evaluation framework with hybrid proposals; 2E confirms bare $\psi_p$ on concrete Λ-rings has no zeta-zero-like spectrum, validating R5's cohomology-must-lift framing); 2C, 2D pending |

@@ -511,10 +511,27 @@ Strangely, the ζ gap is *smaller* in factor terms, but the prime sum's growth a
 
 This is the cleanest negative result of the session. It identifies WHERE the wall sits (at the gap between Siegel-Walfisz and GRH-strength bounds) and confirms the wall isn't an artifact of ζ specifically — it's a feature of *all* L-functions with non-trivial zeros.
 
-## 3E
+## 3E: Li coefficients and the de Bruijn-Newman constant ([3e_li_de_bruijn_newman.md](3e_li_de_bruijn_newman.md))
 
-Literature-and-analysis task connecting Li coefficients to the de Bruijn-Newman constant; deferred.
+**Status:** complete as literature review.
 
-## 3E
+Quantifies the relationship between two equivalent positivity reformulations of RH:
+- **Li criterion** (Li 1997): $\lambda_n \ge 0$ for all $n \ge 1$ ⟺ RH. Discrete, directly computable from zeros.
+- **de Bruijn-Newman constant** (de Bruijn 1950, Newman 1976, Rodgers-Tao 2018): $\Lambda = 0$ ⟺ RH. Continuous, defined via heat-equation deformation of $\xi$.
 
-Literature-and-analysis task connecting Li coefficients to the de Bruijn-Newman constant; deferred.
+**Both are POSITIVITY reformulations of RH, but they probe different structures:**
+
+| | Li | dBN |
+|---|---|---|
+| Type | Discrete sequence | Single real number |
+| Source | Zero-sum formula | Heat-equation deformation |
+| Sharp at | All $n$ | $\Lambda = 0$ |
+| Disc. scale | $n \sim |w_{\text{off}} - 1|^{-2}$ | $t \in [0, 0.22]$ current |
+
+**The key recent result**: Rodgers-Tao 2018 proved $\Lambda \ge 0$, so $\Lambda = 0$ ⟺ RH. Combined with Polymath 15's upper bound $\Lambda \le 0.22$, current knowledge is $0 \le \Lambda \le 0.22$.
+
+**Cross-cut to the project**: this confirms LEARNINGS finding #7 (Weil-form analytic cancellation tightness $\sim 10^{-3}$). All three positivity formulations (Li, dBN, Weil) are "marginally positive" — RH is just barely true. There's no buffer for soft proofs.
+
+The project's experimental thread (3A, 3B, 3B.2) focused on Li rather than dBN because Li is directly accessible from zeros and gives discrete witnesses (3B.2: $\lambda_n^{\text{D-H}} < 0$ at $n = 4 \times 10^5$). dBN would require heat-equation simulation of $\xi$, which is computationally heavier with similar payoff.
+
+**No numerical experiment**; pure literature review. Closes the open 3E TODO item.
