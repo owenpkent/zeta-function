@@ -309,7 +309,7 @@ Below, the major candidates as of $\sim$2025. Scoring is a working draft and ref
 | (xiv) | ✅ | |
 | (xv)-(xvii) | ⏳ | Open |
 
-**Verdict**: Deninger is the most ambitious candidate (full Weil-style picture) but everything is conjectural pending the construction of $\bar X$. The framework is more of a research program than a finished product.
+**Verdict**: Deninger is the most ambitious candidate (full Weil-style picture) but everything is conjectural pending the construction of $\bar X$. The framework is more of a research program than a finished product. **Deep dive**: see [2A_deninger_dossier.md](2A_deninger_dossier.md) for the historical origin, structural dictionary (function field → number field), what has actually been constructed vs what remains conjectural, and the most promising hybrid (Deninger × Borger × Connes via R4 + prismatic cohomology R5).
 
 ### III.6 — Connes-Consani hyperring / characteristic-one geometry (2008-)
 

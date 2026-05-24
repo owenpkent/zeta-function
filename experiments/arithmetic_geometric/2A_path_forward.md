@@ -205,7 +205,7 @@ The Architecture 2 evaluation framework is now substantially complete at the met
 For the project to continue contributing, the natural next steps are:
 
 **Project-level** (no expert collaboration required):
-- Add dossiers for Connes, Deninger, Deitmar, Connes-Consani (one per candidate, following the existing Borger/Lorscheid template).
+- Add dossiers for ~~Connes~~ ([2A_connes_dossier.md](2A_connes_dossier.md)), ~~Deninger~~ ([2A_deninger_dossier.md](2A_deninger_dossier.md)), Deitmar, Connes-Consani (one per candidate, following the existing Borger/Lorscheid template). **Two of four complete**: Connes covered alongside the Connes-Consani extensions in [2A_connes_dossier.md](2A_connes_dossier.md); Deninger separately in [2A_deninger_dossier.md](2A_deninger_dossier.md). Deitmar (monoid schemes) and Connes-Consani-specific (vs the Connes umbrella above) remain.
 - Verify R3.5's specific application to each Connes-Consani positivity formulation (R3.6.1 follow-up).
 - Investigate the triple hybrid (Λ-blueprints + Connes adelic side, R3.6.3 + R4 combined).
 
