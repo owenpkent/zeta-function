@@ -61,12 +61,18 @@ Original source PDFs and their converted text versions live in `sources/`.
 
 ## Experimental thread
 
-See [`experiments/PROOF_ARCHITECTURES_PLAN.md`](experiments/PROOF_ARCHITECTURES_PLAN.md) for the test plan. Four candidate RH proof architectures (spectral, arithmetic-geometric, direct positivity, analytic) with the Davenport-Heilbronn L-function as a structural wrong-approach detector throughout. One concrete experiment per architecture is implemented; Arch 3 (positivity) is the deepest, including a Gram-matrix wrong-approach detector witness for Davenport-Heilbronn.
+See [`experiments/PROOF_ARCHITECTURES_PLAN.md`](experiments/PROOF_ARCHITECTURES_PLAN.md) for the test plan. Four candidate RH proof architectures (spectral, arithmetic-geometric, direct positivity, analytic) with the Davenport-Heilbronn L-function as a structural wrong-approach detector throughout. ~25 experiments + literature reviews implemented across the four architectures, plus full dossier coverage for 5 of 6 major Arch 2 candidates (Borger, Lorscheid, Connes, Deninger, Deitmar). Arch 3 (positivity) has the deepest experimental thread, including a Gram-matrix wrong-approach detector validated at four T_max values (`n_neg` exactly equals number of off-line zero pairs in upper half plane at T_max ∈ {200, 300, 350, 500}).
 
 Smoke test:
 ```powershell
 python -m experiments._shared.smoke_test
 ```
+
+## Cross-cutting findings
+
+Synthesis of structural insights across architectures lives in [`experiments/LEARNINGS.md`](experiments/LEARNINGS.md). The dominant meta-finding from the experimental thread: **RH is marginally true** — every positivity reformulation (Weil-form, Li, de Bruijn-Newman, MT shape factor) is sharp at zero margin. Five independent reinforcing directions (LEARNINGS findings #7, #11, #12, #13 + Arch 3E literature review) all confirm there is no buffer for soft proofs. Any RH proof must use the EXACT structure of $\zeta$ (Euler product, functional equation, archimedean factor) rather than generic positivity arguments.
+
+The 17-constraint framework for Architecture 2 candidates (see [`experiments/arithmetic_geometric/2A_candidate_evaluation.md`](experiments/arithmetic_geometric/2A_candidate_evaluation.md)) operationalizes the comparison of $\mathbb{F}_1$ programs and identifies the geometric route (intersection theory + Hodge index theorem on a constructed surface) as the unique remaining direction for breaking the K1 wall on positivity. The path forward strategic synthesis is in [`experiments/arithmetic_geometric/2A_path_forward.md`](experiments/arithmetic_geometric/2A_path_forward.md).
 
 ## Status
 
@@ -80,7 +86,7 @@ python -m experiments._shared.smoke_test
 | Experiments — Arch 3 (positivity) | ✅ 3A-3D, 3B.2, 3D.2-3D.4, 3E (literature), 3F-3I complete |
 | Experiments — Arch 1 (spectral) | ✅ 1A, 1B, 1C, 1D complete (1D as literature review of Connes adèle class space) |
 | Experiments — Arch 4 (zero-free regions) | ✅ 4B, 4D, 4D.2, 4E, 4E.2-4E.7 complete (4E.6: MT 1D-Fejér ceiling robust under domain relaxation; 4E.7: multi-zero LP gives 55-137× shape-factor improvement but rank-1 LP optima at naive objectives); 4A, 4C, 4E.8 pending |
-| Experiments — Arch 2 (arithmetic-geometric) | ✅ 2A, 2B, 2E complete (2A includes R1-R5 evaluation framework with hybrid proposals; 2E confirms bare $\psi_p$ on concrete Λ-rings has no zeta-zero-like spectrum, validating R5's cohomology-must-lift framing); 2C, 2D pending |
+| Experiments — Arch 2 (arithmetic-geometric) | ✅ 2A, 2B, 2E complete (2A includes R1-R5 evaluation framework with hybrid proposals AND 5 of 6 candidate dossiers: Borger, Lorscheid, Connes, Deninger, Deitmar; 2E confirms bare $\psi_p$ on concrete Λ-rings has no zeta-zero-like spectrum, validating R5's cohomology-must-lift framing); 2C, 2D pending |
 | Intuitive / undergraduate docs | 🔄 In progress |
 | PDF text conversions | 🔄 In progress |
 | manim visualizations | 🔄 In progress |
