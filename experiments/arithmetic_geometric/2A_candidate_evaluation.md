@@ -222,7 +222,7 @@ Below, the major candidates as of $\sim$2025. Scoring is a working draft and ref
 | (xvi) | ❌ | No |
 | (xvii) | ⏳ | Vacuous since the framework doesn't prove RH for anything |
 
-**Verdict**: Deitmar provides a clean (i)-(iii) but the cohomology slot (iv) is essentially empty. This is the early-2000s baseline that subsequent programs try to upgrade.
+**Verdict**: Deitmar provides a clean (i)-(iii) but the cohomology slot (iv) is essentially empty. This is the early-2000s baseline that subsequent programs try to upgrade. **Deep dive**: see [2A_deitmar_dossier.md](2A_deitmar_dossier.md) for the framework's origin (Tits 1956 heuristic → Deitmar 2005 rigorous), the monoid-scheme construction, why $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z}) \cong \mathrm{Spec}(\mathbb{Z})$ (no genuine surface), and why the Deitmar RH program transitioned into successor frameworks (Lorscheid, Borger) by ~2012.
 
 ### III.2 — Lorscheid blueprints (2012)
 
