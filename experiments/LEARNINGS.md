@@ -8,6 +8,34 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 11. Bare $\psi_p$ on concrete Λ-rings has no zeta-zero-like spectrum: cohomology is what does the lifting.
+
+2E ([e2e_adams_spectrum.py](arithmetic_geometric/e2e_adams_spectrum.py), writeup [2E_adams_spectrum_probe.md](arithmetic_geometric/2E_adams_spectrum_probe.md)) tests R5's structural hypothesis directly by computing the spectrum of the Adams operations $\psi_p$ on four concrete Λ-ring substrates:
+
+| Probe | Substrate | Spectrum | min $|\gamma_n - \lambda|$ |
+|---|---|---|---|
+| 1 | Representation ring $R(\mathbb{Z}/n)$ | Roots of unity (cycle structure of mult-by-$p$) | $13.13$ |
+| 2 | Frobenius on $\mathbb{F}_{p^k}$ | $k$-th roots of unity (order of $F$) | $13.13$ |
+| 3 | Truncated ghost ring $W_N$ | $\{0\}$ (nilpotent shift $w_n \to w_{pn}$) | $14.13$ |
+| 4 | $K_*(\mathrm{Spec}\,\mathbb{Z}) \otimes \mathbb{Q}$ | $\{p^d : d \ge 0\}$ (Beilinson eigenspaces) | $0.01$ |
+
+**Probes 1-3 give the predicted "no structural relation" outcome**: spectra live on the unit circle or at $\{0\}$, $\gamma_n$ starts at $14.13$. Min-distances $\approx \gamma_1$ are mechanical.
+
+**Probe 4 has an apparent near-coincidence** ($5^2 = 25 \approx \gamma_3 = 25.01$) which is **pigeonhole, not signal**, confirmed by a structural randomization control. Null hypothesis: replace $\{2, 3, 5, 7\}$ with 4 random primes from $[2, 200]$; recompute min-distance. Observed quantile in 5000-trial null distribution: $0.086$. The closeness is in the lower tail (~9th percentile) but not extraordinary; null median is $0.97$. Verdict: lucky pigeonhole, ~1-in-12 random configurations produce comparable collisions.
+
+**Structural lesson**: bare Λ-ring substrates are too small (or too symmetric) to host zeta-zero spectra. The substrate structure dictates the spectrum:
+- Permutation actions on finite groups → roots of unity.
+- Shifts on graded/truncated structures → nilpotent.
+- Beilinson-graded K-theory → pure powers.
+
+**This is the predicted negative result that confirms R5's framing**: the cohomology theory built on top of $\mathrm{Spec}(W(\mathbb{Z}))$ is what would lift the small Λ-action to an object large enough to carry zeta-zero spectral information. Prismatic cohomology (R5's leading candidate) is one such lift; the spectrum on the cohomology, not on the bare Λ-ring, is where zeta zeros would appear (R5 Q2 — open).
+
+**Cross-cut to 2B (Weil over $\mathbb{F}_5$)**: both 2B and 2E point in the same direction. In 2B, Frobenius eigenvalues on $H^1(C, \mathbb{Q}_\ell)$ — the cohomology, not the structure sheaf $H^0(C, \mathcal{O}_C)$ — give the zeros of $Z(C, T)$. The cohomology theory carries the spectral information; the bare algebraic substrate does not. 2E demonstrates the analogous statement on the Borger side: bare $\psi_p$ on $W(\mathbb{Z})$-flavored substrates does not carry $\zeta$'s zeros, the cohomology would have to.
+
+**Limitations**: tested four substrates; exotic Λ-rings (universal Λ-ring on infinite generators, de Rham-Witt complexes, Frobenius-equivariant K-theory of moduli stacks) not probed. Compared against the first 10 $\gamma_n$ only.
+
+**This closes Arch 2E**. The bare-spectrum question is resolved (negative as predicted). The next step — testing $\psi_p$ on actual prismatic cohomology of $\mathrm{Spec}(W(\mathbb{Z}))$ — is the R5 Q2 question, which requires the cohomology to first be computed and is beyond the project per [2A_path_forward.md](arithmetic_geometric/2A_path_forward.md).
+
 ### 10. The wrong-approach detector's signal saturates: relative min eigenvalue converges and negative count equals off-line zero pairs.
 
 3D.3 extended the Gram-matrix K-scaling from K=100 (3D, 3D.2) up to K=1000, with three structural findings:
@@ -235,6 +263,7 @@ Remaining literature tasks (informed by the evaluation framework):
 - ~~**R4**: explore hybrid candidates — the "Borger Frobenius + Connes trace formula" hybrid.~~ **Analyzed** ([2A_R4_borger_connes_hybrid.md](../experiments/arithmetic_geometric/2A_R4_borger_connes_hybrid.md)). The natural bridge: U_t = ∏_p U_{log p}^{t/log p} — Borger's discrete Adams operations ψ_p generate Connes' continuous ℝ*_+-action via the multiplicative completion. Candidate Hilbert space: H = L²(W(ℤ), μ) for an appropriate measure μ. Predicted scorecard: **~8 ✅ / 5 🟡 / 3 ❌** — similar to Λ-blueprints (R2.5) but with trace formula explicit rather than implicit. **K1 verdict**: fails K1 by R3.5 (inherits Connes' trace identity vulnerability). **Value**: infrastructure for the geometric route — gives a concrete Hilbert space realization where Borger's surface side and Connes' trace formula side coexist. Five open technical questions (R4.1-R4.5) for someone developing it rigorously. **R2.5 (Λ-blueprints) and R4 (Borger + Connes) are complementary hybrids**: similar scorecard progress, different mechanisms. Both inherit K1 failure on (xi)-(xiii) but provide infrastructure for the geometric escape route.
 - ~~**R5**: investigate Bhatt-Morrow-Scholze prismatic cohomology as the cohomology for Spec(W(ℤ)) in Borger's framework.~~ **Analyzed** ([2A_R5_prismatic_cohomology.md](../experiments/arithmetic_geometric/2A_R5_prismatic_cohomology.md)). **Connection**: δ-rings (the foundation of BMS prismatic cohomology) are essentially "Λ-rings at one prime p"; Borger's Λ-structure naturally projects to δ-structures at every prime. So prismatic cohomology applies to Spec(W(ℤ)). **Predicted impact**: closes constraints (iv)-(vii) (finite cohomology, Poincaré duality, cycle class map, Künneth) in one move. **K1 status**: still fails — prismatic cohomology has its own trace formula structure that falls under R3.5's hypothesis. So R5 is infrastructure progress, not K1 escape. Five verification questions surfaced. **Both hybrid candidates (R2.5 Λ-blueprints, R4 Borger + Connes) could use prismatic cohomology as their cohomology theory.**
 - **Path forward strategic plan** ([2A_path_forward.md](../experiments/arithmetic_geometric/2A_path_forward.md)): synthesis of R1-R5 into a research plan. **Develop BOTH hybrid candidates in parallel**; use prismatic cohomology for both; attack Hodge index on whichever track reaches it first. **5-10 year multi-paper research program**, success probability < 50%. Project-level vs beyond-project work distinguished. **Final meta-conclusion**: Architecture 2 is the right place to look for an RH proof (per R3.5 ruling out other architectures), but the geometric construction problem is hard enough that even existing categorical machinery (Λ-rings, blueprints, adèle class space, prismatic cohomology, arithmetic sites) doesn't close it. New mathematics is needed along the hybrid + geometric lines.
+- ~~**2E** (numerical probe): test whether bare $\psi_p$ on concrete Λ-rings has zeta-zero-like spectrum.~~ **Complete** ([e2e_adams_spectrum.py](../experiments/arithmetic_geometric/e2e_adams_spectrum.py), [2E_adams_spectrum_probe.md](../experiments/arithmetic_geometric/2E_adams_spectrum_probe.md)). Four probes (representation rings, Frobenius on $\mathbb{F}_q$, truncated ghost ring, rational K-theory). All spectra are roots of unity, $\{0\}$, or pure powers of $p$ — structurally orthogonal to $\{\gamma_n\}$. The one apparent near-coincidence ($5^2 \approx \gamma_3$, distance 0.01) is pigeonhole, confirmed by randomization control (~9th percentile under structural null). **Conclusion**: the bare Λ-structure cannot carry zeta-zero information — the cohomology lifts (prismatic per R5) is where the spectrum would live. **This is the predicted negative outcome and confirms R5's framing.** See finding #11 above.
 - **2C** (state of the $\mathbb{F}_1$ / Arakelov programs as of 2025): the framework supports this naturally — write up the survey using the scorecard structure.
 - **2D** (smallest open conjecture in Deninger's program): identify a meaningful target shorter than full RH.
 

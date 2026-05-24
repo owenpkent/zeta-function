@@ -80,7 +80,7 @@ python -m experiments._shared.smoke_test
 | Experiments — Arch 3 (positivity) | ✅ 3A-3D, 3B.2, 3D.2-3D.4, 3F-3I complete; 3E pending |
 | Experiments — Arch 1 (spectral) | ✅ 1A, 1B, 1C complete; 1D pending |
 | Experiments — Arch 4 (zero-free regions) | ✅ 4B, 4D, 4D.2, 4E, 4E.2-4E.5 complete; 4A, 4C pending |
-| Experiments — Arch 2 (arithmetic-geometric) | ✅ 2A, 2B complete (2A includes R1-R5 evaluation framework with hybrid proposals); 2C, 2D pending |
+| Experiments — Arch 2 (arithmetic-geometric) | ✅ 2A, 2B, 2E complete (2A includes R1-R5 evaluation framework with hybrid proposals; 2E confirms bare $\psi_p$ on concrete Λ-rings has no zeta-zero-like spectrum, validating R5's cohomology-must-lift framing); 2C, 2D pending |
 | Intuitive / undergraduate docs | 🔄 In progress |
 | PDF text conversions | 🔄 In progress |
 | manim visualizations | 🔄 In progress |

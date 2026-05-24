@@ -90,6 +90,28 @@ Operationalizes the 17-constraint list from `2A_weil_proof_diff.md §5` into a w
 - **Whichever track reaches Hodge index first** picks the winner
 - Project-level vs beyond-project work distinguished
 
+## 2E: Adams-operation spectrum vs zeta-zero ordinates
+
+**Status:** complete ([2E_adams_spectrum_probe.md](2E_adams_spectrum_probe.md), code [e2e_adams_spectrum.py](e2e_adams_spectrum.py)).
+
+A direct numerical probe of the R5 hypothesis: does the bare Adams operation $\psi_p$ on any concrete Λ-ring substrate have a spectrum that resembles zeta-zero ordinates $\{\gamma_n\}$?
+
+**Probes**:
+1. $\psi_p$ on representation rings $R(\mathbb{Z}/n)$ for several $(p, n)$ — spectrum = roots of unity (mult-by-$p$ permutation).
+2. Frobenius on $\mathbb{F}_{p^k}$ for several $(p, k)$ — spectrum = $k$-th roots of unity (order of $F$).
+3. $\psi_p$ on truncated ghost ring $W_N$ — spectrum = $\{0\}$ (nilpotent shift $w_n \to w_{pn}$).
+4. $\psi_p$ on $K_*(\mathrm{Spec}\,\mathbb{Z}) \otimes \mathbb{Q}$ (theoretical reference, Beilinson) — spectrum = $\{p^d : d \ge 0\}$.
+
+**Findings**:
+- Probes 1-3: spectra structurally bounded to unit circle or $\{0\}$; min-distance to $\gamma_n$ is ~$\gamma_1 - 1 = 13.13$ or $\gamma_1 = 14.13$ mechanically.
+- Probe 4: one apparent near-coincidence $5^2 = 25.00 \approx \gamma_3 = 25.01$ (distance $0.01$). Randomization control (replace $\{2,3,5,7\}$ with random 4 primes from $[2, 200]$, 5000 trials): observed min at 8.6th-percentile of null distribution (null median: 0.97). Verdict: **lucky pigeonhole, not signal**.
+
+**Verdict**: bare $\psi_p$-spectra on concrete Λ-ring substrates carry no zeta-zero information, as predicted by R5's structural argument. The cohomology theory built on top of $\mathrm{Spec}(W(\mathbb{Z}))$ is what would lift the small Λ-action to an infinite-dim object large enough to host the zeta spectrum. Prismatic cohomology (R5's leading candidate) is one such lift; its $\psi_p$-spectrum is the actual open question (R5 Q2), and remains beyond computational reach.
+
+**Cross-cut to 2B**: both point in the same direction. In 2B, Frobenius eigenvalues on $H^1(C, \mathbb{Q}_\ell)$ (the cohomology), not on $H^0(C, \mathcal{O}_C)$ (the structure sheaf), carry $Z(C, T)$'s zeros. The cohomology carries the spectral information; the bare algebraic substrate does not.
+
+**Outputs**: `e2e_adams_spectrum.png` (4-panel spectra plot), `e2e_adams_spectrum.npz` (all spectra + randomization-control distribution).
+
 ## 2C, 2D
 
 - **2C** (state of $\mathbb{F}_1$ / Arakelov programs as of 2025): literature review; deferred.

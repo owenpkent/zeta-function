@@ -61,7 +61,7 @@ zeta-function/
 │   ├── positivity/              # Arch 3 (Li coefficients, Weil quadratic form, Gram-matrix detector at K=1000 and T_max=350)
 │   ├── spectral/                # Arch 1 (Berry-Keating discretization, Sierra-Townsend variants)
 │   ├── zero_free/               # Arch 4 (non-negative trig polynomial LP, multivariate balanced-sum LPs up to d=4, MT translation)
-│   ├── arithmetic_geometric/    # Arch 2 (worked Weil example over F_5; 2A evaluation framework with R1-R5 follow-ups, dossiers, hybrid proposals)
+│   ├── arithmetic_geometric/    # Arch 2 (worked Weil example over F_5; 2A evaluation framework with R1-R5 follow-ups, dossiers, hybrid proposals; 2E Adams-spectrum probe)
 │   ├── multifractal/            # Log-correlated field experiments (pre-existing)
 │   ├── LEARNINGS.md             # Cross-cutting findings synthesis
 │   └── PROOF_ARCHITECTURES_PLAN.md  # Test plan and per-experiment status

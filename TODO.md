@@ -48,6 +48,7 @@
 - [x] Arch 2A R4: Borger Frobenius + Connes trace formula hybrid analysis (see experiments/arithmetic_geometric/2A_R4_borger_connes_hybrid.md)
 - [x] Arch 2A R5: prismatic cohomology investigation (see experiments/arithmetic_geometric/2A_R5_prismatic_cohomology.md)
 - [x] Arch 2A path forward strategic synthesis (see experiments/arithmetic_geometric/2A_path_forward.md)
+- [x] Arch 2E: numerical probe of bare psi_p spectrum on concrete Lambda-rings (see experiments/arithmetic_geometric/e2e_adams_spectrum.py + 2E_adams_spectrum_probe.md) — confirmed predicted negative result: roots of unity / {0} / powers of p, no structural relation to zeta zeros; randomization control rules out apparent K-theory near-coincidence as signal
 
 ### Pre-existing experiments
 
@@ -73,7 +74,7 @@
 - [x] Arch 2A R4: explored Borger Frobenius + Connes trace formula hybrid (see experiments/arithmetic_geometric/2A_R4_borger_connes_hybrid.md) — predicted scorecard ~8 ✅ / 5 🟡 / 3 ❌; fails K1 per R3.5; value is infrastructure for the geometric route
 - [x] Arch 2A R5: prismatic cohomology analyzed as candidate cohomology theory for Spec(W(ℤ)) (see experiments/arithmetic_geometric/2A_R5_prismatic_cohomology.md). δ-rings ↔ Λ-rings at one prime; predicted to close constraints (iv)-(vii). Still K1-blocked on positivity per R3.5.
 - [ ] Arch 2A R3.6.3 (surfaced by R3.6): investigate whether Connes-Consani machinery (arithmetic site, hyperrings, characteristic-one geometry) can serve as INFRASTRUCTURE for the geometric route — even though its positivity formulations fail K1, the topos-theoretic / sheaf-theoretic tools might support intersection theory on a constructed surface
-- [ ] Arch 2E (numerical probe): Adams-operation spectrum vs zeta zeros — does Borger's psi_p have zeta-zero-like spectrum at small p?
+- [x] Arch 2E (numerical probe): Adams-operation spectrum vs zeta zeros — does Borger's psi_p have zeta-zero-like spectrum on concrete Lambda-rings? (see experiments/arithmetic_geometric/2E_adams_spectrum_probe.md — NO: spectra are roots of unity, {0}, or powers of p; confirms R5 framing that cohomology must do the lifting, bare Lambda-structure is too small)
 
 ## Open — docs and visualizations
 
