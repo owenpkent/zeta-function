@@ -31,7 +31,7 @@
 | Arch 4E.4 (trivariate balanced-sum LP) | ✅ | **The LP-vs-tensor gap roughly DOUBLES from d=2 to d=3.** Trivariate LP $\max c_{1,1,1} + \alpha c_{2,2,2}$ at tridegree $(2, 2, 2)$ has peak gap **+51.29% at $\alpha = 3.25$** (M-corrected: in $[+50.0\%, +51.3\%]$), vs 4E.2's +25.00% at $\alpha = 3$. Peak LP value 5.09 vs symmetric tensor bound 3.36. The d-variate non-decomposition strengthens with dimension. Per 4E.3 structural lemma, this still does NOT improve the single-zero MT zero-free region constant. |
 | Arch 4E.5 (d=4 balanced-sum LP) | ✅ | **The $(d-1) \times 25\%$ scaling pattern DOES NOT continue cleanly at d=4.** Quadvariate LP $\max c_{1,1,1,1} + \alpha c_{2,2,2,2}$ at quad-degree $(2,2,2,2)$ has peak at $\alpha = 4.5$ with gap interval **$[+54.5\%, +69.8\%]$** (M-converged at $M_{4D} = 35$, 1.5M constraints, $P_{\min} \sim -0.1$). Midpoint $\sim +62\%$, BELOW the $(d-1) \times 25\% = +75\%$ prediction. The peak $\alpha$ shifts upward: $3.0 \to 3.25 \to 4.5$ for $d = 2, 3, 4$. Increment per dimension: $\Delta_{2\to3} \approx 25$pp, $\Delta_{3\to4} \approx 15$pp — the gap grows SUB-LINEARLY in $d$, suggesting saturation at some limit below 100% as $d \to \infty$. |
 | Arch 4E.6 (constrained-domain LP) | ✅ | [`e4e6_constrained_lp.py`](zero_free/e4e6_constrained_lp.py) + [`.md`](zero_free/e4e6_constrained_lp.md). **Negative result, sharpening 4E.3.** Tests the proposed escape: relax $P \ge 0$ to $\Omega \subset [0, 2\pi]^d$ instead of full torus. Four formulations (K-point sampling, arc-removal, zero-constrained, trick-at-off-line-height) all collapse to Fejér / full-non-negativity ceiling at well-resolved parameters. Setup D, the most MT-faithful version: at $N=8$, $K=50$ gives ratio 1.90 over baseline; ratio decays monotonically to 1.000 by $K=400$. Pure sparse-sampling artifact. **The MT 1D Fejér ceiling is robust under naïve domain relaxation.** Genuine escape requires Heath-Brown multi-zero coupling (4E.7), Bombieri variational SOS, or polynomial-ideal SOS (4E.8) — qualitatively different machinery beyond LP-over-a-subset. |
-| Arch 4E.8 (polynomial-ideal SOS via SDP) | ✅ | [`e4e8_sos_sdp.py`](zero_free/e4e8_sos_sdp.py) + [`.md`](zero_free/e4e8_sos_sdp.md). **The last LP/SDP-style escape route from 4E.3 is closed.** Three findings via cvxpy + CLARABEL SDP. **Phase A**: cos × cos SOS-SDP at bidegree (2, 2) matches 4E.2's K-sampling LP to floating-point at every alpha. The +25% LP gap is REAL, not a sampling artifact: the 2D Fejer-Riesz analog holds at the extreme rays of the cos × cos slice at bidegree (2, 2). **Phase C**: full-trig SOS (allowing sin × sin / cross terms) gives the SAME cos × cos projection as cos × cos SOS — sin terms don't help. **Phase D**: direct SDP maximization of c_1 of the phi = 2 theta line restriction over cos × cos SOS at bidegree (2, 2) SATURATES 1D Fejer at effective degree 6 EXACTLY (ratio 1.0000 to 4 decimals; saturating polynomial Q = (1+cos θ)(1+cos φ)). The 4E.3 line-restriction lemma is **tight, not violated**. This bounds Putinar/Schmuedgen polynomial-ideal SOS for the phi=2theta coupling from above. **Pattern (LEARNINGS finding #15 extending #12)**: 4E.6 collapsed to Fejer, 4E.7 had rank-1 LP optima at naive objectives, 4E.8 saturates the Fejer line-restriction bound. The 4E.3 wall is robust under the entire LP/SDP relaxation family. Remaining qualitatively-distinct escapes (Bombieri variational SOS, Heath-Brown multi-zero MT bookkeeping with higher-harmonic 4E.2 input) live outside the LP/SDP framework. |
+| Arch 4E.8 (polynomial-ideal SOS via SDP) | ✅ | [`e4e8_sos_sdp.py`](zero_free/e4e8_sos_sdp.py) + [`.md`](zero_free/e4e8_sos_sdp.md). **The last LP/SDP-style escape route from 4E.3 is closed.** Three findings via cvxpy + CLARABEL SDP. **Phase A**: cos × cos SOS-SDP at bidegree (2, 2) matches 4E.2's K-sampling LP to floating-point at every alpha. The +25% LP gap is REAL, not a sampling artifact: the 2D Fejer-Riesz analog holds at the extreme rays of the cos × cos slice at bidegree (2, 2). **Phase C**: full-trig SOS (allowing sin × sin / cross terms) gives the SAME cos × cos projection as cos × cos SOS — sin terms don't help. **Phase D**: direct SDP maximization of c_1 of the phi = 2 theta line restriction over cos × cos SOS at bidegree (2, 2) SATURATES 1D Fejer at effective degree 6 EXACTLY (ratio 1.0000 to 4 decimals; saturating polynomial Q = (1+cos θ)(1+cos φ)). The 4E.3 line-restriction lemma is **tight, not violated**. This bounds Putinar/Schmuedgen polynomial-ideal SOS for the phi=2theta coupling from above (no Putinar tubular neighborhood escape). **Pattern (LEARNINGS finding #15 extending #12)**: 4E.6 collapsed to Fejer, 4E.7 had rank-1 LP optima at naive objectives, 4E.8 saturates the Fejer line-restriction bound. The 4E.3 wall is robust under the entire LP/SDP relaxation family. Remaining qualitatively-distinct escapes (Bombieri variational SOS, Heath-Brown multi-zero MT bookkeeping with higher-harmonic 4E.2 input) live outside the LP/SDP framework. |
 | Arch 4E.7 (multi-zero MT LP) | ✅ | [`e4e7_multi_zero_lp.py`](zero_free/e4e7_multi_zero_lp.py) + [`.md`](zero_free/e4e7_multi_zero_lp.md). **Multi-zero LP escape from 4E.3 is real at the shape-factor level** but the naive objective produces rank-1 LP optima. Setup: postulate $d$ putative zeros at independent heights, polynomial becomes $d$-variate with full $d$-torus non-negativity constraint (so 4E.3 lemma doesn't apply). Joint shape factor $\lambda_{1,1} = (q_1^2 - 1)^2/4$ is **55-137× larger than $\lambda_1^2$** (naive two-independent-zero MT) at $N \in \{2,3,4\}$. **However**: per 4D-ii, max $c_{1,1}$ at bidegree $(N,N)$ saturates the tensor bound $q_1^2$ with rank-1 LP optimum. Balanced-sum and Heath-Brown-style $(a,b)$ objectives also rank-1 at all tested weights. Naive multi-zero objectives DO NOT exceed tensor products. **A non-trivial multi-zero MT improvement for RH on zeta** would combine this LP gain with higher-harmonic structure (4E.2's +25% rank-2 gain via $c_{1,1} + \alpha c_{2,2}$) AND explicit Heath-Brown bookkeeping (1992) — research-grade. Translation to zero-free region constant for asymptotic RH bounded by $1/\log T$ scaling (Riemann-von Mangoldt density); finite-range problems (Siegel zeros, least prime in AP) get genuine constant-factor improvement. |
 | Arch 2A (Weil-proof diff table) | ✅ | [`2A_weil_proof_diff.md`](arithmetic_geometric/2A_weil_proof_diff.md): step-by-step diff between Weil's proof for curves over $\mathbb{F}_q$ (Lefschetz + Poincaré + Hodge index) and the missing structure over $\mathrm{Spec}(\mathbb{Z})$. **Conclusion: Architecture 2's obstruction is constructive, not analytic.** §4 expands: the analytic shadow (Arch 3's circularity wall) and the geometric obstruction are two views of the same missing positivity. §5 lists 17 specific constraints the missing mathematics must satisfy. Companion [`2A_candidate_evaluation.md`](arithmetic_geometric/2A_candidate_evaluation.md) operationalizes the constraints: checkable predicates, submission template, current scorecards for six candidates (Deitmar, Lorscheid, Borger, Connes, Deninger, Connes-Consani), kill criteria. **Universal finding from the scorecards: no candidate has even a partial ✅ on (xi-xiii) — Hodge index positivity provable without RH input. This is the central open construction problem.** |
 | Arch 2A R1 (D-H exclusion sharpening) | ✅ | [`2A_R1_DH_exclusion.md`](arithmetic_geometric/2A_R1_DH_exclusion.md): per-candidate verification that D-H is excluded from each framework's natural domain. **All six candidates pass kill criterion K2 by construction.** The structural reason: D-H is defined by a linear combination of Dirichlet L-functions, which is an analytic operation on Dirichlet series rather than a geometric operation on the underlying objects. Linear combinations are not constructible within any of the six frameworks; therefore none of them accidentally "proves RH" for D-H. K2 safety is conditional on the Selberg conjecture (no Euler-product L-function with off-line zeros). Updates the (xvii) column in the scorecard from a mix of ⏳/🟡 to uniform ✅. |
@@ -53,14 +53,91 @@
 
 ---
 
-## Premise
+## Why this plan exists
 
-We cannot test "does this approach prove RH". We can test the **intermediate claims** each architecture must produce, and we can build **kill criteria** that would falsify the approach. Two non-negotiable disciplines:
+The Riemann Hypothesis is a 165-year-old open problem with millions of person-hours of expert effort against it. **This project does not expect to prove RH.** What it can do is map the structural landscape rigorously, build experimental controls that distinguish promising approaches from broken ones, and identify the smallest things that *would* be meaningful progress.
 
-1. **Positivity, not just spectral match.** A method that derives only from log-correlated structure, Selberg CLT, GUE statistics, or moments lives at Level 3 and is provably insufficient: those statements are compatible with worlds where RH fails for a single zero at $\beta = 0.51$.
-2. **The Davenport-Heilbronn discipline.** Any architecture-1, -3, or -4 method must distinguish $\zeta$ from Davenport-Heilbronn (functional equation, no Euler product, known off-line zeros). Anything that "proves RH" for D-H is wrong.
+### What we're trying to learn, in order of importance
 
-The four architectures from `docs/solutions/README.md` §8, with concrete test programs below.
+1. **Which approaches are structurally capable of proving RH at all** (versus those that hit provable walls regardless of effort). This is the kill-criterion K1 question: does the method, even in its idealized form, imply RH, or does its conclusion sit logically below RH? Most candidate "proofs" in the literature reduce RH to a different positivity statement that is itself RH-equivalent. That is circularity, not progress. The no-shortcut theorem in [`2A_R3_5_K1_universality.md`](arithmetic_geometric/2A_R3_5_K1_universality.md) formalizes this for trace-formula NCG.
+
+2. **Where the actual obstruction lives for each architecture.** A method that runs into the same wall as a hundred prior attempts is informative if we understand WHERE the wall is. The four architectures hit walls at different places: Hodge index positivity for Arch 2; explicit-formula cancellation tightness for Arch 3; the 1D Fejér ceiling under all natural LP/SDP relaxations for Arch 4; the K1 no-shortcut theorem for Arch 1 (NCG-only spectral approaches). Localizing each wall is concrete progress toward identifying what new mathematics is needed.
+
+3. **What would constitute meaningful progress short of RH itself.** A clear target shorter than RH (a specific conjecture in Deninger's program; a verified positivity statement on a constructed surface; a sharp zero-free region with a structurally new auxiliary inequality; the smallest open conjecture whose proof would be a step) is more useful than vague "progress toward RH." The architecture-specific plans below all aim at such targets.
+
+### Why four architectures, not more or fewer
+
+The taxonomy comes from [`docs/solutions/README.md`](../docs/solutions/README.md) §8. It is *not* the full list of approaches that have been tried (the [research atlas](../docs/research_atlas/README.md) catalogs that). It is the set of approaches that:
+
+- Have a clear logical path from "the intermediate claim is proved" to "RH is proved" (so they could in principle close).
+- Have produced at least partial published progress that we can verify, extend, or attempt.
+- Are structurally distinct enough that progress on one does not trivially transfer to another.
+
+The four (spectral / arithmetic-geometric / direct positivity / analytic) partition the realistic candidates. Random matrix theory and computational verification are NOT separate architectures because they are Level 3 (see below) and cannot close RH alone, regardless of how much progress is made within them.
+
+### Why we test kill criteria, not goals
+
+We cannot test "does this approach prove RH" because the approach is a research program, not a finished proof. We CAN test:
+
+- **Does the approach produce a verifiable intermediate result?** (e.g., Li coefficients positive for the first $10^5$ indices; Berry-Keating spectral density matching the right zeta-zero scaling; the Gram-matrix detector being PSD for $\zeta$.)
+- **Does the intermediate result distinguish $\zeta$ from a structurally similar non-RH object?** (the Davenport-Heilbronn discipline; see below.)
+- **What is the gap between the intermediate result and the final goal?** (e.g., for Arch 3: the Weil quadratic form margin versus the cancellation tightness in Bombieri's explicit formula. For Arch 4: the bivariate LP gap versus the line-restriction lemma. For Arch 2: the 17-constraint scorecard for a candidate cohomology.)
+
+A method that *passes* its intermediate tests is not proved to work; it is just not ruled out. A method that *fails* an intermediate test (especially the D-H control) is ruled out structurally, with finality. The asymmetry is the point: we can rule things out cheaply; we cannot rule things in.
+
+Concretely, the four kill criteria used throughout the project (defined in [`2A_candidate_evaluation.md`](arithmetic_geometric/2A_candidate_evaluation.md)):
+
+- **K1**: the proposed intermediate claim is provably RH-equivalent (circular).
+- **K2**: the method gives the same conclusion for $\zeta$ and Davenport-Heilbronn (L-function-blind).
+- **K3**: the method does not survive contact with a worked function-field example (it would not even reproduce Weil's proof in the case where it succeeds).
+- **K4**: the method's central object cannot be constructed without invoking RH-strength input.
+
+### The Davenport-Heilbronn discipline
+
+The [Davenport-Heilbronn L-function](_shared/davenport_heilbronn.py) is a Dirichlet series with the same functional equation as $\zeta$ but without an Euler product, and with KNOWN off-line zeros at $\rho \approx 0.808 + 85.7 i$ (and functional-equation partner). It is a structural counterexample to any "RH for objects with functional equation" claim that does not use the Euler product structurally.
+
+**Operational use:** every Architecture 1, 3, or 4 method we develop is applied to BOTH $\zeta$ and D-H. If the method gives the same answer for both, the method is L-function-blind and structurally insufficient: it would "prove RH" for D-H, which is false. If the method correctly flags D-H as different from $\zeta$, that is necessary (not sufficient) evidence the method has arithmetic content.
+
+The discipline has done concrete work twice in the project:
+
+1. **It killed a plausible approach**: small-$n$ Li-positivity (3B) looked like a positive signal for $\zeta$ but gave identical positive signals for D-H. The test does not distinguish until $n \sim 320{,}000$ (3B.2), so any argument that proves $\lambda_n \geq 0$ uniformly out to $n = O(10^3)$ is structurally insufficient.
+2. **It validated the right approach**: the Gram-matrix Weil form (3C, 3D, 3D.2, 3D.3, 3D.4) returns indefinite for D-H and PSD for $\zeta$, $\chi_3$, $\chi_4$ across all tested $K$ and $T_{\max}$, with the negative-eigenvalue count exactly equal to the number of off-line zero pairs.
+
+Architecture 2 (arithmetic-geometric) is exempt by design: Deninger-style and $\mathbb{F}_1$-style constructions intentionally require the Euler product that D-H lacks. K2 is satisfied by all six 2A candidates by construction (per [`2A_R1_DH_exclusion.md`](arithmetic_geometric/2A_R1_DH_exclusion.md)).
+
+### Level 4 positivity is the structural commitment
+
+The four-level framing from [`docs/02_graduate/log_correlated_fields_intro.md`](../docs/02_graduate/log_correlated_fields_intro.md) §6 places mathematical statements about $\zeta$ on a hierarchy:
+
+- **Level 1**: statements about $\zeta$ as a function (analytic continuation, functional equation, special values).
+- **Level 2**: statements about $\zeta$'s zeros that follow from Level 1 (the count $N(T)$, average spacing).
+- **Level 3**: statistical / spectral statements about zero distributions (Montgomery pair correlation, Selberg CLT, GUE statistics, log-correlated structure).
+- **Level 4**: pointwise / positivity statements about zeros (Weil positivity, Li $\lambda_n \geq 0$, RH itself).
+
+The structural fact: **RH lives at Level 4, not Level 3**. Level 3 statements are compatible with worlds where one zero has $\beta = 0.51$ (the statistics would be unchanged at leading order). Any method that lives only at Level 3 cannot close RH. This rules out a large class of "near-miss" approaches before we test them in detail.
+
+Architecture 1 spectral constructions that fit Level 3 (matching zero density, spectral statistics) without an arithmetic-content mechanism live at Level 3. The 1C cross-check verified this concretely: the same Berry-Keating + Sierra-Townsend H matrices fit zeta and D-H gammas with discrimination ratio in $[0.50, 1.67]$, factor-3 spread consistent with arithmetic-blind matching. Architectures 2 and 3 aim at Level 4 by construction. Architecture 4 is at Level 4 in principle but its tools have hit a structural ceiling (LEARNINGS findings #12-#15).
+
+### What success looks like for this project
+
+The deliverable is **NOT** a proof of RH. It is:
+
+1. **A working evaluation framework** for proposed RH approaches: kill criteria K1-K4, structural disciplines (D-H, Level 4), candidate scorecards, a worked function-field example to compare against (2B over $\mathbb{F}_5$).
+2. **Sharp localizations of where each architecture's wall lives**: the V-K $2/3$ stagnation as structural ceiling (Arch 4, LEARNINGS #14); the Hodge index positivity as the universal open construction problem (Arch 2, R3.5 + R3.6); the explicit-formula cancellation as the analytic obstruction (Arch 3, finding #7); the K1 no-shortcut theorem for trace-formula NCG (Arch 1 + Arch 2, R3.5).
+3. **A path forward in the architecture(s) that can in principle close RH**: per the cross-architecture synthesis (R3.5 plus #14), only Architecture 2's geometric route can escape the K1 wall. The [2A path forward document](arithmetic_geometric/2A_path_forward.md) lays out the multi-decade hybrid + intersection-theory research program. Project-level vs beyond-project work is distinguished there.
+4. **Reusable experimental infrastructure**: the [`LFunction`](_shared/lfunction.py) interface, the Gram-matrix detector ([`e3c2_weil_gram.py`](positivity/e3c2_weil_gram.py)), the SDP / LP frameworks ([`zero_free/`](zero_free/)), the prismatic-cohomology connection (R5). Available for further work on RH or adjacent problems (GRH for Dirichlet / modular L-functions, sub-convexity, multi-zero MT, the Selberg class).
+
+The **marginal-positivity thesis** has emerged as a project-level synthesis: five independent directions (Weil-form cancellation tightness; bare $\psi_p$ spectrum collapse; constrained-domain LP collapse; multi-zero LP rank-1; the de Bruijn-Newman $\Lambda = 0$ exactly) all point at the same fact: **RH is just barely true, and any proof must use the exact structure of $\zeta$ (Euler product plus functional equation plus the specific cohomology of $\mathrm{Spec}(\mathbb{Z})$) rather than soft positivity or generic analytic arguments.** This is not RH itself, but it sharpens what a proof would have to look like and rules out a large class of soft approaches.
+
+### Two non-negotiable disciplines
+
+The two structural commitments that follow from the above and that every experiment is held against:
+
+1. **Positivity, not just spectral match.** A method that derives only from Level 3 (log-correlated structure, Selberg CLT, GUE statistics, moments) is provably insufficient for RH. Level 3 statements are compatible with $\beta = 0.51$ worlds. Operationally: any method that does not engage with Level 4 positivity is treated as a Level 3 contribution to the broader landscape, not as a route to RH.
+
+2. **The Davenport-Heilbronn discipline.** Any Architecture 1, 3, or 4 method must distinguish $\zeta$ from D-H. Anything that "proves RH" for D-H is wrong. Operationally: every detector, every test, every experimental signature is computed for both L-functions; if they agree, the method is rejected.
+
+The four architectures from [`docs/solutions/README.md`](../docs/solutions/README.md) §8, with concrete test programs below.
 
 ---
 
