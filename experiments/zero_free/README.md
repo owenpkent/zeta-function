@@ -485,7 +485,17 @@ This is research-grade combination beyond this experiment. The translation to a 
 - `e4e7_multi_zero_lp.npz`: single-zero / two-zero / balanced-sum / Heath-Brown data
 - `e4e7_multi_zero_lp.png`: three-panel summary (single-zero shape vs N, joint vs independent log-scale, balanced-sum LP sweep)
 
-## 4A, 4C
+## 4A + 4C: Vinogradov-Korobov and the conditional landscape ([4a_4c_vinogradov_korobov.md](4a_4c_vinogradov_korobov.md))
 
-- **4A** (Vinogradov-Korobov reproduction): substantial literature work; deferred.
-- **4C** (conditional improvements: Heath-Brown, Pintz, Ford): literature mapping; deferred.
+**Status:** complete (unified literature dossier).
+
+The 4B-4E.7 thread covers **Input 2** (the auxiliary non-neg trig polynomial) of the classical analytic route. 4A and 4C cover **Inputs 1 and 3** (explicit formula + exponential sum bounds via Vinogradov's mean value theorem) and the conditional improvement landscape (Heath-Brown / Pintz / Ford / BDG / density hypothesis / LH).
+
+**Headline findings of the dossier:**
+
+- The **$2/3$ exponent** in $\sigma \geq 1 - c/(\log|t|)^{2/3}(\log\log|t|)^{1/3}$ has been stuck for 67 years. It comes directly from Vinogradov's mean value theorem (V-MVT), which was resolved at its sharp form by Bourgain-Demeter-Guth (2016) via $\ell^2$-decoupling. **Within the V-K recipe, $2/3$ is now a true ceiling.**
+- The **auxiliary inequality input (4B-4E.7) is saturated**: 4B confirms numerically that the LP for $\max c_1$ at degree $N$ hits Fejér exactly, and the multivariate generalizations (4D-4E.7) cannot escape the 1D Fejér ceiling under line restriction (4E.3 lemma) or naïve domain relaxation (4E.6) or naïve multi-zero coupling (4E.7). **No amount of clever auxiliary inequality can compensate for the V-K bottleneck in Input 3.**
+- The **conditional landscape** (RH / density hypothesis / LH / Heath-Brown / Pintz / Ford / BDG) sharpens constants and uniformities but **none of the named conditionals would push the exponent from $2/3$ down**. Pushing the exponent requires a fundamentally new input class: most plausibly the Architecture 2 (arithmetic-geometric) exponential-sum machinery á la Deligne, or the Architecture 1 (Connes) spectral identification.
+- **Architecture 4 is a constraint-mapping architecture**, not a route to RH. The 4B-4E.7 thread quantifies what the architecture cannot do; the 67-year stagnation is consistent with a structural ceiling, not insufficient effort.
+
+This closes the Architecture 4 literature TODOs (4A, 4C). The remaining open computational direction is **4E.8** (polynomial-ideal SOS via Putinar/Schmüdgen, requires SDP not LP), still the only LP-style escape route from 4E.3 per the LEARNINGS finding-12 taxonomy.
