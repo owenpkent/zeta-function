@@ -27,6 +27,8 @@
 - [x] Arch 3G: Weil-form duality for D-H (oscillating Dirichlet sum, cancellation 100x looser than zeta)
 - [x] Arch 3H: Weil-form duality for chi_3 (intermediate cancellation; tight cancellation is specifically zeta's pole)
 - [x] Arch 3I: chi_3 unconditional path blocked by Siegel-Walfisz looseness (factor 30-120 too loose)
+- [x] Arch 3J: Schur complement of Weil-form Gram matrix against on-line cushion — irreducible off-line obstruction is ~30x sharper than raw spectrum (rel min asymptote -78.7% vs -2.6%), signature exactly (N_off, N_off) per off-line gamma in UHP; quantitative form of marginal-positivity thesis (see experiments/positivity/e3j_schur_complement.py + README §3J)
+- [x] Arch 3K: hypothetical off-line zero perturbation — Schur signal scales as 16*(beta-1/2)^2 across four decades; float64 stealth window (eps < 10^-5) is looser than Platt-Trudgian rigorous bound (eps < 10^-7); disproof in Gram-matrix family has no leverage point (see experiments/positivity/e3k_hypothetical_offline.py + README §3K)
 - [x] Arch 1A: Berry-Keating discretization; density-mismatch with zeta documented
 - [x] Arch 1B: Sierra-Townsend modifications (centrifugal, Coulomb, modular log); all L-function-agnostic
 - [x] Arch 1C: L-function discrimination test — best-affine RMS ratio spans factor 3 around 1

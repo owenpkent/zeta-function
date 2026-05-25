@@ -28,7 +28,7 @@
 
 **Architectures 1, 3, 4 status**: substantially closed at the project level.
 - Arch 1 (spectral): 1A-1C complete; 1D literature pending.
-- Arch 3 (positivity): complete through 3B.3 rigorous Li witness at n = 336,000 + 3F-3I Weil-form duality cross-cuts.
+- Arch 3 (positivity): complete through 3B.3 rigorous Li witness at n = 336,000 + 3F-3I Weil-form duality cross-cuts + 3J Schur-complement two-clock decomposition (asymptote -78.7%, sharpens raw Gram detector by ~30x) + 3K hypothetical-off-line-zero perturbation (disproof in Gram-matrix family has no leverage point).
 - Arch 4 (analytic): complete through 4E.8 SDP saturation + 4A+4C V-K dossier. The LP/SDP family is structurally closed; remaining escapes (Bombieri variational SOS, Heath-Brown multi-zero MT) are research-grade Directions 6 and 7.
 
 ## Compute budget
