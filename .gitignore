@@ -24,7 +24,8 @@ _draft_*
 *.tmp
 .cascade/
 .cursor/
-.claude/
+.claude/*
+!.claude/agents/
 
 # OS
 .DS_Store

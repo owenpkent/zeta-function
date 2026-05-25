@@ -2,6 +2,8 @@
 
 A multi-level exploration of the Riemann Zeta Function and the Riemann Hypothesis: from intuitive visual understanding through graduate-level analysis to the frontier of current research. Includes a computational experimental thread organized around testing the four candidate RH proof architectures.
 
+**Operational substrate**: this repo is also structured as the substrate for an AI-augmented (and, speculatively, AI-only) proof program for RH. See [`OPERATIONS.md`](OPERATIONS.md) for how to operate it, [`PHASE_STATE.md`](PHASE_STATE.md) for current state, [`docs/03_research/proof_program.md`](docs/03_research/proof_program.md) for the AI-augmented plan, and [`docs/03_research/proof_program_ai_only.md`](docs/03_research/proof_program_ai_only.md) for the AI-only speculative variant. The repo is a handoff artifact: ~50-70% of Phase 0 is done; Phases 1-5 require expert collaborators and multi-year compute.
+
 ## What's Here
 
 This repo is structured so you can enter at any level and go as deep as you want.
@@ -9,24 +11,41 @@ This repo is structured so you can enter at any level and go as deep as you want
 ```
 zeta-function/
 ├── docs/                        # All written explanations
-│   ├── 00_intuitive/            # No math required — visual, conceptual
+│   ├── 00_intuitive/            # No math required: visual, conceptual
 │   ├── 01_undergraduate/        # Calculus, complex numbers, series
 │   ├── 02_graduate/             # Analytic continuation, functional equation,
 │   │                            #   log-correlated fields, four-level RH framing
-│   ├── 03_research/             # Current approaches, extreme values
+│   ├── 03_research/             # Current approaches, extreme values, PROOF PROGRAMS
+│   │   ├── proof_program.md     # ★ AI-augmented (human-led) proof program
+│   │   ├── proof_program_ai_only.md  # ★ AI-only speculative variant
+│   │   └── research_directions/ # ★ 8 research-grade directions with operational specs
 │   ├── implications/            # Why it matters (primes, physics, crypto)
 │   ├── solutions/               # Known approaches to the Riemann Hypothesis
-│   └── research_atlas/          # ★ Master research map — all attempts, failures, ML directions
+│   └── research_atlas/          # Master research map: all attempts, failures, ML directions
 ├── experiments/                 # ★ Computational thread; proof-architecture tests
-│   ├── PROOF_ARCHITECTURES_PLAN.md
+│   ├── PROOF_ARCHITECTURES_PLAN.md    # Test plan + AI-centric methodology
+│   ├── LEARNINGS.md             # 15+ cross-architecture findings
 │   ├── _shared/                 # LFunction interface, zeta, Davenport-Heilbronn control
-│   ├── positivity/              # Arch 3 (Li coefficients, Weil quadratic form)
+│   ├── positivity/              # Arch 3 (Li coefficients, Weil quadratic form, 3B.3 rigorous)
 │   ├── spectral/                # Arch 1 (Berry-Keating discretization)
-│   ├── zero_free/               # Arch 4 (non-negative trig polynomial LP)
-│   ├── arithmetic_geometric/    # Arch 2 (worked Weil-curves example over F_5)
+│   ├── zero_free/               # Arch 4 (LP/SDP family through 4E.8)
+│   ├── arithmetic_geometric/    # Arch 2 (2A diff, R1-R5, R3.6, R3.6.3, 2C, 2D, 2E)
 │   └── multifractal/            # Log-correlated field experiments (pre-existing)
+├── lean/                        # ★ Lean 4 / Mathlib formal verification (skeleton)
+│   ├── lakefile.lean
+│   ├── ZetaRH.lean              # Main module
+│   └── ZetaRH/                  # R3.5, LineRestriction, LambdaBlueprints, HodgeIndex, ...
+├── .claude/agents/              # ★ AI agent role specifications for AI-only execution
+│   ├── surveyor.md              # Literature survey + scorecard maintenance
+│   ├── builder.md               # Propose constructions
+│   ├── verifier.md              # Formalize in Lean 4
+│   ├── adversary.md             # K1-K4 attack; D-H discipline
+│   ├── synthesizer.md           # Integrate outputs into project dossier
+│   └── orchestrator.md          # Schedule work, manage compute budget
 ├── sources/                     # Original PDFs and their converted text
 ├── visualizations/              # manim animation scripts
+├── OPERATIONS.md                # ★ How to operate this repo as the proof-program substrate
+├── PHASE_STATE.md               # ★ Current operational state (read by ORCHESTRATOR)
 ├── CLAUDE.md                    # Project context for AI assistants
 └── LLM_ONBOARDING.md            # User context + tech stack
 ```
