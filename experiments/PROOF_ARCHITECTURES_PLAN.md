@@ -1,6 +1,8 @@
 # Plan: Testing the Four RH Proof Architectures
 
 > Companion to [`docs/solutions/README.md`](../docs/solutions/README.md) and the four-level framing in [`docs/02_graduate/log_correlated_fields_intro.md`](../docs/02_graduate/log_correlated_fields_intro.md) §6. This document is the test plan; the code lives in [`experiments/_shared/`](_shared/) plus per-architecture subdirectories.
+>
+> **Execution modality**: this plan is designed for AI-augmented research. The entire experimental thread (this repo) has been produced through Claude Code sessions with `mpmath` / `numpy` / `cvxpy` / `sympy`. The plan reflects what is tractable under AI execution and what requires human collaboration. See [§ AI-augmented research methodology](#ai-augmented-research-methodology) below for the division of labor.
 
 ## Current status (snapshot)
 
@@ -143,6 +145,78 @@ The four architectures from [`docs/solutions/README.md`](../docs/solutions/READM
 
 ---
 
+## AI-augmented research methodology
+
+The project's experimental thread is executed by an AI assistant (Claude Code with `mpmath`, `numpy`, `cvxpy`, `sympy`, `matplotlib`) collaborating with a human owner. This is not incidental. The plan is structured to maximize what AI execution does well and to flag what it cannot do alone.
+
+### What AI does well in this kind of work
+
+1. **Rigorous high-precision computation.** mpmath at 100+ digits, cvxpy with CLARABEL/SCS SDP solvers, scipy linprog. Examples in this thread: [3B.3](positivity/e3b3_rigorous.py) at 100 digits witnesses $\lambda_{336{,}000}^{DH} < 0$ with explicit error bounds; [4E.8](zero_free/e4e8_sos_sdp.py) sets up a Hermitian PSD SDP and runs to floating-point precision. These are mechanical once specified; AI executes them cleanly with disk caching, error tracking, and reproducible artifacts.
+
+2. **Cross-literature synthesis.** Reading and integrating across F_1 / Arakelov / prismatic cohomology / NCG / tropical geometry simultaneously. Examples: [2C survey](../docs/03_research/f1_arakelov_survey_2025.md) (covers six F_1 candidates + Arakelov-Soulé + 2018-2025 infrastructure), [2A_path_forward.md](arithmetic_geometric/2A_path_forward.md) (R1-R5 strategic synthesis), [2D micro-target](arithmetic_geometric/2D_deninger_micro_target.md) (cross-references three R-series follow-ups).
+
+3. **Structural / categorical reasoning.** Articulating and verifying structural arguments where the logic is clear once stated. Examples: [R3.5 no-shortcut theorem](arithmetic_geometric/2A_R3_5_K1_universality.md) (every trace-formula NCG framework has positivity ⟺ RH), [4E.3 line-restriction lemma](zero_free/e4e3_mt_translation.py) (any d-variate non-neg polynomial restricted to a line is bounded by 1D Fejér at matched effective degree).
+
+4. **Iterative experimental design.** Quickly write experiments, run them, interpret, iterate. The 4E.6 → 4E.7 → 4E.8 sequence of LP/SDP escape attempts is a clean example: each experiment took 1-2 sessions to design and execute, and the cumulative pattern (LP/SDP family saturates 4E.3) emerged across sessions.
+
+5. **Maintaining the architectural picture across sessions.** AI memory + repo state preserve the cross-architecture conclusions, scorecards, and finding numbers. Each session can pick up the prior synthesis without rediscovering it.
+
+6. **Documentation at multiple levels.** The `docs/` tree spans intuitive → undergrad → grad → research; AI produces level-appropriate writing on demand.
+
+### What AI cannot do alone
+
+1. **Genuinely novel mathematical creativity.** The [Hodge index theorem on a constructed surface](../docs/03_research/research_directions/08_hodge_index_surface.md) remains open precisely because no existing technique closes it. AI can articulate the problem, survey known approaches, and verify candidate proofs, but cannot invent the missing argument unaided.
+
+2. **Construct genuinely new mathematical objects.** The foliated dynamical system $X$ Deninger needs has not been constructed in 30+ years of expert work. AI can specify properties $X$ must have ([2D-M3 micro-target](arithmetic_geometric/2D_deninger_micro_target.md)), but cannot build $X$ itself.
+
+3. **Long-horizon multi-year research focus.** A single 7-15 year proof attempt is outside AI's operational mode. AI works best in defined sessions with concrete deliverables.
+
+4. **Independent expert judgment without external verification.** When AI says "this argument works", it should be checked. The [2A scorecards](arithmetic_geometric/2A_candidate_evaluation.md) are explicit about partial expertise and recommend expert consultation.
+
+5. **Discovering structural obstacles AI's training did not cover.** AI works within the mathematical literature it has internalized. Genuinely novel obstructions (like Scheiderer's 2D Fejér-Riesz counterexamples were when first found) are at the edge of what AI can detect.
+
+### The division of labor
+
+| Task | AI primary | Human primary | Both required |
+|---|:---:|:---:|:---:|
+| High-precision computation | ✓ | | |
+| LP/SDP / QP optimization | ✓ | | |
+| Literature synthesis (within a defined corpus) | ✓ | | |
+| Scorecard maintenance | ✓ | | |
+| Rigorous error bounding | ✓ | | |
+| Cross-architecture pattern detection | ✓ | | |
+| Documentation across reader levels | ✓ | | |
+| Mathematical creativity (novel constructions) | | ✓ | |
+| Long-horizon research focus (years) | | ✓ | |
+| Final proof verification (community) | | ✓ | |
+| Architectural strategy | | | ✓ |
+| Kill-criterion design | | | ✓ |
+| Identifying open problems worth attacking | | | ✓ |
+
+### AI-specific guidelines for this plan
+
+These guidelines refine the [§ Why we test kill criteria, not goals](#why-we-test-kill-criteria-not-goals) section for AI execution specifically:
+
+1. **Every experiment must be a script.** No "I ran this in my head" results. AI-executed experiments leave [`*.py`](positivity/) + [`*.npz`](positivity/) + [`*.md`](positivity/) + [`*.png`](positivity/) artifacts. Audits are reproducible.
+
+2. **Every claim must cite either code or literature.** AI's strength is cross-referencing; this lets a reader verify each claim independently. The [scorecard](arithmetic_geometric/2A_candidate_evaluation.md) and [R-series analyses](arithmetic_geometric/) explicitly track which claims are computational, which are literature-derived, which are AI's own structural argument.
+
+3. **The D-H discipline is an AI unit test.** Encoded in [`_shared/davenport_heilbronn.py`](_shared/davenport_heilbronn.py), runnable in `experiments/_shared/smoke_test.py`. Every Arch 1/3/4 method gets the D-H test as a CI check. AI fails fast on L-function-blind methods.
+
+4. **When AI's expertise is partial, say so.** The [Connes dossier](arithmetic_geometric/2A_connes_dossier.md), [R3.6 deep-dive](arithmetic_geometric/2A_R3_6_arithmetic_site.md), and [R3.6.3 infrastructure analysis](arithmetic_geometric/2A_R3_6_3_cc_infrastructure.md) explicitly flag where AI's reading of post-2014 noncommutative-geometry literature is partial. Honest flagging beats overreach.
+
+5. **Use the 17-constraint scorecard as the unifying framework.** Every Arch 2 candidate, every hybrid proposal, every infrastructure piece gets scored against the same 17 constraints. AI maintains the scorecard consistently across sessions; humans validate the scoring.
+
+6. **The marginal-positivity thesis is a structural prior, not a conclusion.** Six reinforcing directions ([LEARNINGS findings #7, #11, #12, #13, #14, #15](LEARNINGS.md)) say RH is just barely true. AI uses this as a prior when evaluating new approaches: any method that proves RH "easily" or with "soft positivity" is suspect by the prior. Skepticism scales with how comfortable the method looks.
+
+### What this project (the experimental thread) is for
+
+The repository is a **handoff artifact**: the AI-tractable portion of the proof program ([`../docs/03_research/proof_program.md`](../docs/03_research/proof_program.md) Phase 0 + parts of Phases 1-3) is documented and reproducible. Human researchers (and future AI sessions) can pick up from any committed state and continue.
+
+The repository is NOT trying to prove RH on its own. Per [§ What success looks like for this project](#what-success-looks-like-for-this-project), the deliverable is the evaluation framework + structural localizations + path forward + reusable infrastructure. Execution of the deeper research-grade directions ([`../docs/03_research/research_directions/`](../docs/03_research/research_directions/)) requires human-led work, possibly with AI as a sub-tool but not as the primary mode.
+
+---
+
 ## Phase 0: Shared infrastructure
 
 Before any architecture-specific work, everything depends on:
@@ -171,6 +245,8 @@ Deliverable: [`experiments/_shared/`](_shared/) with documented API.
 
 **Where a proof would come from:** a self-adjointness theorem with verified domain. Numerical 1A-1C give confidence or rule a candidate out.
 
+**AI tractability:** ✅ HIGH for 1A-1C (numerical operator discretization, spectral comparison, best-affine rescaling); ⏳ LOW for 1D (Connes adèle class space, requires NCG literature judgment and theory development). Project status: 1A-1C complete and closed; 1D pending literature work. The 1C result (L-function-blind discrimination ratio in $[0.50, 1.67]$) is the kind of AI-clean structural finding the methodology is designed to produce.
+
 ---
 
 ## Architecture 2: Arithmetic-geometric (Deninger, $\mathbb{F}_1$)
@@ -185,6 +261,8 @@ Mostly literature and notation; the proof is a construction. Preparatory work:
 | 2D | Identify the smallest open conjecture in Deninger's program that would, if proved, be a meaningful step | A target |
 
 **Where a proof would come from:** the missing cohomology construction. We probably can't construct it here, but we can clarify the target.
+
+**AI tractability:** 🟡 MIXED. AI excels at the **mapping work** (2A diff table, 17-constraint scorecard, R-series candidate analyses, 2C literature survey, 2D micro-target identification, R3.5 no-shortcut theorem articulation, R3.6 + R3.6.3 deep dives). AI cannot do the **construction work** (build the foliated space $X$, prove the Hodge index theorem, construct the surface $\mathrm{Spec}(\mathbb{Z}) \times_{\mathbb{F}_1} \mathrm{Spec}(\mathbb{Z})$). Project status: mapping work substantially complete (2A + all R-series + 2C + 2D + 2E); construction work is the [research-grade directions 1-5, 8](../docs/03_research/research_directions/) beyond project scope. The 2B worked example (RH for $E/\mathbb{F}_5$) is the only place RH is actually proved in the project, and that proof is mechanical (point counting + Frobenius eigenvalues): exactly the kind of computation AI handles well.
 
 ---
 
@@ -202,6 +280,8 @@ Mostly literature and notation; the proof is a construction. Preparatory work:
 
 **Where a proof would come from:** an analytic argument showing $\lambda_n \geq 0$ uniformly, or $Q(f) \geq 0$ on a dense subspace.
 
+**AI tractability:** ✅ VERY HIGH. This architecture is the most AI-tractable in the project. Almost everything is concrete: numerical zero sums, Gram-matrix eigenvalues, high-precision Li coefficient computation, Bombieri explicit formula verification, Selberg-class cross-cuts. AI delivered Gram-matrix wrong-approach detector (3C, 3D, 3D.2, 3D.3, 3D.4), the large-n Li negativity witness for D-H (3B.2 numerical, [3B.3 rigorous at 100 digits](positivity/e3b3_rigorous.py)), the Weil-form duality framework (3F-3I) with the cancellation-tightness diagnosis. The proof-side argument (uniform $\lambda_n \ge 0$ or $Q(f) \ge 0$ on a dense subspace) requires human creativity, but the structural detection that distinguishes promising from broken approaches is AI's strong suit.
+
 ---
 
 ## Architecture 4: Analytic (zero-free regions)
@@ -215,6 +295,8 @@ Mostly literature and notation; the proof is a construction. Preparatory work:
 
 **Where a proof would come from:** a new auxiliary inequality replacing $3 + 4\cos\theta + \cos 2\theta \geq 0$.
 
+**AI tractability:** ✅ VERY HIGH. LP and SDP over multivariate non-negative trig polynomials are perfect for AI: cvxpy + CLARABEL/SCS solve in seconds, the LP/SDP setup is mechanical, the negative results (4E.3 line-restriction lemma, 4E.6/4E.7/4E.8 LP family saturating Fejér) are exactly the kind of structural pattern AI detects across iterations. **Architecture 4 is essentially closed by the AI thread**: 4B Fejér, 4D/4D.2 single-coefficient decomposition, 4E balanced-sum first finding, 4E.2 +25% peak, 4E.3 structural lemma, 4E.4/4E.5 d-variate scaling, 4E.6 constrained-domain collapse, 4E.7 multi-zero rank-1, 4E.8 SDP saturation, [4A+4C unified V-K dossier](zero_free/4a_4c_vinogradov_korobov.md). The only remaining direction is research-grade (Bombieri variational SOS, Heath-Brown multi-zero MT bookkeeping per [Direction 6](../docs/03_research/research_directions/06_bombieri_variational_sos.md) and [Direction 7](../docs/03_research/research_directions/07_heath_brown_multi_zero_mt.md)).
+
 ---
 
 ## Cross-cutting
@@ -227,10 +309,49 @@ Mostly literature and notation; the proof is a construction. Preparatory work:
 
 ## Execution order
 
-1. **Phase 0 (shared infrastructure)** — prerequisite for everything.
-2. **Architecture 3 (positivity)** — most computationally tractable; immediately produces verifiable artifacts (Li coefficients, Weil form). Highest learning rate per unit effort.
-3. **Architecture 1 (spectral)** — rich numerical playground; partial machinery already from multifractal work.
-4. **Architecture 4 (zero-free)** — sharp computational micro-target (trig polynomials), small but well-defined.
-5. **Architecture 2 (arithmetic-geometric)** — mostly literature, longest arc. Save for when other work has clarified what we need.
+The original ordering (positivity → spectral → zero-free → arithmetic-geometric) was chosen for **learning rate per unit effort** under AI execution. In practice, the project ran roughly in this order, with each architecture's mapping work largely complete by mid-2026:
 
-Per-architecture work lives in `experiments/positivity/`, `experiments/spectral/`, `experiments/zero_free/`, `experiments/arithmetic_geometric/`. The task list is tracked in this repo's TODO and the harness's todo state.
+1. **Phase 0 (shared infrastructure)**: prerequisite for everything. ✅ Complete.
+2. **Architecture 3 (positivity)**: most computationally tractable; immediately produces verifiable artifacts (Li coefficients, Weil form). Highest learning rate per unit effort. ✅ Complete through 3B.3 rigorous + 3F-3I cross-cuts.
+3. **Architecture 1 (spectral)**: rich numerical playground; partial machinery already from multifractal work. ✅ Complete through 1C; 1D remains literature.
+4. **Architecture 4 (zero-free)**: sharp computational micro-target (trig polynomials), small but well-defined. ✅ Complete through 4E.8 SDP saturation + 4A+4C V-K dossier; only non-LP/SDP escapes remain (Direction 6, Direction 7).
+5. **Architecture 2 (arithmetic-geometric)**: mostly literature, longest arc. Mapping done (2A diff + scorecards + R-series + 2C survey + 2D micro-target + R3.6.3); construction work is research-grade ([Directions 1-5, 8](../docs/03_research/research_directions/)) and out of scope.
+
+### Order considerations specific to AI execution
+
+- **Cheap things first**: AI executes numerical experiments in seconds. The 3-1-4 order front-loads cheap, verifiable artifacts that calibrate the picture before the slower Architecture 2 literature work.
+- **Architecture 4 ran in parallel** with Architecture 2's R-series: the 4E.6/4E.7/4E.8 experiments interleaved with 2A-R3.5/R3.6/R3.6.3 across sessions. AI handles this concurrency naturally; the constraint is human review bandwidth, not AI speed.
+- **The LEARNINGS.md cross-cutting findings file** is the synthesis surface that ties architectures together. Update it whenever a new experiment lands a structural finding, so the cross-architecture story stays coherent.
+- **Each architecture's "mapping done"** state hands off cleanly to the [research_directions/](../docs/03_research/research_directions/) work. AI can extend each direction in narrow ways (e.g., a few more 3D.X T_max extensions, a few more 4E.X LP variants) without changing the architectural conclusion.
+
+### What ran when (chronological summary as of 2026-05-25)
+
+Looking at the git log, the order in which AI sessions actually delivered each piece:
+- Pre-May 2026: Phase 0 + Arch 3A-3I + Arch 1A-1C + Arch 4B-4E.5 + Arch 2A diff + 2B worked example.
+- May 2026 early: Arch 3C scaling extensions (3D.2, 3D.3), Selberg cross-cut, 4E.6 constrained-domain LP, 4E.7 multi-zero LP, 2A R1-R5 R-series, 2A_path_forward, 2E Adams-spectrum probe.
+- May 23 2026 session: 2A Connes / Deninger / Deitmar dossiers, Arch 1D literature, Arch 3E Li/dBN, Arch 3D.4 T_max=500 extension.
+- May 25 2026 session: Arch 4A+4C V-K unified dossier (commit `a843a84`), Arch 4E.8 SOS-SDP (commit `565de36`), Arch 2C F_1/Arakelov survey (commit `fd020fc`), Plan "Why this plan exists" expansion (commit `a28f106`), Arch 2D Deninger micro-target (commit `10c9f05`), Arch 2A R3.6.3 (commit `3a3f4e3`), Arch 3B.3 rigorous Li witness (commit `30d32aa`), Proof program + 8 research directions (commit `d8a0193`).
+
+The May 25 session alone produced ~5500 lines of new dossier + ~1500 lines of new code across seven commits. This is what AI-augmented research throughput looks like when the architectural picture is well-defined and the experiments are well-scoped.
+
+Per-architecture work lives in `experiments/positivity/`, `experiments/spectral/`, `experiments/zero_free/`, `experiments/arithmetic_geometric/`. The task list is tracked in this repo and the harness's todo state.
+
+---
+
+## Handoff state
+
+As of 2026-05-25, the AI-tractable portion of the proof program is substantially complete. The repo provides:
+
+- A working evaluation framework (kill criteria K1-K4, D-H discipline, Level 4 commitment).
+- Status table with every experiment scored.
+- 15 cross-architecture findings in [`LEARNINGS.md`](LEARNINGS.md).
+- 17-constraint scorecards for six Arch 2 candidates plus R2.5 / R4 hybrid proposals.
+- Strategic synthesis in [`2A_path_forward.md`](arithmetic_geometric/2A_path_forward.md).
+- Operational proof program with eight research directions in [`../docs/03_research/`](../docs/03_research/).
+
+What is NOT in the repo and cannot be: the construction of the Hodge index theorem on the surface (Direction 8), the rigorous development of any Lambda-blueprint surface (Direction 1), the foliated dynamical system $X$ Deninger needs. These require expert human researchers operating over years; the repo is the handoff specification, not the execution.
+
+If you (a future AI session, or a human reading this) want to continue:
+
+- **AI sessions**: pick up from the latest LEARNINGS finding number, extend the experimental thread within the existing architectures, refine the scorecards, sharpen the structural lemmas. Do not attempt the construction-grade directions without human collaboration; that is outside the methodology.
+- **Human researchers**: the [`../docs/03_research/research_directions/`](../docs/03_research/research_directions/) folder is your starting point. Each direction has an operational specification, falsifiability criteria, and estimated effort. Choose based on your expertise and timeline.

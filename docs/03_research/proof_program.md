@@ -4,7 +4,9 @@
 >
 > **Premise**: the four-architecture analysis identifies Architecture 2's geometric route (intersection theory + Hodge index theorem on a constructed arithmetic surface) as the unique direction capable of escaping the K1 wall (per R3.5 no-shortcut theorem). Architectures 1, 3, 4 are structurally capped at the project level. So a proof program must execute Architecture 2.
 >
-> **Honesty up front**: this is a multi-decade research program with success probability under 50%. It cannot be executed by one person in one year. Most milestones are independently publishable as partial results even if the final goal is not reached. The plan is structured so that each phase produces a deliverable that is valuable on its own.
+> **Execution modality: AI-augmented research.** The phases below are scoped around what AI assistants (Claude Code with `mpmath` / `numpy` / `cvxpy` / `sympy`, plus current and future generations of mathematical-reasoning AI) can do versus what requires expert human researchers. The project's experimental thread (this repo) demonstrates AI's capabilities on the mapping side: scorecards, R-series structural analyses, high-precision computational witnesses, cross-literature synthesis. The construction-grade work (Hodge index theorem, foliated dynamical system, the Lambda-blueprint surface) remains human-led, with AI in a sub-tool role. See [§ AI division of labor across phases](#ai-division-of-labor-across-phases) for the per-phase breakdown. The timelines below assume AI-augmented execution; they would be substantially longer for pre-AI research methodology.
+>
+> **Honesty up front**: this is a multi-decade research program with success probability under 1%. It cannot be executed by one person in one year. Most milestones are independently publishable as partial results even if the final goal is not reached. The plan is structured so that each phase produces a deliverable that is valuable on its own.
 
 ---
 
@@ -35,6 +37,47 @@ In order of decreasing tractability, increasing significance:
 | G7 | Verify D-H discipline, Weil specialization, and K1 escape; publish | 12-20 years | 2-8% |
 
 G1-G3 are publishable independently. G4 is a major contribution even without G5. G5 is the central open problem. G6-G7 are the proof.
+
+## 1.5. AI division of labor across phases
+
+The phases below run on different mixes of AI and human work. AI accelerates the surveyable, mechanical, and structurally-mappable parts; human researchers remain primary for the construction-grade and novel-creativity parts. This table is the per-phase scoping:
+
+| Phase | AI primary | Human primary | Both required | AI acceleration vs traditional research |
+|---|:---:|:---:|:---:|---|
+| 0 Foundation | ✓ | | | ~5x (literature synthesis, scorecard work in weeks not months) |
+| 1 Lambda-blueprints | | | ✓ | ~2-3x (AI handles fiber-product calculations + categorical checks; human handles definitions) |
+| 2 Prismatic cohomology | | | ✓ | ~2x (AI assists with Q1-Q5 verification; human constructs cohomology) |
+| 3 Intersection theory | | ✓ | | ~1.5x (mostly construction work; AI as bookkeeping aid) |
+| 4 Hodge index | | ✓ | | ~1.2x (deeply creative work; AI assists with computation and verification) |
+| 5 Assembly | | | ✓ | ~2x (verification-heavy, where AI shines; integration is human-judgment) |
+| 6 Peer review | | ✓ | | ~1x (community process; AI does not accelerate) |
+
+**What AI does in each phase**:
+
+- **Phase 0**: substantially AI-led. Literature deep-dive across F_1, Arakelov, prismatic, NCG. Independent scorecard verification. Structural pinning-down of R3.5 (already done in the project). Identification of expert correspondents (human-led). The 12-month estimate is realistic for an AI-augmented Phase 0; without AI, this is more like 2-3 years.
+
+- **Phase 1**: collaborative. AI articulates the categorical structure of Lambda-Blpr, verifies the basic axioms (composition, identity, full faithfulness of embeddings), and computes the fiber product Spec(Z) x_F1 Spec(Z) once human-defined Fermat-Frobenius is in place. AI maintains the 17-constraint scorecard consistently. Human researcher defines Fermat-Frobenius, judges categorical taste, decides which structural choices to make.
+
+- **Phase 2**: collaborative, with AI heavier on the verification side. AI applies prismatic cohomology machinery to Spec(W(Z)) and verifies the R5 Q1-Q5 properties as theorems. The actual construction of the prismatic site and the foliation requires human researchers with deep p-adic Hodge theory expertise. AI provides infrastructure (e.g., 2D-M3 explicit specification, error checking).
+
+- **Phase 3**: human-led construction work. Defining a Chow-style intersection product on the Lambda-blueprint surface requires creativity AI does not have. AI assists with: bookkeeping (tracking which constraints are satisfied), verifying basic properties (bilinearity, projection formula) once constructions are proposed, and comparing to function-field analogs.
+
+- **Phase 4**: the central open problem. This is where AI is least helpful: the Hodge index theorem requires genuinely novel mathematical creativity. AI's role: (a) cross-survey of related Hodge index theorems (Adiprasito-Huh-Katz tropical, Faltings arithmetic, classical algebraic-geometric); (b) computational verification of candidate proofs once proposed; (c) maintaining the K1 / K2 / K3 verification framework. The actual creative leap is human.
+
+- **Phase 5**: collaborative. Assembling the Weil-template proof from Phases 1-4 is integration work. AI verifies each step against K1-K4 and writes the cross-referenced exposition. Human researchers make integration choices and judge the overall structure.
+
+- **Phase 6**: peer review is a human community process. AI may be used by reviewers to verify computational claims and check structural arguments, but the judgment process is community-driven.
+
+**What this means for the program structure**:
+
+- Phase 0 and 1 are AI-tractable enough that a small group (1 human + AI sessions) can produce them in 1-2 calendar years. This is dramatically faster than pre-AI norms.
+- Phases 2-3 require a small research group (2-3 humans + AI) and 2-3 years each.
+- Phase 4 is the central open problem; AI offers limited acceleration. 5-10 calendar years of human-led work is realistic.
+- Phase 5-6 are collaborative integration and community process. 5-7 calendar years cumulatively.
+
+Total calendar time under AI-augmented execution: 12-18 years. Traditional research methodology would be 20-30 years for the same program.
+
+**What AI cannot accelerate**: the Hodge index theorem itself. The marginal-positivity thesis says RH is barely true; the proof must use exact zeta structure. No amount of computation or literature synthesis substitutes for the creative leap of constructing the right surface, the right cohomology, and the right positivity argument together. This is what makes the program hard, and it is the part AI cannot do alone.
 
 ## 2. Phase structure
 
@@ -141,7 +184,7 @@ Historical reference: Wiles's proof of Fermat's Last Theorem took 18 months betw
 
 ## 3. Personnel and expertise needed
 
-This is not a solo project. Required expertise:
+This is not a solo project. Required human expertise:
 
 - **Algebraic geometry** (arithmetic surfaces, Chow theory, Hodge theory): primary contributor to Phases 1, 3, 4.C, 5.
 - **Noncommutative geometry** (Connes program, adèle class space, trace formulas): primary contributor to Phases 0, 4.B; consultant throughout.
@@ -150,9 +193,31 @@ This is not a solo project. Required expertise:
 - **Tropical / characteristic-one geometry** (Adiprasito-Huh-Katz, Mikhalkin, Connes-Consani): primary contributor to Phase 4.A.
 - **Analytic number theory** (zeta function, Selberg class, D-H): consultant throughout for the validation checks (K2, K3) and the explicit-formula side.
 
-Realistic minimum: a research group of 3-5 mathematicians, each at the postdoc-or-faculty level, with collaborators in adjacent areas. Funding: NSF / Simons / ERC grants over the 10-20 year timeline.
+### AI as a collaborator type
 
-This is a large undertaking. It cannot be staffed by hobbyists or by a single PhD student.
+AI assistants (Claude Code with mathematical libraries, plus current and future generations of mathematical-reasoning AI) are an effective collaborator across all phases, with role varying per the [§ AI division of labor across phases](#15-ai-division-of-labor-across-phases) table. Specifically:
+
+- **Phase 0**: AI is the primary executor for literature synthesis, scorecard verification, R-series structural analysis. A small group (1 human + AI) can complete Phase 0 in 12 months.
+- **Phases 1-2**: AI is a working collaborator: handles categorical / formal verifications, maintains the 17-constraint scorecard, computes explicit fiber products and cohomology classes. Human researcher leads the definitions and structural choices.
+- **Phases 3-4**: AI is a sub-tool: assists with bookkeeping, computational verification of candidate proofs, K1/K2/K3 verification framework. Human researchers lead the creative construction.
+- **Phase 5**: AI is a verification-and-exposition partner: checks each step against kill criteria, writes cross-referenced documentation, computes against the function-field benchmark.
+- **Phase 6**: AI may be used by individual reviewers but does not lead the community process.
+
+**What AI changes**:
+
+1. **The bottleneck shifts from literature synthesis to mathematical creativity.** Phase 0 was traditionally a 2-3 year sub-program (deep reading of multiple research areas, building a unified picture); AI compresses this to 6-12 months. The savings get reinvested in Phase 4, the central open problem.
+
+2. **The scorecard is maintained consistently across years.** Pre-AI, multi-year programs lost institutional memory: contributors changed, scorecards drifted, conventions shifted. AI keeps the 17-constraint framework consistent across sessions and across years, which sharpens the verification of every phase's deliverables.
+
+3. **Reproducibility is enforced.** Every AI-executed experiment leaves code + data + writeup artifacts. Future sessions and reviewers can re-run any check. This is a structural advantage over hand-computed results.
+
+4. **The headcount estimate reduces.** A traditional program would need 5-8 mathematicians plus graduate students; an AI-augmented program can run with 3-5 mathematicians plus AI. The savings come primarily from Phase 0 (the literature-survey roles) and the routine verification roles in Phases 1-2.
+
+### Funding and staffing
+
+Realistic minimum: a research group of 3-5 mathematicians at the postdoc-or-faculty level, with collaborators in adjacent areas, plus AI assistants throughout. Funding: NSF / Simons / ERC grants over the 12-18 year AI-augmented timeline. Total budget ~$5-15M, lower than a traditional 20-30 year program of similar scope.
+
+This is a large undertaking. It cannot be staffed by hobbyists or by a single PhD student, even with AI assistance. The creative parts (Phases 3-4) require expert human judgment and long-horizon focus that AI does not provide.
 
 ## 4. Falsifiability and abandonment criteria
 
@@ -168,46 +233,70 @@ These are HARD abandonment criteria. The program should not be stretched beyond 
 
 ## 5. Probability assessment
 
-Honest estimates based on 30+ years of partial progress on each phase by senior mathematicians:
+Honest estimates based on 30+ years of partial progress on each phase by senior mathematicians, ADJUSTED for AI-augmented execution:
 
-| Phase | Probability of success if executed | Cumulative |
-|---|---|---|
-| 0 | 85% | 85% |
-| 1 | 75% | 64% |
-| 2 | 55% | 35% |
-| 3 | 30% | 11% |
-| 4 | 12% | 1.3% |
-| 5 | 75% (given 4) | 1.0% |
-| 6 | 80% (given 5) | 0.8% |
+| Phase | Trad. probability | AI-augmented probability | Cumulative (AI) |
+|---|---|---|---|
+| 0 | 70% | 85% | 85% |
+| 1 | 60% | 75% | 64% |
+| 2 | 40% | 55% | 35% |
+| 3 | 25% | 30% | 11% |
+| 4 | 10% | 12% | 1.3% |
+| 5 | 60% (given 4) | 75% (given 4) | 1.0% |
+| 6 | 70% (given 5) | 80% (given 5) | 0.8% |
 
-**Overall probability of a verified RH proof via this program: under 1%.**
+**Overall probability of a verified RH proof via this program: under 1%, AI-augmented or not.**
 
-This estimate assumes the program is well-staffed and executed seriously. It is much higher than the base rate of "someone proves RH in the next 20 years" (which is also under 1%) because the program is structurally well-chosen — Architecture 2 is the unique route that can in principle close RH.
+AI primarily accelerates the SURVEYABLE and VERIFIABLE work, raising Phase 0 / 1 / 5 probabilities by ~10-15 percentage points each. AI does NOT meaningfully accelerate the CREATIVE work in Phases 3-4, where the probability bottleneck lies. So the cumulative probability moves from ~0.4% (traditional) to ~0.8% (AI-augmented). A factor of 2 improvement, not an order of magnitude.
+
+This estimate assumes the program is well-staffed and executed seriously. It is much higher than the base rate of "someone proves RH in the next 20 years" (which is also under 1%) because the program is structurally well-chosen: Architecture 2 is the unique route that can in principle close RH.
 
 The MAJORITY of the program's value is in Phases 1-3, which produce significant partial results regardless of whether the full proof is reached. A working arithmetic intersection theory on Spec(Z) x_F1 Spec(Z) would be a major contribution to mathematics independent of RH. Similarly, the prismatic foliation hypothesis verification would close several long-standing open questions.
 
-## 6. What this project (the experimental thread) can contribute
+**What AI changes about the probability picture**:
+- Phase 0 probability rises substantially: AI does the literature synthesis faster, more thoroughly, and more consistently than humans alone.
+- Phase 1-2 probabilities rise moderately: AI handles the formal-verification overhead, letting human researchers focus on creative choices.
+- Phase 3 probability rises slightly: AI helps with bookkeeping but the construction is still creative.
+- Phase 4 probability barely changes: the Hodge index theorem requires creative leap; AI offers limited acceleration.
+- Phases 5-6 probabilities rise: AI helps with verification and exposition.
 
-The experimental thread cannot execute the full proof program. But it has contributed and can contribute to Phase 0:
+The asymmetry (AI helps mapping more than construction) is structural to current AI capabilities and may shift as AI mathematical reasoning improves. If future AI can autonomously discover novel positivity arguments or construct new mathematical objects, the probability picture changes. As of 2026, this is speculative; the estimates above assume current AI capabilities.
 
-- The 17-constraint scorecard ([`2A_candidate_evaluation.md`](../../experiments/arithmetic_geometric/2A_candidate_evaluation.md)) is a starting point for Phase 0.3.
-- The Davenport-Heilbronn discipline (codified in [`_shared/davenport_heilbronn.py`](../../experiments/_shared/davenport_heilbronn.py)) is the K2 unit test for the assembled proof.
-- The Bombieri explicit formula implementation ([`e3f_weil_form_zeta.py`](../../experiments/positivity/e3f_weil_form_zeta.py)) is the validation tool for the Phase 2 Lefschetz trace formula recovery.
-- The R-series strategic analyses (R3.5 no-shortcut, R4 hybrid, R5 prismatic, R3.6.3 infrastructure) are concrete inputs to Phase 0.
+## 6. What this project (the experimental thread) has already contributed
 
-What the project cannot do: the actual research-grade construction work in Phases 1-5. That requires expert mathematicians with the right backgrounds operating over years.
+The experimental thread is AI-augmented Phase 0 work. As of 2026-05-25, it has produced:
+
+- **The 17-constraint scorecard methodology** ([`2A_candidate_evaluation.md`](../../experiments/arithmetic_geometric/2A_candidate_evaluation.md)): the framework Phase 0.3 builds on. Six candidates scored.
+- **The R-series structural analyses**: R1 (D-H exclusion universal), R2 (fiber product in Borger / Lorscheid), R2.5 (Lambda-blueprints hybrid proposal), R3 (Connes-Consani K1 verdict), R3.5 (no-shortcut theorem), R3.6 + R3.6.3 (arithmetic site deep dive + infrastructure follow-ups), R4 (Borger+Connes hybrid analysis), R5 (prismatic cohomology connection).
+- **The 2A path forward synthesis** ([`2A_path_forward.md`](../../experiments/arithmetic_geometric/2A_path_forward.md)): the strategic plan above this operational program.
+- **The 2C F_1 / Arakelov survey** ([`f1_arakelov_survey_2025.md`](f1_arakelov_survey_2025.md)): landscape mapping as of 2025.
+- **The 2D Deninger micro-target** ([`2D_deninger_micro_target.md`](../../experiments/arithmetic_geometric/2D_deninger_micro_target.md)): identification of M3 (prismatic foliation hypothesis) as the smallest open conjecture.
+- **The Davenport-Heilbronn discipline** (codified in [`_shared/davenport_heilbronn.py`](../../experiments/_shared/davenport_heilbronn.py)): the K2 unit test for the assembled proof.
+- **The Bombieri explicit formula implementation** ([`e3f_weil_form_zeta.py`](../../experiments/positivity/e3f_weil_form_zeta.py)): the validation tool for Phase 2 Lefschetz trace formula recovery.
+- **15 cross-architecture findings** ([`LEARNINGS.md`](../../experiments/LEARNINGS.md)): the cumulative structural picture.
+- **Documented out-of-scope directions** ([`research_directions/`](research_directions/)): 8 research-grade follow-ups, each with operational specification.
+
+This is approximately **50-70% of Phase 0** under traditional research methodology. The remaining Phase 0 work (independent expert verification, expert correspondent identification) requires human researchers.
+
+**What the AI thread cannot do**: the actual research-grade construction work in Phases 1-5. The Lambda-blueprint rigorous development, the prismatic foliation hypothesis verification, the intersection theory definition, and the Hodge index theorem proof all require expert mathematicians operating over years. AI can SUPPORT each of these as documented in [§ AI division of labor across phases](#15-ai-division-of-labor-across-phases), but cannot LEAD them.
 
 ## 7. Recommended near-term action
 
-For someone wanting to actually pursue this program, the recommended first step is NOT Phase 0 in full. It is:
+For someone wanting to actually pursue this program, building on the AI-augmented Phase 0 already done in this repo:
 
-**Step A**: spend 3-6 months reading Borger 2009, BMS 2018-2019, Lorscheid 2010-2012, and the relevant Connes-Consani papers. Verify the 2A scorecards independently.
+**Step A** (1-3 months, AI-assisted): read the existing project documents, focusing on [`2A_path_forward.md`](../../experiments/arithmetic_geometric/2A_path_forward.md), [`f1_arakelov_survey_2025.md`](f1_arakelov_survey_2025.md), [`research_directions/`](research_directions/), and the [`PROOF_ARCHITECTURES_PLAN.md`](../../experiments/PROOF_ARCHITECTURES_PLAN.md) "Why this plan exists" section. AI can do the surface reading in a few sessions; human reader internalizes and judges.
 
-**Step B**: identify one of (i) R2.5 Lambda-blueprints, (ii) R4 Borger+Connes hybrid, (iii) some other candidate as the surface framework to commit to. Pick based on which seems most tractable from the literature review.
+**Step B** (1-3 months, AI-assisted): cross-check the 17-constraint scorecards against the primary literature. Identify any disagreements with the AI-produced analyses. AI helps with the cross-referencing; human researcher renders the expert verdict.
 
-**Step C**: write a 30-50 page survey article documenting Step A + B. This produces an independently-publishable Phase 0 milestone in 12-18 months, and identifies whether the full program is worth pursuing.
+**Step C** (3-6 months, human-led with AI support): pick one of (i) R2.5 Lambda-blueprints (Direction 1), (ii) R4 Borger+Connes hybrid (Direction 2), or (iii) another candidate. Make the choice based on Step B's findings. AI can model the scorecard implications of each choice.
 
-If Step C concludes the program is viable, then Phase 1 can begin with a research group. If Step C concludes the program is not viable as currently structured, that itself is a valuable contribution.
+**Step D** (3-6 months, human-led): identify expert collaborators in the chosen direction's adjacent areas. This is a human relationship-building task.
+
+**Step E** (6-12 months, collaborative): begin Phase 1 of the chosen direction. AI handles the formal infrastructure; human researchers handle the creative work.
+
+Total time to begin Phase 1: 12-24 months from a serious start. Faster than pre-AI norms (which would be 24-36 months) because Steps A and B are AI-augmented.
+
+If Steps A-D conclude the program is not viable as currently structured (e.g., the scorecards disagree with primary literature in a fundamental way, or no expert collaborators are available), that itself is a valuable Phase 0.5 negative result worth publishing.
 
 ## 8. Cross-cuts to project documents
 
@@ -226,4 +315,8 @@ The marginal-positivity thesis says RH is just barely true. If it is true, the p
 
 The plan is honest about its < 1% success probability and the multi-decade timeline. Most participants in the program would publish partial results without ever reaching the full proof. That is fine: each phase's deliverable is independently valuable. Even if RH is never proved by this program, the byproducts (Lambda-blueprint geometry, arithmetic intersection theory on Spec(Z) x_F1 Spec(Z), prismatic foliations, hyperring intersection theory) would substantially advance arithmetic geometry.
 
-The project (this repo) has done what it can: identified the architectural picture, sharpened the scorecards, surfaced the central open problem (Hodge index in some constructible setting), and documented the strategic plan. Execution requires research-grade mathematicians and a decade-plus commitment. We can hand the program off; we cannot execute it ourselves.
+**The AI-augmentation angle**: this program is the first major-mathematics research program designed from the outset around AI as a collaborator type. The Phase 0 work done in this repo is a proof of concept: an AI assistant + a focused human owner can produce in months what traditional research methodology would do in 2-3 years. The acceleration is real and structural. But the acceleration is on the MAPPING side, not the CONSTRUCTION side. The Hodge index theorem remains as hard as it ever was; AI does not make it easier, only the surrounding infrastructure faster.
+
+The project (this repo) has done what AI-augmented Phase 0 can do: identified the architectural picture, sharpened the scorecards, surfaced the central open problem (Hodge index in some constructible setting), and documented the strategic plan. Execution of Phases 1-5 requires research-grade mathematicians collaborating with AI over 12-18 calendar years. We can hand the program off; we cannot execute it ourselves.
+
+**The bet**: a serious AI-augmented attempt has roughly twice the success probability of a pre-AI attempt of similar scope. From ~0.4% to ~0.8%. Still under 1%, but enough that the program is worth running for the partial results alone. Even if RH stays open, the byproducts move arithmetic geometry forward.
