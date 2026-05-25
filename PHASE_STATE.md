@@ -41,21 +41,15 @@
 
 ## Recommended next session actions
 
-For an ORCHESTRATOR picking up this state, the highest-leverage next actions are:
+**See [`experiments/orchestrator_sessions/session_001.md`](experiments/orchestrator_sessions/session_001.md) for the current session's concrete plan.**
 
-### Option A: Continue AI-augmented Phase 0 (recommended)
-- Deploy SURVEYOR on Connes-Consani 2017-2025 papers (R3.6.3.a follow-up).
-- Deploy BUILDER on Lambda-blueprint Fermat-Frobenius definition (Phase 1.1).
-- Deploy VERIFIER to start formalizing R3.5 in Lean 4.
+Summary of session 001 decisions (2026-05-25):
+- Primary deployment for session 002: three BUILDERs on Direction 1 milestone 4.1 (Fermat-Frobenius in blueprint language), each on a different angle (blueprint-relation form, Adams-operation form, delta-ring lifted form). Per [`docs/03_research/research_directions/01_lambda_blueprints.md`](docs/03_research/research_directions/01_lambda_blueprints.md) §4.1 and §5.
+- Secondary deployment: one VERIFIER to attempt R3.5 in Lean 4 ([`lean/ZetaRH/R3_5.lean`](lean/ZetaRH/R3_5.lean) skeleton).
+- Rationale: Direction 1 is the gating Phase 1 work; milestone 4.1 is both the first technical task and the direction's primary falsifiability trigger.
+- Not deployed yet: SURVEYOR (no new sub-corpus needed), ADVERSARY (nothing to attack), SYNTHESIZER (no agent outputs to integrate).
 
-### Option B: Transition to AI-only execution
-- Requires the prerequisites in [`OPERATIONS.md`](OPERATIONS.md) §7.
-- Estimated 2-3 years and $20M-50M upfront.
-- Returns: 5-10 year program to RH attempt, vs 12-18 years AI-augmented.
-
-### Option C: Hand off to human research group
-- The repo provides 50-70% of Phase 0 as a documented handoff artifact.
-- Human researchers pick up [`docs/03_research/research_directions/`](docs/03_research/research_directions/) and begin Phase 1.
+Higher-level strategic options remain (Option B AI-only transition requires $20M-50M infrastructure; Option C human-group handoff is the conservative fallback). The session-001 plan is Option A continuation.
 
 ## Falsifiability triggers (per proof_program_ai_only.md §4)
 

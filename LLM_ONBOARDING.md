@@ -13,7 +13,11 @@ Quick reference for AI assistants working on this repository.
 
 **START HERE for research strategy:** [`docs/research_atlas/README.md`](docs/research_atlas/README.md) — comprehensive catalog of all approaches, what failed, what's missing, with a companion section pointing to the experiments.
 
-**START HERE for experiments:** [`experiments/PROOF_ARCHITECTURES_PLAN.md`](experiments/PROOF_ARCHITECTURES_PLAN.md) — the test plan with current status per architecture.
+**START HERE for experiments:** [`experiments/PROOF_ARCHITECTURES_PLAN.md`](experiments/PROOF_ARCHITECTURES_PLAN.md) — the test plan with current status per architecture, AI-centric methodology.
+
+**START HERE for proof program work:** [`PHASE_STATE.md`](PHASE_STATE.md) (current operational state) + [`OPERATIONS.md`](OPERATIONS.md) (how to drive the agent loop) + [`docs/03_research/proof_program.md`](docs/03_research/proof_program.md) (AI-augmented + human-led plan) + [`docs/03_research/proof_program_ai_only.md`](docs/03_research/proof_program_ai_only.md) (speculative AI-only variant).
+
+**START HERE if continuing a multi-agent session:** [`experiments/orchestrator_sessions/`](experiments/orchestrator_sessions/) — last ORCHESTRATOR's plan for the next session. Read the highest-numbered file.
 
 ## About the Owner
 
@@ -33,10 +37,20 @@ I'm Owen — a wheelchair user with muscular dystrophy.
 | `CLAUDE.md` | Project technical context (architectures, conventions, LFunction interface) |
 | `README.md` | Project overview, status, structure map |
 | `TODO.md` | Task tracking (`- [ ]` checkbox format) |
+| `OPERATIONS.md` | How to operate this repo as the AI-only proof program substrate |
+| `PHASE_STATE.md` | Current phase, sub-task, falsifiability triggers, next-session plan |
 | `docs/` | All written explanations by level |
 | `docs/research_atlas/` | Master research map; all approaches, failures, ML directions |
+| `docs/03_research/proof_program.md` | The AI-augmented operational proof program |
+| `docs/03_research/proof_program_ai_only.md` | Speculative AI-only execution variant |
+| `docs/03_research/research_directions/` | Eight research-grade directions with operational specs |
 | `experiments/` | Computational experimental thread (four proof architectures) |
 | `experiments/PROOF_ARCHITECTURES_PLAN.md` | The test plan with current status per architecture |
+| `experiments/LEARNINGS.md` | 15+ cross-architecture findings (the synthesis surface) |
+| `experiments/orchestrator_sessions/` | Per-session ORCHESTRATOR plans (read highest-numbered first) |
+| `lean/` | Lean 4 / Mathlib formal verification skeleton |
+| `lean/smoke_test.sh` | Quick check that Lean builds (run once after edits) |
+| `.claude/agents/` | Six agent role specs: surveyor / builder / verifier / adversary / synthesizer / orchestrator |
 | `sources/` | Source PDFs and their text conversions |
 | `visualizations/` | manim animation scripts |
 | `LLM_ONBOARDING.md` | This file |
@@ -80,9 +94,26 @@ zeta-function/
 
 ## Tech Stack
 
-- **Language:** Python
-- **Visualization:** manim (3Blue1Brown) — `pip install manim`
-- **Docs:** Markdown with LaTeX math (`$...$` inline, `$$...$$` block)
+- **Language:** Python (primary). Lean 4 (formal verification).
+- **Python libraries:** `mpmath` (high-precision arithmetic), `numpy`, `scipy`, `cvxpy` (LP/SDP optimization with CLARABEL/SCS solvers), `sympy`, `matplotlib`.
+- **Visualization:** manim (3Blue1Brown) — `pip install manim`.
+- **Formal verification:** Lean 4 + Mathlib (`lean/` directory, requires `elan` to build).
+- **Docs:** Markdown with LaTeX math (`$...$` inline, `$$...$$` block in files; plain Unicode in chat).
+
+## Agent infrastructure (AI-only proof program substrate)
+
+This repo is structured as the operational substrate for an AI-only proof program. Six agent roles in `.claude/agents/`:
+
+- **SURVEYOR**: literature synthesis + scorecard maintenance.
+- **BUILDER**: propose mathematical constructions (definitions, candidate proofs).
+- **VERIFIER**: translate to Lean 4 / Mathlib and verify.
+- **ADVERSARY**: K1-K4 attack; D-H discipline; counterexample search.
+- **SYNTHESIZER**: integrate verified outputs into the project dossier.
+- **ORCHESTRATOR**: schedule work; manage compute budget; decide abandonment.
+
+Deploy via the `Agent` tool with `subagent_type: <role>` (note: requires the role specs to be loaded in the session; currently invoked via `general-purpose` with the role spec passed as prompt).
+
+See [`OPERATIONS.md`](OPERATIONS.md) for the full operational guide.
 
 ## Math Notation
 
