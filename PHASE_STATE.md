@@ -6,7 +6,7 @@
 
 **Active mode**: AI-augmented (with human owner in critical path). Transition to AI-only execution per [`docs/03_research/proof_program_ai_only.md`](docs/03_research/proof_program_ai_only.md) requires infrastructure not yet built (see [`OPERATIONS.md`](OPERATIONS.md) §7).
 
-**Current phase**: Phase 0 (Foundation), substantially complete.
+**Current phase**: Phase 0 (Foundation), substantially complete. Phase 1 (Direction 1, Lambda-blueprints) entered in session 002 with milestone 4.1 having three candidate definitions on the table.
 
 **Phase 0 deliverables done**:
 - ✅ Six 2A candidate scorecards (Deitmar, Lorscheid, Borger, Connes, Connes-Consani, Deninger).
@@ -41,39 +41,41 @@
 
 ## Recommended next session actions
 
-**See [`experiments/orchestrator_sessions/session_001.md`](experiments/orchestrator_sessions/session_001.md) for the current session's concrete plan.**
+**See [`experiments/orchestrator_sessions/session_002.md`](experiments/orchestrator_sessions/session_002.md) for the current session's concrete plan.**
 
-Summary of session 001 decisions (2026-05-25):
-- Primary deployment for session 002: three BUILDERs on Direction 1 milestone 4.1 (Fermat-Frobenius in blueprint language), each on a different angle (blueprint-relation form, Adams-operation form, delta-ring lifted form). Per [`docs/03_research/research_directions/01_lambda_blueprints.md`](docs/03_research/research_directions/01_lambda_blueprints.md) §4.1 and §5.
-- Secondary deployment: one VERIFIER to attempt R3.5 in Lean 4 ([`lean/ZetaRH/R3_5.lean`](lean/ZetaRH/R3_5.lean) skeleton).
-- Rationale: Direction 1 is the gating Phase 1 work; milestone 4.1 is both the first technical task and the direction's primary falsifiability trigger.
-- Not deployed yet: SURVEYOR (no new sub-corpus needed), ADVERSARY (nothing to attack), SYNTHESIZER (no agent outputs to integrate).
+Summary of session 002 outcomes (2026-05-25):
+- Three BUILDERs returned three F-F candidates for Direction 1 milestone 4.1. Candidates A (blueprint-relation) and B (Adams quotient) are logically equivalent; candidate C (delta-ring lifted) is strictly stronger and uncovers a real F_p obstruction (Buium polynomial does not vanish in F_p, so F_p is not a native delta-blueprint at p).
+- VERIFIER on R3.5 eliminated the global sorry by refactoring R3.5 into a typed `TraceFormulaNCG` framework; the structural content of R3.5 ("Positivity F t ↔ RH F.target_L for any of P-SA, P-Q, P-OP") is now proved by `rfl`. Build remains green. Highest-leverage Mathlib gap identified: Weil's explicit formula in operator form.
+- Recommended session 003 deployment: three VERIFIERs in parallel attempting `#FF-A-1..3`, `#FF-B-1..3`, `#FF-C-1..4` plus one ADVERSARY targeting D-H against all three candidates. Details in session_002.md.
 
-Higher-level strategic options remain (Option B AI-only transition requires $20M-50M infrastructure; Option C human-group handoff is the conservative fallback). The session-001 plan is Option A continuation.
+Higher-level strategic options remain (Option B AI-only transition requires $20M-50M infrastructure; Option C human-group handoff is the conservative fallback). The session-002 plan is Option A continuation.
 
 ## Falsifiability triggers (per proof_program_ai_only.md §4)
 
-- Phase 0 reveals R3.5 too narrow: ✅ NOT triggered.
-- Phase 1 fails at Lambda-Blpr fiber products: NOT YET TESTED.
+- Phase 0 reveals R3.5 too narrow: ✅ NOT triggered (R3.5 structural content now formally verified in Lean as of session 002).
+- Phase 1 fails at milestone 4.1 (no consistent F-F definition): ✅ NOT triggered (three candidates produced; A=B, C strict refinement; all three pass K2).
+- Phase 1 fails at Lambda-Blpr fiber products (milestone 4.5): NOT YET TESTED.
 - Phase 2 fails at prismatic foliation hypothesis: NOT YET TESTED.
 - Phase 3 fails at intersection product: NOT YET TESTED.
 - Phase 4 fails after 5 calendar years of parallel Hodge index attempts: NOT YET TESTED.
 
 ## Pending agent outputs
 
-None at present (project is in a checkpoint state).
+Session 002 outputs landed: three F-F candidates ([A](experiments/arithmetic_geometric/D1_4_1_fermat_frobenius_candidate_A.md), [B](experiments/arithmetic_geometric/D1_4_1_fermat_frobenius_candidate_B.md), [C](experiments/arithmetic_geometric/D1_4_1_fermat_frobenius_candidate_C.md)) plus R3.5 verification ([diagnostic](experiments/orchestrator_sessions/r3_5_verification_attempt.md), [updated Lean](lean/ZetaRH/R3_5.lean)). Awaiting session 003 deployments: VERIFIER-1A/B/C on the F-F candidates' Lean targets, plus ADVERSARY on D-H exclusion across all three.
 
 ## Last verified state
 
-- Git commit: `1928c08` (commit just before the agent substrate landed).
-- LEARNINGS.md last finding: #15 (4E.8 polynomial-ideal SOS).
+- Git commit: `8a6c3d7` (Lean Phase 1 substrate green build).
+- LEARNINGS.md last finding: #15 (4E.8 polynomial-ideal SOS). Session 002 adds #16 (F-F triality A=B<C) and #17 (Weil explicit formula as highest-leverage Mathlib gap).
 - Plan status table: current through Arch 4E.8, 2C, 2D, R3.6.3, 3B.3.
+- Lean: `lake build` green on Lean 4.13.0 + Mathlib v4.13.0; R3.5 sorry eliminated in session 002; remaining sorries are documented VERIFIER targets.
 
 ## Session log (recent)
 
 | Date | Session focus | Commits | Key outputs |
 |---|---|---|---|
-| 2026-05-25 | Lean Phase 1 substrate + green build | TBD | Six modules upgraded from True/Unit placeholders to typed Mathlib-wired data; MathlibBridge.lean added; 14 VERIFIER target IDs tabulated; lake build green (Lean 4.13.0 + Mathlib v4.13.0) |
+| 2026-05-25 | Session 002: three BUILDERs on milestone 4.1 + VERIFIER on R3.5 | TBD | Three F-F candidates (A blueprint-relation, B Adams quotient, C delta-ring); R3.5 structural content proved by `rfl` after refactor into TraceFormulaNCG framework; build green; one sorry eliminated; LEARNINGS #16 (A=B<C triality) and #17 (Weil explicit formula gap) added |
+| 2026-05-25 | Lean Phase 1 substrate + green build | `8a6c3d7` | Six modules upgraded from True/Unit placeholders to typed Mathlib-wired data; MathlibBridge.lean added; 14 VERIFIER target IDs tabulated; lake build green (Lean 4.13.0 + Mathlib v4.13.0) |
 | 2026-05-25 | Arch 4E.8 SOS-SDP | `565de36` | Closes LP/SDP family escape from 4E.3 |
 | 2026-05-25 | Arch 2C F_1/Arakelov survey | `fd020fc` | 280-line landscape survey |
 | 2026-05-25 | Plan Why-section expansion | `a28f106` | Operational framing of project |
