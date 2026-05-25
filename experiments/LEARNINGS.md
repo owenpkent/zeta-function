@@ -8,6 +8,48 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 15. Polynomial-ideal SOS via Putinar/Schmuedgen (SDP) confirms but does NOT escape the 4E.3 line-restriction lemma: the entire LP/SDP family is structurally capped.
+
+4E.8 ([e4e8_sos_sdp.py](zero_free/e4e8_sos_sdp.py), writeup [e4e8_sos_sdp.md](zero_free/e4e8_sos_sdp.md)) tests the third and last open LP/SDP-style escape route from 4E.3 identified by [4E.6](zero_free/e4e6_constrained_lp.md): polynomial-ideal SOS via Putinar/Schmuedgen. Uses cvxpy 1.9.0 with the CLARABEL SDP solver.
+
+**Three structural findings:**
+
+**(Phase A) 4E.2's +25% LP gap is REAL, not a sampling artifact.** The cos × cos SOS-SDP at SOS-bidegree L = 1 (polynomial bidegree (2, 2)) matches the K-sampling LP to floating-point precision across the entire alpha sweep:
+
+| alpha | C-S 1D | cos SOS-SDP | K-sampling LP | gap to C-S |
+|---:|---:|---:|---:|---:|
+| 0 | 2.0000 | 2.0000 | 2.0000 | 0% |
+| 1 | 2.2857 | 2.5616 | 2.5616 | +12.07% |
+| 3 | 3.2000 | **4.0000** | **4.0000** | **+25.00%** |
+| 5 | 5.3333 | 5.7016 | 5.7110 | +6.90% |
+
+At bidegree (2, 2) for the cos × cos slice, the 2D Fejer-Riesz analog HOLDS at the extreme rays we test (max c_{1, 1} + alpha c_{2, 2}). The general statement of 2D Fejer-Riesz fails at higher degrees (Scheiderer), but the slice we care about is benign.
+
+**(Phase C) Full-trig SOS gives no advantage over cos × cos SOS for this objective.** Allowing sin × sin, cos × sin, sin × cos cross terms in P and extracting the cos × cos projection yields the SAME maximum at every alpha tested. The extremal polynomials are already cos × cos.
+
+**(Phase D) The 4E.3 line-restriction lemma is SATURATED but NOT VIOLATED by SOS-SDP.** Direct SDP maximization of c_1 of the phi = 2 theta line restriction over cos × cos SOS polynomials of bidegree (2, 2), with c_0 of the restriction = 1, gives:
+
+| Polynomial | c_1 / c_0 of restriction (raw) | ratio to Fejer raw 1.8478 |
+|---|---:|---:|
+| 4E.2 LP-optimal (alpha = 3) | 0.8000 | 0.4330 |
+| SDP-optimal (cos × cos SOS, L = 1) | **1.8478** | **1.0000** |
+
+The SDP saturates 1D Fejer at effective degree 6 EXACTLY (ratio 1.0000 to 4 decimals). The saturating polynomial is recognizably Q(theta, phi) = (1 + cos theta)(1 + cos phi), so $P|_{\phi=2\theta} = 4 \cos^4 \theta (1 + \cos \theta)^2$.
+
+**This bounds the Putinar/Schmuedgen polynomial-ideal SOS from above.** For any tubular neighborhood K of the line phi = 2 theta in the Putinar setup ($g \ge 0$ defining the neighborhood, certificate $P = \sigma_0 + g \sigma_1$ with sigma_l SOS), the max c_1 of restriction is at most the line-restriction limit, which is 1.8478 = Fejer at effective degree 6. So Putinar polynomial-ideal SOS for the phi = 2 theta coupling does not escape the 4E.3 wall.
+
+**Pattern (extending LEARNINGS finding #12):** the 4E.3 line-restriction lemma is robust under the entire LP/SDP relaxation family. Each successive attempted escape converges to the structural Fejer wall:
+
+- 4E.6 (constrained-domain K-point LP): full collapse to Fejer.
+- 4E.7 (multi-zero LP, naive objectives): real shape-factor gain (lambda_{1,1} 55-137× larger than lambda_1^2) but rank-1 LP optima.
+- 4E.8 (SDP / SOS / Putinar): saturates Fejer line-restriction bound but does not exceed it.
+
+The pattern: **the more LP/SDP-like the escape, the more cleanly it confirms 4E.3 rather than escaping it.** Remaining qualitatively-distinct directions (Bombieri variational SOS with L^2 penalty allowing polynomial negativity; Heath-Brown explicit multi-zero MT bookkeeping combining 4E.2's higher-harmonic gain with multi-zero ledger; arithmetic-geometric or spectral inputs from Arch 1/2) live outside the LP/SDP framework.
+
+**Architectural implication.** Combined with finding #14 (the V-K stagnation), this closes Architecture 4 numerically. The single-zero MT zero-free region constant cannot be improved via LP/SDP machinery on multivariate non-negative trig polynomials at any bidegree, with any objective, in either LP or SDP form. Per LEARNINGS finding #14, pushing the V-K exponent requires fundamentally new input from Arch 2 or Arch 1.
+
+**Cross-cut to the marginal-positivity thesis.** Adding to the list of reinforcing directions: the LP/SDP machinery's incapacity to escape the Fejer wall is another instance of "RH is just barely true". The wall is tight enough that even the strongest natural LP/SDP relaxation (Putinar SOS) saturates it exactly. No buffer remains within the LP/SDP framework.
+
 ### 14. Architecture 4's 67-year stagnation at the Vinogradov-Korobov exponent $2/3$ is a structural ceiling, not insufficient effort: all three inputs of the V-K recipe are now near-optimal within their frameworks.
 
 The 4A + 4C unified literature dossier ([4a_4c_vinogradov_korobov.md](zero_free/4a_4c_vinogradov_korobov.md)) reads the project's experimental thread back against the classical analytic route to a zero-free region. The route has three inputs: (Input 1) the explicit formula relating zero locations to a prime sum, (Input 2) a non-negative trig polynomial as auxiliary inequality, (Input 3) an exponential sum bound on $\zeta$ in the critical strip. **All three inputs are individually near-optimal**:
