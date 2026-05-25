@@ -11,7 +11,7 @@
 - Current phase: Phase 0 (Foundation), substantially complete per [PHASE_STATE.md](../../PHASE_STATE.md).
 - Arch 1, 3, 4 numerically closed (LEARNINGS findings #1, #4, #10, #14, #15).
 - Arch 2 is the only live route; the geometric Hodge index slot (constraints xi-xiii) is the unique K1 escape per R3.5 ([`2A_R3_5_K1_universality.md`](../arithmetic_geometric/2A_R3_5_K1_universality.md)).
-- Lean 4 skeleton exists at [`lean/ZetaRH/`](../../lean/ZetaRH/) but every key theorem is `sorry`. Mathlib has no blueprints, no Lambda-rings, no prismatic cohomology, no NCG worth using.
+- Lean 4 Phase 1 substrate exists at [`lean/ZetaRH/`](../../lean/ZetaRH/) and `lake build` is green on Lean 4.13.0 + Mathlib v4.13.0. Definitions are typed and wired to Mathlib `riemannZeta`, but every key theorem is still `sorry`, tracked by VERIFIER target IDs in [`lean/README.md`](../../lean/README.md). Mathlib has no blueprints, no Lambda-rings, no prismatic cohomology, no NCG worth using.
 - Recent commit `dc842fe` landed the agent substrate. No agents have been deployed yet.
 
 ## Highest-leverage next direction

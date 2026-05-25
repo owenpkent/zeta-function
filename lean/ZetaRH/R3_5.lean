@@ -10,8 +10,10 @@ constructed surface.
 See `experiments/arithmetic_geometric/2A_R3_5_K1_universality.md` for
 the informal statement and proof sketch.
 
-Skeleton only as of 2026-05-25. Requires substantial Mathlib NCG
-infrastructure.
+Phase 1 substrate as of 2026-05-25: the file compiles cleanly, but the
+no-shortcut theorem itself is still `sorry`. Closing it requires substantial
+Mathlib NCG infrastructure that does not yet exist (operator algebras +
+infinite-dimensional spectral theory).
 -/
 
 import ZetaRH.Basic

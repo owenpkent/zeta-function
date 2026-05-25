@@ -46,8 +46,7 @@ zeta-function/
 ├── visualizations/              # manim animation scripts
 ├── OPERATIONS.md                # ★ How to operate this repo as the proof-program substrate
 ├── PHASE_STATE.md               # ★ Current operational state (read by ORCHESTRATOR)
-├── CLAUDE.md                    # Project context for AI assistants
-└── LLM_ONBOARDING.md            # User context + tech stack
+└── CLAUDE.md                    # Project + owner context for AI assistants (merged successor of LLM_ONBOARDING.md)
 ```
 
 ## The Question

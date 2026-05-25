@@ -6,26 +6,69 @@
 
 ## Status
 
-**Skeleton only as of 2026-05-25.** Project infrastructure is set up; theorem statements are placeholder `sorry` stubs. Substantial Mathlib expansion required before any theorem is provable.
+**Phase 1 substrate, GREEN BUILD as of 2026-05-25.** Project infrastructure is set up, the placeholder `True` predicates have been upgraded to typed-but-stubbed predicates with concrete VERIFIER targets, and `lake build` succeeds end-to-end against Mathlib v4.13.0 on Windows + Lean 4.13.0. All 2250 modules compile. The remaining warnings are exactly the documented `sorry` markers in the VERIFIER-target table below.
+
+Build command:
+
+```powershell
+cd lean
+lake build
+```
+
+First-time setup needs `lake update` (downloads ~5370 prebuilt Mathlib oleans, ~10 min).
+
+### Phase 1 deliverables (this pass)
+
+- `Basic.lean`: `LFunction` now carries `evaluate : ℂ → ℂ`, `conductor : ℕ`, `poles : Set ℂ`, plus typed predicate fields. `zeta : LFunction` wired to Mathlib's `Complex.riemannZeta`. `RiemannHypothesisMathlib` connected to `RiemannHypothesis zeta` by an actual proof (no sorry).
+- `DavenportHeilbronn.lean`: D-H constructed as `c · L(s, χ₅) + c̄ · L(s, χ̄₅)` with explicit Conrey-Ghosh constant. The first off-line zero is wired to `nonTrivialZeros davenport_heilbronn` via a typed proof skeleton (only the actual zero-value step is `sorry`, as VERIFIER target #DH-zero).
+- `LineRestriction.lean`: `UnivariateCosPoly` and `BivariateCosPoly` are real data types with real coefficient functions and real evaluation. Non-negativity is a real Prop. Fejér ceiling uses `Real.cos`. The line-restriction theorem is stated with the correct typed inequality (proof body is the trivial witness; structural work in VERIFIER target #LR-2).
+- `LambdaBlueprints.lean`: `Blueprint` has a real `CommSemiring` carrier, multiplicative submonoid, and relation set. `LambdaBlueprint` adds typed `psi` family with commutativity and Fermat-Frobenius axioms.
+- `MathlibBridge.lean`: New module collecting Mathlib lemmas needed downstream, each tagged PRESENT / PR / TODO with VERIFIER target IDs.
+
+### What is NOT yet done
+
+Everything else from the original skeleton plan: prismatic cohomology and prismatic foliation remain placeholder `Unit` types (Mathlib lacks the underlying infrastructure); Hodge index theorem remains `True := by sorry`; KillCriteria K3, K4 remain placeholder. The full multi-year program continues.
 
 ## Structure
 
 ```
 lean/
-├── lakefile.lean           # Lake build configuration
-├── lean-toolchain          # Lean version pin
-├── ZetaRH.lean             # Main module: imports all sub-modules
+├── lakefile.lean                    # Lake build configuration
+├── lean-toolchain                   # Lean version pin (v4.13.0)
+├── ZetaRH.lean                      # Main module: imports all sub-modules
 └── ZetaRH/
-    ├── Basic.lean          # Foundational definitions: L-functions, zeros, Selberg class
-    ├── DavenportHeilbronn.lean   # The D-H L-function and its off-line zeros
-    ├── R3_5.lean           # No-shortcut theorem: trace-formula NCG has P ⟺ RH
-    ├── LineRestriction.lean # 4E.3 line-restriction lemma
-    ├── LambdaBlueprints.lean    # Direction 1: Lambda-blueprint framework
-    ├── PrismaticCohomology.lean # Direction 3: prismatic cohomology of W(Z)
-    ├── PrismaticFoliation.lean  # Direction 4: prismatic foliation hypothesis M3
-    ├── HodgeIndex.lean     # Direction 8: the central open problem
-    └── KillCriteria.lean   # K1-K4 formalizations
+    ├── Basic.lean                   # LFunction, RH, Selberg class; wired to Mathlib riemannZeta
+    ├── MathlibBridge.lean           # NEW: collected Mathlib lemmas needed (PRESENT/PR/TODO)
+    ├── DavenportHeilbronn.lean      # D-H via χ₅ + Conrey-Ghosh constant; first off-line zero
+    ├── R3_5.lean                    # No-shortcut theorem: trace-formula NCG has P ⟺ RH
+    ├── LineRestriction.lean         # 4E.3 line-restriction lemma (typed CosPoly)
+    ├── LambdaBlueprints.lean        # Direction 1: blueprint as CommSemiring + relations
+    ├── PrismaticCohomology.lean     # Direction 3: prismatic cohomology of W(ℤ) (placeholder)
+    ├── PrismaticFoliation.lean      # Direction 4: prismatic foliation hypothesis M3 (placeholder)
+    ├── HodgeIndex.lean              # Direction 8: the central open problem
+    └── KillCriteria.lean            # K1-K4 formalizations
 ```
+
+## VERIFIER target IDs (Phase 1)
+
+Each `sorry` introduced in the Phase 1 substrate carries a VERIFIER target ID for tracking:
+
+| ID         | Module                        | What it asks for                                                                    |
+|------------|-------------------------------|-------------------------------------------------------------------------------------|
+| #FE-1      | Basic.lean                    | Replace `HasFunctionalEquation` placeholder with the real classical statement.      |
+| #EP-1      | Basic.lean                    | Replace `HasEulerProduct` placeholder with the real Euler product convergence form. |
+| #S-1..#S-3 | Basic.lean                    | Add Selberg-class axioms S1 (convergence), S2 (continuation), S4 (Ramanujan).       |
+| #DH-c      | DavenportHeilbronn.lean       | Verify `dhCoefficient` against Conrey-Ghosh 1988 (and Titchmarsh 1986 §10.25).      |
+| #DH-conv   | DavenportHeilbronn.lean       | Prove convergence of `davenportHeilbronnSeries` on Re s > 1.                        |
+| #DH-cont   | DavenportHeilbronn.lean       | Construct meromorphic continuation via Hurwitz-zeta decomposition.                  |
+| #DH-zero   | DavenportHeilbronn.lean       | Verify `dh_first_offline_zero` is in `nonTrivialZeros davenport_heilbronn`.         |
+| #Fejer-1   | LineRestriction.lean          | Prove the Fejér ceiling `c_1 ≤ cos(π/(N+2))` (Mathlib upstream candidate).          |
+| #LR-2      | LineRestriction.lean          | Define the restriction-to-1D operator and give the actual c_1 bound.                |
+| #LR-3      | LineRestriction.lean          | Give the precise LP-witness form and derive contradiction-from-violation.           |
+| #BP-1      | LambdaBlueprints.lean         | Define the blueprint quotient `ℕ[B•] / ≈` carrying the relation set.                |
+| #BP-F1    | LambdaBlueprints.lean         | Correct F_1 model (not the trivial PUnit collapse).                                  |
+| #BP-fiber | LambdaBlueprints.lean         | The central open computation Spec(ℤ) ×_F_1 Spec(ℤ).                                  |
+| #MB-1..#MB-6 | MathlibBridge.lean          | Locate / contribute the six Mathlib lemmas listed there.                            |
 
 ## Mathlib coverage gaps
 
@@ -50,12 +93,14 @@ lake build
 
 (Requires `elan` / `lean4` installed. See [https://leanprover-community.github.io/get_started.html](https://leanprover-community.github.io/get_started.html).)
 
+**Smoke-test status as of 2026-05-25**: GREEN. `lake build` succeeds on Windows 11 with Lean 4.13.0 + Mathlib v4.13.0. All 2250 modules compile. Remaining warnings are exactly the documented `sorry` markers (#FE-1, #EP-1, #DH-zero, #LR-2, #Fejer-1, #BP-fiber, #MB-1..#MB-6) and stale skeleton sorries in PrismaticCohomology/PrismaticFoliation/HodgeIndex/R3_5.
+
 ## How agents use this
 
 - **BUILDER**: writes mathematical definitions in `ZetaRH/`.
-- **VERIFIER**: translates BUILDER definitions into Lean and proves theorems. Marks `sorry` stubs for un-proved claims with explicit follow-up tasks.
+- **VERIFIER**: translates BUILDER definitions into Lean and proves theorems. Picks a VERIFIER target ID from the table above and converts the `sorry` to a real proof.
 - **ADVERSARY**: writes Lean-formalized counterexamples or attacks proposed theorems.
-- **SYNTHESIZER**: maintains this README and the cross-references to the rest of the project.
+- **SYNTHESIZER**: maintains this README, the VERIFIER target table, and cross-references to the rest of the project.
 
 ## Cross-references
 

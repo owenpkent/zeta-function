@@ -13,7 +13,9 @@ prismatic cohomology has:
 See `experiments/arithmetic_geometric/2D_deninger_micro_target.md` and
 `docs/03_research/research_directions/04_prismatic_foliation.md`.
 
-Skeleton only. Depends on prismatic cohomology (Direction 3) being available.
+Phase 1 substrate as of 2026-05-25: file compiles cleanly with placeholder
+`Unit` types and `True := by sorry` theorems M3-1..M3-4. Depends on
+prismatic cohomology (Direction 3) being available upstream.
 -/
 
 import ZetaRH.PrismaticCohomology

@@ -41,3 +41,7 @@ desktop.ini
 experiments/**/_cache/
 experiments/**/*.png
 
+# Lean / Lake build artifacts (gigabytes of compiled oleans; pulled from cache via `lake update`)
+.lake/
+build/
+

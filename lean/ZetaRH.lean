@@ -2,6 +2,7 @@
 -- See lean/README.md for project status and structure.
 
 import ZetaRH.Basic
+import ZetaRH.MathlibBridge
 import ZetaRH.DavenportHeilbronn
 import ZetaRH.KillCriteria
 import ZetaRH.R3_5

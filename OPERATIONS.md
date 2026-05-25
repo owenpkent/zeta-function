@@ -151,11 +151,11 @@ This is a major-mathematics research investment. Comparable to a large LHC exper
 - Documented 8 research directions.
 - Documented AI-augmented + AI-only operational programs.
 - This operations guide.
-- Lean 4 skeleton with placeholder theorems.
+- Lean 4 Phase 1 substrate: typed Mathlib-wired definitions for LFunction, RH, D-H, bivariate cosine polynomials, Lambda-blueprints. `lake build` is green on Lean 4.13.0 + Mathlib v4.13.0. All remaining warnings are documented VERIFIER target IDs (see [`lean/README.md`](lean/README.md)).
 
 **Not yet started in this repo**:
 - Multi-agent orchestration software.
-- Lean 4 Mathlib expansion beyond the skeleton.
+- Lean 4 Mathlib expansion beyond the Phase 1 substrate (proving the VERIFIER targets, contributing upstream definitions).
 - Cron-driven scheduled execution.
 - A serious 1000+ session compute budget.
 

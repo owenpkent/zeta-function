@@ -13,7 +13,12 @@ to Borger's big Witt ring W(Z). The five technical questions Q1-Q5:
 See `experiments/arithmetic_geometric/2A_R5_prismatic_cohomology.md` and
 `docs/03_research/research_directions/03_prismatic_cohomology.md`.
 
-Skeleton only. Mathlib does not have prismatic cohomology as of 2026.
+Phase 1 substrate as of 2026-05-25: file compiles cleanly with placeholder
+`Unit` types and `True := by sorry` theorems Q1-Q5. Mathlib does not have
+prismatic cohomology as of 2026; closing Q1-Q5 requires substantial
+upstream infrastructure (the prismatic site, the prism category, the
+Hodge-Tate divided power algebra). VERIFIER targets to be added once the
+upstream definitions exist.
 -/
 
 namespace ZetaRH.PrismaticCohomology

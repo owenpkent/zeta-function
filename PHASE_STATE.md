@@ -17,14 +17,14 @@
 - ✅ 15 cross-architecture findings in [`experiments/LEARNINGS.md`](experiments/LEARNINGS.md).
 - ✅ Eight research directions documented in [`docs/03_research/research_directions/`](docs/03_research/research_directions/).
 - ✅ AI-augmented and AI-only proof programs documented.
-- ✅ Lean 4 skeleton with placeholder theorems.
+- ✅ Lean 4 Phase 1 substrate (green build on Lean 4.13.0 + Mathlib v4.13.0; typed definitions with documented VERIFIER target IDs).
 - ✅ Agent role specifications in [`.claude/agents/`](.claude/agents/).
 - ✅ Operations guide ([`OPERATIONS.md`](OPERATIONS.md)).
 
 **Phase 0 deliverables remaining**:
 - ⏳ Independent expert verification of the 2A scorecards (HUMAN: requires expert correspondents).
 - ⏳ Identify expert correspondents in arithmetic geometry, NCG, prismatic cohomology (HUMAN).
-- ⏳ Lean 4 / Mathlib expansion: substantial library work to make the placeholder theorems provable (AI-led, multi-year).
+- 🟡 Lean 4 / Mathlib expansion: PHASE 1 SUBSTRATE landed (2026-05-25) and BUILD IS GREEN. The placeholder `True`/`Unit` skeleton has been upgraded to typed data wired to Mathlib `riemannZeta`, real complex-analytic L-functions, real bivariate cosine polynomials, and typed Lambda-blueprint axioms. `lake build` succeeds end-to-end on Windows 11 with Lean 4.13.0 + Mathlib v4.13.0 (all 2250 modules compile; warnings are exactly the documented `sorry` markers). See [`lean/README.md`](lean/README.md) for the VERIFIER target ID table (#FE-1..#MB-6). Full proof closure remains multi-year.
 
 **Architectures 1, 3, 4 status**: substantially closed at the project level.
 - Arch 1 (spectral): 1A-1C complete; 1D literature pending.
@@ -36,7 +36,7 @@
 | Item | Used | Budgeted | Remaining |
 |---|---|---|---|
 | Project sessions to date | ~50-100 (estimate) | unbounded (project-level) | n/a |
-| Lean 4 proofs landed | 0 (skeleton only) | per-direction (see Directions 1-8) | substantial |
+| Lean 4 proofs landed | 1 (RHMathlib_iff_RH_zeta) + Phase 1 typed substrate | per-direction (see Directions 1-8) | substantial |
 | Mathlib contributions | 0 | 5-10 person-years | substantial |
 
 ## Recommended next session actions
@@ -73,6 +73,7 @@ None at present (project is in a checkpoint state).
 
 | Date | Session focus | Commits | Key outputs |
 |---|---|---|---|
+| 2026-05-25 | Lean Phase 1 substrate + green build | TBD | Six modules upgraded from True/Unit placeholders to typed Mathlib-wired data; MathlibBridge.lean added; 14 VERIFIER target IDs tabulated; lake build green (Lean 4.13.0 + Mathlib v4.13.0) |
 | 2026-05-25 | Arch 4E.8 SOS-SDP | `565de36` | Closes LP/SDP family escape from 4E.3 |
 | 2026-05-25 | Arch 2C F_1/Arakelov survey | `fd020fc` | 280-line landscape survey |
 | 2026-05-25 | Plan Why-section expansion | `a28f106` | Operational framing of project |

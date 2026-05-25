@@ -5,7 +5,7 @@ Defined in `experiments/arithmetic_geometric/2A_candidate_evaluation.md`
 and reiterated in `experiments/PROOF_ARCHITECTURES_PLAN.md` § Why we test
 kill criteria, not goals.
 
-Skeleton only as of 2026-05-25.
+Phase 1 substrate as of 2026-05-25: K1, K2 are typed Props; K3, K4 remain placeholders pending function-field infrastructure.
 -/
 
 import ZetaRH.Basic
