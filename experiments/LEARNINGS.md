@@ -595,14 +595,18 @@ beta = 0.366 partner has |1 - 1/rho| > 1, so its Li contribution grows
 exponentially negative and overwhelms the positive on-line baseline). This is
 the first Li-criterion off-line witness for an Epstein zeta in the project, and
 it is the SAME off-line zero that makes the 3L Schur detector fire (Finding
-#19), so the two positivity criteria agree on the second control. The
-discrimination is thus: lambda_n^{DH} < 0 and lambda_n^{Epstein} < 0 <
-lambda_n^{zeta}, lambda_n^{chi_3}, at large n. Note on rigour: the central
-(numerical) Epstein crossover at n = 110,000 is robust; making the Epstein
-witness rigorous to the 3B.3 standard requires its zeros scanned to T = 500 so
-the off-line TAIL bound (which scales as 1/(2 T_max^2)) is negligible, since at
-T = 60 the tail bound swamps the signal. The T = 500 scan tightens the tail by
-~70x and is what upgrades the Epstein witness from central to rigorous.
+#19), so the two positivity criteria agree on the second control. With the
+Epstein zeros scanned to T = 500 (so the off-line TAIL bound, which scales as
+1/(2 T_max^2), is negligible; at T = 60 it swamped the signal), the Epstein
+witness is RIGOROUS: lambda_n^{Epstein} < 0 from n = 110,000 after the
+worst-case asymptotic and tail bounds. The full discrimination then holds
+rigorously: at n = 336,000,
+lambda_n^{DH} < 0 and lambda_n^{Epstein} < 0 < lambda_n^{zeta}, lambda_n^{chi_3}.
+The Li criterion discriminates off-line L-functions from Selberg-class
+L-functions for a SECOND, independent off-line construction, not just
+Davenport-Heilbronn. (The Epstein d=47 off-line zeros stay sparse: still the
+single height at 32.05 up to T = 500, so the higher T_max bought the tail
+bound, not additional zeros.)
 
 **Cross-architecture synthesis of session 003.** Findings #19 and #22 harden
 the wrong-approach discipline (it now rests on TWO independent off-line
