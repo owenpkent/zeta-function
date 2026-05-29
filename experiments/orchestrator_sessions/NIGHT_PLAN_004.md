@@ -49,7 +49,12 @@
   formula can't be validated, BLOCK that sub-part but still commit the rank-4
   PosDef extension (which reuses validated 2H machinery).
 
-- [!] **DEFERRED T3 -- 2N Arakelov Green's function cross-check of 2I.** Not run.
+- [!] **BLOCKED T3 -- 2N Arakelov Green's function cross-check of 2I.** Attempted
+  in-session (e2n_greens_function_crosscheck.py). Gate FAILED: lambda_2I - lambda_theta
+  not constant across points (spread ~0.24) -> theta normalization does not reproduce
+  2I's z-dependence (likely elliptic-log branch / theta-argument / period factor).
+  BLOCKED per protocol (one honest attempt, no thrash, not claimed). 2I remains
+  independently validated against h_hat. See _NIGHT_FINDINGS.md. Original spec below.
   Would re-derive lambda_inf via theta/elliptic-log -- carrying the same
   normalization-trap risk as 2I/2L, and 2I is ALREADY validated independently
   against h_hat (the limit definition), so the marginal confidence gain is low
