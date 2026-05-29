@@ -68,7 +68,8 @@ sum-over-zeros theory Mathlib lacks. See [`lean/README.md`](lean/README.md).
 
 ## The single most-leveraged next move
 
-**Direction 4.6**: construct a leafwise prismatic cohomology $H^*_{\mathcal{F},\mathrm{pr}}$
+**[Direction 4.6](docs/03_research/research_directions/04_prismatic_foliation.md#46-lefschetz-trace-formula)**:
+construct a leafwise prismatic cohomology $H^*_{\mathcal{F},\mathrm{pr}}$
 whose regularized determinant $\det_\zeta(s - \Phi_t)$ equals the dynamical zeta 2R
 exhibited, and on which a Hodge-index **signature** can be stated. 2R fixed its target
 (orbit lengths $\{\log p\}$, self-pairing $-\zeta'/\zeta$); D-H fixed the control (no such
