@@ -146,6 +146,49 @@ the prime block supported on prime powers; the off-line obstruction lives in the
 composite-`n` terms that an Euler product forbids), not their floating-point
 difference.
 
+## Decisive test: composite support detects non-Euler-ness, NOT off-line zeros
+
+The natural next move is to make the fingerprint into a discriminator: declare
+`P_composite` (the part of the prime block carried by composite `n`) the
+"obstruction" and read its indefiniteness as the off-line signal. A controlled
+Epstein class-number ladder kills this cleanly (n <= 120, prec 30; `P_composite`
+is the finite block built from `Lambda_L` restricted to composite `n`):
+
+| L | Euler product | off-line zeros | composite support | `P_composite` |
+|---|---|---|---:|---|
+| zeta | yes | no | 0 | `\|\|.\|\| ~ 1e-30` (zero) |
+| Epstein d=3 (h=1) | yes (= zeta L(chi)) | no | 0 | zero |
+| Epstein d=4 (h=1, Gaussian) | yes (= zeta L(chi)) | no | 0 | zero |
+| Epstein d=47 principal (h=5) | no | **no (<= T=120)** | 15 | indefinite (relmin -1) |
+| Davenport-Heilbronn | no | **yes** | 39 | indefinite (relmin -1) |
+
+`P_composite` is **exactly zero for every genuine Euler product** (including the
+h=1 Epstein forms, which factor as `zeta(s) L(s, chi)`), and indefinite for every
+non-Euler function. But Epstein d=47-principal is non-Euler with an indefinite
+`P_composite` AND no off-line zeros up to T=120. So **composite-n support tracks
+non-Euler-ness, not RH-failure.** It is necessary (an Euler product forbids it)
+but not sufficient (a non-Euler L-function can still satisfy its RH-analogue).
+
+This is exactly the reformulation trap that
+[`new_mathematics.md`](../../docs/03_research/new_mathematics.md) section 5.2 flags
+as failure mode #5: the fingerprint re-detects the Euler product, which we already
+have, rather than producing new positivity content. It is the Davenport-Heilbronn
+discipline applied to this experiment's own method, and the Epstein h=1-vs-h=5
+ladder is the clean witness.
+
+**The narrowing this buys.** The place-type decomposition is the right *structure*
+(it treats archimedean and finite places uniformly, input-side, exactly as the
+framing demands), but it does NOT by itself manufacture a positivity certificate.
+The composite-`n` terms are necessary scaffolding; the actual RH content sits
+entirely in whether the **archimedean block dominates**, which is the hard analytic
+core (Weil/Connes positivity). This is precisely the framing document's own test
+(section 2.2): if proving positivity is still the hardest step inside the framework,
+the framework is not yet the right one. The 3M thread localizes the difficulty to
+"archimedean cushion dominates the prime obstruction" and shows that no soft
+input-side bookkeeping (eigenvalue reconstruction, composite-support detection)
+escapes it. That argues for the structural route (a Hodge-index-type reason the
+cushion dominates -- Architecture 2 / Direction 8), not another detector.
+
 ## Status and next step
 
 - **Solid:** the place-type machinery; the validated `P_fin` and `B_pole` blocks;

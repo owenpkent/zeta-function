@@ -28,7 +28,20 @@ vs 3J's answer-side `M = M_on + M_off` (computable only after locating the zeros
 | Davenport-Heilbronn | 1 | **64** | **6** |
 | Epstein d=47 non-principal | **0** | n/a (no a_1=1 series) | n/a |
 
-For zeta, `Lambda_zeta` lives only on prime powers (`Lambda(p^k)=log p>0`): the Euler product exactly. For D-H, `Lambda_DH` spills onto composite integers, first at `n=6=2*3`. This localizes WHERE a non-Euler L-function's off-line obstruction enters the Weil form: the composite-n terms of the prime block. The non-principal Epstein form `2m^2+mn+6n^2` never equals 1, so `a_1=0` and the `-L'/L` recursion does not apply directly.
+For zeta, `Lambda_zeta` lives only on prime powers (`Lambda(p^k)=log p>0`): the Euler product exactly. For D-H, `Lambda_DH` spills onto composite integers, first at `n=6=2*3`. The non-principal Epstein form `2m^2+mn+6n^2` never equals 1, so `a_1=0` and the `-L'/L` recursion does not apply directly.
+
+**Decisive control (the fingerprint detects NON-EULER, not RH-failure).** A natural temptation is to read the composite-n block `P_composite` (the prime block restricted to composite n) as the off-line obstruction. An Epstein class-number ladder kills this:
+
+| L | Euler product | off-line zeros | composite support | P_composite |
+|---|---|---|---:|---|
+| zeta | yes | no | 0 | zero |
+| Epstein d=3, d=4 (h=1) | yes (= zeta L(chi)) | no | 0 | zero |
+| Epstein d=47 principal (h=5) | no | **no (<=T=120)** | 15 | indefinite |
+| Davenport-Heilbronn | no | **yes** | 39 | indefinite |
+
+`P_composite` is exactly zero for every genuine Euler product (the h=1 Epstein forms factor as `zeta L(chi)`) and indefinite for every non-Euler function -- but Epstein d=47-principal is non-Euler with indefinite `P_composite` and NO off-line zeros. So composite-n support tracks **non-Euler-ness, not RH-failure**: necessary (an Euler product forbids it) but not sufficient. This is the reformulation trap ([new_mathematics.md](../docs/03_research/new_mathematics.md) §5.2, failure mode #5), and is the D-H discipline applied to 3M's own method.
+
+**Net narrowing.** The place-type split is the right structure (uniform archimedean/finite treatment, input-side) but does NOT by itself manufacture positivity: no soft input-side bookkeeping (eigenvalue reconstruction OR composite-support detection) escapes the requirement that the **archimedean block dominate the prime obstruction**, which is the hard Weil/Connes core. This localizes RH's difficulty exactly where the framing document says it must live (§2.2: if positivity is still the hardest step, the framework is not yet right) and argues for the structural route (Hodge-index-type cushion dominance, Architecture 2 / Direction 8) over any further detector.
 
 **Diagnosed gap (provisional).** The archimedean block via the frequency-space digamma kernel matches 3F's validated Bombieri-form integral to 0.2% at large b but carries a converged ~0.06 absolute offset at small b (stable to t_cap = 2e4; isolated to A_arch). Since `M ~ 0.08` is a residue of blocks of size ~60, this swamps the input-side eigenvalue detector. Fix: compute `A_arch` from the bilinear Bombieri-form integral per L-function Gamma factor.
 
