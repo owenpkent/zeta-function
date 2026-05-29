@@ -100,6 +100,21 @@ F_1 / Lambda-blueprint / prismatic program (Directions 1-4), now with a sharp,
 computed target: produce `S` whose intersection form is the Weil-form Gram matrix
 `A_arch + P_fin + B_pole`, with the pole block as the hyperbolic direction.
 
+**Sharpened (2Q).** [2Q](e2q_frobenius_bidegree.md) pins what `Gamma_S` itself must
+be, granting these numbers. The function-field `Gamma` is a `(1, q)` correspondence
+with ONE scale `q`; over `Spec(Z)` the fibre over `p` is `Spec(F_p)`, so `Gamma_S`
+carries a **place-dependent bidegree `(1, p)`** -- no single `q`. From that one fact
+the two defining features of Deninger's program follow as consequences (infinite-
+dimensional `H^i`; an `R`-flow `Phi_t = prod_p U_{log p}^{t/log p}` rather than a
+`Z`-action), and `Gamma_S^2` is pinned to the regularized prime-weighted sum
+`reg-sum_p (log p)*(local self-int at p)` = the prime side `P_fin` read as the
+correspondence's self-pairing = the Direction 4.6 regularized determinant
+`det_zeta(s - Phi_t)`, with per-fibre adjunction input `omega-bar^2 = 12 h_Fal`
+(2J/2L). So the missing object's correspondence now has a specified bidegree and a
+specified regularized self-intersection; the remaining freedom is realizing these as
+honest intersection numbers on a 2-dimensional object (Direction 4 feeding
+Direction 8).
+
 ## 5. Why this is progress, not just reformulation
 
 A bare "RH <=> Weil form positive" reformulation would be failure mode #5

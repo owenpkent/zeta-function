@@ -8,6 +8,18 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 25. The single sharpest break between the function-field template and Spec(Z) is the BIDEGREE of the Frobenius correspondence: on C x C it is a (1, q) correspondence with ONE scale q, but over Spec(Z) it must carry a place-dependent bidegree (1, p) per prime. From that one fact the two defining features of Deninger's program (infinite-dimensional H^i, an R-flow not a Z-action) follow as consequences, and Gamma_S^2 is pinned to the von Mangoldt prime sum.
+
+2Q ([e2q_frobenius_bidegree.py](arithmetic_geometric/e2q_frobenius_bidegree.py), writeup [e2q_frobenius_bidegree.md](arithmetic_geometric/e2q_frobenius_bidegree.md)) takes the now-complete 2K dictionary (#24) one notch further: granting that all intersection NUMBERS are computed, what must the missing correspondence `Gamma_S` BE?
+
+**The break.** In 2G the Frobenius graph is a `(1, q)` correspondence (`e.Gamma=1`, `f.Gamma=q`) with `q` = residue cardinality, CONSTANT over the curve; RH is then the algebraic inequality `|t| < 2g sqrt(q)` in two integers. Over `Spec(Z)` the fibre over `p` is `Spec(F_p)` of cardinality `p`, so `Gamma_S` has a PLACE-DEPENDENT bidegree `(1, p)` -- no single scale `q`. The experiment quantifies it: over the first 40 primes the required-scale spread `max(p)/min(p)` is already 86.5 and diverges.
+
+**Three consequences, derived not posited.** (1) No single scale => no finite `2x2` primitive Gram (the would-be Gram is block-graded over places, scale `p` in the `p`-block). (2) One place-block per prime power => `H^1` infinite-dimensional => the signature is an infinite-dim INDEX theorem, not a determinant -- exactly Deninger's "infinite-dimensional `H^i`," now a consequence of the bidegree. (3) A single Frobenius `x|->x^q` gives a `Z`-action with one log-scale `log q`; commensurable place-scales `{log p}` acting simultaneously FORCE a continuous `R`-action, the flow `Phi_t = prod_p U_{log p}^{t/log p}` of Directions 2/4. The Deninger flow is not aesthetic; it is the only carrier of a continuum of commensurable local scales.
+
+**Gamma_S^2 pinned.** FF: `Gamma^2 = q * Delta^2` (single scale x adjunction). Spec(Z): `"Gamma_S^2" = reg-sum_p (log p)*(local self-int at p)` = the von Mangoldt prime side `P_fin` (2K) read as the correspondence's regularized self-pairing = the Direction 4.6 regularized determinant `det_zeta(s - Phi_t)`, with per-fibre adjunction input `omega-bar^2 = 12 h_Fal` already computed (2J/2L). So `Gamma_S` is a sharper, falsifiable target than "a Frobenius graph on S": a correspondence of place-dependent bidegree `(1,p)` whose regularized self-intersection is the prime sum.
+
+**Sharper K2.** A `(1, p)` local bidegree IS the Euler factor `(1 - p^{-s})^{-1}`. D-H has a functional equation but no Euler product, so its von Mangoldt analogue delocalizes (#20), leaving no clean per-place local degrees: `no Euler product <=> no local bidegrees <=> no Gamma_S <=> no surface`. The wrong-approach discipline is now a bidegree statement, its most geometric form yet.
+
 ### 24. The complete single-arithmetic-surface side of the Hodge-index picture over Spec(Z) is now computed and validated end to end: positive-definite height pairing at ranks 1-4, and the FULL Silverman local decomposition (archimedean Petersson/Green + every finite prime, good and bad) summing to h_hat by the authoritative algorithm.
 
 Session 004 (continued in-session) built out the arithmetic side of the 2K dictionary (#22/#23) to completion on a single arithmetic surface:
