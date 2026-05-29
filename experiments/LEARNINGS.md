@@ -8,6 +8,19 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 24. The complete single-arithmetic-surface side of the Hodge-index picture over Spec(Z) is now computed and validated end to end: positive-definite height pairing at ranks 1-4, and the FULL Silverman local decomposition (archimedean Petersson/Green + every finite prime, good and bad) summing to h_hat by the authoritative algorithm.
+
+Session 004 (continued in-session) built out the arithmetic side of the 2K dictionary (#22/#23) to completion on a single arithmetic surface:
+
+- **2M (#rank-4):** the Neron-Tate height pairing is positive definite at RANK 4 (curve 234446a1; 8x8 Gram, 4 positive eigenvalues, none negative). Faltings-Hriljac PosDef now exhibited at ranks 1, 2, 3 (2H) and 4 (2M).
+- **2L (archimedean self-intersection):** the Petersson norm `||Delta||_Pet(tau) = (Im tau)^6 |eta(tau)|^24` -- the `omega-bar^2 = 12 h_Fal` analogue of `Delta^2 = 2-2g` -- computed and validated by two self-contained gates (j(tau)=j(E) to 1e-51; SL2(Z)-invariance to 1e-50).
+- **2O (bad prime, first pass):** I_1 prime-conductor curves have bad-prime local height identically 0 (closing the 2I caveat rigorously); an I_2 example shows the Z/2 component-group periodicity.
+- **2P (AUTHORITATIVE, supersedes 2I/2O):** implementing Cohen GTM 138 Alg 7.5.6/7.5.7 and Cremona sec 3.4 verbatim (the real height WITH the x<->x+1 convergence switch; the finite height WITH the exact M(M-N)/N component term), the GLOBAL identity `h_inf + sum_p h_p = h_hat` validates for 37a1/389a1/5077a1 and the I_2 curve at P/2P/3P, residual at the h_hat n_iter=7 truncation floor (down to ~1e-8). This confirms 2I's x2 normalization, CORRECTS 2O's bad-prime attribution (the -0.3466 on y^2=x^3+19x-20 is h_2, the I_6 prime, not p=11), and achieves the intent of the blocked T3 theta cross-check (e2n) by the proper route.
+
+**Net for Direction 8.** Every term the 2K dictionary calls for on a SINGLE arithmetic surface is now computed by the reference algorithm and validated against the independent limit-defined canonical height: the positive-definite signature (the Hodge index, ranks 1-4) and the complete local decomposition (archimedean incidence `lambda_inf` (2I), archimedean self-incidence Petersson norm (2L), and every finite local height good/bad via Silverman's exact algorithm (2P)). The Faltings-Hriljac arithmetic Hodge index is thus fully instantiated computationally. The remaining gap is unchanged and singular: the PRODUCT surface `Spec(Z) x Spec(Z)` and its Frobenius correspondence (2K sec 4/6b) -- now the only missing object, with everything that lives on a single arithmetic surface in hand and validated.
+
+**Methodological.** Authoritative textbook algorithms (Cohen/Cremona/Silverman), validated against an independent ground truth (the 4^{-n} limit h_hat), beat ad-hoc reconstructions: 2P superseded the partial 2I (missing the convergence switch) and the approximate 2O (wrong bad-prime attribution) and resolved the blocked 2N -- all caught/fixed by the gate-against-h_hat discipline, never by assumption.
+
 ### 23. The genuine archimedean Neron local height (self-derived, validated against LMFDB h_hat to 1e-5): for integral-generator curves the arithmetic Hodge index regulator is 100% archimedean on the diagonal, BUT the archimedean pairing alone goes indefinite by rank 3 -- positivity is GLOBAL (archimedean diagonal + finite off-diagonal), mirroring 3M's two-clock balance on the arithmetic side.
 
 2I ([e2i_archimedean_local_height.py](arithmetic_geometric/e2i_archimedean_local_height.py), writeup [e2i_archimedean_local_height.md](arithmetic_geometric/e2i_archimedean_local_height.md)) computes the transcendental archimedean Neron local height that 2H's naive coordinate split could not see.

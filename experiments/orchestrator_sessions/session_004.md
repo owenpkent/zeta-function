@@ -93,6 +93,39 @@ definite <=> Hasse-Weil) and the 2H Faltings-Hriljac positive-definiteness into
 PHASE_STATE logs: `eb73ee6`, `deda506`, `f12281f`. (2J/2K/synthesis + Lean: this
 session's closing commits.)
 
+## Continuation (2026-05-29, in-session): single-surface picture completed + Lean + autonomy lessons
+
+After the initial arc, the overnight queue (NIGHT_PLAN_004) was worked IN-SESSION
+(the unattended mechanisms failed -- see below), completing the arithmetic side:
+
+- **Lean** (`62b4717`): 2G `negDef_iff_hasseWeil` machine-proved (the 2x2 primitive
+  form is negative definite iff `t^2 < 4 g^2 q`, i.e. the Hasse-Weil bound IS the
+  signature condition); 2H Faltings-Hriljac stated (documented sorry). Build green.
+- **2M** (`078332c`): height pairing positive definite at RANK 4 (234446a1) -- ranks 1-4.
+- **2L** (`a2b0ae3`): archimedean self-intersection = Petersson norm of Delta;
+  gates pass (j(tau)=j(E) 1e-51, SL2(Z)-invariance 1e-50).
+- **2O** (`f08067a`): bad-prime local height -- I_1 prime-conductor curves give 0
+  (closes the 2I caveat); I_2 example shows Z/2 component periodicity.
+- **2P** (`1306ee6`): the AUTHORITATIVE Silverman decomposition (Cohen 7.5.6/7.5.7,
+  Cremona 3.4, from the books the owner supplied), validating
+  `h_inf + sum_p h_p = h_hat` for all curves/multiples (resid to 1e-8). Confirms
+  2I's normalization, corrects 2O's bad-prime attribution, achieves the blocked-T3
+  intent by the proper route.
+- **2N** (`b020cf4`): theta cross-check BLOCKED honestly (gate failed, not claimed;
+  superseded by 2P).
+
+Net: every term on a SINGLE arithmetic surface (signature ranks 1-4 + complete local
+decomposition) is now computed by reference algorithms and validated against the
+independent limit-defined h_hat. The only remaining object is the product surface.
+
+**Autonomy lessons (process).** Two unattended mechanisms FAILED and were handled
+honestly: (1) `ScheduleWakeup` is session-bound -- it did not fire overnight (the
+"it's running" assurance was wrong; corrected the next morning). (2) The `/schedule`
+remote cron agent ran but never pushed a branch -- the cloud environment lacks
+repo write access; the routine was disabled rather than risk another empty morning.
+The proven reliable path is in-session, gate-or-don't-commit work. Genuine unattended
+runs require granting the cloud env write/PR access and TESTING one push first.
+
 ## Recommended next steps
 
 1. **Numerical:** the 2J follow-up -- period point `tau`, Petersson norm of
