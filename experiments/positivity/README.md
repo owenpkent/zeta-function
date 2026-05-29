@@ -537,7 +537,7 @@ Quantifies the relationship between two equivalent positivity reformulations of 
 
 **The key recent result**: Rodgers-Tao 2018 proved $\Lambda \ge 0$, so $\Lambda = 0$ ⟺ RH. Combined with Polymath 15's upper bound $\Lambda \le 0.22$, current knowledge is $0 \le \Lambda \le 0.22$.
 
-**Cross-cut to the project**: this confirms LEARNINGS finding #7 (Weil-form analytic cancellation tightness $\sim 10^{-3}$). All three positivity formulations (Li, dBN, Weil) are "marginally positive" — RH is just barely true. There's no buffer for soft proofs.
+**Cross-cut to the project**: this confirms LEARNINGS finding #7 (Weil-form analytic cancellation tightness $\sim 10^{-3}$). All three positivity formulations (Li, dBN, Weil) are "marginally positive": RH is true only at the margin. The zero margin is a compass: it rules out the soft proofs and points the search at the exact structure of zeta.
 
 The project's experimental thread (3A, 3B, 3B.2) focused on Li rather than dBN because Li is directly accessible from zeros and gives discrete witnesses (3B.2: $\lambda_n^{\text{D-H}} < 0$ at $n = 4 \times 10^5$). dBN would require heat-equation simulation of $\xi$, which is computationally heavier with similar payoff.
 

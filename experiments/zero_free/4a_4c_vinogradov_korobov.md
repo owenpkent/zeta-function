@@ -91,7 +91,7 @@ $$\text{exponent on } 1 - \sigma = \frac{2}{3}, \quad \text{multiplicative } \lo
 
 This is sharp: any improvement requires either (a) breaking the V-MVT main conjecture (impossible, it's sharp), or (b) using a different method entirely (not an exponential-sum optimization).
 
-## 4. Why the $2/3$ exponent has been stuck for 67 years
+## 4. Why the $2/3$ exponent has been saturated for 67 years
 
 The standard recipe (Inputs 1+2+3) has the V-MVT bound at its analytic heart, and V-MVT has been pushed to its sharp form. So the exponent on $\log|t|$ in the zero-free region cannot be improved within the recipe. Improving the exponent requires changing the recipe.
 

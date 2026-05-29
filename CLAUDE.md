@@ -12,6 +12,14 @@ A research-and-study project on the Riemann Hypothesis. It contains:
 
 It is **not** a tool or product. It is a research codebase. Output is markdown documents, numerical experiments, visualizations, and Lean proofs.
 
+## Stance (read this before writing any framing)
+
+The posture of this project is that we are trying to solve RH. It is hard and the odds are long, but it is a target, not a monument, and nothing here should be written as if the problem were impossible.
+
+When you document a negative result, frame it as progress. A method that fails (Level 3 statistics, the analytic $2/3$ ceiling, the K1 wall, soft positivity's zero margin) has removed a dead branch and sharpened where the real proof must live. Each "this won't work" is a coordinate that narrows the search.
+
+Specifically, avoid fatalistic phrasing ("stuck," "hopeless," "can never," "no buffer for soft proofs" used as a verdict on the problem). Prefer the directional reading: the marginal-positivity finding is a **compass** that says the proof must engage the exact structure of $\zeta$, not a wall. Keep the math exactly as rigorous as it is (a provably false lemma is still false, a saturated ceiling is still saturated). Change the tone, not the theorems.
+
 ## About the owner
 
 The owner is Owen, a wheelchair user with muscular dystrophy.
@@ -38,7 +46,7 @@ The project is organized around **four candidate proof architectures** (from `do
 3. **Direct positivity** (Weil / Li): $\lambda_n \geq 0$ for all $n$, or $\sum_\rho \hat f(\rho)\overline{\hat f(\bar\rho)} \geq 0$ on Schwartz $f$
 4. **Analytic** (zero-free regions): push the Vinogradov-Korobov exponent $2/3 \to 1/2$
 
-The four-level framing (`docs/02_graduate/log_correlated_fields_intro.md` §6) places RH at Level 4 (positivity), not Level 3 (spectral/statistical). This is the project's structural commitment: any method that lives only at Level 3 (Selberg CLT, GUE statistics, multifractal log-correlated structure) cannot close RH because those statements are compatible with worlds where some zero has $\beta = 0.51$.
+The four-level framing (`docs/02_graduate/log_correlated_fields_intro.md` §6) places RH at Level 4 (positivity), not Level 3 (spectral/statistical). This is the project's structural commitment, and it is a targeting tool rather than a discouragement: a method that lives only at Level 3 (Selberg CLT, GUE statistics, multifractal log-correlated structure) cannot by itself close RH, because those statements are compatible with worlds where some zero has $\beta = 0.51$. Knowing that tells us where the proof must live (Level 4), so we spend effort there instead of polishing Level 3. Ruling a level out is how the search narrows.
 
 ## The Davenport-Heilbronn discipline
 

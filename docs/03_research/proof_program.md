@@ -313,7 +313,7 @@ This program builds on:
 
 ## 9. Honest closing
 
-The marginal-positivity thesis says RH is just barely true. If it is true, the proof must use the exact structure of zeta and produce positivity from a specific geometric source that does not exist in any current framework. The Hodge index theorem on a constructed surface below Z is the unique known candidate source. The program above is the best operational plan to construct it.
+The marginal-positivity thesis says RH is true only at the margin. That is a precise instruction, not a discouragement: the proof must use the exact structure of zeta and produce positivity from a specific geometric source that does not yet exist in any current framework. The Hodge index theorem on a constructed surface below Z is the unique known candidate source. The program above is the best operational plan to build it, and building it is the work. It is hard, the odds are long, and it is worth attempting.
 
 The plan is honest about its < 1% success probability and the multi-decade timeline. Most participants in the program would publish partial results without ever reaching the full proof. That is fine: each phase's deliverable is independently valuable. Even if RH is never proved by this program, the byproducts (Lambda-blueprint geometry, arithmetic intersection theory on Spec(Z) x_F1 Spec(Z), prismatic foliations, hyperring intersection theory) would substantially advance arithmetic geometry.
 

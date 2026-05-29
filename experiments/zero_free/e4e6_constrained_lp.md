@@ -12,7 +12,7 @@
 
 > If $P(\theta, \phi) \geq 0$ on $[0, 2\pi]^2$ and $\tilde P(u) := P(t_1 u, t_2 u)$ is the restriction to a line, then $\tilde P$ is a non-neg 1D trig polynomial bounded by the Fejér optimum at matched effective degree.
 
-Consequence: the 2D LP optimal polynomial reduces to 1D Fejér under any line-restriction, so the single-zero MT shape factor (which is computed from the 1D restriction at the zero's frequency line) is bounded by 1D Fejér independent of the 2D LP's structure. The +25% C-S gap of 4E.2 cannot be cashed in.
+Consequence: the 2D LP optimal polynomial reduces to 1D Fejér under any line-restriction, so the single-zero MT shape factor (which is computed from the 1D restriction at the zero's frequency line) is bounded by 1D Fejér independent of the 2D LP's structure. The +25% C-S gap of 4E.2 stays trapped in 1D under line restriction, so cashing it in requires qualitatively different machinery (Arch 2 or 3), not a better LP.
 
 The proposed escape: don't require $P \geq 0$ on all of $[0, 2\pi]^d$ — only on a subset $\Omega$ that's physically meaningful for the MT explicit-formula sum. If $\Omega$ is small enough, the line-restriction argument breaks (P need not be non-negative on the whole line, only on the line's intersection with $\Omega$), and the LP can exceed the Fejér ceiling.
 

@@ -9,6 +9,14 @@ from .lfunction import LFunction
 from .zeta import ZetaLFunction, zeta as zeta_L
 from .davenport_heilbronn import DavenportHeilbronn
 from .dirichlet_l import DirichletL, chi3_L, chi4_L
+from .epstein_zeta import (
+    EpsteinZeta,
+    epstein_for_discriminant,
+    epstein_d47,
+    epstein_d47_principal,
+    epstein_d15,
+    KNOWN_FORMS,
+)
 
 __all__ = [
     "LFunction",
@@ -18,4 +26,10 @@ __all__ = [
     "DirichletL",
     "chi3_L",
     "chi4_L",
+    "EpsteinZeta",
+    "epstein_for_discriminant",
+    "epstein_d47",
+    "epstein_d47_principal",
+    "epstein_d15",
+    "KNOWN_FORMS",
 ]

@@ -414,11 +414,11 @@ Every failed approach hits one or more of these walls. Understanding them is ess
 **What it is:** Classical analytic methods (exponential sums, zero detectors, trigonometric inequalities) have hit provable ceilings that prevent them from reaching the critical line.
 
 **Where it appears:**
-- Vinogradov-Korobov: stuck at exponent $2/3$ since 1958
+- Vinogradov-Korobov: saturated at exponent $2/3$ since 1958 (provably sharp within its class after BDG 2016)
 - Trigonometric inequalities: optimal within their class
 - Moment methods: known for $k = 1, 2$, blocked for $k \geq 3$
 
-**Why it's hard:** These are not failures of technique within the method — they are provable limitations of the method itself. Better execution of the same approach cannot overcome them.
+**Why it's hard:** These are not failures of technique within the method. They are provable limitations of the method itself, so the lever is to change methods, not to push harder inside one. Knowing a class is saturated is useful: it redirects effort toward the architectures (geometric, structural-positivity) that are not capped by these particular ceilings. A saturated method is a solved sub-question, and a signpost to the next one.
 
 ### 3.5 The Bridge Gap
 

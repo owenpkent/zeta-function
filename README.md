@@ -57,6 +57,16 @@ The **Riemann Hypothesis** states:
 
 It has been open since 1859. It is one of the Millennium Prize Problems (worth $1,000,000). It governs the distribution of prime numbers, and its implications ripple through number theory, physics, cryptography, and beyond.
 
+## Stance
+
+We are trying to solve this. That is the posture of the whole repo.
+
+It is hard. The odds against any single program are long, and 166 years of effort by the best mathematicians alive is the honest baseline. But "hard" is not "impossible," and this project treats RH as a target, not a monument.
+
+Read every negative result here in that spirit. When an experiment shows that a method fails (Level 3 statistics cannot pin a single zero, the classical analytic ceiling sits at the $2/3$ exponent, NCG alone hits the K1 wall, soft positivity has zero margin), that is **progress**: it removes a dead branch and sharpens where the real proof must live. Each "this won't work" is a coordinate that narrows the search, not a verdict that the search is hopeless.
+
+The dominant finding (RH is true only at the margin, so the proof must engage the **exact** structure of $\zeta$) is a compass, not a wall. It tells us where to dig. The job is to keep digging there.
+
 ## Levels
 
 | Level | Folder | Prerequisites |
@@ -88,7 +98,7 @@ python -m experiments._shared.smoke_test
 
 ## Cross-cutting findings
 
-Synthesis of structural insights across architectures lives in [`experiments/LEARNINGS.md`](experiments/LEARNINGS.md). The dominant meta-finding from the experimental thread: **RH is marginally true** — every positivity reformulation (Weil-form, Li, de Bruijn-Newman, MT shape factor) is sharp at zero margin. Five independent reinforcing directions (LEARNINGS findings #7, #11, #12, #13 + Arch 3E literature review) all confirm there is no buffer for soft proofs. Any RH proof must use the EXACT structure of $\zeta$ (Euler product, functional equation, archimedean factor) rather than generic positivity arguments.
+Synthesis of structural insights across architectures lives in [`experiments/LEARNINGS.md`](experiments/LEARNINGS.md). The dominant meta-finding from the experimental thread: **RH is true only at the margin**. Every positivity reformulation (Weil-form, Li, de Bruijn-Newman, MT shape factor) is sharp at zero margin. Five independent reinforcing directions (LEARNINGS findings #7, #11, #12, #13 + Arch 3E literature review) point the same way. This is the project's most useful piece of map: it tells us a winning proof must use the EXACT structure of $\zeta$ (Euler product, functional equation, archimedean factor) rather than generic positivity arguments. The margin result rules out the soft routes so that effort concentrates on the structural one.
 
 The 17-constraint framework for Architecture 2 candidates (see [`experiments/arithmetic_geometric/2A_candidate_evaluation.md`](experiments/arithmetic_geometric/2A_candidate_evaluation.md)) operationalizes the comparison of $\mathbb{F}_1$ programs and identifies the geometric route (intersection theory + Hodge index theorem on a constructed surface) as the unique remaining direction for breaking the K1 wall on positivity. The path forward strategic synthesis is in [`experiments/arithmetic_geometric/2A_path_forward.md`](experiments/arithmetic_geometric/2A_path_forward.md).
 
@@ -101,10 +111,10 @@ The 17-constraint framework for Architecture 2 candidates (see [`experiments/ari
 | Research atlas | ✅ `docs/research_atlas/` |
 | Graduate docs (incl. log-correlated, four-level framing) | ✅ Substantial |
 | Experiments — Phase 0 infrastructure | ✅ Complete |
-| Experiments — Arch 3 (positivity) | ✅ 3A-3D, 3B.2, 3D.2-3D.4, 3E (literature), 3F-3I, 3J (Schur complement against on-line cushion gives ~30x sharper detector than raw spectrum, rel min asymptote -78.7%), 3K (hypothetical off-line zero perturbation, disproof path closed in Gram-matrix family) complete |
+| Experiments — Arch 3 (positivity) | ✅ 3A-3D, 3B.2, 3D.2-3D.4, 3E (literature), 3F-3I, 3J (Schur complement against on-line cushion gives ~30x sharper detector than raw spectrum, rel min asymptote -78.7%), 3K (hypothetical off-line zero perturbation, disproof path closed in Gram-matrix family) complete; **3L (Epstein zeta second control): the Schur detector obeys the same counting law (schur_neg = #off-line heights) on a structurally independent off-line construction, generalising the wrong-approach discipline beyond D-H; 3B.4: second Li-criterion off-line witness (Epstein) + rigorous Selberg discrimination** |
 | Experiments — Arch 1 (spectral) | ✅ 1A, 1B, 1C, 1D complete (1D as literature review of Connes adèle class space) |
-| Experiments — Arch 4 (zero-free regions) | ✅ 4B, 4D, 4D.2, 4E, 4E.2-4E.7 complete (4E.6: MT 1D-Fejér ceiling robust under domain relaxation; 4E.7: multi-zero LP gives 55-137× shape-factor improvement but rank-1 LP optima at naive objectives); 4A+4C complete as unified literature dossier (V-K $2/3$ exponent is a structural ceiling after BDG 2016; no named conditional pushes the exponent; Arch 4 is constraint-mapping, not a route to RH); 4E.8 pending (SOS via Putinar/Schmüdgen) |
-| Experiments — Arch 2 (arithmetic-geometric) | ✅ 2A, 2B, 2E complete (2A includes R1-R5 evaluation framework with hybrid proposals AND 5 of 6 candidate dossiers: Borger, Lorscheid, Connes, Deninger, Deitmar; 2E confirms bare $\psi_p$ on concrete Λ-rings has no zeta-zero-like spectrum, validating R5's cohomology-must-lift framing); 2C, 2D pending |
+| Experiments — Arch 4 (zero-free regions) | ✅ 4B, 4D, 4D.2, 4E, 4E.2-4E.8 complete; 4A+4C unified literature dossier (V-K $2/3$ exponent is a structural ceiling after BDG 2016; Arch 4 is constraint-mapping, not a route to RH); **4E.9 (Heath-Brown multi-zero MT SDP, Direction 7): the multi-zero MT shape factor does not exceed the 1D Fejér ceiling (best ratio ≤ 1, rank-2 certificate). The LP/SDP/SOS family is now fully closed** |
+| Experiments — Arch 2 (arithmetic-geometric) | ✅ 2A, 2B, 2E complete (2A includes R1-R5 evaluation framework with hybrid proposals AND 5 of 6 candidate dossiers: Borger, Lorscheid, Connes, Deninger, Deitmar; 2E confirms bare $\psi_p$ on concrete Λ-rings has no zeta-zero-like spectrum, validating R5's cohomology-must-lift framing); **2F (Hodge-index sweep): the function-field RH bound $|\alpha_i| = \sqrt{q}$ holds exactly across a family of curves over finite fields, exhibiting the positivity target a Spec($\mathbb{Z}$) lift must reproduce**; 2C, 2D pending |
 | Intuitive / undergraduate docs | 🔄 In progress |
 | PDF text conversions | 🔄 In progress |
 | manim visualizations | 🔄 In progress |

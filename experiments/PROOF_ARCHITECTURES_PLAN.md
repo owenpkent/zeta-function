@@ -207,7 +207,7 @@ These guidelines refine the [§ Why we test kill criteria, not goals](#why-we-te
 
 5. **Use the 17-constraint scorecard as the unifying framework.** Every Arch 2 candidate, every hybrid proposal, every infrastructure piece gets scored against the same 17 constraints. AI maintains the scorecard consistently across sessions; humans validate the scoring.
 
-6. **The marginal-positivity thesis is a structural prior, not a conclusion.** Six reinforcing directions ([LEARNINGS findings #7, #11, #12, #13, #14, #15](LEARNINGS.md)) say RH is just barely true. AI uses this as a prior when evaluating new approaches: any method that proves RH "easily" or with "soft positivity" is suspect by the prior. Skepticism scales with how comfortable the method looks.
+6. **The marginal-positivity thesis is a structural compass, not a conclusion.** Six reinforcing directions ([LEARNINGS findings #7, #11, #12, #13, #14, #15](LEARNINGS.md)) measure RH as true only at the margin. AI uses this as a prior when evaluating new approaches: a method that proves RH "easily" or with "soft positivity," with no contact with the exact structure of zeta, is suspect by the prior because the measured margin is zero. Skepticism scales with how comfortable the method looks. This is a filter that points toward the structural proof, not a claim that RH is out of reach: if a soft method genuinely survives the D-H control, adversarial attack, and Lean verification, it gets integrated and the thesis gets rewritten.
 
 ### What this project (the experimental thread) is for
 

@@ -125,7 +125,7 @@ The pattern: **the more LP/SDP-like the escape, the more cleanly it confirms 4E.
 
 **Architectural implication.** Combined with finding #14 (the V-K stagnation), this closes Architecture 4 numerically. The single-zero MT zero-free region constant cannot be improved via LP/SDP machinery on multivariate non-negative trig polynomials at any bidegree, with any objective, in either LP or SDP form. Per LEARNINGS finding #14, pushing the V-K exponent requires fundamentally new input from Arch 2 or Arch 1.
 
-**Cross-cut to the marginal-positivity thesis.** Adding to the list of reinforcing directions: the LP/SDP machinery's incapacity to escape the Fejer wall is another instance of "RH is just barely true". The wall is tight enough that even the strongest natural LP/SDP relaxation (Putinar SOS) saturates it exactly. No buffer remains within the LP/SDP framework.
+**Cross-cut to the marginal-positivity thesis.** Adding to the list of reinforcing directions: the LP/SDP machinery's inability to escape the Fejer wall is another instance of "RH is true only at the margin". The wall is tight enough that even the strongest natural LP/SDP relaxation (Putinar SOS) saturates it exactly. The margin within the LP/SDP framework is zero, which is the useful conclusion: it closes this framework cleanly and redirects effort to the architectures (Arch 2 geometric, Arch 1 spectral) that are not bounded by the Fejer ceiling.
 
 ### 14. Architecture 4's 67-year stagnation at the Vinogradov-Korobov exponent $2/3$ is a structural ceiling, not insufficient effort: all three inputs of the V-K recipe are now near-optimal within their frameworks.
 
@@ -516,6 +516,105 @@ Remaining open directions (NOT closed by 4E.3, NOT in the restriction route):
 - **The Gram-matrix scaling experiment template** (e3d2): pick a test family, an L-function set, a basis-size sweep, and report min eigenvalue. Generalizes to any "Level 4 positivity" test.
 
 - **The discrimination-ratio test** (e1c): for any candidate $\zeta$-targeting construction, apply it to D-H (and ideally $\chi_3, \chi_4$) and compute best-affine RMS to each. A construction whose ratio is bounded by a factor of $\sim 3$ is L-function-blind.
+
+---
+
+## Session 003 findings (2026-05-28): second control, function-field target, last analytic escape
+
+**Finding #19 (Arch 3, the wrong-approach detector GENERALISES beyond D-H).**
+[`e3l_epstein_control.py`](positivity/e3l_epstein_control.py) builds a second,
+structurally independent off-line-zero control: the Epstein zeta function of a
+binary quadratic form (functional equation, no single Euler product), via a new
+`experiments/_shared/epstein_zeta.py` (Chowla-Selberg / Terras expansion,
+validated against the class-number-1 anchor $Z_Q = 4\zeta(s)\beta(s)$ to
+$10^{-31}$ and against its own functional equation to $10^{-32}$). Reconnaissance
+result: the small class-number 2 and 3 discriminants ($d = 15, 23$) have NO
+off-line zeros at reachable height, but the class-number-5 discriminant $d = 47$
+non-principal form $2x^2+xy+6y^2$ has an off-line zero pair at
+$\rho \approx 0.634 \pm \ldots$, partner $0.366 + 32.05\,i$; the PRINCIPAL form
+$x^2+xy+12y^2$ has none. Running the 3J Weil-form Schur-complement detector on
+all five targets at $K$ up to 300 gives a clean PASS of the counting law on
+BOTH controls:
+
+  | target | off-line heights | Schur dim | Schur neg | rel min |
+  |---|---|---|---|---|
+  | zeta, chi_3, Epstein d=47 principal | 0 | 0 | 0 | PSD |
+  | Epstein d=47 non-principal | 1 | 2 | 1 | -25.5% |
+  | Davenport-Heilbronn (T<=200) | 4 | 8 | 4 | -77.6% |
+
+The law `schur_neg = #off-line heights`, `schur_dim = 2 * #off-line heights`
+holds identically on Epstein as on D-H. The Weil-form positivity detector
+responds to off-line zeros per se, not to a quirk of the D-H construction. The
+wrong-approach discipline now rests on two independent counterexamples, and the
+Epstein principal-vs-non-principal contrast shows the detector is selective
+WITHIN a single discriminant. (Off-line zeros are sparse for these Epstein
+forms: still only one height up to $T = 120$, so the experiment tests
+generalisation, not the multi-height counting which D-H already established
+across $T \in \{200,300,350,500\}$.)
+
+**Finding #20 (Arch 2, the function-field positivity target, exhibited
+concretely).** [`e2f_hodge_index_sweep.py`](arithmetic_geometric/e2f_hodge_index_sweep.py)
+extends 2B from one curve over $\mathbb{F}_5$ to a family: elliptic curves over
+$\mathbb{F}_q$ for $q \in \{5,7,11,13,17,19,23\}$ and genus-2 hyperelliptic
+curves over $\{5,7,11,13\}$. For each it counts points over $\mathbb{F}_{q^k}$,
+recovers the integer zeta polynomial $P(T)$ exactly (via $\exp(\sum N_k T^k/k)$
+in sympy), and computes the Frobenius eigenvalues. The Weil RH bound
+$|\alpha_i| = \sqrt{q}$ holds EXACTLY across the whole family (worst deviation
+$0.000\mathrm{e}{+}00$; it is a theorem via the Hodge index theorem on
+$C \times C$). This is the positivity TARGET the geometric route (Arch 2,
+Direction 8) must reproduce over $\mathrm{Spec}(\mathbb{Z})$: in the
+function-field world where the index theorem is available, the bound is exact
+and computable; the obstruction over $\mathbb{Z}$ is the absence of the surface
+and the index theorem, not of the positivity statement itself.
+
+**Finding #21 (Arch 4, the last analytic escape closes).**
+[`e4e9_heath_brown_sdp.py`](zero_free/e4e9_heath_brown_sdp.py) implements
+Direction 7 (Heath-Brown multi-zero MT): it targets the MULTI-ZERO MT shape
+factor directly in an SDP over the $\cos\times\cos$ SOS cone, sweeping the
+zero-coupling $g = \gamma_2/\gamma_1$ and bidegree $N \in \{2,3,4\}$, combining
+4E.7's cross-frequency term with 4E.2's higher harmonics. Result: the best
+multi-zero MT / Fejer ratio is $\le 1$ (saturates, never exceeds), with the
+optimal certificate at rank 2 (sharpening 4E.7's rank-1 finding: the multi-zero
+higher-harmonic structure is genuinely 2D yet still capped). The line
+restriction folds any $\cos\times\cos$ SOS polynomial into a 1D non-negative
+polynomial, and the multi-zero ledger redistributes harmonic weight but cannot
+manufacture trick-frequency weight beyond the Fejer cap. This closes the last
+LP/SDP escape from the 4E.3 line-restriction lemma. Architecture 4 is now
+numerically closed across the entire LP/SDP/SOS family. (The D-H discipline does
+not apply: this is pure trig-polynomial optimisation, L-function-agnostic.)
+
+**Finding #22 (Arch 3, a SECOND Li-criterion off-line witness + rigorous
+discrimination).** [`e3b4_li_discrimination.py`](positivity/e3b4_li_discrimination.py)
+extends the 3B.3 rigorous Li machinery from one off-line construction to a
+discrimination statement across five L-functions. Results: the D-H rigorous
+negativity reproduces exactly (lambda_n^{DH} < 0 rigorously from n = 336,000);
+the Selberg-class controls (zeta q=1, chi_3 q=3) are rigorously POSITIVE from
+n = 50,000; and the Epstein d=47 non-principal form gives a SECOND off-line Li
+witness: its lambda_n crosses negative at n = 110,000 (the off-line zero's
+beta = 0.366 partner has |1 - 1/rho| > 1, so its Li contribution grows
+exponentially negative and overwhelms the positive on-line baseline). This is
+the first Li-criterion off-line witness for an Epstein zeta in the project, and
+it is the SAME off-line zero that makes the 3L Schur detector fire (Finding
+#19), so the two positivity criteria agree on the second control. The
+discrimination is thus: lambda_n^{DH} < 0 and lambda_n^{Epstein} < 0 <
+lambda_n^{zeta}, lambda_n^{chi_3}, at large n. Note on rigour: the central
+(numerical) Epstein crossover at n = 110,000 is robust; making the Epstein
+witness rigorous to the 3B.3 standard requires its zeros scanned to T = 500 so
+the off-line TAIL bound (which scales as 1/(2 T_max^2)) is negligible, since at
+T = 60 the tail bound swamps the signal. The T = 500 scan tightens the tail by
+~70x and is what upgrades the Epstein witness from central to rigorous.
+
+**Cross-architecture synthesis of session 003.** Findings #19 and #22 harden
+the wrong-approach discipline (it now rests on TWO independent off-line
+constructions, D-H and Epstein, and both the Gram/Schur detector and the Li
+criterion fire on both). Finding #21 closes Architecture 4 numerically across
+the full LP/SDP/SOS family. Finding #20 exhibits the function-field positivity
+target exactly. Net effect: every architecture reachable by computation is now
+either closed (Arch 1, 3, 4) or has its target made concrete (Arch 2), and the
+sole remaining route is the Hodge-index construction over Spec(Z) (Direction 8),
+which is construction work, not a compute task. This is the marginal-positivity
+picture sharpened, not softened: the controls are stronger and the path is
+narrower.
 
 ---
 

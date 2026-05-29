@@ -40,6 +40,8 @@ desktop.ini
 # experiment outputs
 experiments/**/_cache/
 experiments/**/*.png
+# scratch run logs (underscore-prefixed), not part of the tracked record
+experiments/**/_*.log
 
 # Lean / Lake build artifacts (gigabytes of compiled oleans; pulled from cache via `lake update`)
 .lake/

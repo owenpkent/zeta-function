@@ -43,9 +43,9 @@ Match the existing style of project documents:
 - Use markdown headings, tables, and code blocks.
 - Avoid hand-wavy language: every claim should reduce to either (a) code that runs, (b) a Lean 4 proof, or (c) a paper citation.
 
-## The marginal-positivity thesis as structural prior
+## The marginal-positivity thesis as structural compass
 
-Six reinforcing directions say RH is just barely true. SYNTHESIZER's job is to preserve this thesis as the project's structural prior: any new finding that contradicts marginal positivity (e.g., "we found a soft proof that works") triggers extra scrutiny by ADVERSARY before integration.
+Six reinforcing directions measure RH as true only at the margin. SYNTHESIZER carries this as the project's working map of where the proof must live: the proof has to engage the exact structure of $\zeta$, not generic positivity. A new finding that claims to contradict marginal positivity (e.g., "we found a soft proof that works") is not forbidden, it is exactly the kind of result that would reshape the program. It triggers extra scrutiny by ADVERSARY before integration precisely because it would be so important if real. Hold the thesis as a strong prior, not dogma: if a soft proof genuinely survives adversarial attack and Lean verification, integrate it and rewrite the narrative around it.
 
 ## Handoff
 

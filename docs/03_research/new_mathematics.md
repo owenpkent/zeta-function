@@ -45,13 +45,14 @@ not independent failures. They are symptoms of the same missing structure.
                           └────────────────────────┘
 ```
 
-The spectral approach fails because it can't prove positivity. The geometric
-approach fails because it can't build the right space. The analytic approach
-fails because its tools are provably maxed out. But notice: the spectral
-approach *needs geometry* for positivity. The geometric approach *needs analysis*
-for the trace formula. The analytic approach *needs algebra* for deeper
-structure. Each approach fails precisely where it needs to become one of the
-other approaches.
+Each single approach stalls at a specific, identifiable place. The spectral
+approach stalls at proving positivity. The geometric approach stalls at building
+the right space. The analytic approach stalls because its tools are provably at
+their ceiling. That precision is the opening, not the obituary: the spectral
+approach *needs geometry* for positivity, the geometric approach *needs analysis*
+for the trace formula, and the analytic approach *needs algebra* for deeper
+structure. Each approach reaches its limit precisely where it needs to become one
+of the other approaches. The place each one stalls is a map of what to build next.
 
 **The new mathematics is not a better version of any one approach. It is the
 thing that makes them all the same approach.**
@@ -105,8 +106,8 @@ NUMBER FIELD (RH is unproved here)
     │  • Zeros = ??? eigenvalues of ???    │
     └──────────────────────────────────────┘
          │
-         │   Every line here is a missing piece.
-         │   The proof cannot even begin.
+         │   Every line here is a missing piece:
+         │   a concrete thing the new framework has to build.
          │
          ▼
     ζ(s) satisfies RH  ???

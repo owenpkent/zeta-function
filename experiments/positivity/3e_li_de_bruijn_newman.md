@@ -165,9 +165,9 @@ The project's experimental thread has focused on Li (via 3A, 3B, 3B.2) and Weil 
 - Li coefficients grow $\sim n \log n /2$ — barely positive, not exponentially positive.
 - $\Lambda = 0$ exactly (per Rodgers-Tao + Newman) — RH is "on the boundary," not deep in the safe region.
 
-This is consistent with the project's structural finding (LEARNINGS #7): the Weil-form duality has $\sim 10^{-3}$ cancellation tightness. All three POSITIVITY formulations (Li, dBN, Weil) are "marginally positive" — RH is just barely true.
+This is consistent with the project's structural finding (LEARNINGS #7): the Weil-form duality has $\sim 10^{-3}$ cancellation tightness. All three POSITIVITY formulations (Li, dBN, Weil) are "marginally positive": RH is true only at the margin.
 
-**Implication**: any RH proof attempt that gives "lots of room" (e.g., a positivity argument with order-of-magnitude headroom) is structurally wrong, because the actual margin is zero. Proofs must use the EXACT structure of zeta (Euler product, functional equation, archimedean factor) rather than soft arguments.
+**Implication (a targeting result, not a discouragement)**: an RH proof attempt that gives "lots of room" (e.g., a positivity argument with order-of-magnitude headroom) is almost certainly leaking somewhere, because the actual margin is zero. This tells us exactly where the real proof lives: it must use the EXACT structure of zeta (Euler product, functional equation, archimedean factor) rather than soft arguments. The zero margin removes the soft routes and concentrates the search on the structural one.
 
 This is the same structural lesson encoded in:
 - 3I (Siegel-Walfisz too loose by factor 30-120× — the wall is sharp)
@@ -183,7 +183,7 @@ Li and dBN are two natural positivity reformulations of RH, related but distinct
 - Li is **discrete** (sequence $\{\lambda_n\}$), **directly accessible from zeros**, **provides combinatorial witnesses** of non-RH (per 3B.2 at $n \sim 4 \times 10^5$).
 - dBN is **continuous** ($\Lambda \in \mathbb{R}$), **defined via heat-equation deformation**, **proves "RH is sharp"** ($\Lambda \geq 0$ per Rodgers-Tao 2018, so $\Lambda = 0$ ⟺ RH).
 
-Both confirm the project's structural finding that RH is "marginally true" — there's no room for soft proofs. The Weil-form cancellation tightness (LEARNINGS #7), the K1 wall (R3.5), and the dBN $\Lambda = 0$ sharpness are three views of the same phenomenon.
+Both confirm the project's structural finding that RH is true only at the margin, which points the proof at the exact structure of zeta rather than soft positivity. The Weil-form cancellation tightness (LEARNINGS #7), the K1 wall (R3.5), and the dBN $\Lambda = 0$ sharpness are three views of the same phenomenon, and together they map where to dig.
 
 **Implication for proof attempts**: any RH proof must use the exact structure of $\zeta$ (Euler product, functional equation, archimedean factor) rather than soft positivity arguments. The "marginal positivity" structural picture rules out wholesale generalizations.
 

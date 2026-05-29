@@ -28,8 +28,8 @@
 
 **Architectures 1, 3, 4 status**: substantially closed at the project level.
 - Arch 1 (spectral): 1A-1C complete; 1D literature pending.
-- Arch 3 (positivity): complete through 3B.3 rigorous Li witness at n = 336,000 + 3F-3I Weil-form duality cross-cuts + 3J Schur-complement two-clock decomposition (asymptote -78.7%, sharpens raw Gram detector by ~30x) + 3K hypothetical-off-line-zero perturbation (disproof in Gram-matrix family has no leverage point).
-- Arch 4 (analytic): complete through 4E.8 SDP saturation + 4A+4C V-K dossier. The LP/SDP family is structurally closed; remaining escapes (Bombieri variational SOS, Heath-Brown multi-zero MT) are research-grade Directions 6 and 7.
+- Arch 3 (positivity): complete through 3B.3 rigorous Li witness at n = 336,000 + 3F-3I Weil-form duality cross-cuts + 3J Schur-complement two-clock decomposition (asymptote -78.7%, sharpens raw Gram detector by ~30x) + 3K hypothetical-off-line-zero perturbation (disproof in Gram-matrix family has no leverage point) + **3L Epstein second control (session 003): the Weil-form Schur detector obeys the same counting law (schur_neg = #off-line heights) on a structurally independent off-line construction (Epstein zeta of disc -47), generalising the wrong-approach discipline beyond D-H** + **3B.4 second Li-criterion off-line witness (Epstein lambda_n crosses negative at n = 110,000) plus rigorous Selberg-vs-off-line discrimination.**
+- Arch 4 (analytic): complete through 4E.8 SDP saturation + 4A+4C V-K dossier + **4E.9 Heath-Brown multi-zero MT SDP (session 003, Direction 7): the multi-zero MT shape factor does NOT exceed the 1D Fejer ceiling (best ratio <= 1, optimal certificate rank 2). The LP/SDP/SOS family is now fully closed.** Remaining research-grade escape: Bombieri variational SOS (Direction 6).
 
 ## Compute budget
 
@@ -74,6 +74,7 @@ Session 002 outputs landed: three F-F candidates ([A](experiments/arithmetic_geo
 
 | Date | Session focus | Commits | Key outputs |
 |---|---|---|---|
+| 2026-05-28 | Session 003: four gap-closing experiments (A/B/C/D) | TBD | New `experiments/_shared/epstein_zeta.py` (Epstein zeta as independent second control, validated to 1e-31). 3L: Schur detector generalises beyond D-H (Epstein disc -47, schur_neg = #off-line heights, clean PASS). 3B.4: second Li off-line witness (Epstein neg at n=110,000) + rigorous Selberg discrimination. 2F: function-field RH bound |alpha|=sqrt(q) exact across curve/field family. 4E.9: multi-zero MT SDP does not beat Fejer (Direction 7 closes, rank-2). LEARNINGS #19-#22 added. Repo framing recast from defeatist to directional. |
 | 2026-05-25 | Session 002: three BUILDERs on milestone 4.1 + VERIFIER on R3.5 | TBD | Three F-F candidates (A blueprint-relation, B Adams quotient, C delta-ring); R3.5 structural content proved by `rfl` after refactor into TraceFormulaNCG framework; build green; one sorry eliminated; LEARNINGS #16 (A=B<C triality) and #17 (Weil explicit formula gap) added |
 | 2026-05-25 | Lean Phase 1 substrate + green build | `8a6c3d7` | Six modules upgraded from True/Unit placeholders to typed Mathlib-wired data; MathlibBridge.lean added; 14 VERIFIER target IDs tabulated; lake build green (Lean 4.13.0 + Mathlib v4.13.0) |
 | 2026-05-25 | Arch 4E.8 SOS-SDP | `565de36` | Closes LP/SDP family escape from 4E.3 |
