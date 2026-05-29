@@ -2,7 +2,7 @@
 
 A multi-level exploration of the Riemann Zeta Function and the Riemann Hypothesis: from intuitive visual understanding through graduate-level analysis to the frontier of current research. Includes a computational experimental thread organized around testing the four candidate RH proof architectures.
 
-**Operational substrate**: this repo is also structured as the substrate for an AI-augmented (and, speculatively, AI-only) proof program for RH. See [`OPERATIONS.md`](OPERATIONS.md) for how to operate it, [`PHASE_STATE.md`](PHASE_STATE.md) for current state, [`docs/03_research/proof_program.md`](docs/03_research/proof_program.md) for the AI-augmented plan, and [`docs/03_research/proof_program_ai_only.md`](docs/03_research/proof_program_ai_only.md) for the AI-only speculative variant. The repo is a handoff artifact: ~50-70% of Phase 0 is done; Phases 1-5 require expert collaborators and multi-year compute.
+**Operational substrate**: this repo is also structured as the substrate for an AI-augmented (and, speculatively, AI-only) proof program for RH. See [`STATE_OF_THE_PROGRAM.md`](STATE_OF_THE_PROGRAM.md) for a one-page repo-wide strategic snapshot (where every architecture stands and the single most-leveraged next move), [`OPERATIONS.md`](OPERATIONS.md) for how to operate it, [`PHASE_STATE.md`](PHASE_STATE.md) for current state, [`docs/03_research/proof_program.md`](docs/03_research/proof_program.md) for the AI-augmented plan, and [`docs/03_research/proof_program_ai_only.md`](docs/03_research/proof_program_ai_only.md) for the AI-only speculative variant. The repo is a handoff artifact: ~50-70% of Phase 0 is done; Phases 1-5 require expert collaborators and multi-year compute.
 
 ## What's Here
 
