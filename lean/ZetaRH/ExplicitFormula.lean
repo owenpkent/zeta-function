@@ -31,6 +31,8 @@ positivity whose Architecture-2 (signature) face is in `HodgeIndex.lean`.
 
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.NumberTheory.VonMangoldt
+import Mathlib.Analysis.Calculus.LogDeriv
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import ZetaRH.Basic
 
 namespace ZetaRH.ExplicitFormula
@@ -71,6 +73,31 @@ noncomputable def primeSum (T : AdmissibleTest) : ℂ :=
     Complex.ofReal (Λ n) / Complex.ofReal (Real.sqrt (n : ℝ))
       * (T.g (Real.log (n : ℝ)) + T.g (-(Real.log (n : ℝ))))
 
+/-! ### The archimedean kernel (digamma) -- concrete.
+
+    Mathlib has `logDeriv` and a differentiable `Complex.Gamma` but no named
+    `digamma`. We define it as the logarithmic derivative of `Γ` and build the
+    archimedean kernel of the explicit formula from it. This discharges the kernel
+    part of #EF-arch (the remaining part is the integral pairing, #EF-class). -/
+
+/-- The digamma function `ψ = Γ'/Γ`, the logarithmic derivative of the complex
+    Gamma function. (Upstreamable to Mathlib on its own.) -/
+noncomputable def digamma : ℂ → ℂ := logDeriv Complex.Gamma
+
+/-- `ψ(s) = Γ'(s) / Γ(s)`. Proved (no `sorry`) from `logDeriv_apply`. -/
+theorem digamma_eq (s : ℂ) : digamma s = deriv Complex.Gamma s / Complex.Gamma s :=
+  logDeriv_apply Complex.Gamma s
+
+/-- The archimedean kernel of the explicit formula along the critical line: the
+    logarithmic derivative of the Γ-factor `π^{-s/2} Γ(s/2)` of the completed zeta
+    `ξ`, evaluated at `s = 1/2 + i r`. Equals `-(1/2) log π + (1/2) ψ(1/4 +
+    i r/2)`. This is the density of the archimedean `A_arch` block of the 3M
+    decomposition; the `archTerm` field below is its pairing `(1/2π) ∫ ĝ(r) ·
+    archKernel r dr` against the test transform. -/
+noncomputable def archKernel (r : ℝ) : ℂ :=
+  -(1 / 2 : ℂ) * Complex.log (Real.pi : ℂ)
+    + (1 / 2 : ℂ) * digamma (1 / 4 + Complex.I * (r : ℂ) / 2)
+
 /-! ### The explicit formula as a bundle of functionals.
 
     The zero side, archimedean term, and pole term are the analytic functionals
@@ -82,8 +109,9 @@ noncomputable def primeSum (T : AdmissibleTest) : ℂ :=
     functionals plus the identity relating them to the concrete `primeSum`.
 
       `zeroSum T`  : `∑_ρ ĝ(ρ)` over the non-trivial zeros (`H¹`, the spectral side).
-      `archTerm T` : the archimedean integral `(1/2π) ∫ ĝ · (Γ-factor log-deriv)`
-                     (the `A_arch` block; needs digamma, target #EF-arch).
+      `archTerm T` : the archimedean integral `(1/2π) ∫ ĝ(r) · archKernel r dr`
+                     (the `A_arch` block; kernel now concrete via `digamma`, the
+                     remaining integral pairing is #EF-class).
       `poleTerm T` : the contribution of the pole of ζ at `s = 1` (the `B_pole`
                      block, the hyperbolic direction in the 2K dictionary).
 

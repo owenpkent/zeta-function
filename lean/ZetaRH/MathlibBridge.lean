@@ -32,17 +32,19 @@ open Complex Real
     PRESENT in `Mathlib.NumberTheory.LSeries.RiemannZeta`. -/
 noncomputable def riemannZeta : ℂ → ℂ := _root_.riemannZeta
 
-/-- ζ has a simple pole at s = 1.
-    PRESENT: `Complex.riemannZeta_residue_one` (or similar). VERIFIER
-    target #MB-1: locate the exact Mathlib lemma name in the current
-    Mathlib snapshot. -/
-theorem zeta_pole_at_one : True := trivial  -- WRAP target
+/-- ζ has a simple pole at s = 1: `(s - 1) ζ(s) → 1` as `s → 1`.
+    PRESENT in Mathlib as `riemannZeta_residue_one`. VERIFIER target #MB-1
+    DISCHARGED (no sorry). -/
+theorem zeta_pole_at_one :
+    Filter.Tendsto (fun s ↦ (s - 1) * riemannZeta s) (nhdsWithin 1 {1}ᶜ) (nhds 1) :=
+  riemannZeta_residue_one
 
 /-- ζ(s) ≠ 0 for Re(s) > 1.
-    PRESENT (in some form). VERIFIER target #MB-2. -/
-theorem zeta_ne_zero_re_gt_one : ∀ s : ℂ, 1 < s.re → riemannZeta s ≠ 0 := by
-  -- Should follow from the Euler product + log convergence on Re s > 1.
-  sorry  -- WRAP target
+    PRESENT in Mathlib as `riemannZeta_ne_zero_of_one_lt_re`
+    (`Mathlib.NumberTheory.LSeries.Dirichlet`). VERIFIER target #MB-2
+    DISCHARGED (no sorry). -/
+theorem zeta_ne_zero_re_gt_one : ∀ s : ℂ, 1 < s.re → riemannZeta s ≠ 0 :=
+  fun _ hs => riemannZeta_ne_zero_of_one_lt_re hs
 
 /-! ### Dirichlet characters mod q. -/
 
@@ -79,10 +81,12 @@ theorem fejer_classical : True := by sorry  -- WRAP target
 
 /-! ### Functional equation for ζ. -/
 
-/-- The functional equation `ξ(s) = ξ(1 - s)` where `ξ(s) = (1/2) s (s-1)
-    π^{-s/2} Γ(s/2) ζ(s)`. PRESENT in Mathlib (precise form may vary).
-    VERIFIER target #MB-6. -/
-theorem zeta_functional_equation : True := by sorry  -- WRAP target
+/-- The functional equation of the completed zeta function:
+    `Λ(1 - s) = Λ(s)` where `Λ = completedRiemannZeta`. PRESENT in Mathlib as
+    `completedRiemannZeta_one_sub`. VERIFIER target #MB-6 DISCHARGED (no sorry). -/
+theorem zeta_functional_equation (s : ℂ) :
+    completedRiemannZeta (1 - s) = completedRiemannZeta s :=
+  completedRiemannZeta_one_sub s
 
 /-! ### Selberg class scaffolding (TODO).
 

@@ -29,6 +29,8 @@ First-time setup needs `lake update` (downloads ~5370 prebuilt Mathlib oleans, ~
 
 Everything else from the original skeleton plan: prismatic cohomology and prismatic foliation remain placeholder `Unit` types (Mathlib lacks the underlying infrastructure); the central `Spec(ℤ) × Spec(ℤ)` Hodge index theorem remains `True := by sorry`; KillCriteria K3, K4 remain placeholder. The full multi-year program continues.
 
+**Update (2026-05-29b):** discharged three `MathlibBridge` targets to real kernel-checked proofs (no sorry): #MB-1 (ζ pole at s=1, via `riemannZeta_residue_one`), #MB-2 (ζ≠0 on Re s>1, via `riemannZeta_ne_zero_of_one_lt_re`), #MB-6 (functional equation `Λ(1-s)=Λ(s)`, via `completedRiemannZeta_one_sub`). In `ExplicitFormula.lean` the archimedean kernel is now concrete: `digamma := logDeriv Complex.Gamma` with `digamma_eq` proved and `archKernel` built from it (kernel part of #EF-arch discharged). Project sorry count 26 → 23; build green.
+
 **Update (2026-05-29):** `ExplicitFormula.lean` adds the project's highest-leverage Mathlib target (LEARNINGS #17): the **Weil explicit formula** for ζ and the **Weil positivity criterion**. The prime side `primeSum` is CONCRETE (a `tsum` against Mathlib's `ArithmeticFunction.vonMangoldt`); the spectral/archimedean/pole functionals are bundled into `WeilExplicitFormula`, with `weil_explicit_formula_zeta` (#EF-1) asserting the bundle exists for ζ and `weil_positivity_criterion` (#EF-2) stating `weilForm`-positivity ⟺ `RiemannHypothesis zeta`. This is the Architecture-3 (trace/positivity) face of the same positivity whose Architecture-2 (signature) face is `HodgeIndex.negDef_iff_hasseWeil`. Build green; three documented sorries (#EF-1, #EF-2, #EF-2a) plus the structural targets #EF-arch (no `digamma` in Mathlib), #EF-class, #EF-K2.
 
 **Update (2026-05-28):** `HodgeIndex.lean` now also carries the two "positivity from a signature" results validated in experiments 2G and 2H. The 2G function-field template (`IntersectionSignature` namespace) is FULLY PROVED with no `sorry`: the primitive intersection Gram matrix `G_prim = !![-2g, -t; -t, -2gq]` is negative definite (as a quadratic form) iff the Hasse-Weil bound `t² < 4g²q` holds (`negDef_iff_hasseWeil`), with `det(G_prim) = 4g²q − t²` (`Gprim_det`) tying it to the matrix determinant. The 2H arithmetic Hodge index (`ArithmeticHodgeIndex` namespace) is stated faithfully (`heightPairing_posDef`: the Néron-Tate height-pairing Gram matrix is `Matrix.PosDef`) with a single documented `sorry` (#2H-1), since Mathlib lacks canonical heights and Faltings-Hriljac.
@@ -73,13 +75,16 @@ Each `sorry` introduced in the Phase 1 substrate carries a VERIFIER target ID fo
 | #BP-1      | LambdaBlueprints.lean         | Define the blueprint quotient `ℕ[B•] / ≈` carrying the relation set.                |
 | #BP-F1    | LambdaBlueprints.lean         | Correct F_1 model (not the trivial PUnit collapse).                                  |
 | #BP-fiber | LambdaBlueprints.lean         | The central open computation Spec(ℤ) ×_F_1 Spec(ℤ).                                  |
-| #MB-1..#MB-6 | MathlibBridge.lean          | Locate / contribute the six Mathlib lemmas listed there.                            |
+| #MB-1      | MathlibBridge.lean            | ζ pole at s=1 `(s-1)ζ(s)→1`. **DISCHARGED** via `riemannZeta_residue_one` (no sorry). |
+| #MB-2      | MathlibBridge.lean            | ζ(s)≠0 for Re s>1. **DISCHARGED** via `riemannZeta_ne_zero_of_one_lt_re` (no sorry). |
+| #MB-3..#MB-5 | MathlibBridge.lean          | Hurwitz availability (#MB-3), L-Hurwitz decomposition (#MB-4, sorry), Fejér (#MB-5, sorry). |
+| #MB-6      | MathlibBridge.lean            | ζ functional equation `Λ(1-s)=Λ(s)`. **DISCHARGED** via `completedRiemannZeta_one_sub` (no sorry). |
 | #2G-1      | HodgeIndex.lean               | 2G function-field signature: `G_prim` negative definite ⟺ Hasse-Weil `t² < 4g²q`. PROVED (no sorry). |
 | #2H-1      | HodgeIndex.lean               | 2H Faltings-Hriljac arithmetic Hodge index: Néron-Tate height-pairing Gram matrix is `PosDef`. Sorry (needs Mathlib canonical heights + Faltings-Hriljac). |
 | #EF-1      | ExplicitFormula.lean          | The Weil explicit formula for ζ: a `WeilExplicitFormula` bundle exists (spectral side = arch + pole − prime). Sorry (needs digamma kernel + sum-over-zeros theory). |
 | #EF-2      | ExplicitFormula.lean          | **The Weil positivity criterion**: `weilForm`-positivity on all admissible tests ⟺ `RiemannHypothesis zeta`. The Architecture-3 centerpiece (LEARNINGS #17). Sorry. |
 | #EF-2a     | ExplicitFormula.lean          | Construct `weilForm` (the Hermitian form `∑_ρ f̂(ρ)\overline{f̂(\barρ)}`) from the bundle via the positive-type/self-dual test. Sorry. |
-| #EF-arch   | ExplicitFormula.lean          | The archimedean kernel (Γ-factor logarithmic derivative / digamma); Mathlib has no `digamma`. Carried as the `archTerm` field. |
+| #EF-arch   | ExplicitFormula.lean          | The archimedean kernel. Kernel part **DISCHARGED**: `digamma := logDeriv Complex.Gamma`, `digamma_eq` proved, `archKernel` concrete. Remaining: the integral pairing (#EF-class). |
 | #EF-class  | ExplicitFormula.lean          | The analytic side-conditions on `AdmissibleTest` (smoothness/decay/strip of holomorphy) that make the functionals well-defined and #EF-1 true. |
 | #EF-K2     | ExplicitFormula.lean          | The D-H instance showing the criterion does NOT certify RH for Davenport-Heilbronn (prime side delocalises; experiment 3M #20). |
 
