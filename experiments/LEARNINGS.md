@@ -8,6 +8,18 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 21. Direction 8 opened: the function-field Hodge index is now exact in code as a SIGNATURE -- the primitive intersection form on C x C is negative definite, and that negative-definiteness IS the Hasse-Weil bound. This is the non-circular (signature-side) counterpart to 3M's circular (trace-side) positivity.
+
+2G ([e2g_intersection_signature.py](arithmetic_geometric/e2g_intersection_signature.py), writeup [e2g_intersection_signature.md](arithmetic_geometric/e2g_intersection_signature.md)) builds the intersection form on the sublattice `{e, f, Delta, Gamma}` of `NS(C x C)` (Frobenius graph `Gamma`, diagonal `Delta`, fibres `e, f`) with the classical intersection numbers, and computes its signature across genus 1-2 curves over `F_q`.
+
+**Result (exact, whole family):** full Gram signature is `(1, 3)` (Hodge index: one positive eigenvalue); the primitive part `{Delta_0, Gamma_0}` (orthogonal to the hyperbolic `{e,f}` plane) is negative definite `(0, 2)`; and that negative-definiteness is identically `4 g^2 q - t^2 > 0`, i.e. the **Hasse-Weil bound** `|t| < 2g sqrt(q)` with `t = q + 1 - N_1`. Iterating over Frobenius powers forces `|alpha_i| = sqrt(q)`. **Positivity from a signature, not a trace identity.**
+
+**Why this matters for the program.** It is the function-field TEMPLATE (Direction 8 milestones 5.1 state-the-index + 5.5 Weil-specialization/K3), exact and verified, giving the precise target a Spec(Z) lift must reproduce. It also closes a loop with finding #20: 3M decomposed the **trace/explicit-formula side** (Arch 3) of the positivity and found it circular as a proof route (R3.5/K1); 2G is the **signature side** (Arch 2) of the SAME positivity, and the signature is non-circular. That contrast is exactly why Direction 8, not Architecture 3, is the route.
+
+**K2 geometric face.** The construction is unbuildable for Davenport-Heilbronn: no Euler product => no Frobenius => no graph `Gamma`, no surface. This is the geometric shadow of #20's fingerprint (no Euler product <=> von Mangoldt weight delocalizes off prime powers).
+
+**The precise lift gap.** The template names what is missing over Spec(Z): the surface `Spec(Z) x Spec(Z)` (absent), an arithmetic Frobenius (absent), and the `(1, k)` signature on the arithmetic Neron-Severi (the central open problem). Encouraging precedent: the Faltings-Hriljac arithmetic Hodge index theorem holds for a SINGLE arithmetic surface with signature `(1, rho-1)`; the gap is the product surface and the Frobenius, not the index theorem itself. Natural next computational step: the Arakelov / Faltings-Hriljac pairing on a single arithmetic surface, to see how the archimedean place enters the signature.
+
 ### 20. The Weil form admits an INPUT-SIDE place-type split (archimedean vs finite) that is non-circular, unlike the answer-side on/off split; its clean part is the Euler-product fingerprint (Lambda_L delocalizes onto composite n iff there is no Euler product: zeta 0, D-H 64 starting at n=6), and the off-line obstruction is buried at exactly the archimedean-prime cancellation scale.
 
 3M ([e3m_place_type_balance.py](positivity/e3m_place_type_balance.py), writeup [e3m_place_type_balance.md](positivity/e3m_place_type_balance.md)) introduces a decomposition of the SAME Weil Gram matrix used by 3C-3J, but split by **place type** via the explicit formula rather than by zero location:

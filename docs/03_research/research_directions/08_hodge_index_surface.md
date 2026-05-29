@@ -198,6 +198,8 @@ This is the longest and hardest direction. It requires:
 
 **This is THE central open problem of the proof program.** Status: open. No known proof, no known obstruction.
 
+**Computational template landed (2026-05-28).** [Experiment 2G](../../../experiments/arithmetic_geometric/e2g_intersection_signature.py) (writeup [e2g_intersection_signature.md](../../../experiments/arithmetic_geometric/e2g_intersection_signature.md)) makes milestones 5.1 and 5.5 exact and verifiable in the function-field case: the intersection form on `{e, f, Delta, Gamma}` in `NS(C x C)` has signature `(1, 3)`, its primitive part is negative definite, and that negative-definiteness *is* the Hasse-Weil bound `|t| < 2g sqrt(q)` (verified across genus 1-2 curves). This is "positivity from a signature" exhibited exactly, and it pins the precise target the Spec(Z) lift must reproduce (see the lift-gap table in the writeup). The identified next computational step toward the lift is the Faltings-Hriljac arithmetic Hodge index on a single arithmetic surface, to see how the archimedean place enters the signature.
+
 Probability of success, conditional on Directions 1-3 succeeding: 25-30% (at least one of 4.A, 4.B, 4.C delivers).
 
 Probability of success unconditional: under 1% (because Directions 1-3 themselves have probabilities under 50% each).
