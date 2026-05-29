@@ -27,7 +27,9 @@ First-time setup needs `lake update` (downloads ~5370 prebuilt Mathlib oleans, ~
 
 ### What is NOT yet done
 
-Everything else from the original skeleton plan: prismatic cohomology and prismatic foliation remain placeholder `Unit` types (Mathlib lacks the underlying infrastructure); Hodge index theorem remains `True := by sorry`; KillCriteria K3, K4 remain placeholder. The full multi-year program continues.
+Everything else from the original skeleton plan: prismatic cohomology and prismatic foliation remain placeholder `Unit` types (Mathlib lacks the underlying infrastructure); the central `Spec(ℤ) × Spec(ℤ)` Hodge index theorem remains `True := by sorry`; KillCriteria K3, K4 remain placeholder. The full multi-year program continues.
+
+**Update (2026-05-28):** `HodgeIndex.lean` now also carries the two "positivity from a signature" results validated in experiments 2G and 2H. The 2G function-field template (`IntersectionSignature` namespace) is FULLY PROVED with no `sorry`: the primitive intersection Gram matrix `G_prim = !![-2g, -t; -t, -2gq]` is negative definite (as a quadratic form) iff the Hasse-Weil bound `t² < 4g²q` holds (`negDef_iff_hasseWeil`), with `det(G_prim) = 4g²q − t²` (`Gprim_det`) tying it to the matrix determinant. The 2H arithmetic Hodge index (`ArithmeticHodgeIndex` namespace) is stated faithfully (`heightPairing_posDef`: the Néron-Tate height-pairing Gram matrix is `Matrix.PosDef`) with a single documented `sorry` (#2H-1), since Mathlib lacks canonical heights and Faltings-Hriljac.
 
 ## Structure
 
@@ -69,6 +71,8 @@ Each `sorry` introduced in the Phase 1 substrate carries a VERIFIER target ID fo
 | #BP-F1    | LambdaBlueprints.lean         | Correct F_1 model (not the trivial PUnit collapse).                                  |
 | #BP-fiber | LambdaBlueprints.lean         | The central open computation Spec(ℤ) ×_F_1 Spec(ℤ).                                  |
 | #MB-1..#MB-6 | MathlibBridge.lean          | Locate / contribute the six Mathlib lemmas listed there.                            |
+| #2G-1      | HodgeIndex.lean               | 2G function-field signature: `G_prim` negative definite ⟺ Hasse-Weil `t² < 4g²q`. PROVED (no sorry). |
+| #2H-1      | HodgeIndex.lean               | 2H Faltings-Hriljac arithmetic Hodge index: Néron-Tate height-pairing Gram matrix is `PosDef`. Sorry (needs Mathlib canonical heights + Faltings-Hriljac). |
 
 ## Mathlib coverage gaps
 
