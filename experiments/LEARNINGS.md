@@ -8,6 +8,32 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 20. The Weil form admits an INPUT-SIDE place-type split (archimedean vs finite) that is non-circular, unlike the answer-side on/off split; its clean part is the Euler-product fingerprint (Lambda_L delocalizes onto composite n iff there is no Euler product: zeta 0, D-H 64 starting at n=6), and the off-line obstruction is buried at exactly the archimedean-prime cancellation scale.
+
+3M ([e3m_place_type_balance.py](positivity/e3m_place_type_balance.py), writeup [e3m_place_type_balance.md](positivity/e3m_place_type_balance.md)) introduces a decomposition of the SAME Weil Gram matrix used by 3C-3J, but split by **place type** via the explicit formula rather than by zero location:
+
+```
+M = A_arch + P_fin + B_pole        (computable from Gamma factor + Dirichlet coefficients, no zeros)
+```
+
+vs 3J's answer-side `M = M_on + M_off` (computable only after locating the zeros). The place-type split is the non-circular object a proof is allowed to use, and is exactly the archimedean-vs-finite uniformity the framing document ([new_mathematics.md](../docs/03_research/new_mathematics.md) §2.2, §4.2) demands.
+
+**Validated.** The finite block `P_fin` (built from `Lambda_L(n)`, the coefficients of `-L'/L`, via `a_n log n = sum_{d|n} Lambda_L(d) a_{n/d}`) and the pole block `B_pole` reproduce 3F's independent prime sum and boundary term to floating point.
+
+**Euler-product fingerprint (cancellation-free headline).** `Lambda_L(n)` makes the missing Euler product visible input-side (n <= 200):
+
+| L | a_1 | # composite-n support | first composite n |
+|---|---:|---:|---:|
+| zeta | 1 | **0** | none |
+| Davenport-Heilbronn | 1 | **64** | **6** |
+| Epstein d=47 non-principal | **0** | n/a (no a_1=1 series) | n/a |
+
+For zeta, `Lambda_zeta` lives only on prime powers (`Lambda(p^k)=log p>0`): the Euler product exactly. For D-H, `Lambda_DH` spills onto composite integers, first at `n=6=2*3`. This localizes WHERE a non-Euler L-function's off-line obstruction enters the Weil form: the composite-n terms of the prime block. The non-principal Epstein form `2m^2+mn+6n^2` never equals 1, so `a_1=0` and the `-L'/L` recursion does not apply directly.
+
+**Diagnosed gap (provisional).** The archimedean block via the frequency-space digamma kernel matches 3F's validated Bombieri-form integral to 0.2% at large b but carries a converged ~0.06 absolute offset at small b (stable to t_cap = 2e4; isolated to A_arch). Since `M ~ 0.08` is a residue of blocks of size ~60, this swamps the input-side eigenvalue detector. Fix: compute `A_arch` from the bilinear Bombieri-form integral per L-function Gamma factor.
+
+**Structural finding (marginal positivity, sharpened).** D-H's raw off-line obstruction (`-2.6%`, finding #10) is the SAME ORDER as the archimedean-minus-prime cancellation residue in the explicit formula. The obstruction is buried at exactly the cancellation scale: invisible to a soft input-side reconstruction, visible only with exact arithmetic or the answer-side projection of 3J (which manufactures the `-78.7%` sharpening by projecting onto range(M_off), an answer-side move). This explains WHY finding #19's "fundamentally different diagnostic" is hard to build, and pins what a working positivity certificate must do: engage the exact arithmetic of the blocks (Euler product => prime-power support; off-line obstruction => composite-n terms an Euler product forbids), not their floating-point difference.
+
 ### 19. Schur framework has no leverage point for disproof: hypothetical off-line zero signal scales as 16 * (beta - 1/2)^2, with stealth window epsilon < 10^-5 in float64 -- looser than direct rigorous verification (epsilon < 10^-7 from Platt-Trudgian).
 
 3K ([e3k_hypothetical_offline.py](positivity/e3k_hypothetical_offline.py), README section 3K) injects hypothetical off-line zero pairs into zeta's zero list and traces the Schur complement signal. The result is a clean negative for the disproof program:

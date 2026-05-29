@@ -669,3 +669,29 @@ This is a clean negative result for the disproof program in the Weil-form Gram m
 - `e3k_hypothetical_offline.npz`: 2D arrays of Schur stats over $(\varepsilon, \gamma_0)$ grid
 - `e3k_hypothetical_offline.png`: 4-panel: Schur rel min vs $\varepsilon$, absolute signal, stealth heatmap, local scaling exponent
 
+## 3M: input-side place-type decomposition of the Weil form ([e3m_place_type_balance.py](e3m_place_type_balance.py), writeup [e3m_place_type_balance.md](e3m_place_type_balance.md))
+
+**Status:** machinery built; finite + pole blocks validated against 3F; the $\Lambda_L$ Euler-product fingerprint is a clean cancellation-free result; the input-side eigenvalue detector is provisional pending a correctly normalized archimedean block.
+
+**Motivation (answer-side is circular).** 3J's $M = M_{\rm on} + M_{\rm off}$ split sorts each zero's contribution by where the zero sits, so it is **answer-side**: it cannot found a proof, since the location of the zeros is what a proof must deliver, not assume. 3K confirmed the disproof angle here has no leverage. This experiment introduces the **input-side** alternative: split the same Weil Gram matrix by **place type** via the explicit formula, $M = A_{\rm arch} + P_{\rm fin} + B_{\rm pole}$, where every block is computable from the $\Gamma$-factor and the Dirichlet coefficients alone, without locating a single zero. This is exactly the decomposition the framing document ([`new_mathematics.md`](../../docs/03_research/new_mathematics.md) §2.2, §4.2) calls for: positivity from treating archimedean and finite places uniformly, using admissible input.
+
+**Validated (solid).** The finite block $P_{\rm fin}$ (built from $\Lambda_L(n)$, the coefficients of $-L'/L$, via the recursion $a_n \log n = \sum_{d|n} \Lambda_L(d) a_{n/d}$) and the pole block $B_{\rm pole}$ reproduce 3F's independent prime sum and boundary term to floating point.
+
+**Euler-product fingerprint (headline, cancellation-free).** $\Lambda_L(n)$ makes the missing Euler product visible input-side ($n \le 200$):
+
+| L | $a_1$ | $\#\{n : \Lambda_L(n) \ne 0\}$ | $\#$ on **composite** $n$ | first composite $n$ |
+|---|---:|---:|---:|---:|
+| $\zeta$ | 1 | 60 | **0** | none |
+| Davenport-Heilbronn | 1 | 121 | **64** | **6** |
+| Epstein $d{=}47$ non-principal | **0** | n/a | n/a | n/a |
+
+For $\zeta$, $\Lambda_\zeta$ lives only on prime powers ($\Lambda(p^k) = \log p > 0$): the Euler product exactly. For D-H (no Euler product) $\Lambda_{DH}$ spills onto composite integers, first at $n = 6 = 2 \cdot 3$. This localizes where a non-Euler L-function's off-line obstruction enters the Weil form: the composite-$n$ terms of the prime block. The non-principal Epstein form $2m^2+mn+6n^2$ never equals $1$, so $a_1 = 0$ and the $-L'/L$ recursion does not apply directly (a structural wrinkle recorded for the next pass).
+
+**Provisional (diagnosed gap).** The archimedean block $A_{\rm arch}$, computed in frequency space with the digamma kernel $\Omega_L(t) = 2\log Q + \sum_j[\mathrm{Re}\,\psi(\tfrac14 + \tfrac{\mu_j}{2} + \tfrac{it}{2}) - \log\pi]$, matches 3F's validated Bombieri-form integral to $0.2\%$ at large $b$ but carries a converged $\sim 0.06$ absolute offset at small $b$ (stable to $t_{\rm cap} = 2 \times 10^4$, so not a truncation tail; isolated to $A_{\rm arch}$). Since $M \sim 0.08$ is a tiny residue of blocks of size $\sim 60$, this swamps the eigenvalue detector. Fix: compute $A_{\rm arch}$ from the bilinear generalization of 3F's Bombieri-form integral per L-function $\Gamma$-factor.
+
+**Structural finding (marginal positivity, sharpened).** D-H's raw off-line obstruction ($-2.6\%$, 3D/3J) is the **same order as the archimedean-minus-prime cancellation residue** in the explicit formula. The obstruction is buried at exactly the cancellation scale: invisible to a soft input-side reconstruction (which subtracts two $\sim 60$-sized blocks to $\sim 0.08$), visible only with exact arithmetic or the answer-side projection of 3J. This explains **why** 3K/finding #19's "fundamentally different diagnostic" is hard to build, and says concretely that a working positivity certificate must engage the exact arithmetic of the blocks (Euler product $\Rightarrow$ prime-power support; off-line obstruction $\Rightarrow$ composite-$n$ terms an Euler product forbids), not their floating-point difference.
+
+**Output:**
+- `e3m_place_type_balance.npz`: per-L blocks, residuals, eigenvalue summaries.
+- `e3m_place_type_balance.png`: input-side vs zero-side min eigenvalue; self-consistency residual.
+
