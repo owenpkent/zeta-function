@@ -60,6 +60,22 @@
 - [x] Arch 2F: function-field Hodge-index positivity sweep (experiments/arithmetic_geometric/e2f_hodge_index_sweep.py). Weil RH bound |alpha_i| = sqrt(q) holds exactly (0.000e+00) across elliptic curves over F_5..F_23 and genus-2 curves over F_5..F_13. Exhibits the positivity target a Spec(Z) lift must reproduce. LEARNINGS #20.
 - [x] Arch 4E.9: Heath-Brown multi-zero MT SDP, Direction 7 (experiments/zero_free/e4e9_heath_brown_sdp.py). The multi-zero MT shape factor does NOT exceed the 1D Fejer ceiling (best ratio <= 1, rank-2 certificate). Closes the last LP/SDP/SOS escape from the 4E.3 lemma. LEARNINGS #21.
 
+### Session 004 (2026-05-28/29): Direction 8 single-arithmetic-surface side
+
+- [x] Arch 3M: input-side place-type decomposition of the Weil form M = A_arch + P_fin + B_pole (experiments/positivity/e3m_place_type_balance.py). LEARNINGS #20.
+- [x] Arch 2G: the Hodge index as a SIGNATURE on C x C (primitive form negative definite = Hasse-Weil); machine-proved in Lean (negDef_iff_hasseWeil). LEARNINGS #21.
+- [x] Arch 2H/2M: Faltings-Hriljac height pairing over Spec(Z) positive definite, ranks 1-4 (regulators match LMFDB). LEARNINGS #22.
+- [x] Arch 2I/2L/2O/2P: complete Silverman local-height decomposition (archimedean Green/Petersson + every finite prime) validated h_inf + sum_p h_p = h_hat by the authoritative algorithm. LEARNINGS #23, #24.
+- [x] Arch 2J/2K: arithmetic adjunction (omega-bar^2 = 12 h_Fal) + the dictionary to the would-be Spec(Z) x Spec(Z) intersection form (the product-surface gap, the Morishita bridge literature).
+
+### Session 005 (2026-05-29): sharpen Gamma_S + the Lean explicit-formula thread
+
+- [x] Arch 2Q: the place-dependent bidegree obstruction (experiments/arithmetic_geometric/e2q_frobenius_bidegree.py). Gamma_S must carry a (1,p) bidegree per prime, not a single scale q; forces infinite-dim H^i + the Deninger R-flow as consequences; pins Gamma_S^2 to the von Mangoldt prime sum. Sharper K2 (D-H has no local bidegrees). LEARNINGS #25.
+- [x] Arch 2R: Ruelle dynamical-zeta realization of Gamma_S^2 (experiments/arithmetic_geometric/e2r_dynamical_zeta.py). Orbit lengths {log p}; prod_p (1-p^-s)^-1 = zeta and sum_n Lambda(n) n^-s = -zeta'/zeta = Gamma_S^2 (verified to 2e-4). D-H Lambda delocalizes off prime powers => no closed-orbit spectrum (dynamical K2). The Deninger half of the Morishita bridge made concrete; NOT a new RH route. LEARNINGS #26.
+- [x] Lean: ExplicitFormula.lean — Weil explicit formula + Weil positivity criterion scaffold (#EF-1/#EF-2, the highest-leverage target, LEARNINGS #17); prime side concrete via Mathlib vonMangoldt.
+- [x] Lean: discharged #MB-1 (zeta pole at s=1), #MB-2 (zeta nonvanishing Re s>1), #MB-6 (functional equation) to real kernel-checked proofs from existing Mathlib.
+- [x] Lean: proved the digamma recurrence psi(s+1)=psi(s)+1/s (digamma_add_one) from Complex.Gamma_add_one (Mathlib has no digamma). Build green; project sorry count 26 -> 23.
+
 ### Pre-existing experiments
 
 - [x] **experiments/multifractal/** — E0 benchmarks, E1 zeta MFDFA, E2 FHK max fit, E3 psi MFDFA
@@ -74,8 +90,8 @@
 - [x] Arch 4E.6: constrained-domain LP — impose P ≥ 0 only on a hypothetical-off-line-zero submanifold (see experiments/zero_free/e4e6_constrained_lp.py + .md). Tested four formulations (K-point, arc-removal, zero-constrained, trick-at-off-line-height). All collapse to Fejér / full-non-negativity ceiling at well-resolved parameters; apparent gains are LP-unbounded artifacts or sparse-sampling artifacts. **4E.3's lemma is robust under naive domain relaxation.** Genuine escape requires Heath-Brown multi-zero coupling (4E.7), Bombieri variational SOS, or polynomial-ideal SOS (4E.8) — qualitatively different machinery beyond LP-over-a-subset.
 - [x] Arch 4E.7: multi-zero MT bookkeeping — Heath-Brown-style coupling (see experiments/zero_free/e4e7_multi_zero_lp.py + .md). LP escape from 4E.3 is real at the shape-factor level (λ_{1,1} is 55-137× larger than λ_1² for N ∈ {2,3,4}), but the naive max c_{1,1} objective produces rank-1 (tensor-product) LP optima. A non-trivial multi-zero MT improvement for RH on zeta would require combining this with higher-harmonic structure (4E.2's +25% rank-2 gain) AND explicit Heath-Brown bookkeeping — research-grade.
 - [x] Arch 4E.8: polynomial-ideal sum-of-squares (Putinar/Schmüdgen) for the MT figure of merit (experiments/zero_free/e4e8_sos_sdp.py) — SDP saturates Fejér but does not exceed it; closes the LP/SDP family escape. Extended in 4E.9 (Heath-Brown multi-zero MT, Direction 7): multi-zero shape factor also capped by Fejér (ratio <= 1, rank-2).
-- [ ] Arch 2C: survey state of F_1 / Arakelov-cohomology programs as of 2025 (use the scorecard structure from 2A_candidate_evaluation.md)
-- [ ] Arch 2D: identify the smallest open conjecture in Deninger's program worth targeting
+- [x] Arch 2C: survey state of F_1 / Arakelov-cohomology programs as of 2025 (commit fd020fc; 280-line landscape survey)
+- [x] Arch 2D: identify the smallest open conjecture in Deninger's program worth targeting (commit 10c9f05; M3 prismatic foliation hypothesis, now Direction 4)
 - [x] Arch 2A R1: sharpen D-H exclusion (constraint xvii) for each of the six scored candidates (see experiments/arithmetic_geometric/2A_R1_DH_exclusion.md — all six pass K2 by construction; K2 safety conditional on Selberg conjecture)
 - [x] Arch 2A R2: compute Spec(Z) x_F1 Spec(Z) in Borger / Lorscheid (see experiments/arithmetic_geometric/2A_R2_fiber_product.md — Borger: Spec(W(Z)) via big Witt ring; Lorscheid: blueprint (Z × Z, doubled relations); both 🟡 on (ii), intersection theory still open)
 - [x] Arch 2A R2.5: sketch the Λ-blueprint hybrid framework as a research proposal (see experiments/arithmetic_geometric/2A_R2_5_lambda_blueprints.md). Predicted scorecard 8 ✅ / 4 🟡 / 5 ⏳ if developed. Still needs rigorous definition, categorical verification, fiber product computation — thesis-level project.
