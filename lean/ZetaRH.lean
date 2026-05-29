@@ -11,3 +11,4 @@ import ZetaRH.LambdaBlueprints
 import ZetaRH.PrismaticCohomology
 import ZetaRH.PrismaticFoliation
 import ZetaRH.HodgeIndex
+import ZetaRH.ExplicitFormula
