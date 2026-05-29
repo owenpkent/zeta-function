@@ -23,7 +23,7 @@
 
 ## Task queue (ordered; validation-gated)
 
-- [ ] **T1 -- 2L Faltings height / Petersson norm** (the 2J numerical follow-up).
+- [x] **DONE T1 -- 2L Faltings height / Petersson norm** (the 2J numerical follow-up).
   Compute the period point tau of each test curve (37a1, 389a1, 5077a1) via mpmath
   (AGM / complete elliptic integrals after reduction to short Weierstrass), the
   Petersson norm ||Delta||_Pet(tau) = (Im tau)^6 |Delta(tau)| with
@@ -83,3 +83,7 @@ result, commit hash or BLOCKED reason.)
 
 - INIT (2026-05-28 night): plan written; Lean 2G/2H formalization committed
   (62b4717, build green); 8 prior session-004 commits in place. Scheduling T1.
+- T1 DONE (2L): BOTH gates PASS -- j(tau)=j(E) to 1e-51 (gate a, after the
+  documented kleinj=j/1728 fix the gate itself surfaced), ||Delta||_Pet SL2Z-
+  invariant to 1e-50 (gate b). Archimedean self-intersection (Petersson norm)
+  computed + validated for 37a/389a/5077a. Committed. Next: T2.
