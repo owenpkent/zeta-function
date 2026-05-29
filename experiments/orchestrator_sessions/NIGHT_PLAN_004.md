@@ -103,6 +103,11 @@ result, commit hash or BLOCKED reason.)
   invariant to 1e-50 (gate b). Archimedean self-intersection (Petersson norm)
   computed + validated for 37a/389a/5077a. Committed. Next: T2.
 
+- T2(a) DONE in-session (2026-05-29, owner present, "do it now"): rank-4 arithmetic
+  Hodge index on 234446a1 -- 8x8 height Gram has exactly 4 positive eigenvalues,
+  none negative (PSD rank 4). Faltings-Hriljac PosDef now at ranks 1-4. Committed
+  078332c. T2(b) bad-prime + T3 Green's function still open (remote agent attempting
+  on branch overnight/night-2026-05-30; also scheduled 2026-05-30T07:00Z).
 - CORRECTION (2026-05-29 morning): the overnight ScheduleWakeup loop did NOT fire
   unattended -- that mechanism only re-invokes within an active session, and the
   session was idle overnight. So T2-T5 did not run autonomously. T1 had been done
