@@ -8,6 +8,16 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 22. The arithmetic Hodge index IS a theorem over Spec(Z): the Neron-Tate height pairing on E(Q) is positive definite (validated against known regulators, rank 1-3). But the naive coordinate height split assigns the archimedean place ~0 canonically -- the true archimedean local height is the transcendental sigma-function quantity, not visible in coordinates.
+
+2H ([e2h_arithmetic_hodge_index.py](arithmetic_geometric/e2h_arithmetic_hodge_index.py), writeup [e2h_arithmetic_hodge_index.md](arithmetic_geometric/e2h_arithmetic_hodge_index.md)) computes the canonical height pairing on E(Q) via the exact limit `h_hat(P) = lim h_x(2^n P)/4^n` (group law in exact rationals) for rank 1, 2, 3 curves.
+
+**Headline (solid, validated).** The pairing matrix is POSITIVE DEFINITE for every curve (signatures (1,0),(2,0),(3,0)) -- the Faltings-Hriljac arithmetic Hodge index over Spec(Z), exhibited as a signature. Computed regulators match known LMFDB values (37a 0.05111, 389a 0.15246, 5077a 0.41714). With #21 (2G) this completes the signature picture on both sides of the function-field / number-field divide: negative-definite primitive form on C x C (theorem, 2G), positive-definite height pairing on E/Q (theorem, 2H). Over Spec(Z) the Hodge-index signature is REAL for a single arithmetic surface; the gap is only the product surface Spec(Z) x Spec(Z) and its Frobenius.
+
+**Honest caveat (archimedean place).** The naive coordinate split (h_inf = log max(|x|,1), h_fin = log den) is exact but is NOT the Neron/Arakelov local decomposition. Empirically h_inf/4^n -> 0 (the 2^n P equidistribute on E(R), |x| stays bounded), so the naive split assigns ~0 to the archimedean place. The genuine archimedean Neron local height lambda_inf is the transcendental Weierstrass-sigma / Green's-function quantity, invisible in coordinates. That its coordinate proxy vanishes canonically is the lesson: the archimedean contribution needs genuinely analytic machinery, exactly the framing-document theme (new_mathematics.md §4.2) that the archimedean place is the subtle missing piece.
+
+**Next.** Compute lambda_inf(P) via the sigma-function / Tate's series (mpmath theta), validate by lambda_inf + sum_p lambda_p = h_hat against exact finite local heights, and quantify the archimedean share of the regulator -- "how the archimedean place enters the signature," done correctly.
+
 ### 21. Direction 8 opened: the function-field Hodge index is now exact in code as a SIGNATURE -- the primitive intersection form on C x C is negative definite, and that negative-definiteness IS the Hasse-Weil bound. This is the non-circular (signature-side) counterpart to 3M's circular (trace-side) positivity.
 
 2G ([e2g_intersection_signature.py](arithmetic_geometric/e2g_intersection_signature.py), writeup [e2g_intersection_signature.md](arithmetic_geometric/e2g_intersection_signature.md)) builds the intersection form on the sublattice `{e, f, Delta, Gamma}` of `NS(C x C)` (Frobenius graph `Gamma`, diagonal `Delta`, fibres `e, f`) with the classical intersection numbers, and computes its signature across genus 1-2 curves over `F_q`.
