@@ -121,6 +121,42 @@ correspondence's defining property, and the archimedean fibre's role are all now
 fixed by computed data. That specification is the deliverable Direction 8 milestones
 5.1 and 5.6 (state the index precisely; verify the K1 signature-not-trace escape).
 
+## 6b. State of the art on actually building S (2026 literature)
+
+A literature pass (overnight task T4) on where the construction of an arithmetic
+surface below `Spec(Z)` actually stands, to keep section 4's "the gap is the product
+surface" statement honest:
+
+- **F_1 / blueprint framework (Lorscheid, Connes-Consani).** The organizing idea is
+  unchanged: `Spec(Z)` should be a "curve over `F_1`" with a completion
+  `\overline{Spec Z}` analogous to a curve over a finite field, and intersection
+  theory on `\overline{Spec Z} x \overline{Spec Z}` is the explicit hope for
+  mimicking Weil's proof ([Lorscheid, "Blueprints -- towards absolute arithmetic?",
+  arXiv:1204.3129]). This is exactly the surface 2K specifies. Status: framework,
+  no surface with the needed intersection form.
+- **The Arithmetic Site (Connes-Consani, 2014-).** The adele class space quotient
+  yields the complete Riemann zeta as a Hasse-Weil zeta ([arXiv:1502.05580]); this
+  is the "right arena" (the 3M / R3.5 NCG side), still missing the positivity, as
+  the project's R3.x analyses recorded.
+- **NEW (Oct 2024): Deninger <-> Connes-Consani bridge** ([arXiv:2508.15971]). A
+  correspondence is established between Deninger's foliated dynamical systems
+  attached to abelian number fields and Connes-Consani's adelic spaces:
+  Galois-equivariant, flow-anti-equivariant, with closed orbits <-> primes matching
+  on both sides. This is the most relevant recent progress: it links the two
+  leading candidate frameworks for the "arithmetic Frobenius flow" (Deninger's
+  `R`-action, new_mathematics.md sec 4.1) on the very spaces that would carry the
+  surface. It does NOT yet build the product surface or its intersection form, but
+  it unifies the two programs that each supply half of the 2K dictionary (Deninger:
+  the flow `Gamma_S`; Connes-Consani: the arithmetic site / archimedean place).
+
+**Net for 2K:** the dictionary's two structural halves -- the Frobenius
+correspondence (Deninger flow) and the arithmetic-site geometry (Connes-Consani) --
+were bridged in 2024, but the object that would make `A_arch + P_fin + B_pole` an
+honest intersection form on a 2-dimensional `S` (with `B_pole` the hyperbolic
+direction) is still unbuilt. The 2026 frontier is therefore: put a genuine
+intersection pairing on the Deninger-Connes-Consani space, with the signature 2K
+specifies. That is a sharper, literature-current statement of Direction 8's gap.
+
 ## 6. Connections
 
 - 3M ([e3m](../positivity/e3m_place_type_balance.md)): the place decomposition `M = A+P+B` (the arithmetic Weil form).

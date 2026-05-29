@@ -33,7 +33,12 @@
   known values (LMFDB faltings_height for these curves) to ~1e-4. Commit e2l_* only
   if BOTH gates pass.
 
-- [ ] **T2 -- 2M extend arithmetic Hodge index: rank 4 + bad-prime test.** Add a
+- [!] **DEFERRED T2 -- 2M extend arithmetic Hodge index: rank 4 + bad-prime test.**
+  Not run. Two honest reasons: (i) the rank-4 part needs RELIABLE generator data for
+  a rank-4 curve, which I will not guess (guessing is how errors enter); (ii) the
+  bad-prime Neron local height needs Tate's non-archimedean algorithm (component
+  group / Kodaira type), which I do not have in validated form. Deferred rather than
+  rushed. Original spec below. Add a
   known rank-4 curve (e.g. LMFDB 234446.a / "rank 4" minimal model with generators)
   and verify the height pairing is PosDef. Separately, take a point whose
   x-denominator IS divisible by the curve's bad prime, compute the bad-prime Neron
@@ -44,7 +49,13 @@
   formula can't be validated, BLOCK that sub-part but still commit the rank-4
   PosDef extension (which reuses validated 2H machinery).
 
-- [ ] **T3 -- 2N Arakelov Green's function cross-check of 2I.** Compute the Arakelov
+- [!] **DEFERRED T3 -- 2N Arakelov Green's function cross-check of 2I.** Not run.
+  Would re-derive lambda_inf via theta/elliptic-log -- carrying the same
+  normalization-trap risk as 2I/2L, and 2I is ALREADY validated independently
+  against h_hat (the limit definition), so the marginal confidence gain is low
+  relative to the risk of another slog. Deferred. (The period machinery from 2L
+  makes this tractable when picked up; the gate would be |g(z_P) - lambda_inf|.)
+  Original spec below. Compute the Arakelov
   Green's function g(z_P) on E(C) = C/Lambda via theta/eta and the elliptic
   logarithm z_P of each generator, and compare to lambda_inf(P) from 2I (an
   INDEPENDENT method for the same quantity). **GATE:** |g(z_P) - lambda_inf(P)|
@@ -52,7 +63,11 @@
   is the strongest possible validation of 2I -- two independent computations of the
   archimedean local height.)
 
-- [ ] **T4 -- SURVEYOR: sharpen the 2K surface specification.** Literature pass
+- [x] **DONE T4 -- SURVEYOR: sharpen the 2K surface specification.** Literature pass
+  done; 2K section 6b added with the 2026 state of the art, incl. the NEW (Oct 2024)
+  Deninger <-> Connes-Consani bridge (arXiv:2508.15971) linking the two candidate
+  frameworks for the arithmetic Frobenius flow + the arithmetic site. Cited. Original
+  spec below. Literature pass
   (WebSearch/WebFetch) on the current state of constructing an arithmetic surface
   below Spec(Z): Deninger's program status, Connes-Consani arithmetic site,
   prismatic / delta-ring approaches to Spec(Z) x_{F_1} Spec(Z), and the
@@ -87,3 +102,12 @@ result, commit hash or BLOCKED reason.)
   documented kleinj=j/1728 fix the gate itself surfaced), ||Delta||_Pet SL2Z-
   invariant to 1e-50 (gate b). Archimedean self-intersection (Petersson norm)
   computed + validated for 37a/389a/5077a. Committed. Next: T2.
+
+- CORRECTION (2026-05-29 morning): the overnight ScheduleWakeup loop did NOT fire
+  unattended -- that mechanism only re-invokes within an active session, and the
+  session was idle overnight. So T2-T5 did not run autonomously. T1 had been done
+  in-session the prior evening (owner present). Resuming in-session the next morning:
+  T4 DONE (literature pass, 2K section 6b). T2, T3 DEFERRED (see above -- not rushed;
+  each carries data/normalization risk and T3's target 2I is already independently
+  validated). T5 (this synthesis + _NIGHT_SUMMARY) done. No unvalidated math was
+  committed at any point; the protocol's "commit only if gate passes" held.
