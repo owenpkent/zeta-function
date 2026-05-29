@@ -1,115 +1,252 @@
-# Reading notes: Adiprasito, Huh, Katz, *Hodge Theory for Combinatorial Geometries* (arXiv:1511.02888v2, Ann. of Math. 2018)
+# Reading notes: Adiprasito, Huh, Katz, *Hodge Theory for Combinatorial Geometries* (arXiv:1511.02888v2, Ann. of Math. 188 (2018))
 
 > Intersection/Hodge entry, and the direct source for Direction 8 attack angle 4.A
-> (tropical Hodge index lifted to the arithmetic surface). Folder
+> (a Hodge-index signature with NO underlying variety). Folder
 > [`references/06_intersection_hodge/`](../../../references/06_intersection_hodge/).
-> This is the paper that proves the Hard Lefschetz theorem and the Hodge-Riemann relations
-> for the Chow ring of an ARBITRARY matroid, with no underlying variety. It is the proof
-> that a Hodge-index-type SIGNATURE can exist on a purely combinatorial object that is not
-> a projective variety, which is exactly the move Direction 8 needs ($\mathrm{Spec}(\mathbb{Z})^2$
-> is not a classical projective surface either). Read order: read alongside Hartshorne Ch V
-> (the classical surface case the tropical version generalizes) and Voisin Ch 6.3/7 (the
-> Hodge index / Hodge-Riemann relations being generalized). Pages refer to the PDF. Read:
-> pp.1-8 (§1 introduction with the main theorem 1.4; §2 finite sets, fans, Bergman fans).
+> This is the paper that proves Poincare duality, the Hard Lefschetz theorem, AND the
+> Hodge-Riemann relations for the Chow ring of an ARBITRARY matroid, including non-realizable
+> ones where there is no projective variety underneath. It is the existence proof that a
+> Hodge-index-type SIGNATURE can be manufactured on a purely combinatorial object that is not a
+> classical variety, which is exactly the move Direction 8 needs ($\mathrm{Spec}(\mathbb{Z})^2$
+> is not a projective surface either). Read alongside Hartshorne Ch V (the classical surface
+> case generalized) and Voisin 6.3/7 (the Kahler Hodge index / Hodge-Riemann relations
+> generalized). Pages refer to the PDF (63pp). Read DEEPLY: pp.1-14 (§1 introduction incl.
+> Conjectures 1.1-1.2, Def 1.3 Chow ring, main Theorem 1.4, realizability and the BH17
+> discussion; §2 finite sets, order filters, Bergman complexes/fans, Prop 2.4 = stellar
+> subdivisions; §3 matroids, flats, reduced Bergman fan, Prop 3.5 product local structure;
+> §4 PL functions, ample/nef cones); pp.25-32 (Thm 5.12 Chow-equivalence realizability; §6
+> Poincare-duality presentation Def 6.1, matroidal flip Def 6.4, pullback $\Phi_Z$ and Gysin
+> $\Psi_Z$ homomorphisms, homotopy-invariance Remark 6.5); pp.58-60 (§9 Prop 9.5
+> $\mu^k=\deg(\alpha^{r-k}\beta^k)$, Lemma 9.6, log-concavity Theorem 9.9).
 
 ## One-line takeaway
 
-AHK build a Chow ring $A^*(\mathrm{M})_\mathbb{R}$ for any matroid $\mathrm{M}$ and prove
-it satisfies Poincare duality, the Hard Lefschetz theorem, AND the Hodge-Riemann relations
-(Theorem 1.4), DESPITE there being no projective variety underneath when $\mathrm{M}$ is
-not realizable. The Hodge-Riemann relations give a bilinear form $Q^q_\ell$ that is
-**definite (up to sign) on primitive classes**: that signed-definiteness IS a Hodge-index
-signature, manufactured combinatorially. This is the existence proof that the Direction-8
-signature can live on a non-variety, the precise content of attack angle 4.A.
+For ANY matroid $\mathrm{M}$, AHK build a graded Chow ring $A^*(\mathrm{M})_\mathbb{R}$ and
+prove (Theorem 1.4) it satisfies Poincare duality, Hard Lefschetz, and the Hodge-Riemann
+relations, DESPITE there being no projective variety beneath it when $\mathrm{M}$ is
+non-realizable. The Hodge-Riemann form $Q^q_\ell(a_1,a_2)=(-1)^q\deg(a_1\cdot L^q_\ell a_2)$ is
+DEFINITE (with a $(-1)^q$ sign pattern) on primitive classes: that signed-definiteness IS a
+Hodge-index signature, manufactured combinatorially by an inductive flip argument, not by any
+Hodge theory of a variety. This is the existence proof that the Direction-8 signature can live
+on a non-variety, the precise content of attack angle 4.A.
 
-## The points that matter, mapped to the project
+## Technical content (section by section)
 
-1. **Theorem 1.4: Hard Lefschetz + Hodge-Riemann for an arbitrary matroid's Chow ring (p.4).**
-   For $\ell$ from a strictly submodular function: (1) multiplication $L^q_\ell: A^q\to A^{r-q}$
-   is an isomorphism (Hard Lefschetz), and (2) the form $Q^q_\ell(a_1,a_2)=(-1)^q\deg(a_1\cdot
-   L^q_\ell a_2)$ is symmetric and **positive definite on the kernel of $\ell\cdot L^q_\ell$**
-   (Hodge-Riemann). The proof goes through the Hodge-Riemann relations for ANY strictly convex
-   piecewise-linear function on the tropical linear space (Bergman fan) $\Sigma_\mathrm{M}$
-   (Theorem 8.8).
-   -> This is attack angle 4.A in its source form. The Hodge-Riemann relations are precisely
-   a SIGNATURE statement: the intersection form is positive definite on a primitive subspace
-   and the global signature is fixed by the $(-1)^q$ sign pattern. Direction 8's milestone is
+**§1 Introduction (pp.1-5).** A matroid $\mathrm{M}$ on a finite set $E$ is a closure operator
+satisfying Steinitz-MacLane exchange; its flats form a graded lattice; write $r+1$ for the
+rank. Rota's characteristic polynomial is $\chi_\mathrm{M}(\lambda)=\sum_{I\subseteq E}
+(-1)^{|I|}\lambda^{\mathrm{crk}(I)}=\sum_F\mu(\varnothing,F)\lambda^{\mathrm{crk}(F)}$.
+The decades-old LOG-CONCAVITY conjectures (Conjecture 1.1, the coefficients $w_k(\mathrm{M})$ of
+$\chi$ are log-concave: $w_{k-1}w_{k+1}\le w_k^2$; Conjecture 1.2, the numbers $f_k$ of
+independent $k$-subsets are log-concave; Read, Hoggar, Heron, Rota, Welsh, Mason) are proved by
+constructing a "cohomology ring" of $\mathrm{M}$ satisfying Hard Lefschetz and Hodge-Riemann.
+- **Def 1.3, the Chow ring.** $S_\mathrm{M}=\mathbb{R}[x_F:F$ a nonempty proper flat$]$;
+  $A^*(\mathrm{M})_\mathbb{R}=S_\mathrm{M}/(I_\mathrm{M}+J_\mathrm{M})$, where $I_\mathrm{M}$ is
+  generated by $x_{F_1}x_{F_2}$ for incomparable flats and $J_\mathrm{M}$ by the linear forms
+  $\sum_{i_1\in F}x_F-\sum_{i_2\in F}x_F$ for distinct $i_1,i_2\in E$. From the Feichtner-
+  Yuzvinsky point of view this is the Chow ring of a smooth but NON-COMPACT toric variety
+  $X(\Sigma_\mathrm{M})$.
+- **The realizability chasm (§1.2).** $X(\Sigma_\mathrm{M})$ is "Chow equivalent" to a projective
+  variety iff $\mathrm{M}$ is realizable (later made precise in Thm 5.12). For non-realizable
+  $\mathrm{M}$ "there is no reason to expect a working Hodge theory," yet AHK prove one exists.
+- **A strictly submodular function** $c$ ($c_{I_1}+c_{I_2}>c_{I_1\cap I_2}+c_{I_1\cup I_2}$)
+  defines $\ell(c)=\sum_F c_F x_F\in A^1(\mathrm{M})_\mathbb{R}$ (an "ample class"); the rank
+  function of any matroid is a limit of such. The degree map "$\deg$":
+  $A^r(\mathrm{M})_\mathbb{R}\xrightarrow{\sim}\mathbb{R}$ is normalized by
+  $\deg(x_{F_1}\cdots x_{F_r})=1$ for any complete flag of nonempty proper flats.
+- **MAIN THEOREM 1.4.** Let $\ell\in A^1(\mathrm{M})_\mathbb{R}$ come from a strictly submodular
+  function. For every $0\le q\le r/2$:
+  - *(Hard Lefschetz)* $L^q_\ell:A^q(\mathrm{M})_\mathbb{R}\to A^{r-q}(\mathrm{M})_\mathbb{R}$,
+    $a\mapsto\ell^{r-2q}\cdot a$, is an ISOMORPHISM.
+  - *(Hodge-Riemann relations)* the symmetric bilinear form
+    $Q^q_\ell(a_1,a_2)=(-1)^q\deg(a_1\cdot L^q_\ell a_2)$ is POSITIVE DEFINITE on the kernel of
+    $\ell\cdot L^q_\ell$ (the primitive part).
+  This is proved via the Hodge-Riemann relations for ANY strictly convex piecewise-linear
+  function on the Bergman fan $\Sigma_\mathrm{M}$ (Theorem 8.8), by an inductive argument
+  modeled on McMullen's proof for simple polytopes, EXTENDED past polytopes to matroidal fans.
+- **The BH17 counterexample (cited p.4).** Babaee-Huh's tropical variety satisfies Poincare
+  duality and Hard Lefschetz but FAILS Hodge-Riemann. So Hodge-Riemann is STRICTLY stronger
+  than Hard Lefschetz, and it is the Hodge-Riemann definiteness (not Lefschetz) that proves
+  log-concavity.
+
+**§2 Finite sets, order filters, Bergman fans (pp.5-8).** For $E=\{0,\dots,n\}$, dual lattices
+$\mathrm{N}_E=\mathbb{Z}^E/\langle\mathbf{e}_E\rangle$ and $\mathrm{M}_E=\mathbf{e}_E^\perp$. A
+flag $\mathscr{F}=\{F_1\subsetneq\dots\subsetneq F_l\}$ of nonempty proper subsets and a
+compatible subset $I<\mathscr{F}$ (i.e. $I\subsetneq\min\mathscr{F}$) give a unimodular cone
+$\sigma_{I<\mathscr{F}}=\mathrm{cone}\{\mathbf{e}_i,\mathbf{e}_F\}$. An ORDER FILTER
+$\mathscr{P}$ (upward-closed in the poset of nonempty proper subsets) cuts out a Bergman fan
+$\Sigma_\mathscr{P}$; Prop 2.4 shows $\Sigma_\mathscr{P}$ is the normal fan of a polytope,
+obtained from the simplex fan $\Sigma_\varnothing$ by a sequence of STELLAR SUBDIVISIONS (adding
+one subset to the filter at a time). Extremes: $\mathscr{P}=\varnothing$ gives the simplex fan,
+$\mathscr{P}=$ everything gives the permutohedron fan.
+
+**§3 Matroids and flats (pp.8-12).** Restriction $\mathrm{M}^F$ and contraction $\mathrm{M}_F$;
+the Bergman fan $\Sigma_{\mathrm{M},\mathscr{P}}$ of an order filter of FLATS, and the REDUCED
+Bergman fan $\widetilde\Sigma_{\mathrm{M},\mathscr{P}}$ (Def 3.2), which is pure of dimension
+$r$ (Prop 3.4). The crucial LOCAL PRODUCT STRUCTURE (Prop 3.5): for a flat $F$ in the filter,
+$\mathrm{star}(\mathbf{e}_F,\Sigma_{\mathrm{M},\mathscr{P}})\cong\Sigma_{\mathrm{M}^F,\mathscr{P}^F}
+\times\Sigma_{\mathrm{M}_F}$, and for a rank-1 flat $\{i\}$,
+$\mathrm{star}(\mathbf{e}_i,\Sigma)\cong\Sigma_{\mathrm{M}_{\{i\}},\mathscr{P}_{\{i\}}}$. This
+"facet of a permutohedron is a product of two smaller permutohedrons" is the engine of the
+induction. (When $\mathrm{M}$ is a combinatorial geometry, the star of every ray is a product of
+at most two Bergman fans.)
+
+**§4 Piecewise linear functions and convexity (pp.12-14+).** On a unimodular fan $\Sigma$,
+$\mathrm{PL}(\Sigma)\cong\mathbb{Z}^{V_\Sigma}$ (Courant functions $x_\mathbf{e}$); $A^1(\Sigma)
+=\mathrm{PL}(\Sigma)/\mathrm{M}$ (PL functions modulo globally linear ones), the analogue of
+$\mathrm{Pic}$. Three pullback homomorphisms $p_{\Sigma'\subseteq\Sigma}$, $p_{\sigma\in\Sigma}$
+(restriction to a star), and the product splitting $A^1(\Sigma_1\times\Sigma_2)\cong A^1(\Sigma_1)
+\oplus A^1(\Sigma_2)$. Convex / strictly convex PL functions; the AMPLE cone $\mathscr{K}_\Sigma$
+(strictly convex classes) and NEF cone $\mathscr{N}_\Sigma$ (convex classes), with
+$\mathscr{N}_\Sigma=\overline{\mathscr{K}_\Sigma}$ when ample exists. This is the
+toric-geometry-free formalism in which "ample," "nef," and the Lefschetz element $\ell$ are
+purely combinatorial.
+
+**§5 Realizability (pp.25-26, Thm 5.12).** $A^*(\Sigma)\cong A^*(X(\Sigma))$ (Chow ring of the
+toric variety). Theorem 5.12: there is a Chow equivalence from a smooth projective variety to
+$X(\Sigma_\mathrm{M})$ IF AND ONLY IF $\mathrm{M}$ is realizable over the field. The "if"
+direction uses the De Concini-Procesi wonderful model of a hyperplane arrangement; the "only if"
+uses degree computations in $A^*(\Sigma_\mathrm{M})$. So the variety exists exactly when
+$\mathrm{M}$ is realizable, and the whole content of the paper is that the SIGNATURE survives in
+the non-realizable case where no variety exists.
+
+**§6 Poincare duality (pp.27-32). The order-filter / flip machinery.**
+- **Def 6.1, the four-ideal presentation.** $A^*(\mathrm{M},\mathscr{P})=
+  S_{E\cup\mathscr{P}}/(\mathscr{I}_1+\mathscr{I}_2+\mathscr{I}_3+\mathscr{I}_4)$ over variables
+  $x_i$ ($i\in E$) and $x_F$ ($F\in\mathscr{P}$): $\mathscr{I}_1$ incomparability
+  ($x_{F_1}x_{F_2}$), $\mathscr{I}_2$ complement ($x_ix_F$, $i\notin F$), $\mathscr{I}_3$ closure
+  ($\prod_{i\in I}x_i$ for $I$ independent with closure in $\mathscr{P}\cup\{E\}$), $\mathscr{I}_4$
+  linear. Extremes recover $\mathbb{Z}[x]/(x^{r+1})$ ($\mathscr{P}=\varnothing$) and the Bergman
+  $A^*(\Sigma_\mathrm{M})$ ($\mathscr{P}=$ all flats). Prop 6.2: $A^k(\mathrm{M},\mathscr{P})=0$
+  for $k>r$ (the reduced Bergman fan has dimension $r$).
+- **Def 6.4, the MATROIDAL FLIP.** Given an order filter $\mathscr{P}_-$ and a flat $Z$ maximal
+  in $\mathscr{P}(\mathrm{M})\setminus\mathscr{P}_-$, set $\mathscr{P}_+=\mathscr{P}_-\cup\{Z\}$.
+  The flip $\Sigma_{\mathrm{M},\mathscr{P}_-}\rightsquigarrow\Sigma_{\mathrm{M},\mathscr{P}_+}$
+  removes cones with $\mathrm{cl}(I)=Z$, $\min\mathscr{F}\ne Z$ and adds cones with
+  $\mathrm{cl}(I)\ne Z$, $\min\mathscr{F}=Z$; $Z$ is the "center." Local structure:
+  $\mathrm{star}(\sigma_{Z<\varnothing},\Sigma_{\mathrm{M},\mathscr{P}_-})\cong\Sigma_{\mathrm{M}_Z}$
+  and $\mathrm{star}(\sigma_{\varnothing<\{Z\}},\Sigma_{\mathrm{M},\mathscr{P}_+})\cong
+  \Sigma_{\mathrm{M}^Z,\varnothing}\times\Sigma_{\mathrm{M}_Z}$. Remark 6.5: the flip PRESERVES
+  HOMOTOPY TYPE (a sequence of elementary collapses), so $\Delta_{\mathrm{M},\mathscr{P}}$ has a
+  homotopy type independent of $\mathscr{P}$.
+- **Pullback and Gysin homomorphisms.** $\Phi_Z:A^*(\mathrm{M},\mathscr{P}_-)\to
+  A^*(\mathrm{M},\mathscr{P}_+)$ ($x_F\mapsto x_F$, $x_i\mapsto x_i+x_Z$ if $i\in Z$ else $x_i$),
+  proved well-defined by checking $\phi_Z(\mathscr{I}_j)\subseteq$ the target ideals; it is an
+  ISO when $\mathrm{rk}(Z)=1$ (Prop 6.7). Gysin homomorphisms $\Psi_Z^{p,q}:A^{q-p}(\mathrm{M}_Z)
+  \to A^q(\mathrm{M},\mathscr{P}_+)$ and $\Gamma_Z^{p,q}:A^{q-p}(\mathrm{M}^Z)\to A^q(\mathrm{M})$
+  ($x_\mathscr{F}\mapsto x_Z^p x_\mathscr{F}$). Composing flips $\varnothing\rightsquigarrow
+  \dots\rightsquigarrow\mathscr{P}(\mathrm{M})$ interpolates $\Sigma_{\mathrm{M},\varnothing}
+  \rightsquigarrow\dots\rightsquigarrow\Sigma_\mathrm{M}$; $\Phi_\mathscr{P}\circ\Phi_{\mathscr{P}^c}
+  (x_i)=\alpha_\mathrm{M}$. Poincare duality (Thm 6.19, via this scheme) and the inductive frame
+  for Hard Lefschetz + Hodge-Riemann (§§7-8) both ride on the flip + product-of-stars structure.
+
+**§9 The application: intersection numbers and log-concavity (pp.58-60).**
+- **Prop 9.5.** The reduced characteristic polynomial coefficients ARE intersection numbers:
+  $\mu^k(\mathrm{M})=\deg(\alpha_\mathrm{M}^{r-k}\beta_\mathrm{M}^k)$, where $\alpha_\mathrm{M}=
+  \sum_{i\in F}x_F$ (pullback of $\mathcal{O}(1)$) and $\beta_\mathrm{M}=\sum_{i\notin F}x_F$ are
+  two nef classes. (Worked on the rank-3 uniform matroid $U$: $\beta^2=x_2x_{12}+x_3x_{13}+
+  x_3x_{23}$, three terms = three initial descending 2-flags.)
+- **Lemma 9.6 (the key inequality).** For $\ell_1,\ell_2\in A^1(\mathrm{M})_\mathbb{R}$ with
+  $\ell_2$ nef: $\deg(\ell_1\ell_1\ell_2^{r-2})\deg(\ell_2\ell_2\ell_2^{r-2})\le
+  \deg(\ell_1\ell_2\ell_2^{r-2})^2$. Proof: when $\ell_2$ is ample, the Hodge-Riemann form
+  $Q^1_{\ell_2}$ is negative definite on $\langle\ell_2\rangle$ and positive definite on its
+  primitive complement, so its RESTRICTION to the 2-plane $\langle\ell_1,\ell_2\rangle$ is
+  INDEFINITE (a hyperbolic signature), and the determinant of an indefinite $2\times2$ Gram
+  matrix is $\le0$, which is exactly the reverse Cauchy-Schwarz / log-concavity inequality. Then
+  take a limit to nef.
+- **Theorem 9.9.** Hence the coefficients of the reduced characteristic polynomial, the
+  characteristic polynomial, the independent-set counts $f_k$, and the chromatic polynomial of a
+  graph are all log-concave. The inequality FALLS OUT of the signature being hyperbolic on a
+  2-plane.
+
+## Points mapped to the project
+
+1. **Theorem 1.4 IS attack angle 4.A in its source form.** The Hodge-Riemann relations are a
+   SIGNATURE statement: the form $Q^q_\ell$ is positive definite on the primitive subspace, and
+   the global signature is fixed by the $(-1)^q$ sign pattern. Direction 8's milestone is
    "signature $(1,k)$, the primitive form negative definite" on the arithmetic surface. AHK
-   proves the matroid/tropical analogue of exactly that statement and, decisively, proves it
-   WITHOUT a variety. The lift Direction 8 wants is: replace the Bergman fan $\Sigma_\mathrm{M}$
-   by a tropical/combinatorial model of $\mathrm{Spec}(\mathbb{Z})^2$ and run the same machine.
+   proves the matroid/tropical analogue of exactly that and, decisively, proves it WITHOUT a
+   variety. The lift Direction 8 wants: replace the Bergman fan $\Sigma_\mathrm{M}$ by a
+   tropical/combinatorial model of $\mathrm{Spec}(\mathbb{Z})^2$ and run the same machine. ->
 
-2. **The signature exists with no projective variety underneath (§1.1-1.2, pp.3-4).** AHK are
-   explicit that $A^*(\mathrm{M})_\mathbb{R}$ is the Chow ring of a smooth but NON-COMPACT toric
-   variety $X(\Sigma_\mathrm{M})$, "Chow equivalent" to a projective variety if and only if
-   $\mathrm{M}$ is realizable; for non-realizable $\mathrm{M}$ "there is no reason to expect a
-   working Hodge theory," yet they prove one exists anyway. The proof is McMullen-style induction
-   on the fan (matroidal flips), not Hodge theory of a variety.
-   -> This is the load-bearing methodological fact for Direction 8. $\mathrm{Spec}(\mathbb{Z})^2$
-   is not a classical projective surface (no base field, no $\mathbb{C}$-points giving Kahler
-   Hodge theory), so the classical Hodge index theorem (Voisin 6.3, Hartshorne V.1) does not
-   apply directly. AHK demonstrate the signature can be obtained by a purely combinatorial /
-   inductive route that bypasses the variety. Direction 8's bet is that the arithmetic surface
-   admits a similar bypass. AHK is the proof of concept that "no variety" is not fatal to "has
-   a Hodge index signature."
+2. **The signature exists with no projective variety underneath (§1.2, Thm 5.12).** This is the
+   load-bearing methodological fact. $\mathrm{Spec}(\mathbb{Z})^2$ is not a classical projective
+   surface (no base field, no $\mathbb{C}$-points giving Kahler Hodge theory), so the classical
+   Hodge index theorem (Hartshorne V.1, Voisin 6.3) does not apply directly. Thm 5.12 makes the
+   dichotomy precise: a variety exists iff $\mathrm{M}$ is realizable, and AHK get the signature
+   anyway in the non-realizable case by a purely combinatorial inductive route. AHK is the proof
+   of concept that "no variety" is NOT fatal to "has a Hodge-index signature," which is the
+   entire bet of Direction 8. ->
 
-3. **The Hodge-Riemann relations are STRONGER than Hard Lefschetz, and they are what closes
-   the target inequality (§1, p.4; §9 cited).** AHK note Hodge-Riemann implies Hard Lefschetz,
-   and that it is the Hodge-Riemann relations (the definiteness, i.e. the signature), not merely
-   Hard Lefschetz, that proves the log-concavity conjectures (Conjectures 1.1, 1.2) via reading
-   the characteristic-polynomial coefficients as intersection numbers (§9).
-   -> Direct rhyme with the project's marginal-positivity thesis. The PROOF needs the definite
-   (signature) statement, not the weaker isomorphism (Hard Lefschetz) statement. Mirror of the
-   in-house finding that RH lives at Level 4 (positivity/signature), not Level 3
-   (spectral/isomorphism): a Lefschetz isomorphism is compatible with a wrong-signature world,
-   the definiteness is what forces the bound. The BH17 counterexample AHK cite (a tropical
-   variety with Poincare duality + Hard Lefschetz but NOT Hodge-Riemann) is the tropical
-   D-H-discipline analogue: an object that passes every test except the signature one, proving
-   the signature is the real content.
+3. **Hodge-Riemann is STRICTLY stronger than Hard Lefschetz, and the definiteness is what closes
+   the inequality (§1 p.4 BH17; §9 Lemma 9.6).** The Babaee-Huh BH17 example has Poincare
+   duality + Hard Lefschetz but NOT Hodge-Riemann. This is the tropical D-H discipline: an
+   object that passes every test EXCEPT the signature one, proving the signature is the real
+   content. Direct rhyme with the project's marginal-positivity thesis and the four-level
+   framing: RH lives at Level 4 (positivity/signature), not Level 3 (spectral/isomorphism); a
+   Lefschetz isomorphism is compatible with a wrong-signature world, the DEFINITENESS forces the
+   bound. Any Direction-8 construction must produce the Hodge-Riemann definiteness, not just
+   duality + Lefschetz, or it is the BH17 world. Lemma 9.6 shows exactly how: the inequality is
+   the determinant of an INDEFINITE Gram matrix on a 2-plane being $\le0$, i.e. a signature fact.
+   ->
 
-4. **Reduced characteristic polynomial coefficients = intersection numbers (§9, summarized p.5).**
-   The coefficients $w_k(\mathrm{M})$ of the characteristic polynomial are identified with
-   intersection numbers in the Chow ring, and log-concavity $w_{k-1}w_{k+1}\le w_k^2$ falls out
-   of the Hodge-Riemann signature.
-   -> Template for what Direction 8 must produce on $\mathrm{Spec}(\mathbb{Z})^2$: the zeta /
-   $L$-function data (here the characteristic polynomial; there $\zeta$ via $\Gamma_S^2=-\zeta'/\zeta$,
-   per 2R/2Q) should be readable as intersection numbers, and RH should fall out of the signature
-   of the form pairing those numbers. AHK is the cleanest finished instance of "arithmetic/combinatorial
-   invariant = intersection number, inequality = Hodge index signature."
+4. **The arithmetic invariant = intersection number template (§9, Prop 9.5; Thm 9.9).** The
+   characteristic-polynomial coefficients are literally intersection numbers
+   $\deg(\alpha^{r-k}\beta^k)$, and log-concavity is read off the signature. This is the cleanest
+   finished instance of the exact shape Direction 8 must produce on $\mathrm{Spec}(\mathbb{Z})^2$:
+   the $\zeta$/$L$-function data (there via $\Gamma_S^2=-\zeta'/\zeta$, per 2R/2Q) should be
+   readable as intersection numbers, and RH should fall out of the signature of the form pairing
+   those numbers. AHK shows "arithmetic/combinatorial invariant = intersection number, inequality
+   = Hodge-index signature" is a real, completed pattern. ->
 
-5. **The machinery: Bergman fan, order filters, matroidal flips, deg map (§2, pp.5-8).** The
-   Chow ring is built from the poset of flats; the geometry is a complete unimodular fan
-   $\Sigma_\mathrm{M}$ obtained from the standard simplex fan by stellar subdivisions; "deg" is
-   the canonical $A^r(\mathrm{M})\cong\mathbb{R}$ isomorphism normalized by $\deg(x_{F_1}\cdots
-   x_{F_r})=1$ on flags of flats. The whole proof is fan combinatorics, no schemes.
-   -> The concrete toolkit Direction 8's 4.A would adapt. The open question for the project:
-   what is the matroid / fan / order-filter structure attached to $\mathrm{Spec}(\mathbb{Z})^2$
-   and its Frobenius correspondence $\Gamma_S$? AHK does not answer that (it is about matroids),
-   but it gives the exact target shape: a graded ring with Poincare duality, a Lefschetz element
-   $\ell$, and a deg map, on which Hodge-Riemann is then proved by induction.
+5. **The exact target ring structure and inductive proof technique are spelled out (§2-§4, §6).**
+   The toolkit Direction 8's 4.A would adapt: a graded ring with Poincare duality (Def 6.1,
+   four-ideal presentation), a deg map normalized on flags, a Lefschetz element $\ell$ from a
+   strictly submodular function, the ample/nef cones (§4), and crucially the INDUCTION engine,
+   matroidal flips (Def 6.4) plus the local product-of-stars structure (Prop 3.5: a facet is a
+   product of two smaller objects). The Hodge-Riemann relations are then proved by inducting
+   across flips with the pullback $\Phi_Z$ and Gysin $\Psi_Z$ homomorphisms carrying the
+   signature. The open question for the project: what is the matroid / fan / order-filter / flip
+   structure attached to $\mathrm{Spec}(\mathbb{Z})^2$ and its Frobenius correspondence
+   $\Gamma_S$? AHK does not answer that (it is about matroids), but it gives the precise target
+   SHAPE and the precise PROOF STRATEGY (flip induction, not Hodge theory of a variety). ->
 
 ## What this changes for the program
 
-- **Attack angle 4.A now has its primary source pinned.** AHK is the existence theorem that a
-  Hodge-index signature can be built combinatorially with no variety underneath. That is the
-  whole hope of Direction 8 (lift the signature to $\mathrm{Spec}(\mathbb{Z})$ where there is
-  no projective surface). The note to carry forward: the SIGNATURE (Hodge-Riemann definiteness),
-  not Hard Lefschetz, is the content, and it is provable by fan induction.
+- **Attack angle 4.A now has its primary source fully pinned, with the proof architecture, not
+  just the statement.** AHK is the existence theorem that a Hodge-index signature can be built
+  combinatorially with no variety. The notes to carry forward: (a) the SIGNATURE (Hodge-Riemann
+  definiteness), not Hard Lefschetz, is the content (BH17 + Lemma 9.6); (b) it is provable by an
+  INDUCTION over matroidal flips that exploits a local product structure (facet = product of two
+  smaller fans), with pullback/Gysin maps transporting the form; (c) the realizability dichotomy
+  (Thm 5.12) says the variety is exactly what is MISSING in the interesting case, which is
+  precisely the $\mathrm{Spec}(\mathbb{Z})^2$ situation.
 - **The BH17 example is the tropical D-H discipline.** A tropical variety with Poincare duality
-  and Hard Lefschetz but failing Hodge-Riemann is exactly the kind of "passes everything except
-  the signature" counterexample the project's wrong-approach detector lives for. Any Direction-8
-  construction must produce the Hodge-Riemann definiteness, not just duality + Lefschetz, or it
-  is the BH17 world.
-- **Concrete next-step shape, not yet a computation.** Direction 8's 4.A needs a fan / matroid
-  model of $\mathrm{Spec}(\mathbb{Z})^2 + \Gamma_S$. AHK gives the target ring structure
-  (graded, Poincare duality, deg, Lefschetz $\ell$ from a submodular function) the model would
-  have to realize. No project-native computation lands from this paper directly; it is the
-  structural blueprint for 4.A.
+  and Hard Lefschetz but failing Hodge-Riemann is exactly the "passes everything except the
+  signature" counterexample the project's wrong-approach detector lives for. Use it as the
+  Direction-8 sanity check: a construction that yields only duality + Lefschetz is in the BH17
+  world and has not closed anything.
+- **Concrete next-step SHAPE and METHOD, not yet a computation.** Direction 8's 4.A needs a fan /
+  matroid / flip model of $\mathrm{Spec}(\mathbb{Z})^2+\Gamma_S$. AHK gives the target ring
+  structure (graded, Poincare duality, deg, Lefschetz $\ell$, ample/nef cones) AND the inductive
+  technique (flips + product-of-stars + Gysin transport of the signature). No project-native
+  computation lands directly from this paper; it is the structural-and-methodological blueprint
+  for 4.A. This is the highest-relevance paper of the five for the live Direction-8 front.
 
 ## Status
 
-Read pp.1-8 (§1 introduction including the main Theorem 1.4 statement and the realizability /
-BH17 discussion; §2 finite sets, polyhedra, Bergman fans and order filters). The actual proofs
-of Hard Lefschetz and Hodge-Riemann are in §§7-8 (not read in detail; the §1 statements and the
-§9 application logic are what matter for 4.A). This is the highest-relevance paper of the five
-for the live Direction-8 front: it is the existence proof for a no-variety Hodge-index signature.
+Read DEEPLY pp.1-14 (§1 full intro: Conjectures 1.1-1.2, Def 1.3 Chow ring, the strictly
+submodular $\ell$ and the deg map, main Theorem 1.4 with both Hard Lefschetz and Hodge-Riemann
+stated precisely, the realizability chasm and the BH17 discussion; §2 order filters, Bergman
+complex/fan, Prop 2.4 stellar-subdivision/normal-fan structure; §3 matroid restriction/
+contraction, reduced Bergman fan Prop 3.4, the local product structure Prop 3.5; §4 PL functions,
+the three pullbacks, ample/nef cones); pp.25-32 (§5 Thm 5.12 Chow-equivalence = realizability;
+§6 Def 6.1 four-ideal Poincare-duality presentation, Prop 6.2 vanishing above degree $r$, Def
+6.4 matroidal flip with center $Z$, Remark 6.5 homotopy-invariance, Prop 6.6-6.8 pullback
+$\Phi_Z$ and Gysin $\Psi_Z/\Gamma_Z$ homomorphisms); pp.58-60 (§9 Prop 9.5 characteristic-
+polynomial coefficients = intersection numbers $\deg(\alpha^{r-k}\beta^k)$, Lemma 9.6 the
+indefinite-2-plane key inequality, Lemma 9.7 $\alpha,\beta$ nef, Theorem 9.9 log-concavity).
+The full proofs of Hard Lefschetz and Hodge-Riemann (§§7-8, the McMullen-style flip induction)
+read at the level of the statement of Theorem 8.8 and the inductive scheme (§6), not line by
+line. This is the deepest of the five notes, matching the paper's status as the source for
+Direction-8 attack angle 4.A.

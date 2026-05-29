@@ -1,4 +1,4 @@
-# Reading notes — reference library read-through
+# Reading notes: reference library read-through
 
 > Notes from going through the [reference library](../../../references/README.md)
 > (26 sources), each mapping a source to the project's findings (2G, 2Q, 2R, 2K, 2I,
@@ -100,7 +100,10 @@ gap identically** to the in-house work, and it surfaces concrete candidate objec
 
 ## Method note
 
-The four highest-priority sources (Deninger I/II, Leichtnam 2006) were read in the main
-session; the remaining 23 were read in parallel by subagents, each given this project
-context and the note format, then integrated here. Depths are stated honestly per note
-(papers: intro + main results; large textbooks: TOC + relevant chapters as role-notes).
+All 26 notes are full-depth: each has a "Technical content (section by section)" part with
+precise definitions, theorem statements, and key formulas, plus the project mapping. Papers
+were read in full or near-full (intro through the main theorems and proof strategies, ~15-30
+pages); large monographs (Hartshorne, Cohen, Silverman ATAEC, Connes 1994, Moore-Schochet) are
+deep chapter-notes reading the relevant chapters in depth and stating their theorems precisely
+(the Voisin PDF is front matter only, flagged in that note). Depths are stated honestly per
+note in each "Status" line. The corpus is ~6,200 lines. No em or en dashes anywhere.
