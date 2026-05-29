@@ -33,6 +33,8 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.NumberTheory.VonMangoldt
 import Mathlib.Analysis.Calculus.LogDeriv
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
+import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
 import ZetaRH.Basic
 
 namespace ZetaRH.ExplicitFormula
@@ -87,6 +89,47 @@ noncomputable def digamma : ℂ → ℂ := logDeriv Complex.Gamma
 /-- `ψ(s) = Γ'(s) / Γ(s)`. Proved (no `sorry`) from `logDeriv_apply`. -/
 theorem digamma_eq (s : ℂ) : digamma s = deriv Complex.Gamma s / Complex.Gamma s :=
   logDeriv_apply Complex.Gamma s
+
+/-- **The digamma recurrence** `ψ(s+1) = ψ(s) + 1/s`, for `s ∉ {0, -1, -2, …}`.
+
+    Proved (no `sorry`) from Mathlib's `Complex.Gamma_add_one` (`Γ(s+1) = s Γ(s)`)
+    by taking logarithmic derivatives: the two functions `z ↦ Γ(z+1)` and
+    `z ↦ z Γ(z)` agree on the open set `{z ≠ 0}` containing `s`, so their
+    logarithmic derivatives at `s` coincide; `logDeriv_comp` evaluates the left
+    side as `ψ(s+1)`, and `logDeriv_mul` + `logDeriv_id` the right side as
+    `1/s + ψ(s)`. This is the basic functional equation of the archimedean kernel;
+    upstreamable to Mathlib. -/
+theorem digamma_add_one {s : ℂ} (hs : ∀ m : ℕ, s ≠ -(m : ℂ)) :
+    digamma (s + 1) = digamma s + 1 / s := by
+  have hs0 : s ≠ 0 := by simpa using hs 0
+  have hs1 : ∀ m : ℕ, s + 1 ≠ -(m : ℂ) := by
+    intro m h
+    exact hs (m + 1) (by push_cast at h ⊢; linear_combination h)
+  have hΓs : DifferentiableAt ℂ Complex.Gamma s := Complex.differentiableAt_Gamma s hs
+  have hΓs1 : DifferentiableAt ℂ Complex.Gamma (s + 1) := Complex.differentiableAt_Gamma _ hs1
+  have hΓns : Complex.Gamma s ≠ 0 := Complex.Gamma_ne_zero hs
+  -- the two functions agree on the open neighbourhood {z ≠ 0} of s
+  have hEq : (fun z : ℂ => Complex.Gamma (z + 1)) =ᶠ[nhds s] (fun z : ℂ => z * Complex.Gamma z) := by
+    filter_upwards [isOpen_ne.mem_nhds hs0] with z hz
+    exact Complex.Gamma_add_one z hz
+  -- left side: logDeriv of the composition = ψ(s+1)
+  have hcomp : logDeriv (fun z : ℂ => Complex.Gamma (z + 1)) s = digamma (s + 1) := by
+    have hg : DifferentiableAt ℂ (fun z : ℂ => z + 1) s := by fun_prop
+    have key := logDeriv_comp (f := Complex.Gamma) (g := fun z : ℂ => z + 1) hΓs1 hg
+    have hd : deriv (fun z : ℂ => z + 1) s = 1 := by simp
+    rw [hd, mul_one] at key
+    simpa [digamma, Function.comp_def] using key
+  -- right side: logDeriv of the product = 1/s + ψ(s)
+  have hmul : logDeriv (fun z : ℂ => z * Complex.Gamma z) s = 1 / s + digamma s := by
+    have key := logDeriv_mul (f := fun z : ℂ => z) (g := Complex.Gamma) s hs0 hΓns
+      (by fun_prop) hΓs
+    simp only [logDeriv_id'] at key
+    simpa [digamma] using key
+  -- glue: equal logDerivs of eventually-equal functions
+  have hval : logDeriv (fun z : ℂ => Complex.Gamma (z + 1)) s
+            = logDeriv (fun z : ℂ => z * Complex.Gamma z) s := by
+    rw [logDeriv_apply, logDeriv_apply, hEq.deriv_eq, hEq.eq_of_nhds]
+  rw [← hcomp, hval, hmul, add_comm]
 
 /-- The archimedean kernel of the explicit formula along the critical line: the
     logarithmic derivative of the Γ-factor `π^{-s/2} Γ(s/2)` of the completed zeta

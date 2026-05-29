@@ -67,7 +67,7 @@ Session 002 outputs landed: three F-F candidates ([A](experiments/arithmetic_geo
 
 ## Last verified state
 
-- Git commit: `f090765` (session 005; 2Q + Lean explicit-formula scaffold committed, not pushed). Uncommitted: three MathlibBridge discharges (#MB-1/#MB-2/#MB-6 now real proofs) + concrete digamma archimedean kernel (#EF-arch kernel part); project sorry count 26 → 23; full build green.
+- Git commit: `b4bd4ca` (session 005; 2Q + Lean scaffold + bridge discharges + session-005 consolidation committed, not pushed). Uncommitted: `digamma_add_one` (the recurrence `ψ(s+1)=ψ(s)+1/s`) PROVED in `ExplicitFormula.lean` from `Complex.Gamma_add_one` (no sorry); README/PHASE_STATE updates. Full build green; project sorry count steady at 23.
 - LEARNINGS.md last finding: #25 (the place-dependent bidegree obstruction: `Gamma_S` is a `(1,p)`-per-prime correspondence, from which infinite-dim `H^i` + the `R`-flow follow and `Gamma_S^2` is pinned to the von Mangoldt prime sum); previously #24 (complete single-arithmetic-surface Hodge-index picture: ranks 1-4 PosDef + full Silverman local decomposition = h_hat). Session 004 added #20 (input-side place-type / Euler fingerprint), #21 (2G function-field signature = Hasse-Weil), #22 (2H Faltings-Hriljac over Spec(Z)), #23 (2I archimedean local height), #24.
 - Direction 8: function-field template (2G) + arithmetic single-surface (2H/2I/2L/2M/2O/2P) complete and validated; the dictionary + lift gap in 2K. Remaining: the product surface `Spec(Z) x Spec(Z)` + Frobenius.
 - Lean: `lake build` green on Lean 4.13.0 + Mathlib v4.13.0; 2G `negDef_iff_hasseWeil` machine-proved (no sorry), 2H Faltings-Hriljac stated (documented sorry). Earlier R3.5 sorry eliminated (session 002).
