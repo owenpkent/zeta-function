@@ -51,3 +51,8 @@ build/
 # Reference textbooks (copyrighted -- do not commit)
 *.pdf
 !sources/*.pdf
+
+# In-progress / partial browser downloads (never commit)
+*.crdownload
+*.part
+*.tmp

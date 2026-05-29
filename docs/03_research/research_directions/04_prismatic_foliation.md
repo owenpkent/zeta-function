@@ -135,6 +135,6 @@ Direction 4 depends on Directions 2 and 3. Sequence: Direction 2 first (gives Ph
 
 ## 9. Status
 
-This direction is **research-grade, beyond project scope**. The 2D dossier identifies M3 as the right size; this document provides the operational specification. Execution requires a research group with expertise in (a) prismatic cohomology, (b) noncommutative geometry, (c) Deninger-style foliated dynamics. Estimated 2-4 years.
+This direction is **research-grade**. The 2D dossier identifies M3 as the right size; this document provides the operational specification. Execution requires a research group with expertise in (a) prismatic cohomology, (b) noncommutative geometry, (c) Deninger-style foliated dynamics. Estimated 2-4 years.
 
 A positive resolution would be the first explicit realization of Deninger's foliated space X, a major contribution to arithmetic geometry independent of whether the broader proof program reaches its target.
