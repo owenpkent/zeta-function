@@ -106,7 +106,12 @@ result, commit hash or BLOCKED reason.)
 - T2(a) DONE in-session (2026-05-29, owner present, "do it now"): rank-4 arithmetic
   Hodge index on 234446a1 -- 8x8 height Gram has exactly 4 positive eigenvalues,
   none negative (PSD rank 4). Faltings-Hriljac PosDef now at ranks 1-4. Committed
-  078332c. T2(b) bad-prime + T3 Green's function still open (remote agent attempting
+  078332c (e2m).
+- T2(b) DONE in-session (e2o, f08067a): bad-prime local height. (i) RIGOROUS: the
+  three prime-conductor curves are I_1 => bad-prime height identically 0 (closes the
+  2I caveat). (ii) QUALITATIVE: on an I_2 curve, lambda_bad shows exact Z/2
+  component-group periodicity (period-2, identity=0); exact B_2(j/n) magnitude
+  FLAGGED open (not claimed). T3 Green's function still open (remote agent attempting
   on branch overnight/night-2026-05-30; also scheduled 2026-05-30T07:00Z).
 - CORRECTION (2026-05-29 morning): the overnight ScheduleWakeup loop did NOT fire
   unattended -- that mechanism only re-invokes within an active session, and the
