@@ -1164,6 +1164,34 @@ the exact structure of $\zeta$; the function-field precedent points at
 intersection-theoretic positivity over $\mathrm{Spec}(\mathbb{Z})$ as the shape
 of the missing tool. Both are coordinates, not walls.
 
+### 9.4 What the computational thread has pinned down (2026-05, session 004)
+
+Attacking from this framing produced a concrete narrowing, not just agreement with
+it. The experiments now make the "signature" mechanism (§2.2's structural
+positivity) exact and validated on BOTH sides of the divide: on a curve over
+$\mathbb{F}_q$ the primitive intersection form on $C \times C$ is negative definite
+and that signature literally IS the Hasse-Weil bound ([2G](../../experiments/arithmetic_geometric/e2g_intersection_signature.md));
+over $\mathrm{Spec}(\mathbb{Z})$ the Néron-Tate height pairing on $E(\mathbb{Q})$ is
+positive definite (Faltings-Hriljac, validated against known regulators,
+[2H](../../experiments/arithmetic_geometric/e2h_arithmetic_hodge_index.md)), with
+the archimedean place's contribution computed explicitly (the self-derived,
+validated Néron local height, [2I](../../experiments/arithmetic_geometric/e2i_archimedean_local_height.md)).
+
+The decisive synthesis ([2K](../../experiments/arithmetic_geometric/2K_spec_z_squared_dictionary.md))
+is that the explicit-formula place-decomposition of the Weil quadratic form,
+$M = A_{\mathrm{arch}} + P_{\mathrm{fin}} + B_{\mathrm{pole}}$, is the exact
+arithmetic analogue of the $C \times C$ divisor decomposition: the **pole of
+$\zeta$ at $s=1$ is the hyperbolic $(+1)$ direction** (the fibre class), the
+**prime side is the Frobenius correspondence** $\Gamma_S \cdot \Delta_S$ (existing
+iff there is an Euler product, which is the §2.2 / Davenport-Heilbronn discipline
+made geometric), and the **archimedean place is the intersection at infinity**
+(not positive-definite alone, so positivity is global). The intersection *numbers*
+are all computable today and the index theorem is real for a single arithmetic
+surface; the one missing object is the product surface
+$\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$ and its Frobenius.
+This turns Chapters 4-7 of the §7 hypothetical textbook from a wish-list into a
+specification with a fixed target intersection form.
+
 ---
 
 ## Further Reading
