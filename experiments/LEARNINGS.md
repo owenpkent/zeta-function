@@ -8,6 +8,16 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 26. `Gamma_S^2` (the regularized self-intersection of the arithmetic Frobenius correspondence pinned in #25) is realized concretely as the log-derivative of a Ruelle dynamical zeta whose primitive closed-orbit lengths are exactly `{log p}`: `-zeta'/zeta = sum_n Lambda(n) n^{-s}`. Davenport-Heilbronn has no such closed-orbit spectrum (its log-derivative coefficients delocalize off prime powers), so the dynamical-flow representation does not exist for it.
+
+2R ([e2r_dynamical_zeta.py](arithmetic_geometric/e2r_dynamical_zeta.py), writeup [e2r_dynamical_zeta.md](arithmetic_geometric/e2r_dynamical_zeta.md)) makes #25's abstract `Gamma_S^2 = reg-sum_p (log p)(...)` concrete on the dynamical side, the half of the Morishita Deninger↔Connes-Consani bridge (arXiv:2508.15971, closed orbits↔primes) that Deninger supplies.
+
+**Verified (s=2, prec 30).** The dynamical-zeta product over primes with orbit lengths `l(gamma_p)=log p`, `prod_p (1-p^{-s})^{-1}`, converges to `zeta(s)` (err 5e-2→3e-5 as P:10→5000); and `sum_n Lambda(n) n^{-s}` converges to `-zeta'/zeta(s)=0.56996099` (err 1e-1→2e-4 as N:10→5000). So the flow's regularized self-pairing IS the prime side = `Gamma_S^2`. The local factor at `p` (orbit length `log p`) is the Euler factor `(1-p^{-s})^{-1}` = the geometric content of #25's `(1,p)` bidegree.
+
+**D-H control (dynamical K2).** `Lambda_DH` (from `-L_DH'/L_DH`) carries mass 37.42 OFF prime powers vs 36.94 on them (n≤60), first leaking at n=6 — matching the 3M fingerprint (#20). No Euler product ⇒ no primitive-`{log p}` orbit spectrum ⇒ no flow. The wrong-approach discipline in dynamical-systems language.
+
+**What it is NOT.** Not a new route to RH (the identities are classical); the content is the structural identification (orbit lengths = place-weights = `Gamma_S^2`) and the D-H non-existence. The dynamical zeta gives the SPECTRUM and self-pairing of `Gamma_S`, not the SIGNATURE RH needs. It does not build the cohomology `H^*_{F,pr}`, finiteness, or the index theorem (Directions 4/8 open). It fixes the TARGET for Direction 4.6: a leafwise prismatic `H^*_{F,pr}` whose trace-formula determinant equals this dynamical zeta.
+
 ### 25. The single sharpest break between the function-field template and Spec(Z) is the BIDEGREE of the Frobenius correspondence: on C x C it is a (1, q) correspondence with ONE scale q, but over Spec(Z) it must carry a place-dependent bidegree (1, p) per prime. From that one fact the two defining features of Deninger's program (infinite-dimensional H^i, an R-flow not a Z-action) follow as consequences, and Gamma_S^2 is pinned to the von Mangoldt prime sum.
 
 2Q ([e2q_frobenius_bidegree.py](arithmetic_geometric/e2q_frobenius_bidegree.py), writeup [e2q_frobenius_bidegree.md](arithmetic_geometric/e2q_frobenius_bidegree.md)) takes the now-complete 2K dictionary (#24) one notch further: granting that all intersection NUMBERS are computed, what must the missing correspondence `Gamma_S` BE?

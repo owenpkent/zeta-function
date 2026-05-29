@@ -131,7 +131,11 @@ claim, now with a reason.
   `det_zeta(s - Phi_t | H^*_{F,pr})` and verify it reproduces the Euler product,
   i.e. realize the `Gamma_S^2` constraint of section 3 on an actual leafwise
   prismatic cohomology. That is the first place the place-dependent bidegree would
-  become an honest (regularized) intersection number.
+  become an honest (regularized) intersection number. **Partially done ([2R](e2r_dynamical_zeta.md)):**
+  the DYNAMICAL side of this is now concrete -- `Gamma_S^2 = -zeta'/zeta` is the
+  log-derivative of a Ruelle dynamical zeta with primitive orbit lengths `{log p}`,
+  and D-H has no such orbit spectrum. What remains is the COHOMOLOGY the flow acts
+  on (the signature, not just the spectrum).
 
 ## 7. Connections
 
