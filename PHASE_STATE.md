@@ -41,7 +41,7 @@
 
 ## Recommended next session actions
 
-**See [`experiments/orchestrator_sessions/session_004.md`](experiments/orchestrator_sessions/session_004.md) for the full session-004 narrative and the `NIGHT_PLAN_004.md` queue status.**
+**See [`experiments/orchestrator_sessions/session_005.md`](experiments/orchestrator_sessions/session_005.md) for the latest (session-005) narrative: 2Q (the place-dependent bidegree obstruction) + the Lean Weil-explicit-formula thread. [`session_004.md`](experiments/orchestrator_sessions/session_004.md) has the prior arc.**
 
 Session 004 (2026-05-28/29) completed the SINGLE-arithmetic-surface side of Direction 8: the place-type Weil-form decomposition (3M), the function-field Hodge index as a signature (2G), and over Spec(Z) the Faltings-Hriljac positive-definite height pairing at ranks 1-4 (2H/2M) plus the COMPLETE, authoritatively-validated local-height decomposition (2I archimedean incidence, 2L Petersson self-incidence, 2P Silverman finite+real = h_hat). 2K is the dictionary mapping all of this to the would-be `Spec(Z) x Spec(Z)` intersection form; 2K sec 6b has the 2026 literature state. Lean: 2G signature theorem machine-proved, 2H stated (build green).
 
