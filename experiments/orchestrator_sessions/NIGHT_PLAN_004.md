@@ -55,6 +55,10 @@
   2I's z-dependence (likely elliptic-log branch / theta-argument / period factor).
   BLOCKED per protocol (one honest attempt, no thrash, not claimed). 2I remains
   independently validated against h_hat. See _NIGHT_FINDINGS.md. Original spec below.
+  RESOLVED-BY-BETTER-ROUTE (2P, 1306ee6): the intent of T3 (a correct, validated
+  archimedean local height) was achieved via the AUTHORITATIVE Silverman/Cremona/Cohen
+  algorithm using the textbooks the owner added -- e2p validates h_inf + sum_p h_p =
+  h_hat to the h_hat precision floor. The theta route (e2n) is no longer needed.
   Would re-derive lambda_inf via theta/elliptic-log -- carrying the same
   normalization-trap risk as 2I/2L, and 2I is ALREADY validated independently
   against h_hat (the limit definition), so the marginal confidence gain is low

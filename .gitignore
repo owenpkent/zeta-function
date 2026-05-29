@@ -47,3 +47,7 @@ experiments/**/_*.log
 .lake/
 build/
 
+
+# Reference textbooks (copyrighted -- do not commit)
+*.pdf
+!sources/*.pdf

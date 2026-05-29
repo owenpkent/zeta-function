@@ -27,7 +27,13 @@ INDEPENDENTLY against the canonical height h_hat (the 4^{-n} limit definition), 
 1e-5, via lambda_inf + sum_p lambda_p = h_hat. T3 was a SECOND, confirmatory check;
 its failure is a failure of THIS theta implementation's normalization, not of 2I.
 
-STATUS: BLOCKED. The blocked attempt is preserved (e2n_greens_function_crosscheck.py,
-clearly marked) for a future resumption that fixes the elliptic-log/theta
-normalization (gate: difference constant, then derive the constant C(tau) for a
-no-fit absolute match).
+STATUS: BLOCKED (theta route). The blocked attempt is preserved
+(e2n_greens_function_crosscheck.py, clearly marked).
+
+UPDATE (resolved by a better route): the INTENT of T3 -- a correct, independent,
+validated archimedean local height -- was achieved in 2P
+(e2p_silverman_local_heights.py) using the AUTHORITATIVE Silverman/Cremona/Cohen
+algorithm (from the textbooks the owner supplied) instead of the ad-hoc theta
+formula. 2P validates the full local decomposition h_inf + sum_p h_p = h_hat to the
+h_hat precision floor (resid down to 1e-8). So the local-height program is closed
+correctly; the theta cross-check (e2n) remains optional/curiosity, not needed.
