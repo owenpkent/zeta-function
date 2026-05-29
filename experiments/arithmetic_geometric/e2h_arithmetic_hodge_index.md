@@ -60,20 +60,42 @@ live in coordinates; it requires genuinely analytic (non-algebraic) machinery.
 That is exactly the framing document's theme (section 4.2) that the archimedean
 place is the subtle missing piece a Spec(Z) cohomology must learn to carry.
 
+## One rigorous increment on the finite side (no transcendental input needed)
+
+For a prime p of GOOD reduction, the Neron local height is the exact, elementary
+quantity `lambda_p(P) = (1/2) max{0, -v_p(x(P))} log p`. Every generator used here
+(37a (0,0); 389a (-1,1),(0,0); 5077a (-2,3),(-1,3),(0,2)) has INTEGRAL x, so
+`v_p(x) >= 0` and `lambda_p(P) = 0` for every good prime p. Each curve has prime
+conductor with a single bad prime (37, 389, 5077), far larger than any denominator
+that appears. Hence:
+
+  the entire good-finite contribution to the regulator is exactly ZERO; the
+  positive-definite regulator is carried by the archimedean place together with at
+  most the single bad prime.
+
+This is the correct (and, for integral points, opposite-to-naive) statement: the
+arithmetic Hodge index positivity for these curves is essentially an ARCHIMEDEAN
+phenomenon, consistent with the whole session's theme (3M: the archimedean cushion
+must dominate the finite obstruction).
+
 ## Status and next step
 
 - **Solid:** the arithmetic Hodge index over Spec(Z) (height pairing positive
   definite, rank 1-3) is exhibited and validated against known regulators. With 2G
   this completes the "signature" picture on both sides of the function-field /
-  number-field divide: negative-definite primitive form on C x C (2G), positive-
-  definite height pairing on E/Q (2H).
-- **Next:** compute the genuine archimedean Neron local height `lambda_inf(P)` via
-  the Weierstrass-sigma function / Tate's series (mpmath theta functions), validate
-  it by `lambda_inf + sum_p lambda_p = h_hat` against the exact finite local
-  heights, and quantify the archimedean share of the regulator. THAT is "how the
-  archimedean place enters the signature," done correctly. It is the analytic core
-  the naive split cannot see, and the natural bridge toward how a
-  Spec(Z) x Spec(Z) Hodge index would have to globalize the archimedean place.
+  number-field divide. The good-finite local heights of the integral generators
+  vanish exactly, so the regulator is archimedean (plus a single bad prime).
+- **Next (needs the exact algorithm, deliberately deferred):** the genuine
+  archimedean Neron local height `lambda_inf(P)` and the single bad-prime term, to
+  split the regulator as `lambda_inf + lambda_bad` exactly and quantify the
+  archimedean share. This requires Tate's archimedean series (Silverman 1988,
+  Math. Comp. 51, section III) -- with the documented factor-of-2 normalization
+  caveat between his paper and his books -- or the Weierstrass-sigma closed form
+  with its exact constants, validated by `sum_v lambda_v = h_hat`. It was NOT
+  implemented here rather than ship an unvalidated transcendental formula into the
+  codebase; the cleanest path is a battle-tested implementation (PARI `ellheight` /
+  its local-height functions) cross-checked against the `h_hat` values this
+  experiment already validates.
 
 ## Outputs
 
