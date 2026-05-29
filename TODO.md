@@ -125,7 +125,7 @@
 - [ ] Formalize RH equivalences in Lean 4
 - [ ] Add glossary of terms
 - [x] Add bibliography / further reading (references/README.md — 25-PDF library indexed by direction; PDFs gitignored)
-- [ ] Read-through of the reference library (in progress): notes in docs/03_research/reading_notes/. Done: Deninger II (regularized determinants; §3.7 = the 2K product-surface gap, H^1+det = the 4.6 target). Next: Deninger I, Leichtnam 2006, Alvarez Lopez-Kordyukov-Leichtnam 2017.
+- [ ] Read-through of the reference library (in progress): notes + index in docs/03_research/reading_notes/. Done: Deninger II (§3.7 = the 2K product-surface gap; H^1+det = the 4.6 target); Leichtnam 2006 (a conditional Lefschetz trace formula + Re=1/2 for foliated laminated spaces; the p-adic transversal = the prismatic x foliation bridge; function-field g=1 only). Next: Deninger I, Alvarez Lopez-Kordyukov-Leichtnam 2017, then the prismatic stack.
 - [ ] Link visualizations to corresponding doc sections
 - [ ] Add Jupyter notebooks for interactive exploration
 - [ ] Explore L-functions generalization
