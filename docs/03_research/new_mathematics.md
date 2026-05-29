@@ -8,9 +8,13 @@
 
 ## 1. Why New Mathematics Is Needed
 
-Every serious approach to RH has hit a wall — not a wall of insufficient effort,
+Every serious approach to RH has hit a wall: not a wall of insufficient effort,
 but a wall where the available tools provably cannot go further. These walls are
-not independent failures. They are symptoms of the same missing structure.
+not independent failures. They are symptoms of the same missing structure. This
+is the normal prelude to new mathematics, not the end of the road. Section 9
+gives the historical pattern (the quintic, the parallel postulate, the
+three-body problem, the finite-field Riemann Hypothesis), where the same kind of
+wall was the signal that a new structure had to be built.
 
 ```
                     ┌─────────────────────────────────────────┐
@@ -1059,12 +1063,106 @@ THE NEW MATHEMATICS FOR RH
 
 The ultimate test of the new mathematics is not whether it can be made to
 prove RH through clever argument, but whether, once understood, RH becomes
-*obviously true* — as obvious as "self-adjoint operators have real eigenvalues"
+*obviously true*: as obvious as "self-adjoint operators have real eigenvalues"
 or "compact curves over finite fields satisfy the Weil conjectures."
 
 When someone discovers the right framework, the reaction will not be
-"what an incredible proof" but rather "of course — how could it be
+"what an incredible proof" but rather "of course, how could it be
 otherwise?"
+
+---
+
+## 9. Historical Precedent: New Mathematics Is Invented to Order
+
+The claim "RH probably needs new mathematics" can read as an excuse. It is not.
+It is the single most common pattern in the history of hard problems. Almost
+every era's central problem was eventually settled not by a clever argument
+inside the existing tools, but by the invention of a new *kind* of mathematics,
+and the invention almost always looked absurd or illegitimate at first. The
+purpose of this section is to make that pattern explicit, because it is the
+honest frame for this project: ruling out the soft routes (the rest of this
+document) is what tells us a new structure is required, exactly as it was
+required in each case below.
+
+The recurring shape is: **a specific problem cannot be touched by the available
+tools, someone builds a new world to make it touchable, and the new world turns
+out to be far larger than the problem that forced it.**
+
+### 9.1 Problems that forced new mathematics into existence
+
+| New mathematics | Forced by | The "impossible" step | Later reach |
+|---|---|---|---|
+| Complex numbers (Cardano, Bombelli, 1500s) | Solving the cubic | $\sqrt{-1}$ appears *en route* to real answers (casus irreducibilis) | All of analysis, physics, engineering |
+| Group theory (Galois, ~1830) | Is the quintic solvable by radicals? | Attach a symmetry group to an equation; solvability becomes a group property | Modern algebra, symmetry everywhere |
+| Non-Euclidean geometry (Gauss, Bolyai, Lobachevsky, 1820s) | Proving Euclid's parallel postulate | *Deny* the postulate and get a consistent geometry | General relativity (Einstein, 1915) |
+| Set theory, transfinite numbers (Cantor, 1870s) | Uniqueness of trigonometric (Fourier) series | Infinities come in different sizes | Foundations of all mathematics |
+| Topology (Poincaré, 1890s) | The three-body problem | Abandon exact solutions for qualitative shape (homology, $\pi_1$) | Geometry, data, physics |
+| Computability (Turing, Church, Gödel, 1930s) | Hilbert's Entscheidungsproblem | First define "algorithm" precisely, to prove no algorithm exists | All of computer science |
+
+Other clear instances of the same move: calculus (Newton, Leibniz) to handle
+motion and tangents; measure theory and the Lebesgue integral, because the
+Riemann integral was too weak to survive limits; distribution theory (Schwartz,
+1940s) to make the physicists' Dirac delta legal; quaternions (Hamilton, 1843)
+to do three-dimensional rotation, at the cost of giving up commutativity;
+Kolmogorov's measure-theoretic axioms (1933) to turn probability into
+mathematics.
+
+The lesson is uniform. In each case the established mathematicians of the day
+often considered the new object illegitimate (Kronecker against Cantor's
+infinities, generations of geometers certain the parallel postulate *must* be
+provable, "imaginary" and "sophistic" numbers). The new mathematics was not a
+trick to evade the problem. It was the structure in which the problem became a
+theorem.
+
+### 9.2 The precedent that this project is directly chasing
+
+The most important precedent for the Riemann Hypothesis is the one that already
+happened, for the same statement in a different world: the **Weil conjectures**,
+including the Riemann Hypothesis for varieties over finite fields.
+
+```
+1949   Weil conjectures the RH-analogue over finite fields, and SEES that a
+       proof would need a tool that does not yet exist: a cohomology theory
+       for algebraic varieties over F_q, with a Lefschetz fixed-point formula
+       turning "count solutions" into "count eigenvalues of Frobenius," and a
+       Hodge-index-type positivity forcing |eigenvalue| = sqrt(q).
+
+1960s  Grothendieck builds that tool from the foundations up: schemes, topos
+       theory, etale cohomology. An entire new geometry, created largely to
+       make the missing cohomology exist.
+
+1974   Deligne completes the proof. The finite-field Riemann Hypothesis is now
+       a THEOREM, because the new mathematics was built.
+```
+
+This is exactly the bet of Architecture 2 (Direction 8). Experiment
+[2F](../../experiments/arithmetic_geometric/e2f_hodge_index_sweep.py) in this
+project exhibits the payoff concretely: over finite fields the bound
+$|\alpha_i| = \sqrt{q}$ holds *exactly* across a whole family of curves, because
+the machinery (the Hodge index theorem on $C \times C$) exists there. The gap
+for the real RH is precisely that the analogous machinery over
+$\mathrm{Spec}(\mathbb{Z})$ has never been built: there is no Frobenius, no
+surface $\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$, no index
+theorem. The function-field case is not an analogy that might help. It is a
+completed instance of the exact pattern, where the new mathematics arrived and
+turned the hypothesis into a theorem.
+
+### 9.3 Why this is the honest frame, not pessimism
+
+This project's experimental thread keeps finding the same thing from the inside:
+the soft tools provably cannot reach (the marginal-positivity results, the
+Level-3 ceiling, the $2/3$ analytic ceiling, the K1 wall). In the historical
+record, that is not the sound of a dead end. It is the sound that immediately
+precedes new mathematics: the quintic, the parallel postulate, the three-body
+problem, and the finite-field RH all looked exactly this way until the new
+structure was built. Ruling out what cannot work is how the field learns what
+the new structure has to be.
+
+So "RH needs new mathematics" is a statement of where to dig, with a long track
+record of digging there successfully. The marginal-positivity finding points at
+the exact structure of $\zeta$; the function-field precedent points at
+intersection-theoretic positivity over $\mathrm{Spec}(\mathbb{Z})$ as the shape
+of the missing tool. Both are coordinates, not walls.
 
 ---
 
