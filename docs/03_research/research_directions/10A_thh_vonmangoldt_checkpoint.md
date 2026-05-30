@@ -4,9 +4,15 @@
 >
 > **The checkpoint, in one line.** Compute the $S^1$-equivariant Euler characteristic / regularized determinant attached to $\mathrm{THH}(\mathbb{Z})$ and ask whether it reproduces $-\zeta'/\zeta(s) = \sum_{n\ge 1}\Lambda(n)\,n^{-s}$ (equivalently the Euler product $\prod_p (1-p^{-s})^{-1}$). If yes, the cyclotomic Frobenius is the carrier of the Deninger flow and Direction 3 should re-point from prismatic-over-$\mathbb{Z}_p$ to $\mathrm{TC}$-over-$\mathbb{S}$. If no, the analogy is decorative and Direction 10 is dropped.
 
-## 0. Status (first pass landed 2026-05-30)
+## 0. Status (first pass landed 2026-05-30; reoriented by literature survey same day)
 
-Checkpoint **10A.ii PASSES in its imprimitive form**, and the direction is reduced to one sharp target. See [`experiments/homotopy/e_thh_vonmangoldt.py`](../../../experiments/homotopy/e_thh_vonmangoldt.py) (writeup [.md](../../../experiments/homotopy/e_thh_vonmangoldt.md)), LEARNINGS #28. In one line: Bökstedt's THH(Z) torsion log-orders assemble rigorously to $-\zeta'(s)$ (the imprimitive log-sum), with the correct per-prime $\log p$ structure via $v_p(i)$; the von Mangoldt sum ($=\Gamma_S^2$, #26) is exactly one Möbius factor $1/\zeta$ away, and $1/\zeta = \mu$ is the conjectural primitive reduction $\mathrm{THH}\to\mathrm{TC}$. Remaining target: **does the cyclotomic equalizer implement Möbius inversion?** (plus justifying the $i^{-s}$ weight). The form 10A.iii (signature, the K1 crux) is untouched.
+Checkpoint **10A.ii passed in its imprimitive form** (LEARNINGS #28): Bökstedt's THH(Z) torsion log-orders assemble rigorously to $-\zeta'(s)$, the von Mangoldt sum is one Möbius factor away. See [`e_thh_vonmangoldt`](../../../experiments/homotopy/e_thh_vonmangoldt.md).
+
+**Then a literature survey reoriented the target (LEARNINGS #29, [`survey_tc_zeta_literature.md`](../../../experiments/homotopy/survey_tc_zeta_literature.md)).** Two corrections:
+1. **The proven template is Hesselholt's**, not the naive THH$\to$TC$=$Möbius guess: over $\mathbb{F}_q$, $\zeta(X,s) = \det_\infty(s-\Theta\mid \mathrm{TP}_{\mathrm{odd}})/\det_\infty(s-\Theta\mid \mathrm{TP}_{\mathrm{ev}})$ with $\Theta$ the Frobenius-flow generator on the $S^1$-Tate periodic $\mathrm{TP}_*$ and the periodicity class in $\mathrm{TP}_{-2}$. This is the Deninger flow-determinant, realized in THH and **proven** over $\mathbb{F}_q$. The correct object is $\det_\infty(s-\Theta)$ on $\mathrm{TP}$ with the flow $\Theta$, not raw THH orders with a hand-imposed $i^{-s}$ weight.
+2. **The over-$\mathbb{Z}$ gap is #25 inside Hesselholt's framework**: he flags that $\mathrm{TP}_*$ is generally not periodic over $\mathbb{Z}$ and $\varphi_p$ need not exist there. And even over $\mathbb{F}_q$ where the theorem holds, RH ($|\text{Frobenius eigenvalues}|=q^{1/2}$) is the Weil/Hodge-index **positivity**, a separate input the determinant does not produce. So Direction 10 funnels back to the **same signature/Hodge-index problem as Direction 8** (form 10A.iii). The ADVERSARY also flags Gap B's "TC equalizer $=1/\zeta$" as a likely category error (additive limit vs multiplicative Euler product).
+
+**Revised remaining target:** imitate Hesselholt's $\det_\infty(s-\Theta)$ over $\mathbb{Z}$ (substrate: Morin's over-$\mathbb{S}$ machinery), reconcile the project's $-\zeta'$ with the $\Theta$-determinant, and confront the signature question (10A.iii) which is the real RH content and is shared with Direction 8.
 
 ## 1. Why this checkpoint and not another
 
