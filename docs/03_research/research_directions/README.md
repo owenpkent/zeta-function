@@ -4,6 +4,8 @@
 >
 > These are not project-internal experiments. They are research programs requiring expert mathematicians at the postdoc-or-faculty level, operating over years. The documents here are the operational specifications that would allow such mathematicians (or research groups) to begin.
 
+> **Stance (2026-05-30).** We operate as a research group making incremental, verifiable progress, not as cataloguers of a long shot. The per-direction probabilities below are honest *difficulty* estimates; they are inputs to triage, not verdicts. The program proceeds by proving reachable sub-theorems and tightening the target, one milestone at a time. As of this date the spine has sharpened: the synthesis [`../all_roads_to_the_signature.md`](../all_roads_to_the_signature.md) shows every direction converges on one positivity, and [`08A_rosati_standard_conjecture.md`](08A_rosati_standard_conjecture.md) states it in standard form (arithmetic Rosati positivity = the arithmetic Hodge standard conjecture) with a concrete M1-M5 milestone ladder, M1 done. Read the directions through that spine.
+
 ## The eight directions
 
 | # | Direction | Doc | Phase in proof_program.md | Cumulative success probability |

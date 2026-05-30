@@ -32,15 +32,15 @@ Hesselholt's theorem (#29) is decisive precisely because it is the strongest pos
 
 The wrong-approach detector cuts the same way every time: the realization frameworks are often *buildable* for Davenport-Heilbronn (D-H has a functional equation, hence an explicit formula, hence a trace), and that is exactly why a trace-side proof is suspect (K1/R3.5). The signature is *unbuildable* for D-H: no Euler product $\Rightarrow$ no Frobenius correspondence $\Rightarrow$ no surface $\Rightarrow$ no intersection form to take the signature of (2G's K2 reading; #25/#26's bidegree form). The one object that cannot be built for the known counterexample is the one object whose positivity is RH. That is not a coincidence; it is the discipline telling us where the proof must live.
 
-## Operational implication
+## Operational implication: a research program, not a catalog
 
-Stop building realizations. Connes, Deninger, Hesselholt, Morin, and the project's own 2R/2Q dictionary already supply the determinant/trace side over $\mathbb{F}_q$ and partially over $\mathbb{Z}$. Concentrate effort on the **signature**:
+Stop building realizations. Connes, Deninger, Hesselholt, Morin, and the project's own 2R/2Q dictionary already supply the determinant/trace side over $\mathbb{F}_q$ and partially over $\mathbb{Z}$. The signature is the work, and it is a *program with attackable milestones*, not a 1% lottery ticket. The sharpened target is **arithmetic Rosati positivity** (the standard-conjecture form; see [`research_directions/08A_rosati_standard_conjecture.md`](research_directions/08A_rosati_standard_conjecture.md)):
 
-- the Hodge-index theorem on the constructed surface (Direction 8), the project's stated central problem;
-- equivalently, form 10A.iii: a definite cup-product signature on $\mathrm{TP}_{\mathrm{odd}}$ over $\mathbb{Z}$;
-- with the new TP/flow lens as input: the odd/even split of $\mathrm{TP}$ is exactly the primitive/hyperbolic split of the Weil Hodge index (verified in the function-field case, see [`experiments/arithmetic_geometric/e2s_tp_hodge_split.py`](../../experiments/arithmetic_geometric/e2s_tp_hodge_split.py)).
+> RH = positivity (no negative spectrum) of the Rosati trace form $B(x,y)=\mathrm{Tr}(x\,y^\dagger)$ on the arithmetic Frobenius algebra $\mathcal{A}$ of $\mathrm{Spec}(\mathbb{Z})$.
 
-Whether any framework supplies a *new tool* for the signature (rather than another realization) is the only question that distinguishes progress from reformulation.
+This is the actual engine of Weil 1948, needs no ambient surface to state, is the arithmetic analogue of Grothendieck's **Hodge standard conjecture**, and is non-circular (the positivity comes from a polarization, not from the zeros). The four equivalent function-field faces are all in the record: Rosati positivity (2T), primitive intersection negative-definiteness (2G), $|\alpha_i|=\sqrt q$, and the TP/flow zeros on $\mathrm{Re}(s)=1/2$ (2S).
+
+The milestones (08A §4): **M1** verify the function-field Rosati formulation (done, 2T); **M2** construct the truncated arithmetic Frobenius trace form $\mathcal{A}_P$ from known data (#25/#26 + the 2H-2P Arakelov pairings) and compute its signature (next experiment); **M3** identify the polarization (the Arakelov/archimedean positivity) and prove $B\succeq 0$ on $\mathcal{A}_P$; **M4** control the $P\to\infty$ archimedean-dominates-prime balance (the deep step); **M5** derive RH and verify K1/K2/K3. M2 and M3 are reachable now.
 
 ## Pointers
 
