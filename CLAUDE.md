@@ -31,6 +31,8 @@ The owner is Owen, a wheelchair user with muscular dystrophy.
 
 ## START HERE
 
+- **Mindset and philosophy**: [`docs/researcher_mindset.md`](docs/researcher_mindset.md). How this project works: the problem is a target not a monument, we advance a front, negative results are coordinates, honesty is the engine. Read this first; it defines what counts as progress.
+- **Current spine**: [`docs/03_research/all_roads_to_the_signature.md`](docs/03_research/all_roads_to_the_signature.md) (all directions converge on one positivity) and [`docs/03_research/research_directions/08A_rosati_standard_conjecture.md`](docs/03_research/research_directions/08A_rosati_standard_conjecture.md) (RH = arithmetic Rosati positivity = the arithmetic Hodge standard conjecture, with the M1-M5 milestone ladder).
 - **Research strategy**: [`docs/research_atlas/README.md`](docs/research_atlas/README.md). Comprehensive catalog of all approaches, what failed, what's missing.
 - **Experiments**: [`experiments/PROOF_ARCHITECTURES_PLAN.md`](experiments/PROOF_ARCHITECTURES_PLAN.md). The test plan with current status per architecture.
 - **Proof program work**: [`PHASE_STATE.md`](PHASE_STATE.md) (current operational state), [`OPERATIONS.md`](OPERATIONS.md) (how to drive the agent loop), [`docs/03_research/proof_program.md`](docs/03_research/proof_program.md) (AI-augmented + human-led plan), [`docs/03_research/proof_program_ai_only.md`](docs/03_research/proof_program_ai_only.md) (speculative AI-only variant).
