@@ -8,6 +8,26 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 27. Two new "crazy but formal" directions (9-13) were stress-tested with two cheap experiments. The Hodge-Riemann log-concavity of the Li coefficients is a NON-EULER detector, not an RH detector (the #20 trap, in a new basis); the Jensen/Turan (xi-Taylor-moment) basis is in a STEALTH WINDOW at reachable order (sees neither non-Euler-ness nor off-line zeros). Two bases, two different walls, both consistent with marginal positivity.
+
+Session 2026-05-30 proposed five speculative directions (docs/03_research/research_directions/09-13) attacking the place-dependent-bidegree obstruction (#25) head-on, and shipped two same-day falsification experiments.
+
+**e3n ([e3n_li_signature.py](positivity/e3n_li_signature.py)) -- Direction 9 (arithmetic matroid / AHK).** Tests whether the Li coefficients obey the Adiprasito-Huh-Katz log-concavity (degree-1 Hodge-Riemann) signature an arithmetic matroid would force, and whether D-H violates it. Result at T_max=120, n<=120, 40 dps:
+
+| function | Euler product | off-line zeros | log-concavity violations (lambda_n^2 < lambda_{n-1}lambda_{n+1}) |
+|---|---|---|---:|
+| zeta | yes | no | **0** |
+| D-H | no | yes | 37 |
+| D-H on-line zeros only (control) | no | no | 37 |
+| Epstein d47 principal | **no** | **no** | 57 |
+| Epstein d47 non-principal | no | yes | 52 |
+
+Decisive controls: (i) removing D-H's off-line zeros leaves the 37 violations unchanged; (ii) the non-Euler-but-RH-satisfying Epstein d47 PRINCIPAL form (no off-line zeros up to T=120) has the MOST violations (57). So the log-concavity defect tracks **non-Euler-ness, not RH-failure** -- exactly the LEARNINGS #20 reformulation trap, now in the Hodge-Riemann/Li basis. This SUPPORTS Direction 9's K2 mechanism as a structural-existence statement ("no Euler product => no log-concave Li sequence => no matroid": only the unique Euler product zeta is log-concave), but shows the HR defect alone is not a numerical RH-detector. To test RH the matroid must inject the EXACT Euler structure, not the float-level zero perturbation (doc milestone 9.2).
+
+**e_jensen_turan ([e_jensen_turan.py](integrable/e_jensen_turan.py)) -- Direction 13 (tau-function / Jensen-Turan).** Tests whether the Polya moments of Xi(z)=xi(1/2+iz) obey the Turan inequalities / Jensen-polynomial hyperbolicity (Pólya; Csordas-Norfolk-Varga; Griffin-Ono-Rolen-Zagier 2019), the degree-1 HR / real-rootedness content from the integrable-systems side. Moments extracted by circle-sampling + discrete Cauchy transform (fast, ~80-digit accuracy; the `mp.taylor(method='quad')` route hangs at high order). Result at M=16, 80 dps: zeta, D-H, AND Epstein d47 principal ALL pass (0 Turan violations, 0 non-hyperbolic Jensen polynomials for d=2,3,4). This is a **stealth window**: the xi-moment basis is dominated by the low zeros near z=0, so the off-line D-H zeros at height ~85.7 perturb the low-order moments below the detection floor. The basis sees neither non-Euler-ness nor off-line zeros at reachable order.
+
+**The contrast is the finding.** The Li-coefficient basis (lambda_n = sum over ALL zeros) is sensitive to the on-line zero DISTRIBUTION, hence detects non-Euler-ness (but over-detects: fires on RH-satisfying non-Euler controls). The xi-Taylor-moment basis (dominated by low zeros) is insensitive to high off-line zeros, hence a stealth window. Neither is a clean RH-detector; both walls are consistent with the marginal-positivity thesis (#18/#19) and with the discipline that a working certificate must engage the EXACT Euler/arithmetic structure, not a soft spectral statistic. Net: directions 9 and 13 are not refuted, but their cheap-detector value is bounded; their real test requires the structural constructions (the matroid characteristic polynomial = xi; the tau-function realization), which remain open. Directions 10 (THH/cyclotomic Frobenius over the sphere spectrum) and 11 (bidegree-as-measure) are theory-side and untested; Direction 10 is the only one of the five that dissolves #25's obstruction at the root (one circle action carrying all primes).
+
 ### 26. `Gamma_S^2` (the regularized self-intersection of the arithmetic Frobenius correspondence pinned in #25) is realized concretely as the log-derivative of a Ruelle dynamical zeta whose primitive closed-orbit lengths are exactly `{log p}`: `-zeta'/zeta = sum_n Lambda(n) n^{-s}`. Davenport-Heilbronn has no such closed-orbit spectrum (its log-derivative coefficients delocalize off prime powers), so the dynamical-flow representation does not exist for it.
 
 2R ([e2r_dynamical_zeta.py](arithmetic_geometric/e2r_dynamical_zeta.py), writeup [e2r_dynamical_zeta.md](arithmetic_geometric/e2r_dynamical_zeta.md)) makes #25's abstract `Gamma_S^2 = reg-sum_p (log p)(...)` concrete on the dynamical side, the half of the Morishita Deninger↔Connes-Consani bridge (arXiv:2508.15971, closed orbits↔primes) that Deninger supplies.
