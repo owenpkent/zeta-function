@@ -76,11 +76,29 @@
 - [x] Lean: discharged #MB-1 (zeta pole at s=1), #MB-2 (zeta nonvanishing Re s>1), #MB-6 (functional equation) to real kernel-checked proofs from existing Mathlib.
 - [x] Lean: proved the digamma recurrence psi(s+1)=psi(s)+1/s (digamma_add_one) from Complex.Gamma_add_one (Mathlib has no digamma). Build green; project sorry count 26 -> 23.
 
+### Session 007 (2026-05-30): creative directions (9-13), reframe, and the Rosati spine
+
+- [x] Directions 9-13 proposed (docs/03_research/research_directions/09-13 + README), each attacking the #25 place-dependent-bidegree obstruction: 9 arithmetic matroid (AHK ↔ Li), 10 cyclotomic Frobenius over the sphere spectrum (THH/TC), 11 bidegree-as-a-measure, 12 de Bruijn-Newman criticality (Λ=0), 13 infinite-genus tau-function.
+- [x] e3n (Li log-concavity / Hodge-Riemann signature): the log-concavity defect is a NON-Euler detector, not an RH detector — the Epstein d47-principal control (non-Euler, RH holds) fires with the most violations. The #20 reformulation trap in a new basis. LEARNINGS #27.
+- [x] e_jensen_turan (Jensen polynomials / Turán inequalities on ξ Pólya moments): zeta, D-H, and Epstein-principal all pass at reachable order — a STEALTH WINDOW (the ξ-moment basis is blind to off-line zeros at height 85.7). Two bases, two different walls. LEARNINGS #27.
+- [x] e_thh_vonmangoldt (Direction 10A.ii first pass): Bökstedt's THH(Z) torsion log-orders assemble (exactly, given the i^-s weight) to -ζ'(s); the von Mangoldt sum = Γ_S² (#26) is one Möbius factor 1/ζ away. Per-prime structure via v_p(i) verified. LEARNINGS #28.
+- [x] e_necklace_mobius (Gap B): the cyclotomic C_n-fixed-point components are indexed by necklace polynomials = literally Möbius inversion (Metropolis-Rota cyclotomic identity verified exactly). The μ factor is intrinsic to the cyclotomic combinatorics. LEARNINGS #28.
+- [x] SURVEYOR literature reconnaissance (survey_tc_zeta_literature.md): the THH→von Mangoldt link is not in the literature as posed; the proven template is Hesselholt's ζ(X,s)=det_inf(s-Θ|TP_odd)/det_inf(s-Θ|TP_ev) over F_q. Reorients Direction 10; the over-Z gap is #25 again; ADVERSARY flags the TC-equalizer=Möbius guess as a likely category error. LEARNINGS #29.
+- [x] Synthesis: docs/03_research/all_roads_to_the_signature.md — every architecture/direction realizes ζ (determinant/trace) but RH is the SIGNATURE/positivity, the same object everywhere; the irreducible content. LEARNINGS #30.
+- [x] e2s (TP odd/even = Weil Hodge-index split): triple equivalence across genus 1-2 over F_q (primitive intersection negative-definite ⟺ |α_i|=√q ⟺ Hesselholt zeros on Re=1/2). The K3 check for the TP lens.
+- [x] 08A: RH reformulated as arithmetic Rosati positivity = the arithmetic Hodge standard conjecture, with the M1-M5 milestone ladder. The standard-conjecture (Grothendieck) home of the problem; non-circular (polarization, not zeros); K2-clean.
+- [x] e2t (milestone M1, done): the full 2g-dimensional Rosati trace form has no negative eigenvalues across genus 1-2 over F_q ⟺ |α_i|=√q. Degeneracies (genus-2/F_5) = proper-subalgebra relations. For g=1, G_Rosati = -(2G primitive Gram). Four equivalent function-field faces of RH-for-C now recorded. LEARNINGS #31.
+- [x] e2u (milestone M2, attempted): the arithmetic Rosati positivity assembled as the non-circular archimedean-dominance balance (3M place-type split). Verdict CONTAMINATED by the A_arch ~0.06 offset (balance backwards: D-H outranks zeta). Gate isolated and named (M2.5 = recompute A_arch via the bilinear Bombieri integral). LEARNINGS #32.
+- [x] docs/researcher_mindset.md: the operating philosophy (target not monument; advance a front; negative results are coordinates; honesty is the engine; reformulation must import power; build the ladder; the AI-augmented research group). Wired into CLAUDE.md START HERE. Project framing recast from "long-shot catalog" to "research program with attackable milestones".
+
 ### Pre-existing experiments
 
 - [x] **experiments/multifractal/** — E0 benchmarks, E1 zeta MFDFA, E2 FHK max fit, E3 psi MFDFA
 
 ## Open — experimental
+
+- [ ] **Milestone M2.5 (immediate next): recompute A_arch from the bilinear Bombieri-form integral per Gamma factor** (LEARNINGS #20/#32's diagnosed fix), replacing the digamma-kernel Simpson integral in e3m/e2u, so the self-consistency residual drops below the min-eigenvalue signal. Unblocks the M2 four-way RH-vs-Euler verdict (does the arithmetic Rosati balance separate RH-failure from non-Euler-ness?) and the path to M3 (the polarization). See docs/03_research/research_directions/08A_rosati_standard_conjecture.md §4.
+- [ ] **Milestone M3:** identify the polarization (the Arakelov/archimedean Green's-function positivity, 2I-2L) as the geometric source of B ⪰ 0 on the truncated arithmetic Rosati form; prove it or find the obstruction.
 
 - [x] Arch 3B-extension (rigorous): rigorous Li negativity for D-H at n ~ 4 x 10^5 with >=100-digit precision and explicit error/tail bounds (3B.3, experiments/positivity/e3b3_rigorous.py; first rigorously negative at n=336,000). Extended in 3B.4 to a five-L-function discrimination with a second off-line witness (Epstein).
 - [x] Arch 3D.3 extension: test prediction "neg count = # off-line pairs" by going to T_max = 500. **CONFIRMED**: D-H has 9 off-line gammas in UHP at T_max=500, n_neg = 9 (MATCH). Rel min eig = -2.597e-02 (stable at ~-2.6% across all tested T_max). Four data points total: T_max ∈ {200, 300, 350, 500}, off-gammas {4, 5, 7, 9}, all match n_neg exactly. Two non-trivial double-increments (+2 at T_max=350 and T_max=500). See experiments/positivity/e3d4_T_max_scaling.* updated.
