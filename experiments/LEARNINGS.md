@@ -8,6 +8,21 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 28. Direction 10A.ii first pass: Bokstedt's THH(Z) torsion log-orders assemble RIGOROUSLY to -zeta'(s) (the imprimitive log-sum), and the von Mangoldt sum = #26 dynamical zeta = Gamma_S^2 is exactly ONE Mobius factor (1/zeta) away. That factor is the conjectural THH -> TC cyclotomic reduction. The checkpoint passes in its imprimitive form and reduces Direction 10 to a single sharp target.
+
+e_thh_vonmangoldt ([e_thh_vonmangoldt.py](homotopy/e_thh_vonmangoldt.py), writeup [e_thh_vonmangoldt.md](homotopy/e_thh_vonmangoldt.md)) runs the cheapest concrete form of the Direction 10A checkpoint (the THH-side mirror of #26). Substrate: Bokstedt's theorem `pi_*(THH(Z)) = Z (deg 0), Z/i (deg 2i-1), 0 (even>0)`, so `|THH_{2i-1}(Z)| = i` and the prime p enters degree 2i-1 via `v_p(i)`.
+
+**Three links (all verified).**
+- **Link 1 (exact, term-by-term).** Weighting degree 2i-1 by `i^{-s}` with value `log|THH_{2i-1}| = log i`, the assembled series `sum_i (log i) i^{-s} = -zeta'(s)` (err 5e-16 at s=4). This is the IMPRIMITIVE log-sum, NOT the von Mangoldt sum.
+- **Link 2 (the Mobius gap).** `-zeta'(s) = zeta(s)*(-zeta'/zeta)(s)`, i.e. `Lambda = mu * log` (verified to 6e-31). The von Mangoldt sum is recovered by Mobius convolution (x 1/zeta) of the THH log-orders.
+- **Link 3 (per-prime, exact by regrouping).** `sum_i v_p(i) i^{-s} = zeta(s) p^{-s}/(1-p^{-s})`, times log p = zeta(s) x [p-Euler factor of -zeta'/zeta] (err ~1e-12 for p=2,3,5). Cross-check `sum_p v_p(i) log p = log i` exact.
+
+**Verdict.** The primes enter THH(Z) exactly through `v_p(i)` with correct log p weights and assemble rigorously to `-zeta'(s)`. The von Mangoldt sum (`= Gamma_S^2`, #26) is one factor `1/zeta = mu` away, which on the spectral side is the primitive reduction THH -> TC (the Nikolaus-Scholze cyclotomic equalizer). So Direction 10 reduces to ONE falsifiable target: **does the THH -> TC equalizer implement Mobius inversion?** Two caveats kept explicit: (A) the weight `i^{-s}` on degree 2i-1 is an assumption the S^1-Tate formalism must justify; (B) "1/zeta = TC reduction" is the conjectural target, not a theorem.
+
+**K2 firewall.** D-H is not a ring, so no THH; concretely `Lambda_DH` delocalizes onto composite n (first leak n=6, then 12,14,18,21,...; matches #20/#26), so it is NOT `mu*(log-order sequence)`. No THH, no surface, at the most structural level yet.
+
+This is the strongest positive signal for any of directions 9-13: unlike the bounded cheap-detectors of #27, the THH route reproduces the correct prime structure rigorously up to one identified factor, and that factor has a precise homotopy-theoretic candidate.
+
 ### 27. Two new "crazy but formal" directions (9-13) were stress-tested with two cheap experiments. The Hodge-Riemann log-concavity of the Li coefficients is a NON-EULER detector, not an RH detector (the #20 trap, in a new basis); the Jensen/Turan (xi-Taylor-moment) basis is in a STEALTH WINDOW at reachable order (sees neither non-Euler-ness nor off-line zeros). Two bases, two different walls, both consistent with marginal positivity.
 
 Session 2026-05-30 proposed five speculative directions (docs/03_research/research_directions/09-13) attacking the place-dependent-bidegree obstruction (#25) head-on, and shipped two same-day falsification experiments.

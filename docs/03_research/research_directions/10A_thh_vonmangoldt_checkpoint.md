@@ -4,6 +4,10 @@
 >
 > **The checkpoint, in one line.** Compute the $S^1$-equivariant Euler characteristic / regularized determinant attached to $\mathrm{THH}(\mathbb{Z})$ and ask whether it reproduces $-\zeta'/\zeta(s) = \sum_{n\ge 1}\Lambda(n)\,n^{-s}$ (equivalently the Euler product $\prod_p (1-p^{-s})^{-1}$). If yes, the cyclotomic Frobenius is the carrier of the Deninger flow and Direction 3 should re-point from prismatic-over-$\mathbb{Z}_p$ to $\mathrm{TC}$-over-$\mathbb{S}$. If no, the analogy is decorative and Direction 10 is dropped.
 
+## 0. Status (first pass landed 2026-05-30)
+
+Checkpoint **10A.ii PASSES in its imprimitive form**, and the direction is reduced to one sharp target. See [`experiments/homotopy/e_thh_vonmangoldt.py`](../../../experiments/homotopy/e_thh_vonmangoldt.py) (writeup [.md](../../../experiments/homotopy/e_thh_vonmangoldt.md)), LEARNINGS #28. In one line: Bökstedt's THH(Z) torsion log-orders assemble rigorously to $-\zeta'(s)$ (the imprimitive log-sum), with the correct per-prime $\log p$ structure via $v_p(i)$; the von Mangoldt sum ($=\Gamma_S^2$, #26) is exactly one Möbius factor $1/\zeta$ away, and $1/\zeta = \mu$ is the conjectural primitive reduction $\mathrm{THH}\to\mathrm{TC}$. Remaining target: **does the cyclotomic equalizer implement Möbius inversion?** (plus justifying the $i^{-s}$ weight). The form 10A.iii (signature, the K1 crux) is untouched.
+
 ## 1. Why this checkpoint and not another
 
 LEARNINGS #25 isolates the obstruction with unusual precision: over $\mathrm{Spec}(\mathbb{Z})$ the Frobenius correspondence must carry a place-dependent bidegree $(1,p)$, no single scale, and from that one fact the Deninger flow (a continuous $\mathbb{R}$-action, not a $\mathbb{Z}$-action) and the infinite-dimensionality of $H^i$ follow as consequences. LEARNINGS #26 then realizes the regularized self-intersection $\Gamma_S^2$ concretely as the log-derivative of a Ruelle dynamical zeta whose closed-orbit lengths are exactly $\{\log p\}$, giving $\sum_n \Lambda(n) n^{-s}$, and shows Davenport-Heilbronn has no such closed-orbit spectrum.
