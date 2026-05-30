@@ -83,6 +83,24 @@ has the wrong signature) would be a top-tier result, and the partial results
 (arithmetic intersection theory, the surface frameworks) are contributions in their own
 right.
 
+**Two concrete leads from the reference-library read-through** (26 sources, deep notes in
+[`docs/03_research/reading_notes/`](docs/03_research/reading_notes/)). The literature
+independently confirms the 2Q/2R reduction and locates the gap identically (the signature,
+not the trace formula, is the open step). It also surfaces the two most concrete objects to
+push on:
+
+1. **Bhatt-Lurie's Cartier-Witt stack `WCart`.** Absolute prismatic cohomology is "de Rham
+   relative to $\mathbb{F}_1$" (a candidate for 2K's missing base point), it carries a global
+   Frobenius that is a contraction collapsing `WCart^HT` to the de Rham point, and a **Sen
+   operator $\Theta$** that is the literal generator of the cyclotomic flow ($\gamma_u =
+   u^\Theta$). That is the closest existing object to Deninger's eigenvalue generator / the
+   Direction-4.6 flow, on the finite-places (p-adic transversal) substrate Leichtnam 2006 uses.
+2. **Connes-Consani's square $\widehat{\mathbb{N}^2}$.** They already build the product object
+   (Newton polygons in $\mathbb{Z}\times\mathbb{Z}$) with one-parameter Frobenius correspondences
+   $\Psi(\lambda)$ and a composition law. The gap is isolated and sharp: the characteristic-1
+   operations are idempotent, so there is **no signed intersection pairing / Hodge index yet**.
+   Putting a signature on this square is Direction 8 in its most concrete current form.
+
 ## Canonical pointers
 
 - Operational state / next sub-task: [`PHASE_STATE.md`](PHASE_STATE.md)
@@ -91,5 +109,6 @@ right.
 - Master research map (all approaches, obstructions): [`docs/research_atlas/README.md`](docs/research_atlas/README.md)
 - What new mathematics must look like: [`docs/03_research/new_mathematics.md`](docs/03_research/new_mathematics.md)
 - The eight research directions: [`docs/03_research/research_directions/`](docs/03_research/research_directions/)
+- Reference library (26 sources) + deep reading notes: [`references/README.md`](references/README.md), [`docs/03_research/reading_notes/`](docs/03_research/reading_notes/)
 - Latest session narrative: [`experiments/orchestrator_sessions/session_005.md`](experiments/orchestrator_sessions/session_005.md)
 - Lean substrate + VERIFIER targets: [`lean/README.md`](lean/README.md)

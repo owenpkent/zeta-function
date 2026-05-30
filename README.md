@@ -19,6 +19,7 @@ zeta-function/
 │   │   ├── proof_program.md     # ★ AI-augmented (human-led) proof program
 │   │   ├── proof_program_ai_only.md  # ★ AI-only speculative variant
 │   │   └── research_directions/ # ★ 8 research-grade directions with operational specs
+│   │   └── reading_notes/       # ★ Full-depth notes on all 26 reference-library sources
 │   ├── implications/            # Why it matters (primes, physics, crypto)
 │   ├── solutions/               # Known approaches to the Riemann Hypothesis
 │   └── research_atlas/          # Master research map: all attempts, failures, ML directions
@@ -31,6 +32,7 @@ zeta-function/
 │   ├── zero_free/               # Arch 4 (LP/SDP family through 4E.8)
 │   ├── arithmetic_geometric/    # Arch 2 (2A diff, R1-R5, R3.6, R3.6.3, 2C, 2D, 2E)
 │   └── multifractal/            # Log-correlated field experiments (pre-existing)
+├── references/                  # ★ Reference library (26 sources, gitignored PDFs) + tracked index
 ├── lean/                        # ★ Lean 4 / Mathlib formal verification (skeleton)
 │   ├── lakefile.lean
 │   ├── ZetaRH.lean              # Main module
