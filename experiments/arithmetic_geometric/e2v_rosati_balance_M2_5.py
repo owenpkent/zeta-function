@@ -58,10 +58,14 @@ from experiments.arithmetic_geometric.e2u_rosati_balance_M2 import balance_of_pe
 
 
 def C_mu(mu: float, prec: int) -> "mp.mpf":
-    """Constant in the Bombieri archimedean term for Gamma_R(s+mu).
-    C_0 = log 4pi + gamma_E (3F, validated); general C_mu = log pi - psi(1/2+mu)."""
+    """Constant in the Bombieri archimedean term for Gamma_R(s+mu):
+        C_mu = log pi - psi((1+mu)/2).
+    Verified: mu=0 gives log pi - psi(1/2) = log 4pi + gamma_E (3F, validated);
+    mu=1 gives log pi - psi(1) = log pi + gamma_E (pinned against the frequency
+    block for Davenport-Heilbronn, M2.6). NOTE the argument is (1+mu)/2, NOT
+    1/2+mu (which coincides only at mu=0 and was the M2.5 control bug)."""
     mp.mp.dps = prec
-    return mp.log(mp.pi) - mp.digamma(mp.mpf(1) / 2 + mp.mpf(mu))
+    return mp.log(mp.pi) - mp.digamma((1 + mp.mpf(mu)) / 2)
 
 
 def arch_block_bombieri(b_vals, mu_list, log_Q, prec: int, tail_factor: float = 40.0):
