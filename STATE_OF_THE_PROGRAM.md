@@ -46,6 +46,7 @@ the line. What is in hand vs. missing:
 - **2K** the dictionary: the explicit-formula place-decomposition $M = A_{\mathrm{arch}} + P_{\mathrm{fin}} + B_{\mathrm{pole}}$ maps to the would-be intersection numbers, with the pole at $s=1$ as the hyperbolic $(+1)$ direction.
 - **2Q** (session 005): the missing correspondence $\Gamma_S$ must carry a **place-dependent $(1,p)$ bidegree** (not the function field's single scale $q$); this *forces* infinite-dimensional $H^i$ and the Deninger $\mathbb{R}$-flow, and pins $\Gamma_S^2$ to the von Mangoldt prime sum.
 - **2R** (session 005): that $\Gamma_S^2$ realized concretely as a Ruelle dynamical-zeta log-derivative (orbit lengths $\{\log p\}$, $-\zeta'/\zeta = \sum_n \Lambda(n) n^{-s}$); D-H has no such orbit spectrum.
+- **M3 Analytic Domination** (session 008): Isolated the composite-support obstruction ($P_{\mathrm{comp}}$) and structurally broke the stealth window. For Davenport-Heilbronn, the exact Arakelov geometry ($M_{\mathrm{euler}} = A_{\mathrm{arch}} + P_{\mathrm{pp}} + B_{\mathrm{pole}}$) fails to bound the prime-power block (min eig $-0.9287$); the false positivity of the full $M$ was artificially propped up by $P_{\mathrm{comp}}$. The true geometric RH test is the positivity of $M_{\mathrm{euler}}$.
 
 **The one missing object:** the product surface $\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$ with a genuine intersection pairing realizing these numbers, and a cohomology carrying the **signature** (not just the spectrum, which 2R supplies). This is Direction 4.6 (leafwise prismatic cohomology with a trace formula) feeding Direction 8 (the Hodge index theorem on the surface). Untouched at the construction level; multi-year, multi-person.
 
@@ -68,14 +69,8 @@ sum-over-zeros theory Mathlib lacks. See [`lean/README.md`](lean/README.md).
 
 ## The single most-leveraged next move
 
-**[Direction 4.6](docs/03_research/research_directions/04_prismatic_foliation.md#46-lefschetz-trace-formula)**:
-construct a leafwise prismatic cohomology $H^*_{\mathcal{F},\mathrm{pr}}$
-whose regularized determinant $\det_\zeta(s - \Phi_t)$ equals the dynamical zeta 2R
-exhibited, and on which a Hodge-index **signature** can be stated. 2R fixed its target
-(orbit lengths $\{\log p\}$, self-pairing $-\zeta'/\zeta$); D-H fixed the control (no such
-spectrum). This is the first rung where the place-dependent bidegree becomes an honest
-*intersection number* rather than a spectral fact. It is research-grade (years), but it
-is the unique structural continuation, and it is now specified rather than vague.
+**Construct the Product Surface Intersection Signature (Direction 8):**
+With the analytic domination bound clarified on the trace side (M3), the required move is to build the geometric framework that realizes this positivity on $\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$. This means establishing the Hodge index signature on the Bhatt-Lurie or Connes-Consani spaces.
 
 Honest odds (per the direction docs): Direction 8 unconditional success is under 1%; its
 value is that any outcome (proof, or a refutation showing the natural intersection form
