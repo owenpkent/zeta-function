@@ -138,7 +138,80 @@ theorem digamma_add_one {s : ℂ} (hs : ∀ m : ℕ, s ≠ -(m : ℂ)) :
     archimedean kernel. To be proved from `Complex.Gamma_mul_Gamma_one_sub`. -/
 theorem digamma_reflection {s : ℂ} (hs : ∀ m : ℤ, s ≠ m) :
     digamma (1 - s) - digamma s = (Real.pi : ℂ) * (Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s)) := by
-  sorry
+  have hs_not_nat (m : ℕ) : s ≠ -m := by
+    intro h
+    exact hs (-m) (by push_cast; exact h)
+  have hs_one_not_nat (m : ℕ) : 1 - s ≠ -m := by
+    intro h
+    have : s = 1 + m := by linear_combination -h
+    exact hs (1 + m) (by push_cast; exact this)
+  have hΓs : Complex.Gamma s ≠ 0 := Complex.Gamma_ne_zero hs_not_nat
+  have hΓ1s : Complex.Gamma (1 - s) ≠ 0 := Complex.Gamma_ne_zero hs_one_not_nat
+  have hdΓs : DifferentiableAt ℂ Complex.Gamma s := Complex.differentiableAt_Gamma s hs_not_nat
+  have h1 : DifferentiableAt ℂ Complex.Gamma (1 - s) := Complex.differentiableAt_Gamma (1 - s) hs_one_not_nat
+  have h2 : DifferentiableAt ℂ (fun z : ℂ => 1 - z) s := by fun_prop
+  have hdΓ1s : DifferentiableAt ℂ (fun z => Complex.Gamma (1 - z)) s := h1.comp s h2
+  have h_mul_deriv := logDeriv_mul s hΓs hΓ1s hdΓs hdΓ1s
+  have h_comp_deriv : logDeriv (fun z => Complex.Gamma (1 - z)) s = - digamma (1 - s) := by
+    have key := logDeriv_comp (f := Complex.Gamma) (g := fun z : ℂ => 1 - z) h1 h2
+    have hd : deriv (fun z : ℂ => 1 - z) s = -1 := by
+      rw [deriv_sub (by fun_prop) (by fun_prop)]
+      simp
+    rw [hd, mul_neg_one] at key
+    exact key
+  have h_LHS : logDeriv (fun z => Complex.Gamma z * Complex.Gamma (1 - z)) s = digamma s - digamma (1 - s) := by
+    rw [h_mul_deriv, h_comp_deriv, sub_eq_add_neg]
+    rfl
+  
+  have h_eq : (fun z => Complex.Gamma z * Complex.Gamma (1 - z)) = fun z => (Real.pi : ℂ) / Complex.sin ((Real.pi : ℂ) * z) := by
+    ext z
+    exact Complex.Gamma_mul_Gamma_one_sub z
+  have hs_sin : Complex.sin ((Real.pi : ℂ) * s) ≠ 0 := by
+    intro h
+    rw [Complex.sin_eq_zero_iff] at h
+    rcases h with ⟨k, hk⟩
+    have hk_eq : (Real.pi : ℂ) * s = (Real.pi : ℂ) * k := by
+      calc
+        (Real.pi : ℂ) * s = (k : ℂ) * (Real.pi : ℂ) := hk
+        _ = (Real.pi : ℂ) * (k : ℂ) := mul_comm _ _
+    have h_pi : (Real.pi : ℂ) ≠ 0 := by norm_cast; exact Real.pi_ne_zero
+    have h_eq_k : s = k := mul_left_cancel₀ h_pi hk_eq
+    exact hs k h_eq_k
+  have hd_sin_comp : DifferentiableAt ℂ (fun z => Complex.sin ((Real.pi : ℂ) * z)) s := by fun_prop
+  have hd_pi : DifferentiableAt ℂ (fun _ : ℂ => (Real.pi : ℂ)) s := by fun_prop
+  have h_div_deriv := logDeriv_div s (by norm_cast; exact Real.pi_ne_zero) hs_sin hd_pi hd_sin_comp
+  have h_logDeriv_pi : logDeriv (fun _ : ℂ => (Real.pi : ℂ)) s = 0 := by
+    rw [logDeriv_apply, deriv_const, zero_div]
+  
+  have h_sin_comp_deriv : logDeriv (fun z => Complex.sin ((Real.pi : ℂ) * z)) s = (Real.pi : ℂ) * (Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s)) := by
+    have h1_sin : DifferentiableAt ℂ Complex.sin ((Real.pi : ℂ) * s) := by fun_prop
+    have h2_sin : DifferentiableAt ℂ (fun z : ℂ => (Real.pi : ℂ) * z) s := by fun_prop
+    have key := logDeriv_comp (f := Complex.sin) (g := fun z : ℂ => (Real.pi : ℂ) * z) h1_sin h2_sin
+    have hd_inner : deriv (fun z : ℂ => (Real.pi : ℂ) * z) s = (Real.pi : ℂ) := by
+      rw [deriv_const_mul]
+      · simp
+      · fun_prop
+    rw [hd_inner] at key
+    have h_logDeriv_sin : logDeriv Complex.sin ((Real.pi : ℂ) * s) = Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s) := by
+      rw [logDeriv_apply]
+      have hds : deriv Complex.sin ((Real.pi : ℂ) * s) = Complex.cos ((Real.pi : ℂ) * s) := by simp
+      rw [hds]
+    rw [h_logDeriv_sin] at key
+    calc
+      logDeriv (fun z => Complex.sin ((Real.pi : ℂ) * z)) s = logDeriv (Complex.sin ∘ fun z => (Real.pi : ℂ) * z) s := rfl
+      _ = Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s) * (Real.pi : ℂ) := key
+      _ = (Real.pi : ℂ) * (Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s)) := by ring
+  
+  have h_RHS : logDeriv (fun z => (Real.pi : ℂ) / Complex.sin ((Real.pi : ℂ) * z)) s = - ((Real.pi : ℂ) * (Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s))) := by
+    rw [h_div_deriv, h_logDeriv_pi, h_sin_comp_deriv, zero_sub]
+    
+  have h_final : digamma s - digamma (1 - s) = - ((Real.pi : ℂ) * (Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s))) := by
+    calc
+      digamma s - digamma (1 - s) = logDeriv (fun z => Complex.Gamma z * Complex.Gamma (1 - z)) s := h_LHS.symm
+      _ = logDeriv (fun z => (Real.pi : ℂ) / Complex.sin ((Real.pi : ℂ) * z)) s := by rw [h_eq]
+      _ = - ((Real.pi : ℂ) * (Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s))) := h_RHS
+  
+  linear_combination -h_final
 
 /-- The archimedean kernel of the explicit formula along the critical line: the
     logarithmic derivative of the Γ-factor `π^{-s/2} Γ(s/2)` of the completed zeta
