@@ -131,6 +131,15 @@ theorem digamma_add_one {s : ℂ} (hs : ∀ m : ℕ, s ≠ -(m : ℂ)) :
     rw [logDeriv_apply, logDeriv_apply, hEq.deriv_eq, hEq.eq_of_nhds]
   rw [← hcomp, hval, hmul, add_comm]
 
+/-- **The digamma reflection formula** `ψ(1-s) - ψ(s) = π cot(π s)`, for `s ∉ ℤ`.
+    
+    This relates the digamma function at `s` and `1-s`. Together with the
+    recurrence, it provides the fundamental algebraic identities for the
+    archimedean kernel. To be proved from `Complex.Gamma_mul_Gamma_one_sub`. -/
+theorem digamma_reflection {s : ℂ} (hs : ∀ m : ℤ, s ≠ m) :
+    digamma (1 - s) - digamma s = (Real.pi : ℂ) * (Complex.cos ((Real.pi : ℂ) * s) / Complex.sin ((Real.pi : ℂ) * s)) := by
+  sorry
+
 /-- The archimedean kernel of the explicit formula along the critical line: the
     logarithmic derivative of the Γ-factor `π^{-s/2} Γ(s/2)` of the completed zeta
     `ξ`, evaluated at `s = 1/2 + i r`. Equals `-(1/2) log π + (1/2) ψ(1/4 +
