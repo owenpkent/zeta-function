@@ -8,6 +8,32 @@ The companion documents answer "what did each experiment do?". This one answers 
 
 ## Cross-cutting findings
 
+### 37. The 8B/8C conjecture "absolute prismatic cohomology forces P_comp = 0" is VACUOUS for zeta and INAPPLICABLE to D-H: it is not the real Direction 8 gap, and M3 did not advance the geometric/signature program. (Thread 2 of the M3 stress test.)
+
+This is the structural reading of M3 once the discriminator (#35, #36) is in hand. The 8B/8C docs proposed proving, as the load-bearing geometric step, that the canonical prismatic filtration kills the composite cross-terms (`P_comp = 0`), so that the hand-deletion in M_euler is a geometric fact. Worked through, that step dissolves:
+
+1. **`P_comp = 0` <=> Euler product, by definition.** `P_comp` is built from the composite-supported part of the von-Mangoldt-analogue coefficients (`-L'/L`). Those coefficients are prime-power-supported iff `L` has an Euler product. Confirmed numerically: `||P_comp|| = 0` exactly for zeta, chi3, chi4 (Euler), and `!= 0` for D-H, Epstein (no Euler).
+
+2. **For zeta, `P_comp = 0` is a THEOREM (the Euler product), needing no geometry.** Hence `M(zeta) = M_euler(zeta)` identically (the experiments show the two columns equal for zeta). The conjecture "absolute prismatic cohomology forces `P_comp = 0`" is therefore VACUOUS as applied to zeta: it would re-derive a known triviality. It adds zero leverage for RH, the only L-function we actually need.
+
+3. **For D-H / Epstein there is no surface at all**, by the project's own K2/2Q discipline (#25): no Euler product => no local `(1,p)` bidegrees => no Frobenius correspondence `Gamma_S` => no `Spec(Z) x Spec(Z)`. So `M_euler` for D-H is NOT "the geometric trace with `P_comp` killed by geometry"; it is a number obtained by forcibly applying zeta's prime-power template to D-H's data. It is the trace of no geometric object. `M_euler(DH) < 0` is a discriminator reading, not a failed Arakelov bound on an existing surface.
+
+4. **Therefore M3 reorganized bookkeeping; it did not add geometric content.** For zeta -- the only input with a (conjectural) surface -- `M_euler = M` was already known and positive at M2.5 (#33). Splitting off `P_comp` changes nothing on the zeta side. The genuine Direction 8 gap is exactly the pre-M3 one: construct `Gamma_S` / the surface for zeta and prove its cup-product Hodge-index signature is positive. M_euler is at most a convenient numerical TARGET (the positive number a future construction must reproduce), not a new sub-theorem.
+
+**Consequence for the docs and the ladder.** 8B/8C should NOT list "prove `P_comp = 0` geometrically" as a milestone; it is vacuous-or-inapplicable. The honest milestones are unchanged from before M3. Net assessment of M3 after both stress-test threads: a validated numerical RH discriminator (#36), with NO advance on the geometric signature it was framed as delivering. This is the marginal-positivity compass again -- the soft/bookkeeping move does not engage the exact structure; only constructing the surface for zeta will.
+
+### 36. M3.3: a SECOND off-line control was constructed and verified, and M_euler fires negative on it -- removing the single-EXAMPLE fragility of #35 (though not the single-FAMILY one). (Thread 1 of the M3 stress test.)
+
+3M3 ([e3m3_second_offline.py](positivity/e3m3_second_offline.py)) answers #35's gating question by building a Davenport-Heilbronn-TYPE function at a NEW conductor and verifying every property from scratch before M_euler is allowed to see it. `DHTypeL(q, chi)` forms the real-coefficient combination `c_n = Re chi(n) + kappa Im chi(n)` (period q, `c_1 = 1`) of a primitive complex odd character chi mod q and its conjugate; `kappa` is PINNED numerically so the completed `Lambda_f(s) = (q/pi)^{(s+1)/2} Gamma((s+1)/2) f(s)` satisfies an FE, then the FE is VERIFIED as an identity at independent points.
+
+**Construction validated.** `DHTypeL(5)` reconstructs `kappa = -3.5201 = -1/0.28408`, the conjugate FE branch of the classical Davenport-Heilbronn `kappa = 0.28408` (the two branches are related by `kappa -> -1/kappa`, i.e. the two root-number signs); FE residual `~1e-45`. So the constructor reproduces the literature.
+
+**The q=7 control (order-6 character).** `kappa = -1.50335`, `W = -1`, `a_1 = 1`, FE residual `~1e-16` at the pinning scale and `~1e-51..1e-63` verified at independent generic points (a genuine identity). Off-line zero exhibited and high-precision-verified at `rho = 1.0616 + 28.443 i` (`|f(rho)| ~ 2e-50`; FE partner `1 - rho` also a zero): RH is FALSE for it. (Zeros with `Re > 1` are normal for non-Euler functions -- no Euler product to forbid them.)
+
+**Result.** `min eig(M_euler) = -0.8395 < 0` on the q=7 control, matching its RH-false status. So M_euler now fires correctly on TWO off-line witnesses (q=5 and q=7), plus stays positive on three Euler inputs (zeta, chi3, chi4) and one non-Euler RH-true input (principal Epstein d=47): a clean 7-for-7 across independent inputs.
+
+**Honest scope.** Both off-line witnesses are Davenport-Heilbronn-TYPE (character-combination) constructions, so this removes the literal single-EXAMPLE fragility of #35 but not the single-FAMILY one: the structurally independent off-line mechanism (Epstein) remains untestable (`a_1 = 0`, #35). And by #37 this strengthens M_euler only as a DISCRIMINATOR, not as geometry.
+
 ### 35. M3.2 stress-test of the M_euler discriminator: it survives the false-NEGATIVE probe (independent Euler products stay positive, P_comp = 0 exactly) but the false-POSITIVE probe is STRUCTURALLY UNAVAILABLE -- every Epstein off-line control has a_1 = 0, so M_euler's off-line discipline still rests on Davenport-Heilbronn alone.
 
 3M2 ([e3m2_stress_test.py](positivity/e3m2_stress_test.py)) attacks the M3 (`e3m`) claim that `M_euler = A_arch + P_pp + B_pole` is "the true geometric RH test". M_euler is formed by deleting the composite block `P_comp` by hand; for a non-Euler `L` that deletion equals the Euler-product assumption, and M3's three controls (zeta, D-H, principal Epstein) were favorable. The stress test adds the controls M3 omitted and reuses e3m's validated blocks, so any sign behavior is attributable to the L-data, not a kernel change.

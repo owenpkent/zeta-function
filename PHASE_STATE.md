@@ -22,7 +22,7 @@
 - ✅ Lean 4 Phase 1 substrate (green build on Lean 4.13.0 + Mathlib v4.13.0; typed definitions with documented VERIFIER target IDs).
 - ✅ Agent role specifications in [`.claude/agents/`](.claude/agents/).
 - ✅ Operations guide ([`OPERATIONS.md`](OPERATIONS.md)).
-- 🟡 M3 Analytic Domination: numerical isolation of the stealth-window mechanism (discriminator found; analytic proof and the prismatic P_comp=0 step still open). Stress-tested (e3m2, LEARNINGS #35): M_euler survives the false-negative probe (independent Euler products chi3/chi4 stay positive, P_comp=0) but its false-positive discipline rests on Davenport-Heilbronn alone (every Epstein off-line form has a_1=0, undefined).
+- 🟡 M3 Analytic Domination: a validated numerical RH discriminator, with NO advance on the geometric signature it was framed as delivering. Stress-tested across three threads: (e3m2 #35) survives the false-negative probe; (e3m3 #36) fires negative on a second, independently-constructed and FE-verified off-line control at conductor 7, removing the single-example fragility (both witnesses still DH-type); (#37) the geometric conjecture "prismatic cohomology forces P_comp=0" is VACUOUS for zeta (P_comp=0 is the Euler product) and INAPPLICABLE to D-H (no surface), so it is struck from the Direction 8 ladder. M3 reorganized bookkeeping; the real gap (build the surface for zeta + prove its cup-product signature) is unchanged.
 
 **Phase 0 deliverables remaining**:
 - ⏳ Independent expert verification of the 2A scorecards (HUMAN: requires expert correspondents).
@@ -46,11 +46,10 @@
 
 **Session 008 (2026-06-01) found the M3 numerical discriminator. By isolating the composite obstruction (P_comp), the experiment locates the stealth-window mechanism in the composite delocalization and supplies a quantity (M_euler) that passes the D-H discipline. This is a sharpened target, not a closed milestone: the analytic domination proof and the geometric meaning of M_euler are open. The next move is to either (a) attack the conjecture that prismatic geometry forces P_comp = 0, or (b) geometricize M_euler as a Hodge index signature on the product surface.**
 
-Recommended next steps (in priority order):
+Both M3 stress-test threads are now DONE (e3m3 #36, #37). M_euler is a validated discriminator but adds no geometric content; the geometric program returns to its pre-M3 gap. Recommended next steps (in priority order):
 
-1. **Build a second integer-supported off-line control (a_1 != 0).** The M3.2 stress test (e3m2, LEARNINGS #35) showed M_euler's false-positive discipline rests on Davenport-Heilbronn alone: the Epstein off-line forms all have a_1 = 0 and cannot be fed to it. Construct a D-H-type linear combination at a different conductor (or any engineered functional-equation Dirichlet series with a_1 = 1 and a known off-line zero) and confirm M_euler < 0. This is the cheapest way to learn whether "M_euler detects RH" generalizes past one witness.
-2. **Test the load-bearing geometric conjecture (P_comp = 0 geometrically).** Stress the claim that absolute prismatic cohomology kills composite cross-terms. If it fails, the hand-deletion of P_comp is the Euler-product assumption in disguise rather than a geometric law, and Direction 8B/8C needs rethinking.
-3. **The product surface (Direction 8).** Define the signed intersection pairing on the product surface. Read the literature notes on Bhatt-Lurie's `WCart` and Connes-Consani's $\widehat{\mathbb{N}^2}$ to start building the geometric side of the M3 bound.
+1. **The product surface for zeta (Direction 8), the unchanged real gap.** Construct $\Gamma_S$ / the surface $\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$ for zeta and prove its cup-product Hodge-index signature is $(1, \rho-1)$, reproducing the positive $M_{\mathrm{euler}}(\zeta) = M(\zeta)$ already in hand (M2.5). Items 2-3 of [08C](docs/03_research/research_directions/08C_cohomological_signature.md#6-why-item-1-p_comp--0-geometrically-is-not-actually-a-milestone); the "prove P_comp=0 geometrically" sub-goal has been struck as vacuous. Read the WCart / Connes-Consani literature notes for the construction.
+2. **(Optional hardening) a third off-line witness of a DIFFERENT family.** Both current off-line controls (q=5, q=7) are Davenport-Heilbronn-type; the structurally independent Epstein family is untestable (a_1=0). If a non-DH-type integer-supported off-line construction with a_1!=0 can be found, it would close the single-family gap of #36. Low priority (M_euler is a discriminator, not the proof).
 
 ## Falsifiability triggers (per proof_program_ai_only.md §4)
 

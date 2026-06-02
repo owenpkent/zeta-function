@@ -65,3 +65,13 @@ The structural proof of RH along this route would require proving three things, 
 3. that its polarization by the Arakelov $\star$-operator yields a metric whose signature is $(1, \rho - 1)$, identically recovering $M_{\mathrm{euler}} \ge 0$.
 
 M3 sharpened the target and supplied a discriminator that passes the Davenport-Heilbronn discipline. It did not establish any of 1-3. The honest status is: a concrete, well-posed conjecture with a numerical witness, not a proof.
+
+## 6. Why item 1 (`P_comp = 0` geometrically) is NOT actually a milestone
+
+Stress-testing this direction (LEARNINGS #37) shows that the load-bearing geometric step proposed above dissolves on inspection, and should be struck from the ladder:
+
+- **`P_comp = 0` is equivalent to having an Euler product, by definition.** `P_comp` is built from the composite-supported part of the von-Mangoldt-analogue coefficients of $-L'/L$; those are prime-power supported iff $L$ has an Euler product. (Numerically: $\|P_{\mathrm{comp}}\| = 0$ exactly for $\zeta$, $\chi_3$, $\chi_4$; nonzero for D-H, Epstein.)
+- **For $\zeta$ this is a theorem, not a conjecture.** $\zeta$ has an Euler product, so $P_{\mathrm{comp}}(\zeta) = 0$ and $M(\zeta) = M_{\mathrm{euler}}(\zeta)$ identically. "Absolute prismatic cohomology forces $P_{\mathrm{comp}} = 0$" is therefore **vacuous** for the only input we need: it would re-derive a triviality.
+- **For D-H / Epstein there is no surface at all** (the K2/2Q discipline: no Euler product $\Rightarrow$ no $(1,p)$ bidegrees $\Rightarrow$ no $\Gamma_S$ $\Rightarrow$ no $\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$). So $M_{\mathrm{euler}}(\mathrm{D\text{-}H})$ is not a geometric trace with $P_{\mathrm{comp}}$ "killed by geometry"; it is $\zeta$'s prime-power template applied by force to D-H's data, the trace of no object.
+
+**Consequence.** M3 reorganized bookkeeping; it did not add geometric content, because on the $\zeta$ side $M_{\mathrm{euler}} = M$ was already known and positive at M2.5. The real Direction 8 gap is unchanged from before M3: construct $\Gamma_S$ / the surface for $\zeta$ (items 2-3), and prove the cup-product signature is $(1, \rho-1)$. $M_{\mathrm{euler}}$ is at most the positive number a future construction must reproduce. The milestone ladder for this direction is items 2 and 3 only.
