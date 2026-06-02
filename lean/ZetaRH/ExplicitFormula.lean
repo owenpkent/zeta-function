@@ -235,6 +235,92 @@ theorem digamma_reflection {s : ℂ} (hs : ∀ m : ℤ, s ≠ m) :
   
   linear_combination -h_final
 
+/-- **The digamma duplication formula** `ψ(2s) = ½(ψ(s) + ψ(s+½)) + log 2`, for
+    `s, s+½ ∉ {0, -1, -2, …}`.
+
+    Proved (no `sorry`) from Mathlib's Legendre doubling formula
+    `Complex.Gamma_mul_Gamma_add_half` (`Γ(s)Γ(s+½) = Γ(2s)·2^{1-2s}·√π`) by taking
+    logarithmic derivatives: the `Γ(s)Γ(s+½)` side contributes `ψ(s)+ψ(s+½)`, the
+    `Γ(2s)` factor contributes `2ψ(2s)`, the `2^{1-2s}` factor the constant
+    `-2 log 2`, and `√π` drops out. This is the identity that relates the half-
+    integer-shifted kernel `ψ(s/2)` (the Γ-factor of `ζ`) to `ψ(s)`; upstreamable
+    to Mathlib. -/
+theorem digamma_duplication {s : ℂ} (hs : ∀ m : ℕ, s ≠ -(m : ℂ))
+    (hsh : ∀ m : ℕ, s + 1 / 2 ≠ -(m : ℂ)) :
+    digamma (2 * s) = (1 / 2) * (digamma s + digamma (s + 1 / 2)) + Complex.log 2 := by
+  -- `2s` also avoids the non-positive integers (parity split on the offending `m`)
+  have h2s : ∀ m : ℕ, 2 * s ≠ -(m : ℂ) := by
+    intro m h
+    rcases Nat.even_or_odd m with ⟨k, hk⟩ | ⟨k, hk⟩
+    · exact hs k (by subst hk; push_cast at h ⊢; linear_combination h / 2)
+    · exact hsh k (by subst hk; push_cast at h ⊢; linear_combination h / 2)
+  have hΓs : Complex.Gamma s ≠ 0 := Complex.Gamma_ne_zero hs
+  have hΓsh : Complex.Gamma (s + 1 / 2) ≠ 0 := Complex.Gamma_ne_zero hsh
+  have hdΓs : DifferentiableAt ℂ Complex.Gamma s := Complex.differentiableAt_Gamma s hs
+  have hdΓsh : DifferentiableAt ℂ Complex.Gamma (s + 1 / 2) := Complex.differentiableAt_Gamma _ hsh
+  have hdΓ2s : DifferentiableAt ℂ Complex.Gamma (2 * s) := Complex.differentiableAt_Gamma _ h2s
+  have hsqrt : ((Real.sqrt Real.pi : ℝ) : ℂ) ≠ 0 := by
+    simpa using Real.sqrt_ne_zero'.mpr Real.pi_pos
+  -- the two sides of Legendre doubling are equal as functions
+  have hfun : logDeriv (fun z : ℂ => Complex.Gamma z * Complex.Gamma (z + 1 / 2)) s
+            = logDeriv (fun z : ℂ => Complex.Gamma (2 * z) * (2 : ℂ) ^ (1 - 2 * z)
+                * ((Real.sqrt Real.pi : ℝ) : ℂ)) s := by
+    congr 1; funext z; exact Complex.Gamma_mul_Gamma_add_half z
+  -- LHS logarithmic derivative = ψ(s) + ψ(s+½)
+  have hg_sh : DifferentiableAt ℂ (fun z : ℂ => Complex.Gamma (z + 1 / 2)) s :=
+    hdΓsh.comp s (by fun_prop)
+  have hLHS_comp : logDeriv (fun z : ℂ => Complex.Gamma (z + 1 / 2)) s = digamma (s + 1 / 2) := by
+    have key := logDeriv_comp (f := Complex.Gamma) (g := fun z : ℂ => z + 1 / 2) hdΓsh (by fun_prop)
+    have hd : deriv (fun z : ℂ => z + 1 / 2) s = 1 := by simp
+    rw [hd, mul_one] at key
+    simpa [digamma, Function.comp_def] using key
+  have hLHS : logDeriv (fun z : ℂ => Complex.Gamma z * Complex.Gamma (z + 1 / 2)) s
+            = digamma s + digamma (s + 1 / 2) := by
+    rw [logDeriv_mul s hΓs hΓsh hdΓs hg_sh, hLHS_comp]; rfl
+  -- the `2^{1-2z}` factor contributes the constant `-2 log 2`
+  have hexp_eq : (fun z : ℂ => (2 : ℂ) ^ (1 - 2 * z))
+             = (fun z : ℂ => Complex.exp (Complex.log 2 * (1 - 2 * z))) := by
+    funext z; rw [Complex.cpow_def_of_ne_zero (by norm_num : (2 : ℂ) ≠ 0)]
+  have hcpow : logDeriv (fun z : ℂ => (2 : ℂ) ^ (1 - 2 * z)) s = -2 * Complex.log 2 := by
+    rw [hexp_eq]
+    have h2z : HasDerivAt (fun z : ℂ => 2 * z) 2 s := by simpa using (hasDerivAt_id s).const_mul 2
+    have h1 : HasDerivAt (fun z : ℂ => 1 - 2 * z) (-2) s := by simpa using h2z.const_sub 1
+    have hd : HasDerivAt (fun z : ℂ => Complex.log 2 * (1 - 2 * z)) (Complex.log 2 * -2) s :=
+      h1.const_mul (Complex.log 2)
+    have hf := hd.cexp
+    rw [logDeriv_apply, hf.deriv]
+    field_simp
+    ring
+  -- the `Γ(2z)` factor contributes `2 ψ(2s)`
+  have hG2 : logDeriv (fun z : ℂ => Complex.Gamma (2 * z)) s = 2 * digamma (2 * s) := by
+    have key := logDeriv_comp (f := Complex.Gamma) (g := fun z : ℂ => 2 * z) hdΓ2s (by fun_prop)
+    have hd : deriv (fun z : ℂ => 2 * z) s = 2 := by
+      simpa using ((hasDerivAt_id s).const_mul 2).deriv
+    rw [hd] at key
+    simp only [digamma, Function.comp_def] at key ⊢
+    rw [key]; ring
+  -- RHS logarithmic derivative = 2ψ(2s) - 2 log 2
+  have hΓ2s_ne : Complex.Gamma (2 * s) ≠ 0 := Complex.Gamma_ne_zero h2s
+  have hcpow_ne : (2 : ℂ) ^ (1 - 2 * s) ≠ 0 := by
+    rw [Complex.cpow_def_of_ne_zero (by norm_num : (2 : ℂ) ≠ 0)]; exact Complex.exp_ne_zero _
+  have hd1 : DifferentiableAt ℂ (fun z : ℂ => Complex.Gamma (2 * z)) s := hdΓ2s.comp s (by fun_prop)
+  have hd2 : DifferentiableAt ℂ (fun z : ℂ => (2 : ℂ) ^ (1 - 2 * z)) s := by
+    rw [hexp_eq]
+    have h2z : HasDerivAt (fun z : ℂ => 2 * z) 2 s := by simpa using (hasDerivAt_id s).const_mul 2
+    have h1 : HasDerivAt (fun z : ℂ => 1 - 2 * z) (-2) s := by simpa using h2z.const_sub 1
+    exact ((h1.const_mul (Complex.log 2)).cexp).differentiableAt
+  have hRHS : logDeriv (fun z : ℂ => Complex.Gamma (2 * z) * (2 : ℂ) ^ (1 - 2 * z)
+                * ((Real.sqrt Real.pi : ℝ) : ℂ)) s = 2 * digamma (2 * s) - 2 * Complex.log 2 := by
+    rw [logDeriv_mul_const s ((Real.sqrt Real.pi : ℝ) : ℂ) hsqrt,
+        logDeriv_mul (f := fun z : ℂ => Complex.Gamma (2 * z))
+          (g := fun z : ℂ => (2 : ℂ) ^ (1 - 2 * z)) s hΓ2s_ne hcpow_ne hd1 hd2,
+        hG2, hcpow]
+    ring
+  -- glue the two logarithmic derivatives and solve for ψ(2s)
+  have key : digamma s + digamma (s + 1 / 2) = 2 * digamma (2 * s) - 2 * Complex.log 2 := by
+    rw [← hLHS, hfun, hRHS]
+  linear_combination (-1 / 2 : ℂ) * key
+
 /-- The archimedean kernel of the explicit formula along the critical line: the
     logarithmic derivative of the Γ-factor `π^{-s/2} Γ(s/2)` of the completed zeta
     `ξ`, evaluated at `s = 1/2 + i r`. Equals `-(1/2) log π + (1/2) ψ(1/4 +
