@@ -319,6 +319,18 @@ Dixmier's classification of matroids in terms of the noncommutative space of poi
   compute the `N^x x N^x` Frobenius action `Fr_{n,m} = diag(n,m)` on small Newton polygons
   and look for the `(1,p)` bidegree pattern 2Q predicts. This is the first Connes-Consani
   object directly amenable to the repo's numerical style.
+  **DONE (2026-06-02, 2CC, LEARNINGS #40 -- [e2cc_tropical_shadow](../../../experiments/arithmetic_geometric/e2cc_tropical_shadow.md)).**
+  The Minkowski structure carries a canonical mixed-volume form, Lorentzian by
+  Alexandrov-Fenchel: a Hodge-index signature `(1,k)` exists FOR FREE. But it is the
+  characteristic-1 SHADOW -- arithmetic-blind, it freezes the Frobenius trace `t`
+  (`Delta.Gamma = p-1`, not the point count `q+1-t`), so its signature is RH-AGNOSTIC.
+  This RECONCILES with point #7 below ("the missing object is a SIGNED pairing"): the
+  RH-agnostic convex-geometry shadow exists for free; the ARITHMETIC signed pairing carrying
+  `t` does NOT. The `Fr_{1,p}=diag(1,p)` action does reproduce the `(1,p)` bidegree (as the
+  edge-direction `{p,1}`, e<->f swapped), but only the degree data, not the trace. So the gap
+  is sharpened to "the arithmetic q-lift that restores `t`," with the `(1,p)` bidegree its
+  locus. (ADVERSARY-checked; the mixed-volume form is a PROPOSED shadow by toric-BKK analogy,
+  not a constructed intersection theory of the char-1 topos.)
 - The diagonal self-composition `Psi(lambda) o Psi(lambda^{-1}) = Id_eps` (Thm 7.7) is the
   literature object closest to `Gamma_S^2` (2R). Worth a focused symbolic experiment on the
   `lambda lambda' in Q` (rational-product) deformation regime to see whether the `Id_eps`
