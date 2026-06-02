@@ -36,6 +36,7 @@ import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
 import Mathlib.Algebra.BigOperators.Group.Finset
+import Mathlib.NumberTheory.Harmonic.GammaDeriv
 import ZetaRH.Basic
 
 namespace ZetaRH.ExplicitFormula
@@ -320,6 +321,45 @@ theorem digamma_duplication {s : ℂ} (hs : ∀ m : ℕ, s ≠ -(m : ℂ))
   have key : digamma s + digamma (s + 1 / 2) = 2 * digamma (2 * s) - 2 * Complex.log 2 := by
     rw [← hLHS, hfun, hRHS]
   linear_combination (-1 / 2 : ℂ) * key
+
+/-- A complex number with positive real part is not a non-positive integer; the
+    side condition the digamma identities need at `1`, `1/2`, etc. -/
+private theorem ne_neg_nat_of_re_pos {c : ℂ} (hc : 0 < c.re) : ∀ m : ℕ, c ≠ -(m : ℂ) := by
+  intro m h
+  rw [h] at hc
+  simp only [Complex.neg_re, Complex.natCast_re] at hc
+  have : (0 : ℝ) ≤ (m : ℝ) := Nat.cast_nonneg m
+  linarith
+
+/-- **The digamma special value** `ψ(1) = -γ`, where `γ` is the Euler-Mascheroni
+    constant.
+
+    Proved (no `sorry`) from Mathlib's `Complex.hasDerivAt_Gamma_one` (`Γ'(1) = -γ`):
+    `ψ(1) = Γ'(1)/Γ(1) = -γ/1`. This pins the additive constant of the
+    archimedean kernel. -/
+theorem digamma_one : digamma 1 = -(Real.eulerMascheroniConstant : ℂ) := by
+  rw [digamma_eq, Complex.Gamma_one, div_one]
+  exact Complex.hasDerivAt_Gamma_one.deriv
+
+/-- **The digamma special value** `ψ(1/2) = -γ - 2 log 2`.
+
+    Proved (no `sorry`) from `digamma_one` and `digamma_duplication` at `s = 1/2`
+    (`ψ(1) = ½(ψ(1/2) + ψ(1)) + log 2`), with no second real bridge. This is the
+    half-integer value that appears directly in `ζ`'s archimedean kernel. -/
+theorem digamma_half :
+    digamma (1 / 2) = -(Real.eulerMascheroniConstant : ℂ) - 2 * Complex.log 2 := by
+  have h1ne : ∀ m : ℕ, (1 : ℂ) ≠ -(m : ℂ) :=
+    ne_neg_nat_of_re_pos (by rw [Complex.one_re]; norm_num)
+  have hhalf_ne : ∀ m : ℕ, (1 / 2 : ℂ) ≠ -(m : ℂ) := by
+    intro m h
+    exact h1ne (2 * m) (by push_cast; linear_combination 2 * h)
+  have hsum_ne : ∀ m : ℕ, (1 / 2 : ℂ) + 1 / 2 ≠ -(m : ℂ) := by
+    intro m h
+    exact h1ne m (by rw [show (1 / 2 : ℂ) + 1 / 2 = 1 by ring] at h; exact h)
+  have hdup := digamma_duplication (s := (1 / 2 : ℂ)) hhalf_ne hsum_ne
+  rw [show (2 : ℂ) * (1 / 2) = 1 by ring, show (1 / 2 : ℂ) + 1 / 2 = 1 by ring,
+      digamma_one] at hdup
+  linear_combination (-2 : ℂ) * hdup
 
 /-- The archimedean kernel of the explicit formula along the critical line: the
     logarithmic derivative of the Γ-factor `π^{-s/2} Γ(s/2)` of the completed zeta
