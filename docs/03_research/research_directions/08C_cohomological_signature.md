@@ -48,15 +48,20 @@ When we evaluate the trace of the polarized form $Q(x, y)$ over a basis of test 
 Therefore, the trace of the geometrically polarized cup product is exactly the matrix analyzed in the M3 experiment:
 $$ M_{\mathrm{euler}} = A_{\mathrm{arch}} + P_{\mathrm{pp}} + B_{\mathrm{pole}} $$
 
-### The Demystification of the Stealth Window
-The M3 breakthrough demonstrated that $M_{\mathrm{euler}}$ is highly negative for Davenport-Heilbronn and positive for $\zeta$. 
+### The Stealth Window: a Candidate Explanation (conjectural)
+The M3 experiment demonstrated, numerically, that $M_{\mathrm{euler}}$ is negative for Davenport-Heilbronn and positive for $\zeta$ (and for Epstein up to height 120).
 
-Geometrically, Davenport-Heilbronn lacks an Euler product, meaning its coefficients delocalize onto composite numbers ($P_{\mathrm{comp}} \neq 0$). This violates the $p$-adic stricture required for a well-defined $\Gamma_S$ correspondence on the absolute prismatic site. The "false positivity" of D-H observed in earlier numerical truncations was artificially propped up by $P_{\mathrm{comp}}$, which acts as an unphysical, non-geometric compensation term. 
+The proposed geometric reading: Davenport-Heilbronn lacks an Euler product, so its coefficients delocalize onto composite numbers ($P_{\mathrm{comp}} \neq 0$). IF the $p$-adic stricture required for a well-defined $\Gamma_S$ correspondence on the absolute prismatic site forces $P_{\mathrm{comp}} = 0$ on the geometric side, then the D-H "false positivity" seen in earlier truncations is the non-geometric compensation term $P_{\mathrm{comp}}$ propping up the Gram matrix.
 
-By isolating $M_{\mathrm{euler}}$, the M3 experiment successfully evaluates the true, uncorrupted geometric trace of the Hodge-$\star$ polarized pairing.
+That conditional is exactly the open problem. Deleting $P_{\mathrm{comp}}$ by hand (as M3 does) is the same as assuming the Euler-product geometry; it is NOT yet shown that $M_{\mathrm{euler}}$ is the canonical, uncorrupted geometric trace of the Hodge-$\star$ polarized pairing. The M3 experiment supplies a discriminator and a sharp target. The identification of that discriminator with a cohomological trace is the content still to be proved (§5).
 
 ## 5. Conclusion
 
-The M3 breakthrough (the positivity of $M_{\mathrm{euler}}$) is the numerical trace of the Hodge-index signature on the product surface. By evaluating the trace over the primitive cohomology (which naturally kills the composite cross-terms $P_{\mathrm{comp}}=0$ due to the $p$-adic completion stricture of absolute prismatic cohomology), the geometric bound is recovered.
+The M3 result (the positivity of $M_{\mathrm{euler}}$ for $\zeta$ and Epstein, its negativity for D-H) is a candidate numerical trace of a Hodge-index signature on the product surface. The reading proposed here, that evaluating the trace over the primitive cohomology kills the composite cross-terms ($P_{\mathrm{comp}} = 0$) via the $p$-adic completion stricture of absolute prismatic cohomology, is a conjecture, not a recovered bound.
 
-The final structural proof of RH reduces to proving that the cup-product pairing on $H_{\mathrm{prism}}(\mathrm{Spec}\mathbb{Z} \times_{\mathbb{F}_1} \mathrm{Spec}\mathbb{Z})$ is perfectly alternating, and that its polarization by the Arakelov $\star$-operator yields a metric whose signature is $(1, \rho-1)$.
+The structural proof of RH along this route would require proving three things, all OPEN:
+1. that the canonical prismatic filtration forces $P_{\mathrm{comp}} = 0$ on the geometric side (this is what would license the hand-deletion in M3);
+2. that the cup-product pairing on $H_{\mathrm{prism}}(\mathrm{Spec}\,\mathbb{Z} \times_{\mathbb{F}_1} \mathrm{Spec}\,\mathbb{Z})$ is perfectly alternating;
+3. that its polarization by the Arakelov $\star$-operator yields a metric whose signature is $(1, \rho - 1)$, identically recovering $M_{\mathrm{euler}} \ge 0$.
+
+M3 sharpened the target and supplied a discriminator that passes the Davenport-Heilbronn discipline. It did not establish any of 1-3. The honest status is: a concrete, well-posed conjecture with a numerical witness, not a proof.

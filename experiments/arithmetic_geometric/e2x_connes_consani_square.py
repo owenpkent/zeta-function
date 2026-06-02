@@ -5,8 +5,14 @@ Connes-Consani arithmetic site framework. It implements the geometric Frobenius
 correspondence Fr_{n,m} and the tangential deformation Id_epsilon that appears 
 in the composition law Psi(lambda) o Psi(lambda^{-1}) = Id_eps.
 
-The goal is to demonstrate that the (1, p) place-dependent bidegree required by 2Q 
-acts on this square and yields the von Mangoldt structural data on the diagonal.
+The goal was to test whether the (1, p) place-dependent bidegree required by 2Q,
+acting on this square, yields the von Mangoldt structural data on the diagonal.
+
+Result (negative, and informative): it does not. The tangential-deformation trace
+is constant in p (no log p weight), and the char-1 operations are idempotent (no
+subtraction, hence no signature). Both the log p weights and the signs must come
+from a signed intersection pairing this square lacks. This is the Direction 8 gap,
+made concrete rather than resolved.
 """
 
 import numpy as np
@@ -79,11 +85,14 @@ def run():
         val_orig = S_p.eval_slope(1.0)
         val_def = S_def.eval_slope(1.0)
         trace_diff = val_def - val_orig
-        
-        # The deformation trace should scale with log(p) since Fr is multiplicative
-        # and the base action is scaling by p. In the Connes-Consani log representation, 
-        # this corresponds directly to the log(p) terms in the von Mangoldt sum.
-        print(f"  Diagonal Trace(Id_eps - Id) ~ {trace_diff/eps:.4f} (expected scaling based on p)")
+
+        # NOTE (honest result): the deformation trace is identically 1, INDEPENDENT of p.
+        # The base x-coordinate is 1, so Id_eps shifts it by eps regardless of which
+        # Frobenius Fr_{1,p} was applied, giving trace_diff/eps = 1 for every prime.
+        # This toy char-1 model does NOT reproduce the log(p) von Mangoldt weights:
+        # the multiplicative/log structure that would carry them is absent from the
+        # idempotent (min-plus) operations. That absence is the point, see the verdict.
+        print(f"  Diagonal Trace(Id_eps - Id) ~ {trace_diff/eps:.4f} (constant in p; NO log p)")
 
     print("\n[2X] Idempotency Check:")
     S1 = HereditarySubset([(2, 3)])
@@ -95,10 +104,12 @@ def run():
     print(f"  S_union + S_union = {S_union + S_union} (Idempotent: No Subtraction!)")
     
     print("\nConclusion: The geometric (1, p) bidegrees operate correctly on the")
-    print("characteristic-1 square. The diagonal composition yields the tangential")
-    print("deformation, which houses the analytic scaling (the von Mangoldt sum).")
-    print("However, the idempotency (S+S=S) confirms the missing element is the")
-    print("signed intersection pairing (Direction 8 gap).")
+    print("characteristic-1 square, and the diagonal composition yields the tangential")
+    print("deformation. But the deformation trace is constant in p (no log p), so this")
+    print("char-1 model does NOT by itself house the von Mangoldt analytic scaling.")
+    print("Together with idempotency (S+S=S, no subtraction), this confirms the missing")
+    print("element is the signed intersection pairing (Direction 8 gap): both the signs")
+    print("and the log p weights have to come from a structure this square does not have.")
 
 if __name__ == "__main__":
     run()

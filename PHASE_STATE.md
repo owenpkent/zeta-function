@@ -6,7 +6,7 @@
 
 **Active mode**: AI-augmented (with human owner in critical path). Transition to AI-only execution per [`docs/03_research/proof_program_ai_only.md`](docs/03_research/proof_program_ai_only.md) requires infrastructure not yet built (see [`OPERATIONS.md`](OPERATIONS.md) §7).
 
-**Current spine (session 008).** The program is now organized as a research group running the M1-M5 ladder of [`08A_rosati_standard_conjecture.md`](docs/03_research/research_directions/08A_rosati_standard_conjecture.md) toward one precisely identified theorem: **RH = arithmetic Rosati positivity = the arithmetic Hodge standard conjecture**. Operating philosophy in [`docs/researcher_mindset.md`](docs/researcher_mindset.md). M1 (function-field Rosati) done (e2t); M2 (arithmetic balance, e2u) assembled; M2.5 done (e2v, A_arch validated, zeta POSITIVE); M2.6 done (e2w, stealth window identified). **M3 DONE (e3m_analytic_domination.py): Stealth window broken by isolating composite obstruction (P_comp). For Davenport-Heilbronn, M_euler (A_arch + P_pp + B_pole) is highly NEGATIVE (-0.9287), failing the geometric Arakelov bound. False positivity was propped up by P_comp. True geometric RH test is the positivity of M_euler.**
+**Current spine (session 008).** The program is now organized as a research group running the M1-M5 ladder of [`08A_rosati_standard_conjecture.md`](docs/03_research/research_directions/08A_rosati_standard_conjecture.md) toward one precisely identified theorem: **RH = arithmetic Rosati positivity = the arithmetic Hodge standard conjecture**. Operating philosophy in [`docs/researcher_mindset.md`](docs/researcher_mindset.md). M1 (function-field Rosati) done (e2t); M2 (arithmetic balance, e2u) assembled; M2.5 done (e2v, A_arch validated, zeta POSITIVE); M2.6 done (e2w, stealth window identified). **M3 PARTIAL (e3m_analytic_domination.py): a NUMERICAL discriminator, not the analytic proof M2.6 demanded. Splitting P_fin into prime-power P_pp and composite P_comp and deleting P_comp gives M_euler (A_arch + P_pp + B_pole) which separates all three controls correctly: zeta +0.035, D-H -0.929, Epstein +0.676 (passes the D-H discipline where the full M did not). CAVEAT: for a non-Euler L the deletion of P_comp is imposed by hand and equals the Euler-product assumption; the claim that prismatic geometry forces P_comp = 0 (so M_euler is the canonical trace and M_euler >= 0 <=> RH) is the Direction 8B/8C CONJECTURE, not a result. The analytic domination proof remains open.**
 
 **Current phase**: Phase 0 (Foundation), substantially complete. Phase 1 (Direction 1, Lambda-blueprints) entered in session 002 with milestone 4.1 having three candidate definitions on the table.
 
@@ -22,7 +22,7 @@
 - ✅ Lean 4 Phase 1 substrate (green build on Lean 4.13.0 + Mathlib v4.13.0; typed definitions with documented VERIFIER target IDs).
 - ✅ Agent role specifications in [`.claude/agents/`](.claude/agents/).
 - ✅ Operations guide ([`OPERATIONS.md`](OPERATIONS.md)).
-- ✅ M3 Analytic Domination: structural isolation of the stealth window.
+- 🟡 M3 Analytic Domination: numerical isolation of the stealth-window mechanism (discriminator found; analytic proof and the prismatic P_comp=0 step still open).
 
 **Phase 0 deliverables remaining**:
 - ⏳ Independent expert verification of the 2A scorecards (HUMAN: requires expert correspondents).
@@ -44,11 +44,12 @@
 
 ## Recommended next session actions
 
-**Session 008 (2026-06-01) achieved the M3 breakthrough. By isolating the composite obstruction (P_comp), the false positivity of the stealth window is dismantled. The project must now geometricize this trace-side positivity bound (M_euler) as a Hodge index signature on the product surface.**
+**Session 008 (2026-06-01) found the M3 numerical discriminator. By isolating the composite obstruction (P_comp), the experiment locates the stealth-window mechanism in the composite delocalization and supplies a quantity (M_euler) that passes the D-H discipline. This is a sharpened target, not a closed milestone: the analytic domination proof and the geometric meaning of M_euler are open. The next move is to either (a) attack the conjecture that prismatic geometry forces P_comp = 0, or (b) geometricize M_euler as a Hodge index signature on the product surface.**
 
 Recommended next steps (in priority order):
 
-1. **The product surface (Direction 8).** We need to define the signed intersection pairing on the Product Surface. Read the literature notes on Bhatt-Lurie's `WCart` and Connes-Consani's $\widehat{\mathbb{N}^2}$ to start building the geometric side of the M3 bound.
+1. **Test the load-bearing conjecture (P_comp = 0 geometrically).** Before building the full signature, stress the claim that absolute prismatic cohomology kills composite cross-terms. If it fails, M3's discriminator is just the Euler-product assumption in disguise and the direction needs rethinking. This is the cheapest way to find out whether Direction 8B/8C has a foundation.
+2. **The product surface (Direction 8).** Define the signed intersection pairing on the product surface. Read the literature notes on Bhatt-Lurie's `WCart` and Connes-Consani's $\widehat{\mathbb{N}^2}$ to start building the geometric side of the M3 bound.
 
 ## Falsifiability triggers (per proof_program_ai_only.md §4)
 

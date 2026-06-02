@@ -5,10 +5,16 @@ This experiment splits the finite prime block P_fin into P_prime_power and P_com
 geometric polarization A_arch (the Arakelov archimedean Green's function) bounds
 P_prime_power + B_pole.
 
-For Davenport-Heilbronn (no Euler product), P_comp != 0. We will compute the
+For Davenport-Heilbronn (no Euler product), P_comp != 0. We compute the
 eigenvalues of P_comp and show that it introduces indefinite/negative directions
-that break the geometric bound, isolating the off-line obstruction structurally
-and breaking the stealth window seen in M2.6.
+that compensate the geometric bound, isolating a candidate mechanism behind the
+stealth window seen in M2.6.
+
+Scope (honest): this is a NUMERICAL discriminator, not the analytic domination
+proof M2.6 demanded. M_euler is formed by deleting P_comp by hand; for an Euler
+product that deletion is automatic, but for D-H/Epstein it is imposed. The claim
+that it is geometrically forced (so M_euler is the canonical trace) is the
+Direction 8B/8C conjecture, not a result of this script.
 
 Outputs:
   - e3m_analytic_domination.npz
@@ -128,23 +134,27 @@ def run(K=8, b_min=1.3, b_max=6.0, prec=30, out_dir: Path = None):
 
     print("-" * len(header))
     
-    print("\n[M3] ===== VERDICT: THE STEALTH WINDOW DEMYSTIFIED =====")
-    print("       1. For zeta (Euler product): P_comp = 0, so M = M_euler.")
-    print("          M_euler is POSITIVE (+0.0346), meaning the geometric A_arch successfully")
-    print("          bounds the prime-power obstruction P_pp.")
-    print("       2. For D-H (No Euler product, RH fails):")
-    print("          M_euler (A_arch + P_pp + B_pole) is highly NEGATIVE (-0.9287)!")
-    print("          The geometric Arakelov cushion FAILS to bound the prime-power block.")
-    print("          However, M = M_euler + P_comp is POSITIVE (+0.0942).")
-    print("          CONCLUSION: P_comp provides *positive* compensation in the exact direction")
-    print("          where M_euler fails, artificially propping up the Gram matrix at small b.")
-    print("          This is the structural cause of the stealth window.")
-    print("       3. For Epstein (No Euler product, RH holds <= 120):")
-    print("          M_euler is POSITIVE (+0.6763). Its prime-power block IS bounded by A_arch,")
-    print("          despite having a massive P_comp (-15.022) which is absorbed by M.")
-    print("       => The true test of RH via arithmetic geometry is the positivity of M_euler")
-    print("          (the polarization bounding the primes), NOT the full M which includes")
-    print("          composites that obscure the geometry.")
+    print("\n[M3] ===== VERDICT: A NUMERICAL DISCRIMINATOR (not yet a proof) =====")
+    print("       Define M_euler = A_arch + P_pp + B_pole, i.e. M with the composite-")
+    print("       supported block P_comp DELETED BY HAND. For an Euler product P_comp = 0")
+    print("       automatically; for D-H and Epstein this deletion is imposed, not derived.")
+    print("       1. zeta (Euler product): P_comp = 0, so M = M_euler = POSITIVE (+0.0346).")
+    print("          The geometric A_arch bounds the prime-power obstruction P_pp.")
+    print("       2. D-H (no Euler product, RH fails): M_euler = NEGATIVE (-0.9287), while")
+    print("          the full M = M_euler + P_comp = POSITIVE (+0.0942). So P_comp supplies")
+    print("          positive compensation exactly where M_euler fails. The composite")
+    print("          delocalization (no Euler product) is what props up the stealth window.")
+    print("       3. Epstein (no Euler product, RH holds <= 120): M_euler = POSITIVE (+0.6763)")
+    print("          despite a large P_comp (-15.022) that the full M absorbs.")
+    print("       => DISCRIMINATOR: M_euler separates all three cases correctly (zeta +,")
+    print("          D-H -, Epstein +), passing the D-H discipline where the full M did not.")
+    print("       => CAVEAT (what is NOT shown): M_euler is not yet an intrinsic invariant.")
+    print("          Restricting to prime-power support is the SAME assumption as having an")
+    print("          Euler-product geometry. The claim that absolute prismatic cohomology")
+    print("          forces P_comp = 0 (so that M_euler is the canonical geometric trace) is")
+    print("          the conjecture of Directions 8B/8C, NOT a result of this experiment.")
+    print("          The analytic domination PROOF that M2.6 called for remains open; this")
+    print("          run isolates a candidate mechanism and a sharp target, it does not prove it.")
     
     # Save and Plot
     np.savez_compressed(
