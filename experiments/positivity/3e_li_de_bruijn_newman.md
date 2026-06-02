@@ -8,6 +8,20 @@
 >
 > Closes Arch 3E TODO open item: "quantify the Li / de Bruijn-Newman relationship (literature)".
 
+> **Update 2026-06-02.** The heat side, deferred here as "computationally heavy" (sec 8), was
+> finally run: [`experiments/criticality/e_dbn_kernel.md`](../criticality/e_dbn_kernel.md) (E_DBN1,
+> LEARNINGS #38). It tested the cheapest dBN object — the Pólya kernel positivity $\Phi\ge 0$ — and
+> found it is **K2-failing / orthogonal to RH**: the RH-false Davenport-Heilbronn passes it
+> identically to $\zeta$, because off-line zeros are archimedean-suppressed in the kernel to
+> $\exp(-\tfrac\pi4 d\gamma)\sim10^{-29}$. This is established in the literature, which should be
+> added here: **Dobner (arXiv:2005.05142, 2020)** ($\Lambda_F\ge 0$ for the extended Selberg class
+> $S^\#$, which *includes* D-H, kernel not assumed $\ge0$); **Newman-Wu (arXiv:1901.06596, 2019)**
+> (nonnegative kernels with empty real-zero set); **Michalowski (arXiv:2602.20313, 2026)** (same
+> Toeplitz-minor method, kernel positivity decoupled from $\Lambda$); **Stopple (arXiv:1301.3158)**
+> and **Andrade-Chang-Miller (arXiv:1310.3477)** (generalized $\Lambda$ for Dirichlet/function-field/
+> automorphic $L$). The RH content is the *flow* (sign of $\Lambda$ in $(0,1/2]$), not any $t=0$
+> kernel statement.
+
 ## 1. The Li criterion
 
 **Definition** (Li 1997, "The positivity of a sequence of numbers and the Riemann hypothesis"):
