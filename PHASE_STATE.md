@@ -22,7 +22,7 @@
 - ✅ Lean 4 Phase 1 substrate (green build on Lean 4.13.0 + Mathlib v4.13.0; typed definitions with documented VERIFIER target IDs).
 - ✅ Agent role specifications in [`.claude/agents/`](.claude/agents/).
 - ✅ Operations guide ([`OPERATIONS.md`](OPERATIONS.md)).
-- 🟡 M3 Analytic Domination: numerical isolation of the stealth-window mechanism (discriminator found; analytic proof and the prismatic P_comp=0 step still open).
+- 🟡 M3 Analytic Domination: numerical isolation of the stealth-window mechanism (discriminator found; analytic proof and the prismatic P_comp=0 step still open). Stress-tested (e3m2, LEARNINGS #35): M_euler survives the false-negative probe (independent Euler products chi3/chi4 stay positive, P_comp=0) but its false-positive discipline rests on Davenport-Heilbronn alone (every Epstein off-line form has a_1=0, undefined).
 
 **Phase 0 deliverables remaining**:
 - ⏳ Independent expert verification of the 2A scorecards (HUMAN: requires expert correspondents).
@@ -48,8 +48,9 @@
 
 Recommended next steps (in priority order):
 
-1. **Test the load-bearing conjecture (P_comp = 0 geometrically).** Before building the full signature, stress the claim that absolute prismatic cohomology kills composite cross-terms. If it fails, M3's discriminator is just the Euler-product assumption in disguise and the direction needs rethinking. This is the cheapest way to find out whether Direction 8B/8C has a foundation.
-2. **The product surface (Direction 8).** Define the signed intersection pairing on the product surface. Read the literature notes on Bhatt-Lurie's `WCart` and Connes-Consani's $\widehat{\mathbb{N}^2}$ to start building the geometric side of the M3 bound.
+1. **Build a second integer-supported off-line control (a_1 != 0).** The M3.2 stress test (e3m2, LEARNINGS #35) showed M_euler's false-positive discipline rests on Davenport-Heilbronn alone: the Epstein off-line forms all have a_1 = 0 and cannot be fed to it. Construct a D-H-type linear combination at a different conductor (or any engineered functional-equation Dirichlet series with a_1 = 1 and a known off-line zero) and confirm M_euler < 0. This is the cheapest way to learn whether "M_euler detects RH" generalizes past one witness.
+2. **Test the load-bearing geometric conjecture (P_comp = 0 geometrically).** Stress the claim that absolute prismatic cohomology kills composite cross-terms. If it fails, the hand-deletion of P_comp is the Euler-product assumption in disguise rather than a geometric law, and Direction 8B/8C needs rethinking.
+3. **The product surface (Direction 8).** Define the signed intersection pairing on the product surface. Read the literature notes on Bhatt-Lurie's `WCart` and Connes-Consani's $\widehat{\mathbb{N}^2}$ to start building the geometric side of the M3 bound.
 
 ## Falsifiability triggers (per proof_program_ai_only.md §4)
 
