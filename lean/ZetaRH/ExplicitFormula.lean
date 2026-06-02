@@ -35,12 +35,13 @@ import Mathlib.Analysis.Calculus.LogDeriv
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
+import Mathlib.Algebra.BigOperators.Group.Finset
 import ZetaRH.Basic
 
 namespace ZetaRH.ExplicitFormula
 
 open Complex
-open scoped ArithmeticFunction
+open scoped ArithmeticFunction BigOperators
 
 /-! ### The admissible test-function class.
 
@@ -130,6 +131,27 @@ theorem digamma_add_one {s : ℂ} (hs : ∀ m : ℕ, s ≠ -(m : ℂ)) :
             = logDeriv (fun z : ℂ => z * Complex.Gamma z) s := by
     rw [logDeriv_apply, logDeriv_apply, hEq.deriv_eq, hEq.eq_of_nhds]
   rw [← hcomp, hval, hmul, add_comm]
+
+/-- **The iterated digamma recurrence** `ψ(s+n) = ψ(s) + ∑_{k<n} 1/(s+k)`, for
+    `s ∉ {0, -1, -2, …}`.
+
+    Proved (no `sorry`) by induction on `n` from `digamma_add_one`. This is the
+    finite-difference form of the archimedean kernel: shifting the Γ-factor
+    argument by an integer adds a partial sum of the harmonic-type series. It is
+    the lemma the explicit-formula archimedean term needs to move between
+    `ψ(1/4 + i r/2)` and its integer translates. Upstreamable to Mathlib. -/
+theorem digamma_add_nat {s : ℂ} (hs : ∀ m : ℕ, s ≠ -(m : ℂ)) (n : ℕ) :
+    digamma (s + n) = digamma s + ∑ k ∈ Finset.range n, 1 / (s + k) := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    -- s + n avoids the poles, so digamma_add_one applies at s + n
+    have hsn : ∀ m : ℕ, s + (n : ℂ) ≠ -(m : ℂ) := by
+      intro m h
+      exact hs (m + n) (by push_cast at h ⊢; linear_combination h)
+    have estep : s + ((n + 1 : ℕ) : ℂ) = (s + (n : ℂ)) + 1 := by push_cast; ring
+    rw [estep, digamma_add_one hsn, ih, Finset.sum_range_succ]
+    ring
 
 /-- **The digamma reflection formula** `ψ(1-s) - ψ(s) = π cot(π s)`, for `s ∉ ℤ`.
     
