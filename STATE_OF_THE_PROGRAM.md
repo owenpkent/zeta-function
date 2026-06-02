@@ -62,10 +62,15 @@ Phase 1 green (Lean 4.13.0 + Mathlib v4.13.0, all modules compile). Real machine
 content: `RiemannHypothesisMathlib_iff_RiemannHypothesis_zeta`; `negDef_iff_hasseWeil`
 (2G); and session 005's additions in `ExplicitFormula.lean` (the Weil explicit formula +
 positivity criterion scaffold, #EF-1/#EF-2), three discharged bridge lemmas
-(#MB-1/#MB-2/#MB-6: $\zeta$ pole, nonvanishing, functional equation), and the digamma
-recurrence $\psi(s+1)=\psi(s)+1/s$. Project sorry count 23. The highest-leverage
-remaining target is the Weil explicit formula itself (LEARNINGS #17), which needs a
-sum-over-zeros theory Mathlib lacks. See [`lean/README.md`](lean/README.md).
+(#MB-1/#MB-2/#MB-6: $\zeta$ pole, nonvanishing, functional equation), and (session 008)
+six sorry-free digamma identities discharging the kernel part of #EF-arch: the recurrence
+$\psi(s+1)=\psi(s)+1/s$, reflection $\psi(1-s)-\psi(s)=\pi\cot\pi s$, iterated recurrence
+$\psi(s+n)=\psi(s)+\sum_{k<n}1/(s+k)$, duplication $\psi(2s)=\tfrac12(\psi(s)+\psi(s+\tfrac12))+\log 2$,
+and the special values $\psi(1)=-\gamma$, $\psi(\tfrac12)=-\gamma-2\log 2$ (the half-integer
+arguments of $\zeta$'s archimedean kernel); all upstreamable to Mathlib. Project sorry count 23
+(the digamma additions are all sorry-free). The highest-leverage remaining target is the Weil
+explicit formula itself (LEARNINGS #17), which needs a sum-over-zeros theory Mathlib lacks, and
+the remaining #EF-class integral pairing. See [`lean/README.md`](lean/README.md).
 
 ## The single most-leveraged next move
 
