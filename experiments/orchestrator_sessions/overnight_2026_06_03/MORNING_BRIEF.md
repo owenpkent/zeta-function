@@ -37,3 +37,9 @@ Diff against main: `git log --oneline main..overnight-2026-06-03` and `git diff 
 ## Honest accounting
 
 No stream advanced RH or the M3/M4 signature gap; all results are trace-side (the 5th–8th reinforcement of #30 this session). The frontier (a polarization on the product surface) is beyond overnight autonomous reach. What overnight delivered that is *real*: the Lean substrate (machine-checked) and the de Branges density revision (verified). The rest is organized, triaged leads for you to pick from. Main stayed pristine; nothing was pushed. One process lesson recorded: keep workflows small (round 1 crashed on `structuredClone` over ~1M tokens of aggregated output, though all files were recovered).
+
+---
+
+## K=1000 RESULT (collected ~03:30, VERIFIED, committed)
+
+The K=1000 de Branges extension finished (~4.4h). VERIFIED by independent spot-check (k=34 anchor + k=497/750/35/600 all match k1000.npz). **Answer to the open density question: the ~6% failure density does NOT stabilize -- it drifts UPWARD to 8.0% at K=1000** (80/1000), per-100 windows [2,7,6,6,11,8,10,8,13,9] rising from ~5% (low zeros) to ~9-13% (higher zeros). So the de Branges pointwise (3.1) failure is a generic, mildly-increasing positive-density phenomenon; the "6%" from K=500 was a low-zero undercount. Reinforces #43 (does not change the lesson: the RH-equivalent pairing must be a global sum, not the pointwise cross-term). Committed k1000.npz to the branch; LEARNINGS #43 2DB.2 note updated. **Overnight loop ENDED here.**
