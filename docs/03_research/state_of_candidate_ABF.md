@@ -1,0 +1,45 @@
+# State of candidate A+B+F: the prismatic-Rosati spine after four probes
+
+> Synthesis written 2026-06-03, consolidating the retrocausal brainstorm ([`backwards_from_2050.md`](backwards_from_2050.md)) and the four probes it spawned (2DD, 2EE, 2FF, 2GG; LEARNINGS #43-#46). One page: what the brainstorm proposed, what the probes established, and the single unified target they converge on. Companion to [`all_roads_to_the_signature.md`](all_roads_to_the_signature.md) (the signature thesis) and [`research_directions/08A_rosati_standard_conjecture.md`](research_directions/08A_rosati_standard_conjecture.md) (the M-ladder).
+
+## The one-paragraph state
+
+The brainstorm reasoned backward from "RH solved in 2050" to a five-constraint silhouette (positivity from a polarization not a trace; unbuildable for D-H; specializes to Weil; closes the local-to-global gap with the archimedean place carrying the continuation; zero slack) and six candidate mechanisms for the one missing organ, the polarization. Four cheap, honest probes then collapsed three of those candidates into a single spine: **candidate A (prismatic Hodge-Riemann) is the body; candidate B (the archimedean fiber) and candidate F (the transcendence of the primes) are its two required organs, and they are the same two organs the M4 milestone always had, now named with unusual precision.** No probe killed a candidate; each sharpened the description and confirmed, in a fresh basis, that the realization/trace side is built and the signature is the irreducible content. The front is exactly where 08A's M4 put it; the gain is resolution.
+
+## What each probe established
+
+| Probe | Question | Outcome (all honest, all non-killing) |
+|---|---|---|
+| **2DD** (#43) | Does the prismatic cup product have **room** for a definite signature? | YES. Over $\mathbb{F}_q$ the crystalline cup product is a polarization of scale $q$; its primitive entries $q-|\alpha|^2$ vanish at RH (the cup-product face of marginal positivity) and open a sign under perturbation. The $(1,p)$-graded model has room, is unbuildable for D-H, but is blind to the global continuation. Candidate A sharpened: it needs the archimedean fiber (= candidate B). |
+| **2EE** (#44) | Build the **archimedean block** and glue it. | The validated Weil form $M=A_{\mathrm{arch}}+P_{\mathrm{fin}}+B_{\mathrm{pole}}$ has the Hodge-index silhouette: $B_{\mathrm{pole}}$ is rank-1 (the ample/fundamental-class "+1"), present for $\zeta$, absent for D-H. But $A_{\mathrm{arch}}$ is indefinite in isolation (positivity is global) and the stealth window persists (M4 is analytic). Named M4's two organs: (a) $H^2$, (b) the two-clock period. |
+| **2FF** (#45) | What is the **two-clock period** (organ b)? | NOT a number. $\mathbb{F}_q$ has one clock $\log q$; the primes $\{\log p\}$ are rationally independent (no common period, defect $\sim 2500\times$ the FF value) and the archimedean clock runs as $\log(T/2\pi)$ (verified on 79 $\zeta$ zeros). Organ (b) = the scaling flow $\mathbb{R}_+$ with spectrum $\{\log p\}$; the obstruction to a single number **is** the transcendence of $\{\log p\}$ (bridge to candidate F). |
+| **2GG** (#46) | What is the **$H^2$ fundamental class** (organ a)? | The FE $\xi(s)=\xi(1-s)$ IS the Poincare duality, but D-H has a FE too, so the **pairing** is buildable for D-H. What separates is the **fundamental class**: $\zeta$ residue at $s=1$ is 1 (the Euler-product pole), D-H is entire (residue 0). Organ (a)'s obstruction is the nonzero unit, not the pairing -- the cleanest cohomological form of the D-H discipline. |
+
+## The unified target (A = B + F, the two organs)
+
+Candidate A's content is a Hodge-Riemann polarization on the arithmetic $H^1$. The four probes show it factors exactly into M4's two organs, each now a precise, attackable statement:
+
+- **Organ (a) [= candidate A's dependency (i), the $H^2$ side].** Build a genuine geometric Poincare duality $H^1\otimes H^1\to H^2 = \text{unit}$ over $\mathrm{Spec}(\mathbb{Z})$, as a **perfect cup product** into the 1-dim **Euler-pole fundamental class** (residue at $s=1$), on the infinite-dimensional $H^1$. The FE supplies the duality *symmetry* (even D-H has it); the open part is realizing it as a geometric cup product with a *nonzero* unit (which D-H lacks). The Deninger $H^0/H^1/H^2$ grading ($s=0$ / zeros / $s=1$ pole) is the target shape.
+
+- **Organ (b) [= candidate B, the archimedean/two-clock side, bridged to candidate F].** Build the scaling flow $\mathbb{R}_+$ with the incommensurable orbit spectrum $\{\log p\}$, and prove the running archimedean clock $\log(T/2\pi)$ balances the prime clock at every height. The single interpolating period does not exist as a number *because* $\{\log p\}$ is transcendentally independent, so this organ is dual to a transcendence statement (candidate F): the geometric gluing and the Diophantine independence of the primes are two faces of the one missing input.
+
+**The positivity that glues (a) and (b) is RH.** Organ (a) gives the pairing and the unit; organ (b) gives the flow whose self-adjointness w.r.t. that pairing is the spectral consequence (candidate D's "operator from the polarization" lens). The marginal-positivity thesis says this gluing has zero slack, which is why every soft probe (the stealth window) cannot see it and why the proof must engage the exact arithmetic (organ b's transcendence, organ a's Euler pole).
+
+## What is genuinely new here vs. the pre-existing spine
+
+08A/all_roads already located RH as arithmetic Rosati positivity = the arithmetic Hodge standard conjecture, with M4 the deep step. The four probes did not move that; they added resolution that changes what to attack:
+
+1. **The cohomological form of K2 (#46):** D-H fails not for lack of a duality (it has a FE) but for lack of a nonzero $H^2$ (it is entire). The wrong-approach detector is now a statement about the fundamental class, not the pairing. This is the sharpest K2 articulation the project has.
+2. **The period-is-a-flow / transcendence bridge (#45):** organ (b) cannot be a number, and the obstruction is precisely the transcendence of $\{\log p\}$, wiring the program to Diophantine approximation (a live field) as candidate F predicted.
+3. **The Hodge-index silhouette of the explicit formula (#44):** the validated Weil form already wears the $(1,k)$ shape, with the Euler-pole as the rank-1 ample class; the gluing-as-trace is built, the gluing-as-signature is the gap.
+4. **Room confirmed (#43):** the cup-product polarization is not structurally barred from definiteness; the question "is there room?" is closed (yes), so effort moves to constructing the duality and proving its positivity, not to checking feasibility.
+
+## The next bricks (in priority order)
+
+1. **Organ (a), the prismatic Poincare duality.** Extend [`lean/ZetaRH/PrismaticCohomology.lean`](../../lean/ZetaRH/PrismaticCohomology.lean) toward a typed cup product $H^1\otimes H^1\to H^2$ with the Euler-pole as the fundamental class; numerically, probe whether a truncated arithmetic $H^1$ admits a *perfect* (nondegenerate) pairing into the rank-1 pole as the truncation grows (does perfectness survive $P\to\infty$?).
+2. **The candidate-F bridge made explicit.** Test whether the validated Weil form's positivity translates to a linear-independence/transcendence condition on $\{\log p\}$ (if it is an unconditional identity, the bridge is a mirage; if it carries an independence input, the program connects to Baker-type bounds). This is the highest-leverage single experiment, because a real bridge imports an entire field.
+3. **The D-H-aware test (brainstorm §4 mistake iii, probe 2).** Reframe the stealth window from a wall into a target: find the form whose negative eigenvector *is* D-H's off-line zero at $\gamma\approx 85.7$ and $\zeta$'s on-line, with the fundamental class (Euler pole, now the named discriminator) as the differing input.
+
+## Honest scope (the whole program's)
+
+Every probe's function-field part is rigorous and reproduces the established 2T/2G picture in new (cup-product, duality, period) language. Every probe's arithmetic part is either a clean decisive computation (residues, incommensurability, zero spacings) or an explicitly-labeled structural model that constructs **no** arithmetic cohomology and proves **nothing** about RH. Nothing here is a step of a proof. What the four probes deliver is a sharpened map: candidate A is the spine, its two organs are named precisely, K2 has a cohomological form, and organ (b) bridges to a transcendence statement. That is a front pushed forward in description, which is how this project measures progress.
