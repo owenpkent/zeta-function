@@ -290,6 +290,14 @@ M2.6 non-circular Weil/Rosati form, the Schur detector, and a Lean/Mathlib subst
    $\zeta$-vs-D-H discrimination DISAPPEARS. Operationalizes the spec's mandatory K2
    test: if discrimination survives prime-zeroing, the certificate is K2-blind
    (archimedean, shared with D-H) and is rejected.
+   **DONE (2026-06-03, `experiments/positivity/e3p_prime_block_ablation.py`, LEARNINGS #46).**
+   Result: the $M_{\mathrm{euler}}$ certificate is K2-GENUINE. Scaling the prime-power
+   block by $\alpha\in[0,1]$: at $\alpha=1$ it sign-separates ($\zeta\,{+}0.035$ passes,
+   D-H ${-}0.929$ fails); at $\alpha=0$ both are negative ($\zeta\,{-}2.34$, D-H ${-}4.63$)
+   so the discrimination DISAPPEARS. The discriminating sign is carried by the Euler /
+   $\{\log p\}$ block, not the archimedean block D-H shares. The positive counterpart to
+   probe 3 (#45): there the PSLQ-accessible surface was the shared archimedean half;
+   here the certificate's sign is verified to live on the unshared Euler half.
 3. **Stumble-yield PSLQ sweep behind the D-H guard (a day).** PSLQ at $\ge 50$ digits
    over $\{\lambda_n, \gamma_k, C_\mu, \text{the THH/von-Mangoldt "one-Mobius-away"
    assembly}\}$, then immediately recompute every flagged relation for D-H and
@@ -309,6 +317,15 @@ M2.6 non-circular Weil/Rosati form, the Schur detector, and a Lean/Mathlib subst
    and measure where its margin crosses zero. Compare the required resolution to the
    Platt-Trudgian rigorous bound ($\epsilon<10^{-7}$) versus the float64 stealth
    window ($\epsilon<10^{-5}$). Tests "RECOVERS THE MARGIN, NOT JUST THE SIGN".
+   **DONE (2026-06-03, `experiments/positivity/e3q_margin_recovery.py`, LEARNINGS #47).**
+   Result: the off-line margin is a clean $-3.1\,\varepsilon^2$ law at the D-H height (real
+   D-H zero $\varepsilon=0.3085$ gives $-0.77$, trivially detected). The float64 stealth is a
+   REMOVABLE eigensolver-cancellation artifact, NOT structural: the signal source
+   $\|\mathrm{Im}\,\phi\|^2$ is clean $\varepsilon^2$ with float64 $=$ mpmath to $\varepsilon=10^{-12}$.
+   But removability is moot for certification: detecting an off-line zero at distance
+   $\varepsilon$ requires injecting its location to precision $<\varepsilon$, exactly what rigorous
+   verification supplies, so the certificate is downstream with no independent disproof
+   leverage. The margin must be recovered analytically. Sharpens #3K/#19.
 5. **Lean de-smuggling audit of the $C_\mu$ Weil form (days).** State
    $\min\mathrm{eig}(M)>0$ as a Lean proposition and trace its dependency graph
    against the Mathlib analytic-NT port to confirm no lemma silently assumes RH, GRH,
@@ -320,6 +337,15 @@ M2.6 non-circular Weil/Rosati form, the Schur detector, and a Lean/Mathlib subst
    UNCONDITIONALLY definite (cannot detect an off-line perturbation) or whether any
    weighting makes it fail. Reuses the `e3c2_weil_gram` cvxpy/CLARABEL machinery. A
    found violation is the watchlist-1 signal.
+   **DONE (2026-06-03, `experiments/positivity/e3r_convex_hodge_polarity.py`, LEARNINGS #48).**
+   Result: the convex-Hodge (mixed-area / Lorentzian) signature is UNCONDITIONALLY
+   $(1, n-1)$ for every weighting (uniform, $w_p=\log p$, steep, adversarial; 2000/2000
+   random cases have pos $=1$), so it cannot flip to flag an off-line zero: WRONG polarity.
+   The Weil form, by contrast, flips PSD $\to$ indefinite when an off-line pair is injected
+   (min-eig $0 \to -0.104$): RIGHT polarity. So the channel is blocked by TWO obstructions,
+   #40 (arithmetic-blind, signature does not move with $t$) AND #48 (even if it did, the
+   Kahler package cannot fail). The watchlist-1 signal needs a genuinely new theorem, not
+   weight injection. No violation found (none expected).
 
 ## 7. Epistemics: why hard problems fall by accident, and the catch-net
 
