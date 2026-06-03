@@ -1,0 +1,230 @@
+# The Spec(Z) cohomology landscape: who realizes zeta, and where the polarization is missing
+
+> A consolidating reference map for Direction 8, written 2026-06-02. It answers a direct
+> question: **"do we need to do Spec(Z) cohomology work, and is it unsolved?"** Short answer:
+> yes, and it is unsolved at one precise point. Every serious candidate **realizes** $\zeta$ as a
+> trace/determinant; **none** carries a **polarization** (a signed pairing whose positivity is RH).
+> The polarization is the universal gap, and supplying it is not a shortcut to RH: it **is** RH
+> (the arithmetic Hodge standard conjecture, [`08A_rosati_standard_conjecture.md`](research_directions/08A_rosati_standard_conjecture.md) M4).
+>
+> Built from a survey/synthesis workflow grounded in the project findings #26-#44 and the
+> reference-library reading notes; the three most load-bearing 2024-2026 literature items were
+> verified against the originals (arXiv:1807.06400, 2302.11389, 2602.15941). Cross-checked against
+> the project's own experiments. Distinguishes PROVEN from CONJECTURAL throughout.
+
+## 1. The requirement (why "realizing zeta" is the easy half)
+
+Weil's proof of RH for a curve $C/\mathbb{F}_q$ runs on a cohomology $H^1(C)$ that carries three things:
+
+- **(i) Trace.** Frobenius acts with eigenvalues $\alpha_i$ = the "zeros," and $\zeta_C$ is a ratio of
+  characteristic determinants $\det(1 - \mathrm{Frob}\, q^{-s} \mid H^i)$. (A realization of $\zeta$ as a determinant/trace.)
+- **(ii) Duality.** Poincare duality $H^1 \otimes H^1 \to H^2$ **is** the functional equation $\xi(s)=\xi(1-s)$.
+- **(iii) Polarization.** A positive-definite Rosati/Hodge-index form on the primitive part. Its
+  positivity forces $|\alpha_i| = \sqrt q$, which **is** RH-for-$C$.
+
+The project verified this entire template in the function-field case (2G/2T, four equivalent faces).
+The thesis "all roads to the signature" (#30) is the empirical finding that **over Spec(Z) every
+candidate delivers (i), most deliver a partial (ii), and none delivers (iii).** (iii) is the
+irreducible content, and it equals RH.
+
+## 2. The scorecard
+
+Legend: ✓ = present/proven, ◑ = partial or proven-only-in-a-restricted-sense, ✗ = absent.
+"Trace (i)", "FE (ii)", "Polariz. (iii)" are the three Weil ingredients; "K2" is the
+Davenport-Heilbronn discipline (does the structure distinguish $\zeta$ from the no-Euler-product
+counterexample); "Open step" is the single sharpest missing object.
+
+| Candidate | (i) | (ii) | (iii) | K2 | Single sharpest open step |
+|---|:--:|:--:|:--:|:--:|---|
+| **Deninger** foliated dynamical system / R-flow | ◑ | ◑ | ✗ | ✓ (on $F$) | intersection form on $X\times X$ + Hodge-index signature, no RH input |
+| **Connes** 1999 adele-class trace formula | ✓ | ◑ | ✗ (K1 wall) | ✓ (on $F$) | global (all-places) Weil positivity; spectral identification as a theorem |
+| **Connes-Consani** arithmetic site + square | ✓ (diag.) | ◑ | ✗ (#40) | ✓ | the arithmetic $q$-lift restoring the trace $t$ at the $(1,p)$ bidegree |
+| **Connes-Consani** Jacobian of $\overline{\mathrm{Spec}\,\mathbb{Z}}$ (2026) | ◑→✓ | ◑ | ✗ | ✓ (on $F$) | turn the Picard/realization structure into a signed pairing (not de Branges) |
+| **Bhatt-Lurie** absolute prismatic / WCart | ✓ (both halves) | ◑ (duality proven, no positivity) | ✗ | ✓ (on $F$) | a positive cup-product / Rosati form on the global prismatic $H^1$ |
+| **Bhatt-Scholze** per-prime prismatic | ◑ (local) | ◑ (local) | ✗ | ✓ | assembly over all $p$ + the polarization |
+| **Hesselholt** TP/TC ($\zeta=\det_\infty(s-\Theta\mid TP_{odd}/TP_{ev})$) | ✓ (proven /$\mathbb{F}_q$) | ◑ (proven /$\mathbb{F}_q$) | ✗ over $\mathbb{Z}$ | ✓ | define TP over $\mathbb{Z}$ with a periodic flow + negative-definite cup form on $TP_{odd}$ |
+| **Kucharczyk-Scholze** topological Galois realization | ✗ | ✗ | ✗ | n/a | an archimedean cohomology compatible with the cyclotomic/Witt substrate |
+| **Faltings-Hriljac** single-surface arithmetic Hodge index | ✗ (no $\zeta$) | ◑ (wrong dim) | ◑ **PROVEN, but single surface** | vacuous | the **product** $\mathrm{Spec}(\mathbb{Z})\times\mathrm{Spec}(\mathbb{Z})$ + Frobenius $\Gamma_S$ |
+| **Gillet-Soule** arithmetic Riemann-Roch | ✗ | ◑ (wrong dim) | ◑ (inherits single-surface) | vacuous | cycle-class for $\Gamma_S$ on the product + arithmetic standard conjecture |
+| **Deitmar** monoid schemes | ✗ | ✗ | ✗ | vacuous | a non-collapsing 2-dim self-product + a cohomology |
+| **Lorscheid** blueprints | ✗/◑ | open | ✗ | ✓ | intersection theory + cycle class on the (2-dim) blueprint surface |
+| **Borger** $\Lambda$-rings / $\mathrm{Spec}(W(\mathbb{Z}))$ | ◑ (Frobenius built in) | open | ✗ | ✓ | a finite 2-dim $\Lambda$-cohomology of $\mathrm{Spec}(W(\mathbb{Z}))$ with an intersection form |
+| **Soule / Kurokawa** $q\to1$ absolute zeta | ◑ (formal) | ◑ (by hand) | ✗ | weak/untested | a genuine cohomology behind the $q\to1$ bookkeeping |
+| **Adiprasito-Huh-Katz** matroid Hodge theory | ✗ | ✗ | ◑ **PROVEN signature, no variety, but arithmetic-blind** | structure only | inject the Frobenius trace $t$ into the Chow-ring HR form |
+
+## 3. The two proven signatures that bracket the gap
+
+The single most useful structural fact in the landscape: there exist exactly **two proven
+Hodge-index-type signatures** anywhere near the problem, and **both miss in a precisely diagnosable
+way**. A third, the de Branges pairing, overshoots. Together they bracket the missing object.
+
+- **Faltings-Hriljac (too local).** The arithmetic intersection form on a **single** arithmetic
+  surface is negative semi-definite on the primitive part; equivalently the Neron-Tate height
+  pairing is positive-definite. This is a **real, proven polarization** (the project reproduced it
+  end-to-end, 2H-2P, ranks 1-4). It fails to give RH only because it lives on one surface of
+  relative dimension $\ge 1$, **not** on the product $\mathrm{Spec}(\mathbb{Z})\times\mathrm{Spec}(\mathbb{Z})$,
+  and carries no Frobenius correspondence reaching the zeta zeros. *Too local.*
+- **Adiprasito-Huh-Katz (too blind).** The Kahler package (including Hodge-Riemann positivity) holds
+  on the Chow ring of **any** matroid, even non-realizable ones: a **signature with no underlying
+  variety**, exactly the shape Weil's proof wants. It fails because it is **arithmetic-blind**: it
+  takes no Frobenius trace $t$ (the project's #40 mixed-volume probe reads the same $(1,3)$ signature
+  for $t=2$ and $t=100$), and its log-concavity defect tracks non-Euler-ness, not RH-failure (e3n:
+  the non-Euler RH-true Epstein control has the *most* violations). *Too blind.*
+- **de Branges (too strong).** The de Branges space of $\xi$ realizes the continuation as a signed
+  reproducing-kernel inner product that **does** reach the global zeros, but its positivity is
+  **strictly stronger than RH** (it implies GRH for all Dirichlet $L$ at once) and Conrey-Li proved
+  it **fails for $\zeta$** at the 34th zero (the project reproduced this to 12 sig figs, #43/2DB.1).
+  *Too strong.*
+
+So the missing object is pinned by three sides: a polarization that is **global** (unlike
+Faltings-Hriljac), **carries the arithmetic trace $t$** (unlike AHK), and is **RH-equivalent, not
+strictly stronger** (unlike de Branges).
+
+## 4. The universal gap, stated precisely
+
+Every candidate is missing the same object:
+
+> A **signed intersection pairing on the global $H^1$ of the product** $\mathrm{Spec}(\mathbb{Z})\times\mathrm{Spec}(\mathbb{Z})$
+> (with its Frobenius correspondence $\Gamma_S$ of place-dependent bidegree $(1,p)$, #25/2Q, and
+> regularized self-intersection $\Gamma_S^2 = $ the von Mangoldt sum, #26/2R), whose
+> negative-definiteness on the primitive part is proven **without RH input**. This is the arithmetic
+> Hodge standard conjecture / Rosati positivity (08A M4).
+
+Why it is hard, localized by the project's recent coordinates:
+
+- The zeros live in the **analytic continuation** $\mathrm{Re}(s) < 1$, where the local Euler/orbit
+  data cannot reach (it converges only for $\mathrm{Re}(s) > 1$). The pairing must realize the
+  continuation, carried by the **archimedean place** (#42/2CC.3).
+- The free convex-geometry signatures (mixed volume / AHK) are **arithmetic-blind**: they have no
+  slot for $t$ (#40/2CC).
+- The trace lives on the diagonal ($\mathrm{Id}_\epsilon$ = von Mangoldt, #41/2CC.2; the prismatic
+  Frobenius $F$ + Sen $\Theta$, #44/2PR.1), but the **signature** of the off-diagonal global $H^1$
+  is exactly what no determinant supplies.
+- A new structural obstruction: the prismatic Sen operator is **not semisimple** in general (Petrov,
+  Annals), so the polarization cannot be built eigenspace-by-eigenspace; it must be intrinsic.
+
+## 5. Closest candidates and what each would need
+
+- **Faltings-Hriljac / Gillet-Soule + a constructed product.** The positivity is already a theorem on
+  a single surface; the missing piece is the **product surface and a Frobenius cycle class**. This is
+  the most direct route: graft the proven arithmetic Hodge index onto $\mathrm{Spec}(\mathbb{Z})\times\mathrm{Spec}(\mathbb{Z})$
+  once that object and $\Gamma_S$ exist. (Lorscheid gives a 2-dim blueprint self-product; Borger gives
+  $\mathrm{Spec}(W(\mathbb{Z}))$; neither has an intersection theory yet.)
+- **Bhatt-Lurie / Hesselholt prismatic-TP.** The trace is realized most explicitly here (both halves
+  of completed $\zeta$ as determinants, #44; Hesselholt's $\mathbb{F}_q$ theorem proven). It needs a
+  **positive cup-product on the global prismatic/TP $H^1$**, now known to resist the naive
+  eigenspace construction (Petrov). The realization machinery has gone fully global over Spec(Z)
+  (Drinfeld prismatization), so the substrate exists; the polarization does not.
+- **Connes-Consani.** The 2026 Jacobian paper builds a Picard/polarization **structure** on the
+  absolute curve and the spectral-realization apparatus (prolate/zeta-spectral-triples), but defers
+  the RH-positivity. By the project's R3.5 no-shortcut theorem, any trace-formula positivity in this
+  framework is K1-equivalent to RH (no independent reduction), so the route must escape into an
+  honest intersection signature, not a trace identity. The one genuinely proven positivity here is at
+  the **archimedean place only** (the Sonin space), which is RH-agnostic (shared by D-H).
+
+## 6. The K2 caveat that organizes everything
+
+The Davenport-Heilbronn discipline cuts the problem cleanly in two. The **archimedean / continuation
+half** (the $\Gamma$-factor, the Sonin space, the Sen $\Theta$ divisor, the de Branges kernel
+positivity) is **shared by D-H** and is therefore RH-agnostic: D-H has the same functional equation
+and $\Gamma$-factor by construction. **All K2 discrimination lives on the Euler-product / Frobenius
+half** (orbit lengths $\{\log p\}$, the $(1,p)$ bidegree, the prismatic $F$, THH). So the
+polarization that proves RH must be carried by the **Frobenius direction**, the one object that is
+structurally unbuildable for D-H (no Euler product $\Rightarrow$ no Frobenius correspondence $\Rightarrow$
+no surface). Any proposed positivity built only from the continuation/archimedean side is
+automatically K2-blind (#38/#43/#44).
+
+## 7. Recent frontier (2024-2026)
+
+The realization side is moving fast; the polarization has not moved. Verified items:
+
+- **Deninger's foliated space is now constructed.** Via sheafified rational Witt vectors $W_{rat}(X)$,
+  for normal schemes of finite type over $\mathrm{Spec}(\mathbb{Z})$, with an $\mathbb{R}$-flow whose
+  periodic orbits biject with closed points ([arXiv:1807.06400](https://arxiv.org/abs/1807.06400),
+  2018). The regularized-determinant Lefschetz formula is proven for genuine 3-dimensional Riemannian
+  foliated dynamical systems (Deninger, 2024). **This corrects the project's earlier "X has never
+  been constructed" caveat: X is now constructed; its cohomology, duality, and polarization remain
+  open.** Morishita 2025 ([arXiv:2508.15971](https://arxiv.org/abs/2508.15971)) builds an
+  $\mathbb{R}_+$-anti-equivariant bridge (a duality dictionary) between Deninger's systems and the
+  Connes-Consani adelic spaces for abelian number fields; no polarization is transferred.
+- **A new obstruction on the prismatic side.** Petrov proved the Bhatt-Lurie Sen operator is **not
+  semisimple** in general (a liftable smooth projective variety of dimension $p+1$ with
+  non-degenerate Hodge-to-de-Rham spectral sequence), [arXiv:2302.11389](https://arxiv.org/abs/2302.11389),
+  Annals. This blocks any eigenspace-based Hodge-Riemann polarization on the prismatic substrate.
+- **Connes-Consani, "On the Jacobian of $\overline{\mathrm{Spec}\,\mathbb{Z}}$"**
+  ([arXiv:2602.15941](https://arxiv.org/abs/2602.15941), Feb 2026): interprets the adele class space
+  as the Picard monoid of the absolute curve, "incorporating the singular strata required for the
+  spectral realization of L-functions." It builds the realization/Picard structure; it states **no**
+  positivity or RH result. This lands exactly on the pattern: structure on the realization side, the
+  polarization deferred.
+
+Other 2024-2026 developments reported by the survey (to verify against originals before formal
+citation): prismatic Poincare duality of perfect complexes (Tang, Compositio 2024) supplies
+ingredient (ii) at the complex level with no positivity; Drinfeld prismatization and Bhatt-Lurie
+F-gauges/syntomification assemble the realization apparatus globally over Spec(Z); the
+Connes-Consani-Moscovici prolate / "zeta spectral triples" program matches the lowest zeros to high
+numerical accuracy and states explicitly that proving the convergence would establish RH (i.e. the
+convergence/positivity is the unproven content). Yuan-Zhang (Math. Ann. 367, 2017) extended the
+arithmetic Hodge index to adelic line bundles in higher dimension, still on a fixed scheme, never on
+the product.
+
+## 8. Honest caveats (proven vs conjectural)
+
+- **PROVEN:** the function-field template (Weil, 2G/2T); the single-surface arithmetic Hodge index
+  (Faltings-Hriljac, 2H-2P); the AHK Kahler package (no variety, arithmetic-blind); Hesselholt's
+  determinant formula over $\mathbb{F}_q$; the archimedean Weil positivity (Connes-Consani Sonin
+  space, RH-agnostic); prismatic Poincare duality (complex-level, no positivity); the Sen-spectrum
+  $\to$ $\Gamma$-divisor identity (#44, a class function of the spectrum, real-but-only-heuristic);
+  Deninger's foliated space construction.
+- **CONJECTURAL:** the global determinant over $\mathbb{Z}$; the spectral identification
+  $\mathrm{spec}(H) = \{\gamma_n\}$; the product surface $\mathrm{Spec}(\mathbb{Z})\times\mathrm{Spec}(\mathbb{Z})$
+  and its Frobenius cycle class; **every** product/global polarization. The arithmetic standard
+  conjectures (the would-be source of RH-positivity) are themselves open.
+- Do **not** read any candidate's realization (i) or duality (ii) as progress toward RH. RH is (iii),
+  and (iii) is open in every framework. "Spec(Z) cohomology" is RH in cohomological clothing.
+
+## 9. The sharpest next probe (for this project)
+
+Given #40-#44, the live frontier is **the product surface + $\Gamma_S$** (08A M4). Two ways in,
+both research-grade:
+
+1. **Construction:** build the intersection theory on a constructed self-product (Lorscheid's
+   2-dim blueprint surface, or Borger's $\mathrm{Spec}(W(\mathbb{Z}))$, or the Connes-Consani square),
+   with a cycle class for $\Gamma_S$ carrying the $(1,p)$ bidegree, then attempt the
+   Faltings-Hriljac-type negative-definiteness on the primitive part.
+2. **Obstruction-first (recommended near-term):** the arithmetic $q$-lift that re-injects the
+   Frobenius trace $t$ into the (arithmetic-blind) mixed-volume / AHK signature at the $(1,p)$
+   bidegree, or a sharp no-go showing why the local-to-global continuation pairing cannot be a
+   determinant. This is cheaper to probe and continues the #40-#44 sequence; the open question is
+   whether the TP/flow or prismatic language gives any new leverage on the positivity (Petrov's
+   non-semisimplicity says the obvious eigenspace route is blocked).
+
+## 10. References
+
+Classical / verifiable: Weil (1948); Deninger, *Some analogies...* (ICM 1998), *Dynamical systems
+for arithmetic schemes* ([arXiv:1807.06400](https://arxiv.org/abs/1807.06400), 2018); Connes,
+*Trace formula in NCG and the zeros of zeta* (Selecta 1999); Connes-Consani, *Geometry of the
+arithmetic site* ([arXiv:1502.05580](https://arxiv.org/abs/1502.05580), 2014), *Weil positivity and
+the archimedean place* (Sonin space, [arXiv:2006.13771](https://arxiv.org/abs/2006.13771), 2021),
+*On the Jacobian of $\overline{\mathrm{Spec}\,\mathbb{Z}}$* ([arXiv:2602.15941](https://arxiv.org/abs/2602.15941),
+2026); Bhatt-Lurie, *Absolute prismatic cohomology* ([arXiv:2201.06120](https://arxiv.org/abs/2201.06120));
+Bhatt-Scholze, *Prisms and prismatic cohomology* (Annals 2022); Bhatt-Morrow-Scholze, *THH and
+integral p-adic Hodge theory* (Publ. IHES 2019); Hesselholt, *THH and the Hasse-Weil zeta function*
+(2018); Petrov, *Non-decomposability of the de Rham complex and non-semisimplicity of the Sen
+operator* ([arXiv:2302.11389](https://arxiv.org/abs/2302.11389), Annals); Kucharczyk-Scholze,
+*Topological realisations of absolute Galois groups* ([arXiv:1609.04717](https://arxiv.org/abs/1609.04717));
+Arakelov (1974); Faltings, *Calculus on arithmetic surfaces* (Ann. Math. 1984); Hriljac (1985);
+Gillet-Soule, *An arithmetic Riemann-Roch theorem* (Invent. Math. 1992); Yuan-Zhang, *The arithmetic
+Hodge index theorem for adelic line bundles* (Math. Ann. 2017); Deitmar (2005); Lorscheid, *The
+geometry of blueprints* (Adv. Math. 2012); Borger, *$\Lambda$-rings and the field with one element*
+([arXiv:0906.3146](https://arxiv.org/abs/0906.3146)); Soule (2004); Kurokawa (absolute zeta);
+Adiprasito-Huh-Katz, *Hodge theory for combinatorial geometries* (Ann. Math. 2018); Conrey-Li, *A
+note on some positivity conditions...* ([arXiv:math/9812166](https://arxiv.org/abs/math/9812166));
+Morishita ([arXiv:2508.15971](https://arxiv.org/abs/2508.15971), 2025); Drinfeld, *Prismatization*
+([arXiv:2301.12392](https://arxiv.org/abs/2301.12392)).
+
+Project internal: [`08A_rosati_standard_conjecture.md`](research_directions/08A_rosati_standard_conjecture.md)
+(the M1-M5 ladder, RH = arithmetic Hodge standard conjecture); [`all_roads_to_the_signature.md`](all_roads_to_the_signature.md)
+(#30); [`experiments/LEARNINGS.md`](../../experiments/LEARNINGS.md) #25/#26/#40/#41/#42/#43/#44;
+the reading notes in [`reading_notes/`](reading_notes/); the 2A candidate scorecards and
+`f1_arakelov_survey` in [`experiments/arithmetic_geometric/`](../../experiments/arithmetic_geometric/).
