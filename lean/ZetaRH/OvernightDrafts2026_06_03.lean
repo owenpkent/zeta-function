@@ -198,13 +198,28 @@ structure SenRegDet where
 /-- **The Lerch regularized-determinant identity exists** (VERIFIER target
     #2PR-1): there is a zeta-regularized product over `{-n}` whose value is
     `√(2π)/Γ(s)`. This is the classical Lerch formula
-    `∏^{reg}_{n≥0}(s+n) = √(2π)/Γ(s)` (a textbook regularized-product fact). The
-    obstruction is purely that Mathlib lacks the zeta-regularized product
-    `∏^{reg}` (it would be built from `∂_w Hurwitz-ζ(w, s)|_{w=0}`); once that
-    construction exists, `lerch` follows from the Lerch/Hurwitz derivative
-    formula. Tracked as #2PR-1. -/
+    `∏^{reg}_{n≥0}(s+n) = √(2π)/Γ(s)` (a textbook regularized-product fact).
+
+    NOTE (overnight 2026-06-03, main-agent check of Mathlib): we deliberately do
+    NOT discharge this by the vacuous witness `⟨lerchRHS, fun _ => rfl⟩`. The
+    `SenRegDet` structure does not constrain `value` to be the actual regularized
+    product `∏^{reg}`, so inhabiting it by `value := lerchRHS` is mathematically
+    empty (it would assert only "a function equal to `lerchRHS` exists"), NOT the
+    Lerch identity. A sorry-free-but-vacuous lemma would misrepresent the state,
+    so the `sorry` stays until the genuine object exists.
+
+    THE PRECISE MATHLIB GAP. Two pieces are missing, both upstreamable:
+    (1) the zeta-regularized product `∏^{reg}_{n≥0}(s+n) := exp(-∂_w ζ_H(w, s)|_{w=0})`
+        (no regularized-product / regularized-determinant API in Mathlib); and the
+        analytic input it reduces to,
+    (2) the **Lerch / Hurwitz derivative-at-0 formula** `∂_w hurwitzZeta a w |_{w=0}
+        = log (Real.Gamma a / √(2π))` (equivalently `ζ_H'(0, a) = log Γ(a) − ½ log 2π`).
+    Mathlib (`Mathlib/NumberTheory/LSeries/HurwitzZeta*.lean`) has `hurwitzZeta` and
+    special VALUES (`hurwitzZeta_neg_nat`, `hurwitzZetaEven a 0 = if a = 0 then -1/2
+    else 0`) but NOT the DERIVATIVE at `0`; that derivative-at-0 (the Lerch formula)
+    is the single missing lemma. Once it lands, `lerch` follows. Tracked as #2PR-1. -/
 theorem senRegDet_exists : Nonempty SenRegDet := by
-  sorry  -- #2PR-1 (needs zeta-regularized product in Mathlib; Lerch formula)
+  sorry  -- #2PR-1: missing Mathlib lemma = ∂_w hurwitzZeta a w|_{w=0} = log(Γ a / √(2π)) (Lerch)
 
 /-! ### Sorry inventory (this file).
 
