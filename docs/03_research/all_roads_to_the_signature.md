@@ -50,6 +50,7 @@ The numerical phase (M1-M2.6, plus the M3 discriminator) is complete: the non-ci
 
 ## Pointers
 
+- Retrocausal companion: [`backwards_from_2050.md`](backwards_from_2050.md) reasons backward from "RH is solved in 2050", using this thesis as a boundary condition, to six candidate mechanisms for the missing polarization (each with its D-H kill condition) and two Monday-actionable probes (the prismatic cup-product Gram; the D-H-aware test).
 - Directions: [`research_directions/08_hodge_index_surface.md`](research_directions/08_hodge_index_surface.md) (the signature, central), [`research_directions/10A_thh_vonmangoldt_checkpoint.md`](research_directions/10A_thh_vonmangoldt_checkpoint.md), [`research_directions/10B_thh_weight_and_mobius.md`](research_directions/10B_thh_weight_and_mobius.md).
 - Findings: LEARNINGS #18-21 (signature vs trace, marginal positivity), #25-26 (bidegree, dynamical zeta), #27 (Dir 9/13 detectors), #28-29 (THH route + Hesselholt reorientation).
 - Experiments: 2G (function-field Hodge index, exact signature), e2s (TP odd/even = Hodge-index split), e_thh_vonmangoldt, e_necklace_mobius, survey_tc_zeta_literature.
