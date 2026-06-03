@@ -26,6 +26,13 @@ indices matched the negative set; see experiments/orchestrator_sessions/overnigh
     - slope log10|Q| vs gamma: full -0.6768, tail -0.6785, -> -(pi/2)/ln10 = -0.68219 (one-sided).
     - two-factor decomposition -0.3385 + -0.3381 ~ the double-Gamma law (each ~ -(pi/4)/ln10).
 
+K=1000 FOLLOW-UP (data in e2db2_debranges_k1000.npz; verified independently). The density does NOT
+stabilize at the K=500 ~6%: it drifts UPWARD to 80/1000 = 8.0%, per-100 windows [2,7,6,6,11,8,10,8,
+13,9] (rising from ~5% at low zeros to ~9-13% higher). So the de Branges pointwise (3.1) failure is a
+generic, mildly-increasing positive-density phenomenon; the "~6%" of the K=500 sample was a low-zero
+undercount. Reproduce with `ZETA_K=1000 python -m experiments.arithmetic_geometric.e2db2_debranges_k500`
+(writes e2db2_debranges_k1000.npz; ~4.4h, precision scaled with gamma up to dps~1028 at gamma~1419).
+
 HONEST SCOPE. A COMPUTED coordinate, not a proof. It refines the empirical negative-index set and
 the asymptotic slope of 2DB.1; the reading (de Branges (3.1) is strictly-stronger-than-RH and fails
 for zeta; the pointwise cross-term is the WRONG positivity) is unchanged. Does NOT touch the M3
@@ -142,12 +149,13 @@ def _save(K, gammas, logsQ, signs, sub_xip, sub_x1, dps_used, neg, q34, slope_al
         import numpy as np
     except Exception as exc:  # pragma: no cover
         print(f"(npz skipped: {exc})"); return
-    np.savez(NPZ, K=K, gamma=np.array(gammas, float), logQ=np.array(logsQ, float),
+    out = HERE / f"e2db2_debranges_k{K}.npz"   # K-dependent so K=500 and K=1000 coexist
+    np.savez(out, K=K, gamma=np.array(gammas, float), logQ=np.array(logsQ, float),
              sign=np.array(signs, int), sub_xip=np.array(sub_xip, float), sub_x1=np.array(sub_x1, float),
              dps_used=np.array(dps_used, int), neg_indices=np.array(neg, int),
              q34=float(q34) if q34 is not None else float("nan"),
              slope_all=slope_all, slope_tail=slope_tail, target_slope=target)
-    print(f"Saved: {NPZ}")
+    print(f"Saved: {out}")
 
 
 def report_from_npz():
