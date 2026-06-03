@@ -331,6 +331,17 @@ M2.6 non-circular Weil/Rosati form, the Schur detector, and a Lean/Mathlib subst
    against the Mathlib analytic-NT port to confirm no lemma silently assumes RH, GRH,
    or a zero-free region beyond Vinogradov-Korobov $2/3$. Formalization as the K1/
    non-circularity verifier.
+   **DONE (2026-06-03, `lean/ZetaRH/AccidentAudit.lean`, LEARNINGS #49).** The truncated
+   Weil/Rosati Gram `weilGram = A_arch + P_fin + B_pole` (Gamma factor + von Mangoldt
+   primes + pole, naming no zero) and its symmetry `weilGram_isSymm` are formalized
+   SORRY-FREE, and `#print axioms weilGram_isSymm` emits exactly `[propext,
+   Classical.choice, Quot.sound]`: a kernel-checked non-circularity certificate (no
+   `sorryAx`, no `riemannZeta`/`RiemannHypothesis`/`nonTrivialZeros`). A control confirmed
+   `#print axioms` reports `sorryAx` on the deferred targets, so the clean verdict is
+   genuine. This upgrades the project's "non-circular" CLAIM (M2.5/M2.6) to a kernel-checked
+   FACT. Two documented sorries deferred (#ACC-1 the positivity, #ACC-2 the K2
+   necessary-not-sufficient statement). This is the dossier's catch-net layer 1
+   (formalization) realized: the first machine-checked, not numerical, accident-probe result.
 6. **Wrong-polarity check for the convex-Hodge family (a day).** Build a small
    weighted matroid Chow ring / tropical fan with $w_p=\log p$ (Amini-Piquerez
    general-weight setting) and test computationally whether its HR form is

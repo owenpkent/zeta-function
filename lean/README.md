@@ -8,6 +8,8 @@
 
 **Phase 1 substrate, GREEN BUILD as of 2026-05-25.** Project infrastructure is set up, the placeholder `True` predicates have been upgraded to typed-but-stubbed predicates with concrete VERIFIER targets, and `lake build` succeeds end-to-end against Mathlib v4.13.0 on Windows + Lean 4.13.0. All 2250 modules compile. The remaining warnings are exactly the documented `sorry` markers in the VERIFIER-target table below.
 
+**Update (2026-06-03):** `AccidentAudit.lean` added (cheap-probe 5 of the "RH solved by accident" dossier, LEARNINGS #49). It formalizes the truncated non-circular Weil/Rosati Gram `weilGram = A_arch + P_fin + B_pole` from the Gamma factor (`Real.log Real.pi`), the von Mangoldt prime weights (`ArithmeticFunction.vonMangoldt`), and the pole residue, naming NO zero. `weilGram` and its symmetry anchor `weilGram_isSymm` are SORRY-FREE, and `#print axioms weilGram_isSymm` emits exactly `[propext, Classical.choice, Quot.sound]` (no `sorryAx`, no `riemannZeta`/`RiemannHypothesis`/`nonTrivialZeros`): a kernel-checked NON-CIRCULARITY certificate (a control confirmed `#print axioms` does report `sorryAx` on the deferred targets, so the verdict is genuine). Two documented sorries added (#ACC-1 positivity, #ACC-2 the K2 necessary-not-sufficient statement). Build green.
+
 Build command:
 
 ```powershell
@@ -53,7 +55,8 @@ lean/
     ├── PrismaticCohomology.lean     # Direction 3: prismatic cohomology of W(ℤ) (placeholder)
     ├── PrismaticFoliation.lean      # Direction 4: prismatic foliation hypothesis M3 (placeholder)
     ├── HodgeIndex.lean              # Direction 8: the central open problem
-    └── KillCriteria.lean            # K1-K4 formalizations
+    ├── KillCriteria.lean            # K1-K4 formalizations
+    └── AccidentAudit.lean           # Cheap-probe 5: de-smuggling audit of the C_mu Weil form (sorry-free non-circularity certificate)
 ```
 
 ## VERIFIER target IDs (Phase 1)
@@ -87,6 +90,8 @@ Each `sorry` introduced in the Phase 1 substrate carries a VERIFIER target ID fo
 | #EF-arch   | ExplicitFormula.lean          | The archimedean kernel. Kernel part **DISCHARGED**: `digamma := logDeriv Complex.Gamma`, `digamma_eq` proved, `archKernel` concrete, and the basic algebraic identities `digamma_add_one` (`ψ(s+1)=ψ(s)+1/s`), `digamma_reflection` (`ψ(1-s)-ψ(s)=π cot(πs)`), and `digamma_add_nat` (`ψ(s+n)=ψ(s)+∑_{k<n} 1/(s+k)`, by induction from the recurrence), `digamma_duplication` (`ψ(2s)=½(ψ(s)+ψ(s+½))+log 2`, from Legendre's doubling `Complex.Gamma_mul_Gamma_add_half`), and the special values `digamma_one` (`ψ(1)=-γ`, from `Complex.hasDerivAt_Gamma_one`) and `digamma_half` (`ψ(½)=-γ-2log 2`, from duplication at `s=½`) **PROVED** (no sorry). Six sorry-free digamma identities total, from `Complex.Gamma_add_one`, `Complex.Gamma_mul_Gamma_one_sub`, `Complex.Gamma_mul_Gamma_add_half`, and `Complex.hasDerivAt_Gamma_one`. Remaining: the integral pairing (#EF-class). |
 | #EF-class  | ExplicitFormula.lean          | The analytic side-conditions on `AdmissibleTest` (smoothness/decay/strip of holomorphy) that make the functionals well-defined and #EF-1 true. |
 | #EF-K2     | ExplicitFormula.lean          | The D-H instance showing the criterion does NOT certify RH for Davenport-Heilbronn (prime side delocalises; experiment 3M #20). |
+| #ACC-1     | AccidentAudit.lean            | The numerical positivity certificate `(weilGram K N b).PosDef` for zeta (min-eig +0.035; e3c/e3m). Necessary-not-sufficient. Sorry (needs concrete numerical entries + a PosDef witness). |
+| #ACC-2     | AccidentAudit.lean            | `weilGram_noncirc`: positivity of `weilGram` does NOT entail `RiemannHypothesis zeta` (the same construction for Davenport-Heilbronn would otherwise prove a false RH; the M2.6 stealth window #34). Sorry (needs the explicit D-H witness Gram + its off-line zero, ties to #DH-zero). The non-circular-because-necessary-not-sufficient statement. |
 
 ## Mathlib coverage gaps
 
