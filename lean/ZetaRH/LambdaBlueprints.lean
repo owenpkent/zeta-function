@@ -29,7 +29,7 @@ Substantial Mathlib work still required: blueprints are not in Mathlib.
 -/
 
 import Mathlib.Algebra.Ring.Defs
-import Mathlib.Algebra.Ring.Int
+import Mathlib.Algebra.Ring.Int.Defs
 import Mathlib.Algebra.Group.Basic
 import Mathlib.Data.Nat.Prime.Basic
 

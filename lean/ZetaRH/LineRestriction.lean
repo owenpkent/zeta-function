@@ -27,7 +27,7 @@ Status (Phase 1 substrate, 2026-05-25 onwards):
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 namespace ZetaRH
 
