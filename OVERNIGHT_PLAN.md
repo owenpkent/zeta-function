@@ -8,6 +8,8 @@ coordinates; no fabricated proofs; every Arch 1/3/4 result must pass the Davenpo
 Stop condition: when the high-value backlog is genuinely exhausted, stop and record it rather than
 generate filler.
 
+## STATUS: loop stopped (honest stop, not exhaustion of effort) -- see Final summary at bottom.
+
 ## Backlog (curated, buildable now, distinct, each adds a real coordinate)
 
 - [x] C1. Function-field polarization made concrete (the case where Level 5 EXISTS). Build the
@@ -45,3 +47,35 @@ generate filler.
   = 1.16 (RH-false), Epstein-d47-principal = 5.14 (RH-TRUE), both non-Euler. d>0 for both RH-true and
   RH-false => detects non-Euler-ness (no equilibrium product state), not RH-failure: the Bost-Connes
   K2 firewall, necessary-not-sufficient. Sharpens 2A_R1 (D-H has no product state). Committed+pushed.
+- C3 ATTEMPTED, NOT COMMITTED (honest stop). The input-side cross-swap (A_zeta + P_DH vs
+  A_DH + P_zeta) does NOT cleanly isolate the seam: the archimedean block A_arch is itself
+  indefinite in the Phi_b basis (min-eig ~ -55 for zeta), so the raw min-eig is swamped by the
+  archimedean block and a first assembly had a sign error (gave M(zeta) ~ -123, while e3m's
+  calibrated value is REL min +0.08, positive). Caught by calibration against e3m BEFORE committing.
+  The seam thesis is already established cleanly by #46 (prime-block ablation) and #20 (place-type
+  split), so a muddy reconfirmation was not worth the risk. Supervised retry note: the clean seam
+  localizer is the ANSWER-side Schur complement (e3j), not the input-side raw min-eig; and the
+  archimedean block being non-PSD in this basis is itself the mechanism behind the M2.6 stealth
+  window -- worth a careful supervised experiment.
+
+## Final overnight summary (loop stopped honestly, no further wakeup)
+
+Delivered tonight (all committed + pushed): the first-principles construction sweep + Rankin
+loglog-coefficient (e3w, #53); C1 function-field polarization (e3x, #54); C4 Bost-Connes
+multiplicativity obstruction (e3z, #55); C5 session capstone. Four clean, distinct cycles plus the
+sweep, each passing the Davenport-Heilbronn discipline, no fabricated proofs.
+
+Stopped (no further wakeup) because the remaining backlog is no longer clearly additive AND low-risk:
+- C2 (Connes Thm 7.1 Sonin positivity): genuinely new but implementation-risky unsupervised (Sonin
+  projection + trace); wants a careful supervised build.
+- C3 (seam cross-swap): attempted, found subtle (archimedean block non-PSD swamps the signal; first
+  assembly buggy, caught by calibration); thesis already established by #46/#20. Supervised retry via
+  the e3j Schur route recommended.
+- C6 (Lean): tooling risk (elan/lake) unsupervised.
+- C7 (de Branges height-distribution): only a modest refinement of #43; borderline filler.
+
+Per the stop-discipline ("do not generate filler; be honest about when to stop"), the loop ends here
+rather than committing risky or marginal work overnight. Most additive supervised next steps: C2 and
+the e3j-based seam experiment, both wanting a human sanity-check on the construction. The session's
+net result and the sharpened missing-math statement stand in
+docs/03_research/session_2026_06_03_capstone.md.
