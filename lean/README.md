@@ -8,6 +8,8 @@
 
 **Phase 1 substrate, GREEN BUILD as of 2026-05-25.** Project infrastructure is set up, the placeholder `True` predicates have been upgraded to typed-but-stubbed predicates with concrete VERIFIER targets, and `lake build` succeeds end-to-end against Mathlib v4.13.0 on Windows + Lean 4.13.0. All 2250 modules compile. The remaining warnings are exactly the documented `sorry` markers in the VERIFIER-target table below.
 
+**Update (2026-06-04):** `RHEquivalences.lean` added (entry point A of the RH-logical-status excursion, [`docs/03_research/rh_logical_status.md`](../docs/03_research/rh_logical_status.md) §7). The equivalence hub: `robinInequality`, `lagariasInequality`, `mertensBound` are CONCRETE Props over Mathlib (`ArithmeticFunction.sigma` σ, `harmonic`, `Real.eulerMascheroniConstant`, `ArithmeticFunction.moebius` μ); `li_criterion` and `nymanBeurling_criterion` bundle the analytic data Mathlib lacks (sum-over-zeros, L²(0,1) closure), mirroring `ExplicitFormula.WeilExplicitFormula`. Distinct from `ExplicitFormula.lean`'s Weil-form positivity (#EF-2): this module owns the elementary/criterion faces. The headline object is `RH_arith := lagariasInequality`, the Π⁰₁ arithmetic surrogate, with `RH_arith_iff_RiemannHypothesis` reusing #LG-1 (no new sorry). Sorry-free anchors (all with `#print axioms` = `[propext, Classical.choice, Quot.sound]`, no `sorryAx`, no `ofReduceBool`): `riemannHypothesis_zeta_iff_nonTrivialZeros` (definitional), `riemannHypothesisMathlib_iff_zeta` (Basic re-export), `lagarias_holds_at_one` (the n = 1 equality case, the reason the criterion uses ≤ not strict <), `lagarias_holds_at_three` (the first transcendental instance, σ(3)=4 ≤ 11/6 + e^{11/6}·log(11/6) ≈ 4.08, proved by effective bounds: e^{11/6} ≥ e·(11/6) ≥ (27/10)(11/6) via `add_one_le_exp`+`exp_one_gt_d9`, log(11/6) ≥ 5/11 via `log_le_sub_one_of_pos`; realizes the §1 effective-approximation claim), `rh_arith_refutable` (entry point B: the Σ⁰₁ refutability structure, `¬ RH_arith ↔ ∃ n ≥ 1, ¬ lagariasInequalityAt n`, the formal core of `rh_logical_status.md` §2), and `sigma_one_six` / `sigma_one_twelve` (the σ matrix side is kernel-computable via `decide`). Five documented sorries (#RB-1, #LG-1, #MT-1, #LI-1, #NB-1). Build green (2284 modules).
+
 **Update (2026-06-03):** `AccidentAudit.lean` added (cheap-probe 5 of the "RH solved by accident" dossier, LEARNINGS #49). It formalizes the truncated non-circular Weil/Rosati Gram `weilGram = A_arch + P_fin + B_pole` from the Gamma factor (`Real.log Real.pi`), the von Mangoldt prime weights (`ArithmeticFunction.vonMangoldt`), and the pole residue, naming NO zero. `weilGram` and its symmetry anchor `weilGram_isSymm` are SORRY-FREE, and `#print axioms weilGram_isSymm` emits exactly `[propext, Classical.choice, Quot.sound]` (no `sorryAx`, no `riemannZeta`/`RiemannHypothesis`/`nonTrivialZeros`): a kernel-checked NON-CIRCULARITY certificate (a control confirmed `#print axioms` does report `sorryAx` on the deferred targets, so the verdict is genuine). Two documented sorries added (#ACC-1 positivity, #ACC-2 the K2 necessary-not-sufficient statement). Build green.
 
 Build command:
@@ -56,7 +58,8 @@ lean/
     ├── PrismaticFoliation.lean      # Direction 4: prismatic foliation hypothesis M3 (placeholder)
     ├── HodgeIndex.lean              # Direction 8: the central open problem
     ├── KillCriteria.lean            # K1-K4 formalizations
-    └── AccidentAudit.lean           # Cheap-probe 5: de-smuggling audit of the C_mu Weil form (sorry-free non-circularity certificate)
+    ├── AccidentAudit.lean           # Cheap-probe 5: de-smuggling audit of the C_mu Weil form (sorry-free non-circularity certificate)
+    └── RHEquivalences.lean          # RH equivalence hub (Robin/Lagarias/Mertens/Li/Nyman-Beurling) + the Π⁰₁ kernel witness RH_arith
 ```
 
 ## VERIFIER target IDs (Phase 1)
@@ -92,6 +95,11 @@ Each `sorry` introduced in the Phase 1 substrate carries a VERIFIER target ID fo
 | #EF-K2     | ExplicitFormula.lean          | The D-H instance showing the criterion does NOT certify RH for Davenport-Heilbronn (prime side delocalises; experiment 3M #20). |
 | #ACC-1     | AccidentAudit.lean            | The numerical positivity certificate `(weilGram K N b).PosDef` for zeta (min-eig +0.035; e3c/e3m). Necessary-not-sufficient. Sorry (needs concrete numerical entries + a PosDef witness). |
 | #ACC-2     | AccidentAudit.lean            | `weilGram_noncirc`: positivity of `weilGram` does NOT entail `RiemannHypothesis zeta` (the same construction for Davenport-Heilbronn would otherwise prove a false RH; the M2.6 stealth window #34). Sorry (needs the explicit D-H witness Gram + its off-line zero, ties to #DH-zero). The non-circular-because-necessary-not-sufficient statement. |
+| #RB-1      | RHEquivalences.lean           | `robin_criterion`: Robin's inequality `∀ n ≥ 5041, σ(n) < e^γ n log log n` ⟺ RH. Sorry (full RH-equivalence; unformalized in any prover). |
+| #LG-1      | RHEquivalences.lean           | `lagarias_criterion`: Lagarias's inequality `∀ n ≥ 1, σ(n) ≤ H_n + e^{H_n} log H_n` ⟺ RH. Sorry. Also backs `RH_arith_iff_RiemannHypothesis` (the Π⁰₁ kernel witness, no new sorry). |
+| #MT-1      | RHEquivalences.lean           | `mertens_criterion`: the Mertens bound `M(x) = O(x^{1/2+ε})` ⟺ RH. Sorry. |
+| #LI-1      | RHEquivalences.lean           | `li_criterion`: Li/Keiper positivity `∀ n ≥ 1, λ_n ≥ 0` ⟺ RH, given the `LiData` Keiper-Li representation. Sorry. #LI-def (the convergent symmetric-pairing form of the sum-over-zeros identity) is the `LiData.keiperLi` field's deep content. |
+| #NB-1      | RHEquivalences.lean           | `nymanBeurling_criterion`: the Báez-Duarte distances `d_N → 0` ⟺ RH, given `NymanBeurlingData`. Sorry. #NB-def (the tie of `dist` to the actual L²(0,1) closure of dilated fractional parts) is the opaque data. |
 
 ## Mathlib coverage gaps
 
