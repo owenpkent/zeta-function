@@ -11,6 +11,7 @@
 - [x] **docs/02_graduate/log_correlated_fields_intro.md** — log-correlated fields, four-level RH framing, primes-zeros Fourier duality
 - [x] **docs/03_research/** — extreme values, log-correlated fields, new mathematics
 - [x] **CLAUDE.md** — project context for AI assistants
+- [x] **docs/03_research/rh_logical_status.md** + **lean/ZetaRH/RHEquivalences.lean** — RH's logical status (Π⁰₁, undecidability is a back door to truth not an escape); the Π⁰₁ kernel witness `RH_arith`; 8 sorry-free Lean anchors incl. Lagarias at n=1,2,3 and the Σ⁰₁ refutability structure (LEARNINGS #64)
 
 ### Experimental thread (see `experiments/PROOF_ARCHITECTURES_PLAN.md`)
 
