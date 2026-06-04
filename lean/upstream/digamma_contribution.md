@@ -1,6 +1,6 @@
 # Mathlib contribution staging: three digamma identities (reflection, iterated recurrence, duplication)
 
-> Tier-1 move 1A from the needle-map ([`STATE_OF_THE_PROGRAM.md`](../../STATE_OF_THE_PROGRAM.md) Update 2026-06-04). Status: **half-preempted, salvageable.** This note packages the surviving contribution. It is NOT part of the `lake build` target (no module imports it).
+> Tier-1 move 1A from the needle-map ([`STATE_OF_THE_PROGRAM.md`](../../STATE_OF_THE_PROGRAM.md) Update 2026-06-04). Status: **half-preempted; the 3 surviving identities are now VERIFIED against the upstream `Complex.digamma`** in [`../ZetaRH/DigammaExtras.lean`](../ZetaRH/DigammaExtras.lean) (green on Lean/Mathlib v4.30.0 after the cache bump; `#print axioms` clean for all three). This note packages the contribution; `DigammaExtras.lean` is the PR-ready, build-checked unit.
 
 ## The finding (2026-06-04 re-check of current Mathlib master)
 
@@ -45,8 +45,8 @@ theorem digamma_two_mul (s : ℂ) (hs : ∀ m : ℕ, s ≠ -m) (hsh : ∀ m : �
 - Source lemmas the proofs need are all present in master: `Complex.Gamma_mul_Gamma_one_sub` (reflection), `Complex.Gamma_mul_Gamma_add_half` (Legendre duplication), `Complex.Gamma_add_one`, `Complex.differentiableAt_Gamma`, `Complex.Gamma_ne_zero`, `logDeriv_comp`, `logDeriv_mul`, `logDeriv_div`, `logDeriv_id'`.
 - Master uses the Lean module system (`public import ...`); the target file's imports are `Mathlib.Analysis.Meromorphic.Complex`, `Mathlib.NumberTheory.Harmonic.GammaDeriv`, `Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv`. The reflection/duplication proofs additionally need the `Gamma_mul_Gamma_*` lemmas (Gamma/Beta), so add `Mathlib.Analysis.SpecialFunctions.Gamma.Beta`.
 
-## Honest scope and the required step before PR
+## Verification status and the remaining step before PR
 
-The mathematical content is kernel-verified in our substrate (Mathlib v4.13.0). This note is NOT a verified PR: our cache predates Mathlib's `Digamma.lean`, so I could not compile the adapted proofs against current master. **Before opening a PR:** drop the three theorems into a current-Mathlib checkout's `Digamma.lean` (or a follow-on file), lift each proof from `ExplicitFormula.lean` with the name-adaptations above, `lake build`, and fix any API drift. The likely break points are the `digamma`/`digamma_def` unfolding and the `1/s` vs `s⁻¹` mismatch in the `linear_combination` steps.
+**Verified (2026-06-04, after the v4.30.0 cache bump):** the three theorems compile GREEN against the upstream `Complex.digamma` in [`../ZetaRH/DigammaExtras.lean`](../ZetaRH/DigammaExtras.lean), and `#print axioms` is `[propext, Classical.choice, Quot.sound]` for each (no `sorryAx`, no `ofReduceBool`). The proofs transferred essentially verbatim from `ExplicitFormula.lean`: the only adaptations were the recurrence name (`digamma_add_one` -> `digamma_apply_add_one`), `1/s` -> `s⁻¹`, and unfolding via `digamma_def` (since `Complex.digamma` is definitionally `logDeriv Gamma`, the predicted break points did not bite).
 
-Submitting the PR itself (fork, CLA, review) is a manual GitHub step for the maintainer; this repo cannot do it.
+**Before opening the PR:** rebase the three theorems from `DigammaExtras.lean` onto the exact Mathlib commit being targeted (we built against the v4.30.0 tag, c5ea00351...; master may have drifted), drop them into `Mathlib/Analysis/SpecialFunctions/Gamma/Digamma.lean` (they already live in `namespace Complex`), and align names/docstrings to Mathlib conventions (e.g. a maintainer may prefer `Complex.cot` in the reflection statement, or a particular lemma name). Submitting the PR (fork, CLA, review) is a manual GitHub step for the maintainer; this repo cannot do it.
