@@ -14,3 +14,4 @@ import ZetaRH.HodgeIndex
 import ZetaRH.ExplicitFormula
 import ZetaRH.AccidentAudit
 import ZetaRH.RHEquivalences
+import ZetaRH.DigammaExtras
