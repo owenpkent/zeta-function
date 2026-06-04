@@ -5,7 +5,7 @@
 > next move. Companion to the operational [`PHASE_STATE.md`](PHASE_STATE.md) (current
 > sub-task, falsifiability triggers) and the synthesis surface
 > [`experiments/LEARNINGS.md`](experiments/LEARNINGS.md) (26 cross-architecture
-> findings). Last updated: 2026-05-29 (after session 005).
+> findings). Last updated: 2026-06-04 (needle-map refinement; see the Update section below).
 
 ## The thesis in one paragraph
 
@@ -20,6 +20,14 @@ meta-finding, validated five independent ways, is the **marginal-positivity thes
 RH is true only at the margin, so any proof must engage the *exact* structure of
 $\zeta$ (Euler product, functional equation, archimedean factor), not generic
 positivity. That is a compass, not a verdict.
+
+## Update (2026-06-04): the needle-map refinement
+
+An adversarially-vetted "where can we move the needle" sweep (29 agents: map 4 fronts, rank every candidate move for leverage vs trap-risk, synthesize) sharpened the live front in three ways:
+
+- **The Connes-Consani signed-pairing handle is CLOSED** (2CC.4, LEARNINGS #65): the soft-max de-idempotentization does not restore the Frobenius trace t (Δ·Γ stays a fixed function of (β,p), no free knob to roam the Hasse-Weil window). So among the two concrete objects, the better handle for M4 is now the **Bhatt-Lurie WCart substrate** (Frobenius F + Sen Θ on one stack, Θ a proven derivation, cohomological dimension 1, Tang's prismatic Poincaré duality to build on), not the C-C square. Two hard bounds even on WCart: it has no archimedean place (Bhatt-Lurie Rmk 1.4.3) and its Sen spectrum is the integer lattice {−n}, blind to the nontrivial zeros.
+- **The deep target restated as M4a-POSITIVITY:** prove the functional-equation cup product H¹×H¹→H² is Hodge-Riemann positive on the primitive infinite-dimensional arithmetic H¹, WITHOUT RH input. Three traps the sweep flagged: the Deninger-II §6 skew-adjointness mechanism yields only parity (D-H-shared), not zero location; the numerical route is provably exhausted (D-H reads +0.094, wrong sign; a resolution cost, not removable by finer truncation); Petrov (Annals) proves the Sen operator is not semisimple, so the polarization must be built intrinsically, not eigenspace-by-eigenspace. A Lean `IsPolarization(cupGram) ↔ RH` target is the K1 circularity wall and must NOT be built (the honest `sorry` is superior).
+- **Bounded Tier-1 moves (real artifacts, ~0% RH leverage but genuine deliverables):** upstream the digamma module to Mathlib (six theorems already sorry-free; the highest-value bounded move); upstream the 2G function-field Hodge-index lemma; state the Euler-product fingerprint lemma (multiplicativity detector, necessary-not-sufficient, "has Euler product" not "Selberg class"); substrate hygiene (Schwartz-ify AdmissibleTest, fix #MB-4). See [`docs/03_research/rh_logical_status.md`](docs/03_research/rh_logical_status.md) §7 for the logical-status excursion (RH is Π⁰₁; undecidability is a back door to truth, not an escape) and its Lean kernel witness.
 
 ## The four architectures
 
@@ -100,6 +108,7 @@ push on:
    $\Psi(\lambda)$ and a composition law. The gap is isolated and sharp: the characteristic-1
    operations are idempotent, so there is **no signed intersection pairing / Hodge index yet**.
    Putting a signature on this square is Direction 8 in its most concrete current form.
+   **(2026-06-04 update: the soft-max route to that signature is now CLOSED, 2CC.4 / LEARNINGS #65 -- it cannot restore the Frobenius trace t. The better handle is the WCart substrate; see the Update section above.)**
 
 ## Canonical pointers
 
