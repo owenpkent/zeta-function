@@ -7,6 +7,8 @@
 > and the strategic snapshot [`STATE_OF_THE_PROGRAM.md`](../STATE_OF_THE_PROGRAM.md).
 > Reading notes (as they are produced) live in
 > [`docs/03_research/reading_notes/`](../docs/03_research/reading_notes/).
+> **How to add a paper / process a PDF (file -> extract -> note -> index):**
+> [`docs/03_research/reading_notes/PROCESSING_PDFS.md`](../docs/03_research/reading_notes/PROCESSING_PDFS.md).
 >
 > **Priority for the live front (Direction 4.6 → 8):** 02 (Deninger) and 03
 > (foliated trace formulas) are the direct blueprint; 01 (prismatic) is the
@@ -44,6 +46,7 @@
 
 | File | Reference | Role |
 |---|---|---|
+| `Connes-2026-RH-Past-Present-and-a-Letter-Through-Time.pdf` | Connes, arXiv:2602.04022 (2026) | The Feb-2026 survey + the "Letter to Riemann": extremize the truncated Weil form, Thm 6.1 gives on-line zeros per cutoff (primes ≤13 → first 50 zeros to 2.6e-55), RH = the unproven convergence; Shannon/Slepian bridge; prolate UV model. Notes: [Connes-2026-RH-Past-Present-Letter](../docs/03_research/reading_notes/Connes-2026-RH-Past-Present-Letter.md); assessment: [connes_2602_letter_to_riemann](../docs/03_research/connes_2602_letter_to_riemann.md). |
 | `Connes-1998-Trace-Formula-in-NCG-and-Zeros-of-Riemann-Zeta.pdf` | Connes, Selecta 1999 | Spectral interpretation of the critical zeros; the NCG trace formula. |
 | `Connes-Consani-2015-Geometry-of-the-Arithmetic-Site.pdf` | Connes & Consani, *Geometry of the Arithmetic Site* | The adèle-class-space geometry; the Connes side of the bridge (R3.5/3M context). |
 | `Connes-1994-Noncommutative-Geometry.pdf` | Connes, *Noncommutative Geometry* (book) | Foliations, the trace, foundational NCG. |
