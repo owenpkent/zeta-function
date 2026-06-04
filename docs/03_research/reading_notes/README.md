@@ -99,6 +99,11 @@ gap identically** to the in-house work, and it surfaces concrete candidate objec
 |---|---|
 | [Gerasimov-Lebedev-Oblezin-Archimedean-L-factors-TFT](Gerasimov-Lebedev-Oblezin-Archimedean-L-factors-TFT.md) | Archimedean L-factor as a topological field theory partition function; the q=0 (Frobenius trace) to q->1 (Gamma-factor) deformation, a lens on the A_arch place (2I) and 2Q's two-clock question. |
 
+## Adding a paper
+
+The full procedure for filing, extracting, note-taking, and indexing a PDF is in
+[`PROCESSING_PDFS.md`](PROCESSING_PDFS.md). New notes follow the house style described there and below.
+
 ## Method note
 
 All 26 notes are full-depth: each has a "Technical content (section by section)" part with

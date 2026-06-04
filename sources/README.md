@@ -2,6 +2,11 @@
 
 Original PDFs and their converted/annotated text versions.
 
+> This folder is the **primary-sources** tier (classical / original documents; PDFs committed via the
+> `!sources/*.pdf` gitignore whitelist). Modern reference papers go in [`references/`](../references/)
+> (gitignored, index-only). Full procedure for filing and processing any PDF:
+> [`docs/03_research/reading_notes/PROCESSING_PDFS.md`](../docs/03_research/reading_notes/PROCESSING_PDFS.md).
+
 ## PDFs
 
 | File | Description |
