@@ -13,3 +13,4 @@ import ZetaRH.PrismaticFoliation
 import ZetaRH.HodgeIndex
 import ZetaRH.ExplicitFormula
 import ZetaRH.AccidentAudit
+import ZetaRH.RHEquivalences
