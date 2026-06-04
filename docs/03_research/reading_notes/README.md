@@ -67,6 +67,7 @@ gap identically** to the in-house work, and it surfaces concrete candidate objec
 ### 04 NCG / Connes (the other half of the Morishita bridge)
 | Note | Headline |
 |---|---|
+| [Connes-2026-RH-Past-Present-Letter](Connes-2026-RH-Past-Present-Letter.md) | The Feb-2026 survey + the "Letter to Riemann": extremize the truncated Weil form, Thm 6.1 (Connes-van Suijlekom) gives on-line zeros per finite cutoff (primes <=13 -> first 50 zeros to 2.6e-55), RH = the unproven convergence eta_x-hat -> Xi; plus the Shannon/Slepian information-theory bridge and the prolate UV model (Moscovici). Zeta-blind by Thm 6.1; instrumented by e3s/e3t/e3u/e3v/e3y. Assessment: connes_2602_letter_to_riemann.md. |
 | [Connes-1998-Trace-Formula-NCG-Zeros](Connes-1998-Trace-Formula-NCG-Zeros.md) | RH reduced to a trace formula on the adele class space; Weil dictionary's bottom rows = Directions 4.6 + 8; trace-formula positivity <=> RH pins the K1 wall. |
 | [Connes-Consani-2015-Geometry-Arithmetic-Site](Connes-Consani-2015-Geometry-Arithmetic-Site.md) | Builds the square N^2-hat with Frobenius correspondences Psi(lambda): a concrete product surface + Gamma_S over char-1, but idempotent ops => no signed pairing yet (the Direction-8 gap, isolated). |
 | [Connes-1994-Noncommutative-Geometry](Connes-1994-Noncommutative-Geometry.md) | Role-note: foliations + Ruelle-Sullivan current (I.5), flow of weights = why R*_+ is canonical Frobenius (V.8/11), transverse fundamental class = where an NCG Lefschetz pairing / K1 wall lives (III.7). |
