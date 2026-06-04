@@ -23,7 +23,7 @@ generate filler.
 - [ ] C4. Bost-Connes K2 sharpening: D-H is a KMS mixture, never a pure product state. Make the
   multiplicativity failure concrete (a_{mn} != a_m a_n for D-H; a_m a_n = a_mn for zeta) as the
   obstruction to the product-state / Euler-factor construction.
-- [ ] C5. Session capstone synthesis dossier: Connes 2602 -> candidate proof -> assume-RH ->
+- [x] C5. Session capstone synthesis dossier: Connes 2602 -> candidate proof -> assume-RH ->
   marginal wall -> construction sweep, with the single sharpened statement of the missing math and
   the full coordinate map of what this session ruled out.
 - [ ] C6. Lean: formalize the Rankin loglog-coefficient discriminator as a def, or attempt an #ACC sorry.
@@ -36,3 +36,7 @@ generate filler.
   primitive part negative-definite, buffer 4q - a^2 > 0 with median 2.88 q (O(q), healthy). The
   polarization the integer case lacks, exhibited where it is a theorem; contrast with the e3v
   e^{-4 pi x} marginal wall names the missing math precisely. Committed + pushed.
+- C5 (session_2026_06_03_capstone.md): coordinate map of the whole session (Connes 2602 -> candidate
+  proof -> assume-RH -> marginal wall -> construction sweep -> function-field contrast), with the
+  single sharpened statement of the missing math and the full negative map of what was ruled out.
+  Done out of order (low-risk synthesis) so a coherent narrative exists early. Committed + pushed.
