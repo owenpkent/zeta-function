@@ -50,7 +50,7 @@ import Mathlib.NumberTheory.Harmonic.Defs
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Complex.ExponentialBounds
+import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import ZetaRH.Basic
 
@@ -65,11 +65,11 @@ open scoped ArithmeticFunction
     known exception set (the 27 numbers up to 5040); it does not affect the Π⁰₁
     complexity class, only the truth value. -/
 
-/-- The per-n Robin inequality `σ(n) < e^γ · n · log log n`. Concrete: `σ 1 n` is
+/-- The per-n Robin inequality `σ(n) < e^γ · n · log log n`. Concrete: `ArithmeticFunction.sigma 1 n` is
     Mathlib's sum-of-divisors arithmetic function, `Real.eulerMascheroniConstant`
     is γ. -/
 noncomputable def robinInequalityAt (n : ℕ) : Prop :=
-  (σ 1 n : ℝ) < Real.exp Real.eulerMascheroniConstant * (n : ℝ) * Real.log (Real.log (n : ℝ))
+  (ArithmeticFunction.sigma 1 n : ℝ) < Real.exp Real.eulerMascheroniConstant * (n : ℝ) * Real.log (Real.log (n : ℝ))
 
 /-- **Robin's criterion** as a `Prop`: the inequality holds for every n ≥ 5041. -/
 def robinInequality : Prop := ∀ n : ℕ, 5041 ≤ n → robinInequalityAt n
@@ -84,7 +84,7 @@ def robinInequality : Prop := ∀ n : ℕ, 5041 ≤ n → robinInequalityAt n
 /-- The per-n Lagarias inequality `σ(n) ≤ H_n + exp(H_n) · log(H_n)`. Concrete:
     `harmonic n : ℚ` is Mathlib's harmonic number, cast to `ℝ`. -/
 noncomputable def lagariasInequalityAt (n : ℕ) : Prop :=
-  (σ 1 n : ℝ) ≤ (harmonic n : ℝ) + Real.exp (harmonic n : ℝ) * Real.log (harmonic n : ℝ)
+  (ArithmeticFunction.sigma 1 n : ℝ) ≤ (harmonic n : ℝ) + Real.exp (harmonic n : ℝ) * Real.log (harmonic n : ℝ)
 
 /-- **Lagarias's criterion** as a `Prop`: the inequality holds for every n ≥ 1. -/
 def lagariasInequality : Prop := ∀ n : ℕ, 1 ≤ n → lagariasInequalityAt n
@@ -96,7 +96,7 @@ def lagariasInequality : Prop := ∀ n : ℕ, 1 ≤ n → lagariasInequalityAt n
 
 /-- The Mertens function `M(x) = ∑_{n=1}^{x} μ(n)`, using Mathlib's
     `ArithmeticFunction.moebius` (μ). -/
-noncomputable def mertens (x : ℕ) : ℤ := ∑ n ∈ Finset.Icc 1 x, μ n
+noncomputable def mertens (x : ℕ) : ℤ := ∑ n ∈ Finset.Icc 1 x, ArithmeticFunction.moebius n
 
 /-- **The Mertens bound** as a `Prop`: `|M(x)| ≤ C · x^{1/2 + ε}` for every ε > 0
     (with a constant C depending on ε). The exponent uses `Real.rpow`. -/
@@ -210,8 +210,8 @@ theorem riemannHypothesisMathlib_iff_zeta :
     `1 ≤ 1 + e^1 · log 1 = 1`. This is exactly why the criterion uses `≤`, not
     strict `<`: at n = 1 the two sides are equal. -/
 theorem lagarias_holds_at_one : lagariasInequalityAt 1 := by
-  have hσn : σ 1 1 = 1 := by simp [ArithmeticFunction.sigma_one_apply]
-  have hσ : (σ 1 1 : ℝ) = 1 := by rw [hσn]; norm_num
+  have hσn : ArithmeticFunction.sigma 1 1 = 1 := by simp [ArithmeticFunction.sigma_one_apply]
+  have hσ : (ArithmeticFunction.sigma 1 1 : ℝ) = 1 := by rw [hσn]; norm_num
   have hHq : harmonic 1 = 1 := by simp [harmonic, Finset.sum_range_one]
   have hH : (harmonic 1 : ℝ) = 1 := by rw [hHq]; norm_num
   unfold lagariasInequalityAt
@@ -228,8 +228,8 @@ theorem lagarias_holds_at_one : lagariasInequalityAt 1 := by
       `log(11/6) ≥ 5/11` (from `log_le_sub_one_of_pos` applied to 6/11, via `log_inv`).
     The product bound gives RHS ≥ 11/6 + 2.25 = 49/12 ≈ 4.083 ≥ 4. Margin ≈ 0.08. -/
 theorem lagarias_holds_at_three : lagariasInequalityAt 3 := by
-  have hσ : (σ 1 3 : ℝ) = 4 := by
-    have h : σ 1 3 = 4 := by rw [ArithmeticFunction.sigma_one_apply]; decide
+  have hσ : (ArithmeticFunction.sigma 1 3 : ℝ) = 4 := by
+    have h : ArithmeticFunction.sigma 1 3 = 4 := by rw [ArithmeticFunction.sigma_one_apply]; decide
     rw [h]; norm_num
   have hH : (harmonic 3 : ℝ) = 11 / 6 := by
     have h : harmonic 3 = 11 / 6 := by
@@ -275,8 +275,8 @@ theorem lagarias_holds_at_three : lagariasInequalityAt 3 := by
     Even the tightest small-n case of the Π⁰₁ matrix is effectively checkable.
     (For general n, soft bounds provably cannot work: that would be proving RH.) -/
 theorem lagarias_holds_at_two : lagariasInequalityAt 2 := by
-  have hσ : (σ 1 2 : ℝ) = 3 := by
-    have h : σ 1 2 = 3 := by rw [ArithmeticFunction.sigma_one_apply]; decide
+  have hσ : (ArithmeticFunction.sigma 1 2 : ℝ) = 3 := by
+    have h : ArithmeticFunction.sigma 1 2 = 3 := by rw [ArithmeticFunction.sigma_one_apply]; decide
     rw [h]; norm_num
   have hH : (harmonic 2 : ℝ) = 3 / 2 := by
     have h : harmonic 2 = 3 / 2 := by
@@ -293,12 +293,12 @@ theorem lagarias_holds_at_two : lagariasInequalityAt 2 := by
     have he3 : (16 : ℝ) ≤ Real.exp 3 := by
       rw [hcube]
       calc (16 : ℝ) ≤ (27 / 10 : ℝ) ^ 3 := by norm_num
-        _ ≤ Real.exp 1 ^ 3 := pow_le_pow_left (by norm_num) he1 3
+        _ ≤ Real.exp 1 ^ 3 := pow_le_pow_left₀ (by norm_num) he1 3
     have key : (4 : ℝ) ^ 2 ≤ Real.exp (3 / 2) ^ 2 := by
       rw [hsq]
       calc (4 : ℝ) ^ 2 = 16 := by norm_num
         _ ≤ Real.exp 3 := he3
-    exact le_of_pow_le_pow_left (by norm_num) (le_of_lt (Real.exp_pos _)) key
+    exact le_of_pow_le_pow_left₀ (by norm_num) (le_of_lt (Real.exp_pos _)) key
   -- log(3/2) ≥ 2/5
   have hlog : (2 / 5 : ℝ) ≤ Real.log (3 / 2) := by
     rw [Real.le_log_iff_exp_le (by norm_num : (0 : ℝ) < 3 / 2)]
@@ -306,13 +306,13 @@ theorem lagarias_holds_at_two : lagariasInequalityAt 2 := by
     have hsq2 : Real.exp 2 = Real.exp 1 ^ 2 := by rw [← Real.exp_nat_mul]; norm_num
     have he2 : Real.exp 2 ≤ 243 / 32 := by
       rw [hsq2]
-      calc Real.exp 1 ^ 2 ≤ (68 / 25 : ℝ) ^ 2 := pow_le_pow_left (le_of_lt (Real.exp_pos 1)) he1' 2
+      calc Real.exp 1 ^ 2 ≤ (68 / 25 : ℝ) ^ 2 := pow_le_pow_left₀ (le_of_lt (Real.exp_pos 1)) he1' 2
         _ ≤ 243 / 32 := by norm_num
     have key : Real.exp (2 / 5 : ℝ) ^ 5 ≤ (3 / 2 : ℝ) ^ 5 := by
       rw [hpow]
       calc Real.exp 2 ≤ 243 / 32 := he2
         _ = (3 / 2 : ℝ) ^ 5 := by norm_num
-    exact le_of_pow_le_pow_left (by norm_num) (by norm_num) key
+    exact le_of_pow_le_pow_left₀ (by norm_num) (by norm_num) key
   -- combine
   unfold lagariasInequalityAt
   rw [hσ, hH]
@@ -349,12 +349,12 @@ theorem rh_arith_refutable :
 /-- `σ(6) = 12` (6 is perfect: the proper divisors 1, 2, 3 sum to 6, so the full
     divisor sum is 12). A sorry-free witness that the σ side of the matrix is
     kernel-computable. -/
-theorem sigma_one_six : σ 1 6 = 12 := by
+theorem sigma_one_six : ArithmeticFunction.sigma 1 6 = 12 := by
   rw [ArithmeticFunction.sigma_one_apply]; decide
 
 /-- `σ(12) = 28` (divisors 1, 2, 3, 4, 6, 12). A non-perfect-number witness that
     the σ computation is not special to perfect numbers. -/
-theorem sigma_one_twelve : σ 1 12 = 28 := by
+theorem sigma_one_twelve : ArithmeticFunction.sigma 1 12 = 28 := by
   rw [ArithmeticFunction.sigma_one_apply]; decide
 
 /-! ### De-smuggling check (mirrors `AccidentAudit.lean`).

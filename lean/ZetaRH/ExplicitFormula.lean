@@ -35,7 +35,7 @@ import Mathlib.Analysis.Calculus.LogDeriv
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
-import Mathlib.Algebra.BigOperators.Group.Finset
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.NumberTheory.Harmonic.GammaDeriv
 import ZetaRH.Basic
 
@@ -177,9 +177,8 @@ theorem digamma_reflection {s : ℂ} (hs : ∀ m : ℤ, s ≠ m) :
   have h_mul_deriv := logDeriv_mul s hΓs hΓ1s hdΓs hdΓ1s
   have h_comp_deriv : logDeriv (fun z => Complex.Gamma (1 - z)) s = - digamma (1 - s) := by
     have key := logDeriv_comp (f := Complex.Gamma) (g := fun z : ℂ => 1 - z) h1 h2
-    have hd : deriv (fun z : ℂ => 1 - z) s = -1 := by
-      rw [deriv_sub (by fun_prop) (by fun_prop)]
-      simp
+    have hd : deriv (fun z : ℂ => 1 - z) s = -1 :=
+      ((hasDerivAt_id s).const_sub 1).deriv
     rw [hd, mul_neg_one] at key
     exact key
   have h_LHS : logDeriv (fun z => Complex.Gamma z * Complex.Gamma (1 - z)) s = digamma s - digamma (1 - s) := by
@@ -291,7 +290,6 @@ theorem digamma_duplication {s : ℂ} (hs : ∀ m : ℕ, s ≠ -(m : ℂ))
     have hf := hd.cexp
     rw [logDeriv_apply, hf.deriv]
     field_simp
-    ring
   -- the `Γ(2z)` factor contributes `2 ψ(2s)`
   have hG2 : logDeriv (fun z : ℂ => Complex.Gamma (2 * z)) s = 2 * digamma (2 * s) := by
     have key := logDeriv_comp (f := Complex.Gamma) (g := fun z : ℂ => 2 * z) hdΓ2s (by fun_prop)

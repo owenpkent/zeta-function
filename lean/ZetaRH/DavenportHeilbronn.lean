@@ -43,7 +43,7 @@ Status (Phase 1 substrate, 2026-05-25 onwards):
 import ZetaRH.Basic
 import Mathlib.NumberTheory.DirichletCharacter.Basic
 import Mathlib.NumberTheory.LSeries.Dirichlet
-import Mathlib.Data.Complex.Exponential
+import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Data.ZMod.Basic
 
 namespace ZetaRH
