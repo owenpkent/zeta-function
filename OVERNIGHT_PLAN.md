@@ -8,7 +8,10 @@ coordinates; no fabricated proofs; every Arch 1/3/4 result must pass the Davenpo
 Stop condition: when the high-value backlog is genuinely exhausted, stop and record it rather than
 generate filler.
 
-## STATUS: loop stopped (honest stop, not exhaustion of effort) -- see Final summary at bottom.
+## STATUS: loop stopped overnight; resumed SUPERVISED 2026-06-04. The C3 seam question was
+## resolved supervised as e3y (M2.6 follow-up, LEARNINGS #56): A_arch is indefinite, positivity is a
+## ~370x cancellation residue, and the stealth window is quantified (off-line < reconstruction
+## residual). See Final summary at bottom for the overnight portion.
 
 ## Backlog (curated, buildable now, distinct, each adds a real coordinate)
 

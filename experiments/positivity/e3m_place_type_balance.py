@@ -30,11 +30,17 @@ Every block here is computable FROM THE GAMMA FACTOR AND THE DIRICHLET
 COEFFICIENTS ALONE, without ever locating a single zero. That is the whole
 point: it is an input-side decomposition, legitimate for a proof.
 
-A_arch is a manifestly positive-semidefinite quadratic form (a positive kernel
-Omega_L(t) integrated against |test|^2). P_fin is the indefinite piece. The
-Weil criterion M >= 0 (<=> RH) becomes:
+CORRECTION (e3y / M2.6 follow-up, LEARNINGS #56): A_arch is NOT positive-semidefinite. The kernel
+Omega_L(t) = 2 log Q + Re psi(1/4 + i t/2) - log pi is NEGATIVE for small |t| (Omega(0) ~ -5.4 for
+zeta), so A_arch is indefinite (measured min eig ~ -55 at K=10). The three blocks A_arch, P_fin,
+B_pole each have norm 55-123 and largely cancel: A + P + B = M_zero has norm ~0.3 (a ~370x
+cancellation). The "cushion dominates obstruction" picture below is therefore only heuristic; the
+real situation is a near-perfect three-way cancellation whose tiny positive residue is the Weil
+form, which is exactly why the off-line obstruction hides below the reconstruction residual (the
+M2.6 stealth window, e3y). The Weil criterion M >= 0 (<=> RH) is the statement that this residue is
+non-negative.
 
-    the archimedean cushion A_arch must dominate the finite obstruction -(P_fin + B_pole).
+    [heuristic] the archimedean piece A_arch and -(P_fin + B_pole) nearly cancel; M is the residue.
 
 We quantify domination with the generalized eigenvalue of the pencil
 (-(P+B), A):
