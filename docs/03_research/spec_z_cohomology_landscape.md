@@ -115,7 +115,8 @@ Why it is hard, localized by the project's recent coordinates:
   of completed $\zeta$ as determinants, #44; Hesselholt's $\mathbb{F}_q$ theorem proven). It needs a
   **positive cup-product on the global prismatic/TP $H^1$**, now known to resist the naive
   eigenspace construction (Petrov). The realization machinery has gone fully global over Spec(Z)
-  (Drinfeld prismatization), so the substrate exists; the polarization does not.
+  (Gurney, *Prismatization over $\mathbf{Z}$*, arXiv:2301.12392; the Drinfeld and Bhatt-Lurie
+  prismatizations are p-adic/local), so the substrate exists; the polarization does not.
 - **Connes-Consani.** The 2026 Jacobian paper builds a Picard/polarization **structure** on the
   absolute curve and the spectral-realization apparatus (prolate/zeta-spectral-triples), but defers
   the RH-positivity. By the project's R3.5 no-shortcut theorem, any trace-formula positivity in this
@@ -176,8 +177,9 @@ The realization side is moving fast; the polarization has not moved. Verified it
 
 Other 2024-2026 developments reported by the survey (to verify against originals before formal
 citation): prismatic Poincare duality of perfect complexes (Tang, Compositio 2024) supplies
-ingredient (ii) at the complex level with no positivity; Drinfeld prismatization and Bhatt-Lurie
-F-gauges/syntomification assemble the realization apparatus globally over Spec(Z); the
+ingredient (ii) at the complex level with no positivity; Gurney's *Prismatization over $\mathbf{Z}$*
+(arXiv:2301.12392) extends the p-adic Drinfeld / Bhatt-Lurie prismatizations to a global object over
+Spec(Z), and Bhatt-Lurie F-gauges/syntomification assemble the realization apparatus; the
 Connes-Consani-Moscovici prolate / "zeta spectral triples" program matches the lowest zeros to high
 numerical accuracy and states explicitly that proving the convergence would establish RH (i.e. the
 convergence/positivity is the unproven content). Yuan-Zhang (Math. Ann. 367, 2017) extended the
@@ -236,8 +238,10 @@ geometry of blueprints* (Adv. Math. 2012); Borger, *$\Lambda$-rings and the fiel
 ([arXiv:0906.3146](https://arxiv.org/abs/0906.3146)); Soule (2004); Kurokawa (absolute zeta);
 Adiprasito-Huh-Katz, *Hodge theory for combinatorial geometries* (Ann. Math. 2018); Conrey-Li, *A
 note on some positivity conditions...* ([arXiv:math/9812166](https://arxiv.org/abs/math/9812166));
-Morishita ([arXiv:2508.15971](https://arxiv.org/abs/2508.15971), 2025); Drinfeld, *Prismatization*
-([arXiv:2301.12392](https://arxiv.org/abs/2301.12392)).
+Morishita ([arXiv:2508.15971](https://arxiv.org/abs/2508.15971), 2025); Gurney, *Prismatization over
+$\mathbf{Z}$* ([arXiv:2301.12392](https://arxiv.org/abs/2301.12392)); Drinfeld, *Prismatization*
+([arXiv:2005.04746](https://arxiv.org/abs/2005.04746)); Bhatt-Lurie, *Absolute prismatic cohomology*
+([arXiv:2201.06120](https://arxiv.org/abs/2201.06120)).
 
 Project internal: [`08A_rosati_standard_conjecture.md`](research_directions/08A_rosati_standard_conjecture.md)
 (the M1-M5 ladder, RH = arithmetic Hodge standard conjecture); [`all_roads_to_the_signature.md`](all_roads_to_the_signature.md)
