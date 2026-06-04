@@ -20,7 +20,7 @@ generate filler.
 - [ ] C3. The seam, quantified: across a family, show the off-line indefiniteness is attributable
   entirely to the prime block (sharpening #46) and the archimedean block carries none of it, by a
   clean ablation that varies mu/Q (archimedean) vs the coefficients (prime).
-- [ ] C4. Bost-Connes K2 sharpening: D-H is a KMS mixture, never a pure product state. Make the
+- [x] C4. Bost-Connes K2 sharpening: D-H is a KMS mixture, never a pure product state. Make the
   multiplicativity failure concrete (a_{mn} != a_m a_n for D-H; a_m a_n = a_mn for zeta) as the
   obstruction to the product-state / Euler-factor construction.
 - [x] C5. Session capstone synthesis dossier: Connes 2602 -> candidate proof -> assume-RH ->
@@ -40,3 +40,8 @@ generate filler.
   proof -> assume-RH -> marginal wall -> construction sweep -> function-field contrast), with the
   single sharpened statement of the missing math and the full negative map of what was ruled out.
   Done out of order (low-risk synthesis) so a coherent narrative exists early. Committed + pushed.
+- C4 (e3z_multiplicativity_obstruction, LEARNINGS #55): multiplicativity defect d(L) = mean
+  |a_{mn}-a_m a_n|/mean|a_m a_n| over coprime pairs. zeta, chi3 = 0 (Euler => product state); D-H
+  = 1.16 (RH-false), Epstein-d47-principal = 5.14 (RH-TRUE), both non-Euler. d>0 for both RH-true and
+  RH-false => detects non-Euler-ness (no equilibrium product state), not RH-failure: the Bost-Connes
+  K2 firewall, necessary-not-sufficient. Sharpens 2A_R1 (D-H has no product state). Committed+pushed.
