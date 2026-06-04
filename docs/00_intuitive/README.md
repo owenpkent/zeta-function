@@ -92,6 +92,7 @@ If even one note is out of place, the whole symphony of primes is subtly off in 
 
 ## What's Next?
 
+- **[The primes as a curve →](spec_z_as_a_curve.md)** — Spec(Z): the integers viewed as a geometric curve, zeta as its own function, and how RH becomes geometry. The bridge from this page to the research program.
 - **[Visualizations →](../../visualizations/)** — See the zeta function plotted on the complex plane
 - **[Undergraduate level →](../01_undergraduate/README.md)** — The math behind the series and complex numbers
 - **[Implications →](../implications/README.md)** — Why this matters beyond pure math

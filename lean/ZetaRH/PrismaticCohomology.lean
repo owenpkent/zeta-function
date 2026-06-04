@@ -58,4 +58,45 @@ theorem Q4_cycle_class : True := by sorry
 /-- Q5: Künneth formula for prismatic cohomology of products. -/
 theorem Q5_kunneth : True := by sorry
 
+/- ----------------------------------------------------------------------------
+   Organ (a) of M4 (added 2026-06-03; see
+   `docs/03_research/state_of_candidate_ABF.md` and the probes 2EE/2GG/2HH,
+   experiments/LEARNINGS.md #44/#46/#47).
+
+   The brainstorm + four probes localized organ (a) of milestone M4 as: a perfect
+   cup product H^1 ⊗ H^1 → H^2 into the 1-dim Euler-pole fundamental class, that is
+   a POLARIZATION (Hodge-Riemann positive), not merely a nondegenerate duality.
+
+   Placeholder typed targets in the existing Phase-1 idiom (Unit / True := by
+   sorry). NOT compiled in the 2026-06-03 session (no elan/lake toolchain in that
+   environment); they mirror the known-green placeholder pattern of Q1-Q5 above and
+   are to be verified on the owner's build. VERIFIER target IDs to be tabulated in
+   `lean/README.md` once the upstream prismatic definitions exist.
+   ---------------------------------------------------------------------------- -/
+
+/-- The cup-product / Poincaré-duality pairing H^1 ⊗ H^1 → H^2 (placeholder).
+
+    Over F_q this is the perfect alternating intersection form on H^1 of a curve
+    (2DD/2GG, rigorous). Over Spec(ℤ) it is the open prismatic Poincaré duality;
+    the functional equation ξ(s)=ξ(1-s) supplies its symmetry (2GG/#46). -/
+def cup_product (_x _y : Type) : Type := Unit  -- placeholder
+
+/-- The fundamental class H^2 (placeholder): the 1-dim target of the trace map,
+    realized arithmetically by the Euler-product pole of ζ at s=1 (residue 1).
+    It is ZERO for an entire L with a functional equation but no Euler product
+    (e.g. Davenport-Heilbronn, residue 0): the cohomological K2 face (2GG/#46). -/
+def fundamental_class : Type := Unit  -- placeholder
+
+/-- Q3a (organ (a), the unit / K2 face, 2GG/#46): the fundamental class H^2 is
+    NONZERO iff the L-function has the Euler-product pole. A Poincaré duality whose
+    trace lands in a zero fundamental class is not a polarization. -/
+theorem Q3a_fundamental_class_nonzero : True := by sorry
+
+/-- Q3b (organ (a), the positivity face, 2HH/#47): the cup product is a POLARIZATION
+    (Hodge-Riemann positive) iff for every zero the FE-partner equals the conjugate,
+    i.e. Re(ρ)=1/2, i.e. RH. Perfectness of the duality is free (the FE); positivity
+    is the content. This is the H^2/duality face of the arithmetic Hodge standard
+    conjecture (08A). -/
+theorem Q3b_cup_is_polarization_iff_RH : True := by sorry
+
 end ZetaRH.PrismaticCohomology
