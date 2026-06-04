@@ -75,7 +75,7 @@ six sorry-free digamma identities discharging the kernel part of #EF-arch: the r
 $\psi(s+1)=\psi(s)+1/s$, reflection $\psi(1-s)-\psi(s)=\pi\cot\pi s$, iterated recurrence
 $\psi(s+n)=\psi(s)+\sum_{k<n}1/(s+k)$, duplication $\psi(2s)=\tfrac12(\psi(s)+\psi(s+\tfrac12))+\log 2$,
 and the special values $\psi(1)=-\gamma$, $\psi(\tfrac12)=-\gamma-2\log 2$ (the half-integer
-arguments of $\zeta$'s archimedean kernel); all upstreamable to Mathlib. Project sorry count 23
+arguments of $\zeta$'s archimedean kernel); all upstreamable to Mathlib. (2026-06-04 re-check: Mathlib master now ships `Complex.digamma` with the recurrence and both special values, so 3 of the 6 are preempted; the reflection, iterated-recurrence, and duplication formulas remain genuinely novel upstream candidates, staged in [`lean/upstream/digamma_contribution.md`](lean/upstream/digamma_contribution.md).) Project sorry count 23
 (the digamma additions are all sorry-free). The highest-leverage remaining target is the Weil
 explicit formula itself (LEARNINGS #17), which needs a sum-over-zeros theory Mathlib lacks, and
 the remaining #EF-class integral pairing. See [`lean/README.md`](lean/README.md).
