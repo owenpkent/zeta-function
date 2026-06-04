@@ -191,6 +191,9 @@ prolate model) is the D-H-shared, RH-agnostic half exactly as the no-free-lunch 
   [`spec_z_cohomology_landscape.md`](spec_z_cohomology_landscape.md);
   [`rh_solved_by_accident.md`](rh_solved_by_accident.md);
   [`2A_R3_connes_positivity.md`](../../experiments/arithmetic_geometric/2A_R3_connes_positivity.md);
-  LEARNINGS #7/#18/#46/#49/#50; experiments
+  LEARNINGS #7/#18/#46/#49/#50/#51; experiments
   [`e3s_connes_eta.py`](../../experiments/positivity/e3s_connes_eta.py),
-  [`e3t_prolate_residual.py`](../../experiments/positivity/e3t_prolate_residual.py).
+  [`e3t_prolate_residual.py`](../../experiments/positivity/e3t_prolate_residual.py),
+  [`e3u_assume_rh_backwards.py`](../../experiments/positivity/e3u_assume_rh_backwards.py) (validates
+  Connes' Theorem 7.3 heat expansion against the actual zeros, and shows the assume-RH Hilbert-Polya
+  operator D is exactly blind to beta: Level 3, not Level 4).
