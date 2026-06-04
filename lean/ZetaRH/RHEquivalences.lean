@@ -263,6 +263,63 @@ theorem lagarias_holds_at_three : lagariasInequalityAt 3 := by
   have hval : (27 / 10 * (11 / 6 : ℝ)) * (5 / 11) = 9 / 4 := by norm_num
   linarith [hprod, hval]
 
+/-- **A worked n = 2 instance of Lagarias** (no sorry): `σ(2) = 3 ≤ 3/2 + e^{3/2}·log(3/2) ≈ 3.32`.
+
+    n = 2 is the HARDEST small case (smallest margin: even the exact right-hand
+    side is only about 3.32 against σ(2) = 3). The crude order-1 bounds that
+    sufficed for n = 3 fail here; this needs SHARP effective bounds, obtained by
+    comparing integer powers of e against rational powers:
+      `e^{3/2} ≥ 4` since `(e^{3/2})² = e³ = (e¹)³ ≥ (27/10)³ ≥ 16 = 4²`;
+      `log(3/2) ≥ 2/5` since `e^{2/5} ≤ 3/2`, as `(e^{2/5})⁵ = e² = (e¹)² ≤ (68/25)² ≤ (3/2)⁵`.
+    Then `e^{3/2}·log(3/2) ≥ 4·(2/5) = 8/5`, so RHS ≥ 3/2 + 8/5 = 31/10 ≥ 3. Margin 0.1.
+    Even the tightest small-n case of the Π⁰₁ matrix is effectively checkable.
+    (For general n, soft bounds provably cannot work: that would be proving RH.) -/
+theorem lagarias_holds_at_two : lagariasInequalityAt 2 := by
+  have hσ : (σ 1 2 : ℝ) = 3 := by
+    have h : σ 1 2 = 3 := by rw [ArithmeticFunction.sigma_one_apply]; decide
+    rw [h]; norm_num
+  have hH : (harmonic 2 : ℝ) = 3 / 2 := by
+    have h : harmonic 2 = 3 / 2 := by
+      simp only [harmonic, Finset.sum_range_succ, Finset.sum_range_zero]; norm_num
+    rw [h]; norm_num
+  have he1 : (27 / 10 : ℝ) ≤ Real.exp 1 :=
+    le_of_lt (lt_of_le_of_lt (by norm_num) Real.exp_one_gt_d9)
+  have he1' : Real.exp 1 ≤ 68 / 25 :=
+    le_of_lt (lt_of_lt_of_le Real.exp_one_lt_d9 (by norm_num))
+  -- e^{3/2} ≥ 4
+  have hexp32 : (4 : ℝ) ≤ Real.exp (3 / 2) := by
+    have hsq : Real.exp (3 / 2 : ℝ) ^ 2 = Real.exp 3 := by rw [← Real.exp_nat_mul]; norm_num
+    have hcube : Real.exp 3 = Real.exp 1 ^ 3 := by rw [← Real.exp_nat_mul]; norm_num
+    have he3 : (16 : ℝ) ≤ Real.exp 3 := by
+      rw [hcube]
+      calc (16 : ℝ) ≤ (27 / 10 : ℝ) ^ 3 := by norm_num
+        _ ≤ Real.exp 1 ^ 3 := pow_le_pow_left (by norm_num) he1 3
+    have key : (4 : ℝ) ^ 2 ≤ Real.exp (3 / 2) ^ 2 := by
+      rw [hsq]
+      calc (4 : ℝ) ^ 2 = 16 := by norm_num
+        _ ≤ Real.exp 3 := he3
+    exact le_of_pow_le_pow_left (by norm_num) (le_of_lt (Real.exp_pos _)) key
+  -- log(3/2) ≥ 2/5
+  have hlog : (2 / 5 : ℝ) ≤ Real.log (3 / 2) := by
+    rw [Real.le_log_iff_exp_le (by norm_num : (0 : ℝ) < 3 / 2)]
+    have hpow : Real.exp (2 / 5 : ℝ) ^ 5 = Real.exp 2 := by rw [← Real.exp_nat_mul]; norm_num
+    have hsq2 : Real.exp 2 = Real.exp 1 ^ 2 := by rw [← Real.exp_nat_mul]; norm_num
+    have he2 : Real.exp 2 ≤ 243 / 32 := by
+      rw [hsq2]
+      calc Real.exp 1 ^ 2 ≤ (68 / 25 : ℝ) ^ 2 := pow_le_pow_left (le_of_lt (Real.exp_pos 1)) he1' 2
+        _ ≤ 243 / 32 := by norm_num
+    have key : Real.exp (2 / 5 : ℝ) ^ 5 ≤ (3 / 2 : ℝ) ^ 5 := by
+      rw [hpow]
+      calc Real.exp 2 ≤ 243 / 32 := he2
+        _ = (3 / 2 : ℝ) ^ 5 := by norm_num
+    exact le_of_pow_le_pow_left (by norm_num) (by norm_num) key
+  -- combine
+  unfold lagariasInequalityAt
+  rw [hσ, hH]
+  have hprod : (4 : ℝ) * (2 / 5) ≤ Real.exp (3 / 2) * Real.log (3 / 2) :=
+    mul_le_mul hexp32 hlog (by norm_num) (le_of_lt (Real.exp_pos _))
+  linarith [hprod]
+
 /-! ### Refutability and the computable matrix (entry point B).
 
     The formal content of `docs/03_research/rh_logical_status.md` §2: because
@@ -311,5 +368,6 @@ theorem sigma_one_twelve : σ 1 12 = 28 := by
 #print axioms rh_arith_refutable
 #print axioms sigma_one_six
 #print axioms lagarias_holds_at_three
+#print axioms lagarias_holds_at_two
 
 end ZetaRH.RHEquivalences
