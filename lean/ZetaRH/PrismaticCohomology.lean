@@ -78,21 +78,21 @@ theorem Q5_kunneth : True := by sorry
 
     Over F_q this is the perfect alternating intersection form on H^1 of a curve
     (2DD/2GG, rigorous). Over Spec(ℤ) it is the open prismatic Poincaré duality;
-    the functional equation ξ(s)=ξ(1-s) supplies its symmetry (2GG/#46). -/
+    the functional equation ξ(s)=ξ(1-s) supplies its symmetry (2GG/#60). -/
 def cup_product (_x _y : Type) : Type := Unit  -- placeholder
 
 /-- The fundamental class H^2 (placeholder): the 1-dim target of the trace map,
     realized arithmetically by the Euler-product pole of ζ at s=1 (residue 1).
     It is ZERO for an entire L with a functional equation but no Euler product
-    (e.g. Davenport-Heilbronn, residue 0): the cohomological K2 face (2GG/#46). -/
+    (e.g. Davenport-Heilbronn, residue 0): the cohomological K2 face (2GG/#60). -/
 def fundamental_class : Type := Unit  -- placeholder
 
-/-- Q3a (organ (a), the unit / K2 face, 2GG/#46): the fundamental class H^2 is
+/-- Q3a (organ (a), the unit / K2 face, 2GG/#60): the fundamental class H^2 is
     NONZERO iff the L-function has the Euler-product pole. A Poincaré duality whose
     trace lands in a zero fundamental class is not a polarization. -/
 theorem Q3a_fundamental_class_nonzero : True := by sorry
 
-/-- Q3b (organ (a), the positivity face, 2HH/#47): the cup product is a POLARIZATION
+/-- Q3b (organ (a), the positivity face, 2HH/#61): the cup product is a POLARIZATION
     (Hodge-Riemann positive) iff for every zero the FE-partner equals the conjugate,
     i.e. Re(ρ)=1/2, i.e. RH. Perfectness of the duality is free (the FE); positivity
     is the content. This is the H^2/duality face of the arithmetic Hodge standard
