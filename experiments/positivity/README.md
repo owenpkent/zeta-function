@@ -695,3 +695,79 @@ For $\zeta$, $\Lambda_\zeta$ lives only on prime powers ($\Lambda(p^k) = \log p 
 - `e3m_place_type_balance.npz`: per-L blocks, residuals, eigenvalue summaries.
 - `e3m_place_type_balance.png`: input-side vs zero-side min eigenvalue; self-consistency residual.
 
+## 3O: PSLQ stumble-yield scan with the Davenport-Heilbronn guard ([e3o_pslq_stumble.py](e3o_pslq_stumble.py))
+
+**Status:** complete; a negative coordinate (LEARNINGS #45). Executes cheap-probe 3 of the "RH solved by accident" dossier ([`docs/03_research/rh_solved_by_accident.md`](../../docs/03_research/rh_solved_by_accident.md)).
+
+**Motivation.** The dossier's slot 4 is the "numerical stumble": Tao's pattern that an accidental proof often surfaces first as a high-precision coincidence in a program built for another purpose. PSLQ (integer-relation detection) is the canonical detector. The dossier assigns this slot the strictest bar (a coincidence is not a proof until proven exact AND RH-equivalent AND D-H-discriminating) and names the canonical trap: de Branges in reverse, 12-digit agreement then failure at the 34th zero. This experiment runs PSLQ with that guard baked in.
+
+**Part A (validation).** PSLQ re-discovers all 3 known archimedean relations and a precision-stability test confirms each is REAL (residual falls from $\sim 10^{-81}$ at dps=80 to $\sim 10^{-201}$ at dps=200): the Bombieri kernel $C_\mu(0) = \log\pi + \gamma_E + 2\log 2$, the Bombieri-Lagarias constant $\mathrm{ASYMP} = (1-\gamma_E-\log 2\pi)/2$, and $\log 2\pi = \log\pi + \log 2$.
+
+**Part B (search + the trap, defeated).** With a disciplined bound (maxcoeff $10^4$, tol $10^{-72}$) NO new integer relation appears among the independent high-precision constants $\{\gamma_E, \log\pi, \log 2, \zeta(2), \zeta(3), \gamma_1, \gamma_2\}$ plus the Euler-side prime zetas $\{P(2), P(3)\}$. The de Branges trap is then reproduced on purpose: loosening the discipline (maxcoeff $10^9$, default tol) makes PSLQ "find" a relation with 8-digit coefficients ($\max|\text{coeff}| = 4.5\times 10^7$) and residual $2.26\times 10^{-61}$, but the SAME integer combination stays at $2.26\times 10^{-61}$ at dps=220 instead of vanishing. It does not improve with precision, so it is a chance artifact ($\text{tol} \sim \text{maxcoeff}^{-(n-1)}$), the exact 12-digit-agreement-then-failure mode, caught automatically.
+
+**Part C (the D-H/Epstein guard layer).** The first 12 Li coefficients are all positive for every control ($\zeta$, Davenport-Heilbronn, Epstein $d{=}15$ RH-true, Epstein $d{=}47$ off-line): no discrimination at low $n$, consistent with finding #2 (D-H Li negativity is a large-$n$ effect, scale $n\sim 3.2\times 10^5$). The per-zero tail term at $n=12$ is already $\sim 10^{-2}$ (truncation $\sim n^2\log T/T$), so usable precision is $\sim 1$ digit.
+
+**The finding (a negative coordinate, new angle on #30).** The quantities reachable to PSLQ precision are exactly the closed-form archimedean / $\Gamma$-factor constants, and that half is SHARED verbatim by D-H, so any PSLQ-discoverable identity is RH-agnostic by construction. The quantity that discriminates $\zeta$ from D-H (the Li coefficients) has its signal only at large $n$, where truncation has already destroyed precision, so it is never simultaneously discriminating AND PSLQ-precise. The numerical-stumble accident is therefore precision-confined to the archimedean half that D-H shares: K2-blind by computability. This is the dossier's no-free-lunch verdict for slot 4, demonstrated rather than asserted.
+
+**Output:**
+- `e3o_pslq_stumble.npz`: the constant basis, the relations found, the cross-L Li table.
+
+## 3P: prime-block ablation, the mandatory K2 test for a certificate ([e3p_prime_block_ablation.py](e3p_prime_block_ablation.py))
+
+**Status:** complete; a K2-soundness validation of the $M_{\mathrm{euler}}$ discriminator (LEARNINGS #46). Executes cheap-probe 2 of the "RH solved by accident" dossier ([`docs/03_research/rh_solved_by_accident.md`](../../docs/03_research/rh_solved_by_accident.md)).
+
+**Motivation.** The dossier's D-H filter has an operational test #3: a certificate's discriminating SIGN must be carried by the Frobenius / $\{\log p\}$ (Euler) half, not the archimedean half Davenport-Heilbronn shares. Operationally, zero out the prime contribution and check whether the $\zeta$-vs-D-H discrimination disappears. If it survives, the certificate is K2-blind (archimedean, shared with D-H) and must be rejected; if it disappears, the certificate is K2-genuine.
+
+**Method.** Ablate the validated M3 discriminator $M_{\mathrm{euler}} = A_{\mathrm{arch}} + P_{\mathrm{pp}} + B_{\mathrm{pole}}$ (3M / LEARNINGS #35-37) by scaling the prime-power block by $\alpha\in[0,1]$, reusing the exact e3m / e2v block-builders. Computes $\min\mathrm{eig}$ per L-function ($\zeta$, D-H, Epstein-d47-principal) across $\alpha$, plus the full $M$ (keeping $P_{\mathrm{comp}}$) for contrast.
+
+**Findings (K=8, b in [1.3,6], prec=30).**
+
+| $\alpha$ | $\zeta$ | D-H | Eps47-pr | sign-separation? |
+|---:|---:|---:|---:|:--:|
+| 0.00 (no primes) | $-2.342$ | $-4.635$ | $+0.690$ | no |
+| 1.00 (full primes) | $+0.035$ | $-0.929$ | $+0.676$ | YES |
+
+The $\zeta$-vs-D-H sign-separation (the positivity certificate passing for $\zeta$, failing for D-H) appears only at full prime strength. At $\alpha=0$ both $\zeta$ and D-H are negative, so neither passes and the discrimination is gone: the prime-power block is what lifts $\zeta$ over zero (Euler-product structure), and it does not lift D-H far enough (its remaining deficit is the deleted composite block $P_{\mathrm{comp}}$, the stealth-window compensator of #34). Contrast: the full $M$ (keeping $P_{\mathrm{comp}}$) does NOT sign-separate even at $\alpha=1$ ($\zeta\,{+}0.035$, D-H $+0.094$ wrong sign), the M2.6 stealth window.
+
+**The finding.** The certificate's RH-verdict for $\zeta$ is created by the Euler / $\{\log p\}$ block, not the archimedean block shared with D-H, so $M_{\mathrm{euler}}$ is K2-GENUINE (the right kind of certificate). The positive counterpart to 3O / #45 (where the PSLQ-accessible surface was the shared archimedean half, hence K2-blind). Validates K2-soundness; does NOT prove RH and does not make $M_{\mathrm{euler}}$ intrinsic (deleting $P_{\mathrm{comp}}$ is still the Euler-product assumption, #37 caveat stands).
+
+**Output:**
+- `e3p_prime_block_ablation.npz`: the $\alpha$-sweep, per-L min-eigenvalues, the margins.
+- `e3p_prime_block_ablation.png`: $M_{\mathrm{euler}}$ min-eig vs $\alpha$ for $\zeta$ and D-H.
+
+## 3Q: sharp-margin recovery test ([e3q_margin_recovery.py](e3q_margin_recovery.py))
+
+**Status:** complete; sharpens 3K/#19 (LEARNINGS #47). Executes cheap-probe 4 of the "RH solved by accident" dossier ([`docs/03_research/rh_solved_by_accident.md`](../../docs/03_research/rh_solved_by_accident.md)).
+
+**Motivation.** The dossier's acceptance criterion "RECOVERS THE MARGIN, NOT JUST THE SIGN": a certificate that only sees an off-line zero when $\varepsilon = \beta - 1/2$ exceeds the float64 stealth window ($\sim 10^{-5}$, #19) is blind below it, looser than the rigorous Platt-Trudgian bound ($10^{-7}$). This experiment injects a hypothetical off-line zero at the Davenport-Heilbronn zero HEIGHT ($\gamma_0 = 85.699$) and answers the question 3K left open: is the stealth window fundamental or a float64 artifact?
+
+**Findings (K=200, cushion T_max=120, prec=30 / dps=50).**
+
+- **Part 1 (the margin law).** $\min\mathrm{eig}(M_{\mathrm{aug}}) \approx -3.1\,\varepsilon^2$ at the D-H height (the 3K law). The real D-H zero ($\varepsilon = 0.3085$) gives $-0.77$: trivially detected. The float64 full-Gram detection reaches $\varepsilon^* \sim 7\times 10^{-8}$ (where $-3.1\varepsilon^2$ meets the $\sim 10^{-15}$ eigenvalue cancellation floor); the #19 Schur relative-signal detector is looser ($\sim 10^{-5}$). Both straddle the rigorous bound $10^{-7}$.
+- **Part 2 (artifact or structural?).** The off-line signal SOURCE $\|\mathrm{Im}\,\phi(\rho)\|^2$ is a clean $\varepsilon^2$ (ratio constant $0.103$) and float64 EQUALS mpmath to relative $0$ down to $\varepsilon = 10^{-12}$ (because $\phi$ is evaluated in mpmath internally). So the stealth is NOT in the data: it is a float64 EIGENSOLVER CANCELLATION artifact (extracting a $-\varepsilon^2$ eigenvalue from an $O(1)$ Gram). Removable from the source or in higher precision.
+
+**The finding.** The stealth window is removable, not structural (it corrects a natural misreading of 3K). But the sharp point is that removability is moot for certification: detecting an off-line zero at distance $\varepsilon$ requires KNOWING its location to precision $< \varepsilon$ and injecting it, which is exactly what rigorous verification supplies. So the certificate is DOWNSTREAM of the rigorous check, has no independent disproof leverage, and cannot certify RH at any precision. A proof must recover the margin ANALYTICALLY. The marginal-positivity thesis, sharpened: the bottleneck is not precision but the absence of an independent analytic handle on the margin.
+
+**Honest note.** The first version had two bugs (a Schur-magnitude sign/degeneracy giving a spurious $\varepsilon^*$, and a small-K Part 2 where the cushion absorbed the off-line direction); both were caught and fixed (Part 1 now uses the clean full-Gram margin, Part 2 the unambiguous source $\|\mathrm{Im}\,\phi\|^2$).
+
+**Output:**
+- `e3q_margin_recovery.npz`: the $\varepsilon$-sweep margins, the float64-vs-mpmath source comparison.
+- `e3q_margin_recovery.png`: margin vs $\varepsilon$ (Part 1); $\|\mathrm{Im}\,\phi\|^2$ float64 vs mpmath (Part 2).
+
+## 3R: wrong-polarity check for the convex-Hodge accident channel ([e3r_convex_hodge_polarity.py](e3r_convex_hodge_polarity.py))
+
+**Status:** complete; a negative coordinate against a B-credible accident channel (LEARNINGS #48). Executes cheap-probe 6 of the "RH solved by accident" dossier ([`docs/03_research/rh_solved_by_accident.md`](../../docs/03_research/rh_solved_by_accident.md)).
+
+**Motivation.** A B-credible accident channel is the weighted tropical Kahler package (Amini-Piquerez): a Hodge-Riemann signature that moves with arithmetic weights $w_p = \log p$ (which would defeat the AHK arithmetic-blindness of #40). The adversary's objection is a polarity argument: a proven Kahler / Hodge-Riemann package is UNCONDITIONALLY definite (it holds for ALL admissible weights), so it can never go indefinite, i.e. never FAIL when a zero leaves the line. Wrong polarity for an RH detector, which needs definiteness IFF RH.
+
+**Findings.**
+
+- **Part 1 (convex-Hodge, wrong polarity).** The mixed-area (Alexandrov-Fenchel / Lorentzian) form of $n=8$ segments has signature $(1, 7) = (1, n-1)$ for uniform, arithmetic $w_p=\log p$, steep, and adversarial weightings, and the positive count is exactly 1 in 2000/2000 random (weights, directions). The signature is INVARIANT: unconditional definiteness on the primitive part. Injecting arithmetic weights does not let it flip.
+- **Part 2 (Weil form, right polarity).** The augmented Weil/Schur Gram (e3k) is PSD with only on-line zeros (signature $(10,0)$, min-eig $-1.4\times10^{-16}$) and acquires a NEGATIVE eigenvalue when an off-line pair $\beta=0.7$ is injected (signature $(11,1)$, min-eig $-0.104$). Conditional definiteness: definite IFF RH.
+
+**The finding.** The convex-Hodge channel is blocked by TWO independent obstructions: #40 (its signature does not move with the Frobenius trace $t$, arithmetic-blind) and #48 (even if it did, the Kahler package's unconditional definiteness means the signature cannot FAIL, wrong polarity). The dossier's #1 watchlist signal -- a HR theorem whose signature BOTH moves with $t$ AND can fail -- therefore needs a genuinely new theorem, not weight injection. Honest scope: a signature-level polarity argument on a small exact model plus the known Weil-form behavior; does not prove no Kahler-type detector can exist.
+
+**Output:**
+- `e3r_convex_hodge_polarity.npz`: curated + random signatures (Part 1); the Weil-form signature flip (Part 2).
+- `e3r_convex_hodge_polarity.png`: convex-Hodge eigenvalues (unconditional $(1,n-1)$) vs Weil-form flip.
+
