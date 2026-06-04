@@ -227,9 +227,22 @@ To make further progress on the K1 question:
 
 These are research directions, not session-completable tasks. R3 maps the territory; concluding work is a multi-paper / multi-year effort.
 
+## 12. Addendum (2026-06-03): the 2602.04022 constructive reframing does NOT escape K1
+
+Connes' Feb-2026 survey *The Riemann Hypothesis: Past, Present and a Letter Through Time* (arXiv:2602.04022) reframes the positivity constructively: take the minimal eigenvector $\eta_x$ of the truncated Weil form $QW_\lambda$ (primes $\le x$), and **Theorem 6.1 (Connes-van Suijlekom)** proves $\hat\eta_x$ has all zeros on the critical line, unconditionally for each finite cutoff. The numerics are striking (primes $\le 13$ recover the first 50 zeros to $2.6\times10^{-55}$..$10^{-3}$).
+
+This is a **new realization, not a new positivity**, and it does not move the K1 verdict above:
+
+- Theorem 6.1's hypotheses (lower-bounded, simple isolated even ground state) are mild and generic; they require no positivity and know nothing about the Euler product. The theorem **manufactures on-line zeros for any admissible even-kernel form**, so it is zeta-blind. The entire RH content is the unproven convergence $\hat\eta_x \to \Xi$ (paper sec 6.6), which is global Weil positivity $\Leftrightarrow$ RH (this is exactly **C1** above, restated on the eigenvector). K1 fail is unchanged.
+- The project verified the zeta-blindness directly ([e3s_connes_eta.py](../positivity/e3s_connes_eta.py), [e3t_prolate_residual.py](../positivity/e3t_prolate_residual.py), LEARNINGS #50): the identical construction reproduces Davenport-Heilbronn's on-line zeros and (Caratheodory-Fejer) gives all-roots-on-circle for zeta-, D-H-, and random-derived symbols, while structurally missing D-H's off-line zero at $0.8085+85.699i$. This is the **R3.5 no-shortcut theorem** in action: a trace/real-zeros identity, not a signature.
+- The Moscovici ultraviolet model (paper sec 7.6) and the Sonin-space archimedean positivity (Theorem 7.1) are genuine proven fragments, but they live on the **archimedean half shared with D-H** (K2-blind / RH-agnostic).
+
+Full assessment: [docs/03_research/connes_2602_letter_to_riemann.md](../../docs/03_research/connes_2602_letter_to_riemann.md).
+
 ## References
 
 - Connes, A. (1999). *Trace formula in noncommutative geometry and the zeros of the Riemann zeta function*. Selecta Math. (N.S.), 5(1), 29–106.
+- Connes, A. (2026). *The Riemann Hypothesis: Past, Present and a Letter Through Time*. arXiv:2602.04022.
 - Connes, A.; Consani, C. (2008). *On the notion of geometry over 𝔽₁*. arXiv:0809.2926.
 - Connes, A.; Consani, C. (2011). *Characteristic 1, entropy and the absolute point*. Noncommutative Geometry, Arithmetic, and Related Topics, JHU Press.
 - Connes, A.; Consani, C. (2014). *The hyperring of adèle classes*. J. Number Theory, 135, 281–311.

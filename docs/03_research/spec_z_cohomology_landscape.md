@@ -38,6 +38,7 @@ counterexample); "Open step" is the single sharpest missing object.
 |---|:--:|:--:|:--:|:--:|---|
 | **Deninger** foliated dynamical system / R-flow | ◑ | ◑ | ✗ | ✓ (on $F$) | intersection form on $X\times X$ + Hodge-index signature, no RH input |
 | **Connes** 1999 adele-class trace formula | ✓ | ◑ | ✗ (K1 wall) | ✓ (on $F$) | global (all-places) Weil positivity; spectral identification as a theorem |
+| **Connes** $\eta_x$ / Weil-form CF (2602.04022) | ✓ (Thm 6.1) | ◑ | ✗ (K1 wall) | ✓ (only via unproven limit) | convergence $k_\lambda \to \theta_x$ ($\Leftrightarrow$ global Weil positivity $=$ RH) |
 | **Connes-Consani** arithmetic site + square | ✓ (diag.) | ◑ | ✗ (#40) | ✓ | the arithmetic $q$-lift restoring the trace $t$ at the $(1,p)$ bidegree |
 | **Connes-Consani** Jacobian of $\overline{\mathrm{Spec}\,\mathbb{Z}}$ (2026) | ◑→✓ | ◑ | ✗ | ✓ (on $F$) | turn the Picard/realization structure into a signed pairing (not de Branges) |
 | **Bhatt-Lurie** absolute prismatic / WCart | ✓ (both halves) | ◑ (duality proven, no positivity) | ✗ | ✓ (on $F$) | a positive cup-product / Rosati form on the global prismatic $H^1$ |
@@ -157,6 +158,21 @@ The realization side is moving fast; the polarization has not moved. Verified it
   spectral realization of L-functions." It builds the realization/Picard structure; it states **no**
   positivity or RH result. This lands exactly on the pattern: structure on the realization side, the
   polarization deferred.
+- **Connes, "Letter to Riemann"** ([arXiv:2602.04022](https://arxiv.org/abs/2602.04022), Feb 2026):
+  a survey with a research kernel. **Theorem 6.1 (Connes-van Suijlekom)** proves that the minimal
+  eigenvector $\eta_x$ of the truncated Weil form $QW_\lambda$ has a Fourier transform with all zeros
+  on the critical line, **unconditionally for each finite cutoff** (primes $\le 13$ recover the first
+  50 zeros to $2.6\times10^{-55}$..$10^{-3}$). This **sharpens the realization half** (an on-line-
+  zeros theorem, not a trace identity), but supplies **no** polarization: Theorem 6.1 manufactures
+  on-line zeros for *any* admissible even-kernel form, so it is zeta-blind, and the entire RH content
+  sits in the unproven convergence $\eta_x \to E(h)$ (sec 6.6), which is global Weil positivity, i.e.
+  RH. The project verified the zeta-blindness directly: the identical construction reproduces
+  Davenport-Heilbronn's on-line zeros and (Caratheodory-Fejer) gives all-roots-on-circle for zeta-,
+  D-H-, and random-derived symbols alike, while structurally missing D-H's off-line zero at
+  $0.8085+85.699i$ (e3s/e3t,
+  [`connes_2602_letter_to_riemann.md`](connes_2602_letter_to_riemann.md), LEARNINGS #50). The proven
+  fragments (Sonin-space archimedean positivity, prolate $\hat k_\lambda\to\Xi$, Moscovici UV model)
+  are the D-H-shared, RH-agnostic half. Same pattern: a sharper realization, polarization deferred.
 
 Other 2024-2026 developments reported by the survey (to verify against originals before formal
 citation): prismatic Poincare duality of perfect complexes (Tang, Compositio 2024) supplies
