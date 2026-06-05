@@ -22,6 +22,7 @@ Status: open. Not proved in Lean (nor in any other framework).
 
 import ZetaRH.Basic
 import ZetaRH.DavenportHeilbronn
+import ZetaRH.FrobeniusAlgebra
 import ZetaRH.KillCriteria
 import ZetaRH.LambdaBlueprints
 import ZetaRH.PrismaticFoliation
@@ -72,11 +73,12 @@ theorem hodge_index_implies_RH :
     not apply, and the Hodge index theorem is a genuine K1-escape route. -/
 theorem hodge_index_escapes_K1 : True := by sorry
 
-/-- K2 check: the Hodge index theorem does NOT hold on the analog of S
-    for the Davenport-Heilbronn L-function. (D-H is excluded from the
-    Lambda-blueprint framework by construction; the analog of S simply
-    does not exist for D-H.) -/
-theorem hodge_index_K2_safe : True := by sorry
+/-- K2 check: the Hodge-index route cannot even form its Frobenius cup target
+    for Davenport-Heilbronn. D-H has a functional equation, but no Euler product,
+    hence no local `(1,p)` Frobenius bidegrees and no Tate-twist `H^2` target. -/
+theorem hodge_index_K2_safe :
+    ¬ FrobeniusAlgebra.CanFormCupTarget davenport_heilbronn :=
+  FrobeniusAlgebra.no_dh_cupTarget
 
 /-- K3 check: restricted to a curve over F_q, the Hodge index theorem on S
     recovers Weil's 1948 Hodge index on C × C. -/
