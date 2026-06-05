@@ -190,6 +190,30 @@ form or from zeros would be circular. The audit also upgrades the toy Python K2
 guard from name-based to data-based: a renamed Davenport-Heilbronn wrapper is
 blocked because `has_euler_product=False`.
 
+**Primitive-quotient probe landed (2LN, 2026-06-05).** The next probe
+[`../../../experiments/arithmetic_geometric/e2ln_wcart_primitive_quotient.md`](../../../experiments/arithmetic_geometric/e2ln_wcart_primitive_quotient.md)
+tests the only remaining direct-polarization escape hatch: does the Petrov Sen
+nilpotent survive on the primitive quotient? **Answer: no, by Jacobson-Morozov,
+but it does not help.** On a faithful `sl2`/Jordan model with a genuine defective
+block, the direct Hermitian Rosati/Lyapunov metric `Theta^* H + H Theta = -H,
+H > 0` does NOT exist on the full nonsemisimple block (a nilpotent is not
+diagonalizable, so it cannot be conjugated to skew-Hermitian). But the monodromy
+weight filtration `W(N)` makes `N` a pure Lefschetz lowering operator (the zero
+endomorphism on each primitive graded quotient), so the nilpotent dies on the
+primitive quotient and the metric exists there. The catch: the positivity gap
+relocates undiminished to the SIGN of the primitive monodromy form
+`Q_k(x,y) = c_E * Omega(x, N^k y)`, which is `+definite` or `-definite` according
+to the archimedean Weil phase `c_E`, not `N`. A misaligned Lefschetz operator
+leaves the nilpotent alive on the "primitive" subspace, so the missing datum is
+the geometric Frobenius/Lefschetz operator supplying the correct primitive
+decomposition, not `Theta`. **Consequence for this proposal:** Axiom 4 (primitive
+positivity) is exactly the residue. The monodromy formalism (Axioms 1-3) is the
+right shape and the nilpotent is harmless, but Axiom 4 must be earned by
+constructing `C_E` geometrically and proving it is a positive compatible complex
+structure on each primitive piece without zero-side or RH input. WCart stays
+alive; the route reduces to the geometric construction of the Frobenius-aligned
+primitive projector.
+
 ## First mathematical construction target
 
 Build `C_E` from the Euler/Frobenius direction by a polar decomposition, not from
