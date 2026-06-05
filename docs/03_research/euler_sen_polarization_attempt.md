@@ -178,6 +178,18 @@ Putting a genuine defective block at the Tate center,
 baseline remains rigidly hyperbolic. Honest caveat: `B_E` is supplied as input,
 so the real arithmetic construction of `B_E` is still the gap.
 
+**Adversarial K1 audit landed (2MM, 2026-06-05).** The follow-up audit
+[`../../../experiments/arithmetic_geometric/e2mm_euler_sen_k1_audit.md`](../../../experiments/arithmetic_geometric/e2mm_euler_sen_k1_audit.md)
+confirms that the finite Euler-Sen package is a transport formalism, not a
+positivity theorem: for arbitrary symmetric `B`, `signature(Q_N)=signature(B)`.
+Across 32 random controlled-signature rows in dimensions `1..6`, there were zero
+transport mismatches. This does not kill the proposal, but it makes the K1 burden
+precise. The future theorem must construct `B` geometrically from Euler/Frobenius
+data plus the archimedean metric and prove `B > 0`; importing `B` from the Weil
+form or from zeros would be circular. The audit also upgrades the toy Python K2
+guard from name-based to data-based: a renamed Davenport-Heilbronn wrapper is
+blocked because `has_euler_product=False`.
+
 ## First mathematical construction target
 
 Build `C_E` from the Euler/Frobenius direction by a polar decomposition, not from
