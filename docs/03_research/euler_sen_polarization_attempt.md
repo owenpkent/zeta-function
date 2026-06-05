@@ -234,6 +234,25 @@ This is dangerous because `B_E` resembles the Weil form. The non-circular versio
 must define `B_E` as a geometric trace on the Euler-Sen object, not as a
 zero-side or positivity-assumed kernel.
 
+**Construction probe landed (2LO, 2026-06-05).** The probe
+[`../../../experiments/arithmetic_geometric/e2lo_euler_weil_operator.md`](../../../experiments/arithmetic_geometric/e2lo_euler_weil_operator.md)
+runs this target literally. The polar formula WORKS: over `F_q` with the
+symplectic `Omega`, `A_E^2 = (t^2 - 4 g^2 q) I`, so `-A_E^2` is positive definite
+iff `t^2 < 4 g^2 q`, `C_E = A_E (-A_E^2)^{-1/2}` is an `Omega`-compatible complex
+structure (`C_E^2 = -I` to `7e-15`), and `Q(x,y) = Omega(x, C_E y)` is positive
+exactly in the Hasse-Weil window (206/206 rows, reducing to
+`HodgeIndex.negDef_iff_hasseWeil`). But the K1 danger is realized constructively:
+the `(1,q)` bidegree is shared by every curve over `F_q`, while the trace
+`t = q + 1 - #E(F_q)` is strictly finer (nine admissible traces over `F_5` give
+nine distinct `C_E`), so the `(1,p)` bidegree plus archimedean data do NOT
+determine `B_E`. The missing piece is exactly the trace `t`, the global Frobenius
+point count, equivalently the product-surface / prismatic Poincare-duality
+assembly (Direction 8). The FE/archimedean-only bypass forms for Davenport-
+Heilbronn, confirming kill condition 2 (an FE-only `C_E` is D-H-blind and dead).
+So the polar construction is the correct LOCAL formalism, but the SIGN over
+`Spec(Z)` is the same global gap as the product surface, not a `C`-linear-algebra
+quantity.
+
 ## Kill conditions
 
 Abandon or demote this proposal if any of these happens:
