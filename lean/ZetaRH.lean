@@ -8,9 +8,11 @@ import ZetaRH.KillCriteria
 import ZetaRH.R3_5
 import ZetaRH.LineRestriction
 import ZetaRH.LambdaBlueprints
+import ZetaRH.FrobeniusAlgebra
 import ZetaRH.PrismaticCohomology
 import ZetaRH.PrismaticFoliation
 import ZetaRH.HodgeIndex
+import ZetaRH.EulerSenLinearAlgebra
 import ZetaRH.ExplicitFormula
 import ZetaRH.AccidentAudit
 import ZetaRH.RHEquivalences
