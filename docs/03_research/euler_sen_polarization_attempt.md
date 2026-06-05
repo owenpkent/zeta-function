@@ -190,6 +190,30 @@ form or from zeros would be circular. The audit also upgrades the toy Python K2
 guard from name-based to data-based: a renamed Davenport-Heilbronn wrapper is
 blocked because `has_euler_product=False`.
 
+**Primitive-quotient probe landed (2LN, 2026-06-05).** The next probe
+[`../../../experiments/arithmetic_geometric/e2ln_wcart_primitive_quotient.md`](../../../experiments/arithmetic_geometric/e2ln_wcart_primitive_quotient.md)
+tests the only remaining direct-polarization escape hatch: does the Petrov Sen
+nilpotent survive on the primitive quotient? **Answer: no, by Jacobson-Morozov,
+but it does not help.** On a faithful `sl2`/Jordan model with a genuine defective
+block, the direct Hermitian Rosati/Lyapunov metric `Theta^* H + H Theta = -H,
+H > 0` does NOT exist on the full nonsemisimple block (a nilpotent is not
+diagonalizable, so it cannot be conjugated to skew-Hermitian). But the monodromy
+weight filtration `W(N)` makes `N` a pure Lefschetz lowering operator (the zero
+endomorphism on each primitive graded quotient), so the nilpotent dies on the
+primitive quotient and the metric exists there. The catch: the positivity gap
+relocates undiminished to the SIGN of the primitive monodromy form
+`Q_k(x,y) = c_E * Omega(x, N^k y)`, which is `+definite` or `-definite` according
+to the archimedean Weil phase `c_E`, not `N`. A misaligned Lefschetz operator
+leaves the nilpotent alive on the "primitive" subspace, so the missing datum is
+the geometric Frobenius/Lefschetz operator supplying the correct primitive
+decomposition, not `Theta`. **Consequence for this proposal:** Axiom 4 (primitive
+positivity) is exactly the residue. The monodromy formalism (Axioms 1-3) is the
+right shape and the nilpotent is harmless, but Axiom 4 must be earned by
+constructing `C_E` geometrically and proving it is a positive compatible complex
+structure on each primitive piece without zero-side or RH input. WCart stays
+alive; the route reduces to the geometric construction of the Frobenius-aligned
+primitive projector.
+
 ## First mathematical construction target
 
 Build `C_E` from the Euler/Frobenius direction by a polar decomposition, not from
@@ -209,6 +233,25 @@ primitive Euler-Sen quotients without using RH.
 This is dangerous because `B_E` resembles the Weil form. The non-circular version
 must define `B_E` as a geometric trace on the Euler-Sen object, not as a
 zero-side or positivity-assumed kernel.
+
+**Construction probe landed (2LO, 2026-06-05).** The probe
+[`../../../experiments/arithmetic_geometric/e2lo_euler_weil_operator.md`](../../../experiments/arithmetic_geometric/e2lo_euler_weil_operator.md)
+runs this target literally. The polar formula WORKS: over `F_q` with the
+symplectic `Omega`, `A_E^2 = (t^2 - 4 g^2 q) I`, so `-A_E^2` is positive definite
+iff `t^2 < 4 g^2 q`, `C_E = A_E (-A_E^2)^{-1/2}` is an `Omega`-compatible complex
+structure (`C_E^2 = -I` to `7e-15`), and `Q(x,y) = Omega(x, C_E y)` is positive
+exactly in the Hasse-Weil window (206/206 rows, reducing to
+`HodgeIndex.negDef_iff_hasseWeil`). But the K1 danger is realized constructively:
+the `(1,q)` bidegree is shared by every curve over `F_q`, while the trace
+`t = q + 1 - #E(F_q)` is strictly finer (nine admissible traces over `F_5` give
+nine distinct `C_E`), so the `(1,p)` bidegree plus archimedean data do NOT
+determine `B_E`. The missing piece is exactly the trace `t`, the global Frobenius
+point count, equivalently the product-surface / prismatic Poincare-duality
+assembly (Direction 8). The FE/archimedean-only bypass forms for Davenport-
+Heilbronn, confirming kill condition 2 (an FE-only `C_E` is D-H-blind and dead).
+So the polar construction is the correct LOCAL formalism, but the SIGN over
+`Spec(Z)` is the same global gap as the product surface, not a `C`-linear-algebra
+quantity.
 
 ## Kill conditions
 
@@ -237,3 +280,17 @@ Abandon or demote this proposal if any of these happens:
 The proposal is not "RH solved." It is a candidate for the missing kind of
 mathematics: a mixed, monodromy-based Hodge-Riemann package whose positivity is
 Euler-formed, intrinsic, and non-eigenspace-based.
+
+## Why "non-eigenspace-based" is forced, not stylistic
+
+The Lane 2 writeup [`lane2_petrov_nonsemisimplicity.md`](lane2_petrov_nonsemisimplicity.md)
+makes precise why this proposal must be monodromy-based rather than
+eigenspace-based. Petrov ([arXiv:2302.11389](https://arxiv.org/abs/2302.11389),
+Annals) shows the WCart Sen operator is genuinely non-semisimple in geometric
+prismatic situations, and a Hodge-Riemann form built from the semisimple part
+$\Theta_{\mathrm{ss}}$ alone forces the nilpotent $N = 0$. So the naive
+Sen-eigenspace polarization branch is dead; the surviving shape is exactly the
+$N$-aware primitive forms $Q_r(x,y) = Q(x, N^r y)$ of Axiom 4. The branch pruning
+is D-H-aware by type (Petrov's Frobenius-lift obstruction class is undefined for
+the Euler-product-free D-H), and it is confirmed computationally by 2LN (#69),
+2LO (#70), and 2P+ (#71).
