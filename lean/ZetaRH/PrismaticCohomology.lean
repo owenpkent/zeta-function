@@ -21,6 +21,8 @@ Hodge-Tate divided power algebra). VERIFIER targets to be added once the
 upstream definitions exist.
 -/
 
+import ZetaRH.FrobeniusAlgebra
+
 namespace ZetaRH.PrismaticCohomology
 
 /-- A delta-ring (the foundation of prismatic cohomology).
@@ -87,10 +89,18 @@ def cup_product (_x _y : Type) : Type := Unit  -- placeholder
     (e.g. Davenport-Heilbronn, residue 0): the cohomological K2 face (2GG/#60). -/
 def fundamental_class : Type := Unit  -- placeholder
 
-/-- Q3a (organ (a), the unit / K2 face, 2GG/#60): the fundamental class H^2 is
-    NONZERO iff the L-function has the Euler-product pole. A Poincaré duality whose
-    trace lands in a zero fundamental class is not a polarization. -/
-theorem Q3a_fundamental_class_nonzero : True := by sorry
+/-- Q3a (organ (a), the unit / K2 face): forming the Frobenius cup target
+    structurally requires Euler-product data. This is the type-level version of
+    "no Euler product -> no Frobenius correspondence -> no Tate-twist H^2 target." -/
+theorem Q3a_fundamental_class_nonzero (L : LFunction) :
+    FrobeniusAlgebra.CanFormCupTarget L -> L.has_euler_product :=
+  FrobeniusAlgebra.cupTarget_requires_eulerProduct
+
+/-- Q3a, Davenport-Heilbronn control: D-H has a functional equation but no Euler
+    product, so the Frobenius cup target cannot be formed. -/
+theorem Q3a_davenport_heilbronn_no_cup_target :
+    ¬ FrobeniusAlgebra.CanFormCupTarget davenport_heilbronn :=
+  FrobeniusAlgebra.no_dh_cupTarget
 
 /-- Q3b (organ (a), the positivity face, 2HH/#61): the cup product is a POLARIZATION
     (Hodge-Riemann positive) iff for every zero the FE-partner equals the conjugate,

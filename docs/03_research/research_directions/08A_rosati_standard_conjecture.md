@@ -23,6 +23,18 @@ The ingredients are pinned by the project's own findings:
 - The trace form's "diagonal" is the regularized self-intersection $\Gamma_S^2 = \sum_p (\log p)(\cdots)$, the von Mangoldt prime sum (LEARNINGS #26).
 - The archimedean place must enter the positivity together with the finite places (the two-clock balance, LEARNINGS #18/#23): positivity is global, not place-by-place.
 
+**Formation spec (2026-06-04).** Before the positivity theorem, the target has a
+formation rule: Euler product data $\to$ local Frobenius bidegrees $(1,p)$ $\to$
+the Tate-twist $H^2$ fundamental class $\to$ a cup target
+$H^1\times H^1\to H^2$. This is now isolated in
+[`../frobenius_cup_target_spec.md`](../frobenius_cup_target_spec.md) and mirrored
+in Lean by [`../../../lean/ZetaRH/FrobeniusAlgebra.lean`](../../../lean/ZetaRH/FrobeniusAlgebra.lean).
+The key theorem is formation-level, not RH-level: if the Frobenius cup target
+forms, then the L-function has Euler-product data. Consequently the target is
+uninhabited for Davenport-Heilbronn by type, not by a string guard or by deleting
+composite support by hand. Positivity of the formed target remains the open
+arithmetic Hodge standard conjecture.
+
 ## 3. Why this is the right professional framing
 
 - **It is a standard conjecture.** Over a field, the positivity of the Rosati form is the **Hodge standard conjecture** (one of Grothendieck's standard conjectures), a theorem in char $0$ via Hodge theory and the Hodge-Riemann relations, open in general char. RH-for-$\zeta$ is its arithmetic ($\mathbb{F}_1$/$\mathrm{Spec}\,\mathbb{Z}$) analogue. This is not a fringe reformulation; it is the Serre-Grothendieck view of the Weil conjectures applied to the arithmetic case, and it connects the program to a large, active literature (standard conjectures, motives, polarizations, Hodge-Riemann).
