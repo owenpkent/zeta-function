@@ -1,6 +1,6 @@
 # Attack prompt: out-of-repo agent on the live RH front (self-contained)
 
-> The no-repo-access twin of [`attack_prompt.md`](attack_prompt.md). Paste it to an AI agent that **cannot read this repository** (a fresh chat, a different model, a sandbox with no filesystem). The in-repo version starts with "read these six files"; this one inlines their substance instead, so the agent has the full orientation without repo access.
+> The no-repo-access twin of [`attack_prompt.md`](attack_prompt.md). Paste it to an AI agent that **cannot read this repository** (a fresh chat, a different model, a sandbox with no filesystem). The in-repo version starts with "read these six files"; this one inlines their substance instead, so the agent has the full orientation without repo access. For a condensed, copy-paste-ready chat-box version (e.g. for ChatGPT), see [`attack_prompt_chatgpt.md`](attack_prompt_chatgpt.md); this file is the fuller source it is derived from.
 >
 > Source of truth lives in the repo. If anything here drifts from `PHASE_STATE.md`, `docs/03_research/all_roads_to_the_signature.md`, `docs/03_research/research_directions/08A_rosati_standard_conjecture.md`, `docs/03_research/soft_detector_wall.md`, or `docs/03_research/spec_z_cohomology_landscape.md`, those files win. Re-derive this from them when re-syncing.
 

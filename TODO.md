@@ -131,7 +131,7 @@
 
 - [x] **Merge the Euler-Sen linear-algebra core (PR #5)**: 2LL/#67 plus the Lean substrate (`EulerSenLinearAlgebra.lean`, `FrobeniusAlgebra.lean`). A Tate-centered defective Sen block (`Theta = -1/2 I + N`, `N^2 = 0`) satisfies the exact cup-target equation (`Theta^T Omega + Omega Theta = -Omega`, residual 0) and recovers the function-field Rosati/Hasse-Weil sign via `Q_N(x,y) = Omega(x, N y)`, escaping the 2KK rigid-hyperbolic trap.
 - [x] **2MM Euler-Sen K1 audit** (experiments/arithmetic_geometric/e2mm_euler_sen_k1_audit.{py,md}, LEARNINGS #68): the finite Euler-Sen primitive form is a TRANSPORT theorem, `signature(Q_N) = signature(B)` for arbitrary symmetric `B` (0 mismatches across 32 rows, dimensions 1-6), so it manufactures NO positivity. Sharpens the M4 burden without ambiguity: construct `B` geometrically from Euler/Frobenius data plus the archimedean metric and prove `B > 0` on primitive pieces without zero-side or RH input (importing `B` from a Weil form or known zeros is K1-circular). K2 guard upgraded to data-based (`has_euler_product`, which blocks a renamed Davenport-Heilbronn). 2LL survives as a coherent monodromy slot; 2MM prevents over-reading it as a positivity theorem.
-- [x] **RH attack launch prompts** (prompts/): the in-repo agent prompt (`attack_prompt.md`) and the self-contained no-repo-access twin (`attack_prompt_no_repo.md`).
+- [x] **RH attack launch prompts** (prompts/): the in-repo agent prompt (`attack_prompt.md`), the self-contained no-repo-access twin (`attack_prompt_no_repo.md`), and the condensed copy-paste-ready ChatGPT twin (`attack_prompt_chatgpt.md`).
 
 ### Pre-existing experiments
 
