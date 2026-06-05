@@ -280,3 +280,17 @@ Abandon or demote this proposal if any of these happens:
 The proposal is not "RH solved." It is a candidate for the missing kind of
 mathematics: a mixed, monodromy-based Hodge-Riemann package whose positivity is
 Euler-formed, intrinsic, and non-eigenspace-based.
+
+## Why "non-eigenspace-based" is forced, not stylistic
+
+The Lane 2 writeup [`lane2_petrov_nonsemisimplicity.md`](lane2_petrov_nonsemisimplicity.md)
+makes precise why this proposal must be monodromy-based rather than
+eigenspace-based. Petrov ([arXiv:2302.11389](https://arxiv.org/abs/2302.11389),
+Annals) shows the WCart Sen operator is genuinely non-semisimple in geometric
+prismatic situations, and a Hodge-Riemann form built from the semisimple part
+$\Theta_{\mathrm{ss}}$ alone forces the nilpotent $N = 0$. So the naive
+Sen-eigenspace polarization branch is dead; the surviving shape is exactly the
+$N$-aware primitive forms $Q_r(x,y) = Q(x, N^r y)$ of Axiom 4. The branch pruning
+is D-H-aware by type (Petrov's Frobenius-lift obstruction class is undefined for
+the Euler-product-free D-H), and it is confirmed computationally by 2LN (#69),
+2LO (#70), and 2P+ (#71).
