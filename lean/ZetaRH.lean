@@ -13,6 +13,8 @@ import ZetaRH.PrismaticCohomology
 import ZetaRH.PrismaticFoliation
 import ZetaRH.HodgeIndex
 import ZetaRH.EulerSenLinearAlgebra
+import ZetaRH.SenDefiniteObstruction
+import ZetaRH.TraceBlindObstruction
 import ZetaRH.ExplicitFormula
 import ZetaRH.AccidentAudit
 import ZetaRH.RHEquivalences

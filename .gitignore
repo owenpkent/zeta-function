@@ -42,6 +42,8 @@ experiments/**/_cache/
 experiments/**/*.png
 # scratch run logs (underscore-prefixed), not part of the tracked record
 experiments/**/_*.log
+# DuckDB lemma-graph build artifact (regenerable from schema.sql + seed_lemmas.json)
+experiments/lemma_db/*.duckdb
 
 # Lean / Lake build artifacts (gigabytes of compiled oleans; pulled from cache via `lake update`)
 .lake/

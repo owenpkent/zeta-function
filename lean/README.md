@@ -63,6 +63,8 @@ lean/
     ├── PrismaticCohomology.lean     # Direction 3: prismatic cohomology of W(ℤ) (placeholder)
     ├── PrismaticFoliation.lean      # Direction 4: prismatic foliation hypothesis M3 (placeholder)
     ├── HodgeIndex.lean              # Direction 8: the central open problem
+    ├── SenDefiniteObstruction.lean  # Direction 8E Class A no-go: skew+nilpotent ⟹ 0 (sorry-free)
+    ├── TraceBlindObstruction.lean   # Direction 8E Class C no-go: no t-blind signature decides Hasse-Weil (sorry-free)
     ├── KillCriteria.lean            # K1-K4 formalizations
     ├── AccidentAudit.lean           # Cheap-probe 5: de-smuggling audit of the C_mu Weil form (sorry-free non-circularity certificate)
     └── RHEquivalences.lean          # RH equivalence hub (Robin/Lagarias/Mertens/Li/Nyman-Beurling) + the Π⁰₁ kernel witness RH_arith
@@ -92,6 +94,8 @@ Each `sorry` introduced in the Phase 1 substrate carries a VERIFIER target ID fo
 | #MB-3..#MB-5 | MathlibBridge.lean          | Hurwitz availability (#MB-3), L-Hurwitz decomposition (#MB-4, sorry), Fejér (#MB-5, sorry). |
 | #MB-6      | MathlibBridge.lean            | ζ functional equation `Λ(1-s)=Λ(s)`. **DISCHARGED** via `completedRiemannZeta_one_sub` (no sorry). |
 | #2G-1      | HodgeIndex.lean               | 2G function-field signature: `G_prim` negative definite ⟺ Hasse-Weil `t² < 4g²q`. PROVED (no sorry). |
+| #ClassA-1  | SenDefiniteObstruction.lean   | Direction 8E Class A no-go: `skew_nilpotent_eq_zero` (real skew + nilpotent ⟹ 0, elementary trace proof) + `sen_no_nilpotent_part` + `sen_nilpotent_part_not_isNilpotent` (a non-semisimple Sen module admits no definite invariant cup form; Petrov ν≠0) + `bskew_nilpotent_eq_zero_of_gram` (Gram-factor reduction) + `bskew_nilpotent_eq_zero` (UNCONDITIONAL in `B.PosDef`, via `CFC.sqrt`). 5 theorems, PROVED (no sorry); `#print axioms` = `[propext, Classical.choice, Quot.sound]` only. |
+| #ClassC-1  | TraceBlindObstruction.lean    | Direction 8E Class C no-go: `negDef_depends_on_trace` (the Hasse-Weil/Rosati `NegDef` predicate is non-constant in the trace `t`) + `no_trace_blind_signature` (no `t`-blind predicate `P g q` decides `NegDef g q t`; the arithmetic-blind AHK combinatorial signature cannot carry RH-positivity, #48). PROVED (no sorry); `#print axioms` = `[propext, Classical.choice, Quot.sound]` only. |
 | #2H-1      | HodgeIndex.lean               | 2H Faltings-Hriljac arithmetic Hodge index: Néron-Tate height-pairing Gram matrix is `PosDef`. Sorry (needs Mathlib canonical heights + Faltings-Hriljac). |
 | #EF-1      | ExplicitFormula.lean          | The Weil explicit formula for ζ: a `WeilExplicitFormula` bundle exists (spectral side = arch + pole − prime). Sorry (needs digamma kernel + sum-over-zeros theory). |
 | #EF-2      | ExplicitFormula.lean          | **The Weil positivity criterion**: `weilForm`-positivity on all admissible tests ⟺ `RiemannHypothesis zeta`. The Architecture-3 centerpiece (LEARNINGS #17). Sorry. |

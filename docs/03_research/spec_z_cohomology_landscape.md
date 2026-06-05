@@ -219,6 +219,44 @@ both research-grade:
    whether the TP/flow or prismatic language gives any new leverage on the positivity (Petrov's
    non-semisimplicity says the obvious eigenspace route is blocked).
 
+## Graph diagnostic: do the 17 candidate cohomologies collapse onto one gap node, or bracket it?
+
+Recorded 2026-06-05 (SYNTHESIZER/INFRA import into `experiments/lemma_db`). This section pins the answer to the fork the scorecard was built to resolve: is the universal gap (the missing RH-equivalent polarization) a single irreducible node that every realization candidate lacks, or do some candidates sit off to the side as distinct near-misses that could be attacked directly?
+
+### The graph diagnostic
+
+Every candidate framework was entered as a new `kind=candidate` node and wired to the existing graph by ANNOTATION edges only (never `depends_on`/`specializes`, per the load-bearing-edge rule: a candidate substrate NEEDS the gap, it does not PROVE it). Each candidate's single sharpest open step resolves to exactly one target:
+
+- COLLAPSE (`instantiates TGT-m4-hodge-standard`): 9 realization candidates. Deninger foliated R-flow, Connes-Consani arithmetic site, Connes-Consani Jacobian, Bhatt-Lurie WCart, Bhatt-Scholze per-prime, Hesselholt TP/TC, Lorscheid blueprints, Borger Lambda-rings, Soule-Kurokawa absolute zeta. They differ only in substrate, never in the positivity they lack (#71/2P+: the three strongest recent ones are three two-thirds of the same construction).
+- OFF-TO-SIDE (`instantiates`/`specializes` a distinct `NODE-*`): 4 candidate frameworks over 3 distinct proven-signature bracket nodes. Faltings-Hriljac and its inheritor Gillet-Soule on `NODE-fh-too-local`; Adiprasito-Huh-Katz on `NODE-ahk-too-blind`; de Branges on `NODE-debranges-too-strong`.
+- K1 WALL (`instantiates OBS-k1-circularity`): 2 candidates (Connes 1999 adele-class trace formula, Connes eta_x / Weil-form CF). A degenerate fourth direction: a trap to escape, not a near-miss to extend.
+- PRE-REALIZATION (`instantiates PRIM-euler-product`): 2 candidates (Kucharczyk-Scholze, Deitmar). Upstream of the gap; no realized zeta whose polarization could be missing.
+
+A DuckDB query (added to `queries.sql`) counts candidates by resolve-target and joins each off-to-side bracket to the one `PROP-*` node it violates. Result: `TGT-m4-hodge-standard` collapses 9 candidates (missing property = the conjunction itself, no single drop); the three `NODE-*` brackets each carry a distinct single missing property.
+
+### The property decomposition
+
+The gap node `TGT-m4-hodge-standard` is the LOGICAL CONJUNCTION of four independently-named properties, each a new signature-layer node that `TGT-m4-hodge-standard --depends_on-->` (load-bearing, all `dh_buildable=false`):
+
+1. `PROP-global`: lives on the global H^1 of the PRODUCT (reaches the actual zeros via the Frobenius correspondence Gamma_S), not a single surface, not place-by-place.
+2. `PROP-carries-trace`: the pairing's value sees the arithmetic Frobenius trace t (von Mangoldt); not arithmetic-blind.
+3. `PROP-rh-equivalent`: positivity is EQUIVALENT to RH for zeta, not strictly stronger (no GRH overshoot).
+4. `PROP-noncircular` (K1): positivity DERIVED from a polarization, never read off the zeros (R3.5 no-shortcut).
+
+GAP = PROP-global AND PROP-carries-trace AND PROP-rh-equivalent AND PROP-noncircular. Each conjunct is proven-droppable by a distinct object, which is what makes the conjunction irreducible (no property is redundant): Faltings-Hriljac proves {carries-trace, rh-equivalent, noncircular} (drops global); AHK proves {global, rh-equivalent, noncircular} (drops carries-trace); de Branges realizes {global, carries-trace, noncircular} (drops rh-equivalent, and is REFUTED on it for zeta at the 34th zero, Conrey-Li, #43); the Connes trace-formula family drops noncircular (the K1 wall).
+
+Two adversary calibrations are recorded as load-bearing-correct. (a) Independence is two-level: at the BRACKET level (proven char-0/F_q witnesses) the four are pairwise dissociable (the AHK-vs-FH dissociation, AHK global-but-blind vs FH trace-but-local), but for the LITERAL target object `PROP-global` and carries-the-zeta-trace are CO-DEPENDENT, one bundled datum (the product surface + Gamma_S = the global Frobenius point count t, per #70/2LO and #56). carries-trace dissociates from global only under the weaker reading 'arithmetic-sensitive in general' (how AHK fails it). So the true joint-realizability question is effectively 3-axis, not 4-free. (b) Asymmetry: `PROP-noncircular` is the only conjunct with no positive realization-candidate witness; it is witnessed-as-droppable only negatively (by the Connes family). There is no noncircular near-miss to extend, only a wall to escape.
+
+### The collapse count
+
+Of the 17 candidate frameworks: 9 COLLAPSE onto `TGT-m4-hodge-standard`; 4 sit OFF TO THE SIDE over 3 distinct bracket nodes; 2 are on the K1 wall; 2 are pre-realization. The collapse cohort (9) dominates. The K2 cut (section 6) splits the four properties cleanly: NEUTRAL / archimedean side (shared by Davenport-Heilbronn, RH-agnostic) carries `PROP-global` and `PROP-rh-equivalent`; the EULER / Frobenius side (the K2 discriminators, unbuildable for D-H) carries `PROP-carries-trace` and `PROP-noncircular`. Every load-bearing PROP node is `dh_buildable=false`, so the D-H audit stays clean (the firewall holds by type on the gap conjunction).
+
+### Verdict
+
+The gap is IRREDUCIBLE. The missing-positivity of the realization candidates collapses onto the single node `TGT-m4-hodge-standard`; the three proven signatures (Faltings-Hriljac, AHK, de Branges) are the genuine off-to-side nodes, each missing exactly ONE structural property, and together they bracket the gap from three sides. The no-go (the four-property conjunction) IS the target, and there is no soft shortcut: any proof must supply all four at once. The two LIVE attack near-misses are AHK (supply `PROP-carries-trace`: inject t into the Hodge-Riemann form, intrinsically, since Petrov non-semisimplicity forbids the eigenspace route) and FH (supply `PROP-global`: build the product + Gamma_S). Because global and carries-the-zeta-trace are one datum for the literal object, these two near-misses are two faces of the same construction, which is exactly why the diagnosis is collapse rather than dissolution. de Branges is a dead bracket (refuted, K2-blind); the Connes/K1 direction is a wall, not a target.
+
+---
+
 ## 10. References
 
 Classical / verifiable: Weil (1948); Deninger, *Some analogies...* (ICM 1998), *Dynamical systems
