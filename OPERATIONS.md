@@ -44,6 +44,8 @@ For construction work (Phase 3, 4):
 
 The `Agent` tool in this Claude Code session supports multiple parallel agents via separate tool calls in a single message.
 
+**Keep the fan-out cheap.** Before launching agents, read [`TOKEN_EFFICIENCY.md`](TOKEN_EFFICIENCY.md): tier models (full model for BUILDER/SYNTHESIZER generation, Sonnet/Haiku for ADVERSARY/VERIFIER rubric application), batch many small judgments into one agent, hand data inline and disable file reading where possible, cap output fields, and salvage completed agent results from disk rather than recomputing. The workflow cache-resume prefix trap is documented there.
+
 ### 2.3 Synthesis
 
 After agent outputs land:
