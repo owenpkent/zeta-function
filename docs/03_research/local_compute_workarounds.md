@@ -247,6 +247,12 @@ mathematics actually lives). **Cost**: mechanical templating, cheap per certific
    spectrum transfer.** No ghost comb over F_q; LCC/EFR's cheapest kill ruled out.
    Follow-on: a moment-problem transfer theorem (discrete -> pole-sourced continuous)
    is now the named mathematical target for LCC/EFR, replacing "find the mechanism".
+   **Zeta-side mirror DONE 2026-06-10 (e3gg_zeta_moment_mirror.py, #80):** ran the
+   same flat-extension machinery on zeta's zeros and EXHIBITED the fail mode -- zeta's
+   zero-measure Toeplitz never goes flat (ghost room persists ~15 orders of magnitude
+   above the F_q floor; |c_k| ~ O(1/sqrt N), C->I), so the moments do not pin the comb.
+   D-H behaves identically (mechanism, not a detector). The transfer obstruction is now
+   concrete and quantitative.
 3. **Queued session-019 pair**: e3x LCC LP triple, then e1x ECC with the idea-5
    interval rider.
 4. **e3bb + e3cc exact dual / ghost pair** (ideas 2-3): the zeta-side pinching
