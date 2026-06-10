@@ -315,11 +315,23 @@ a mechanism; a clean positive supports a conjecture without proving anything.
    Outcome: a persistent $c_6$ floor kills LCC clause (i); D-H feasibility breaks the
    firewall and the whole lens.
 
-2. **EDF under-decimation discriminator** (extends `experiments/positivity/e3c2_weil_gram.py`).
+2. **EDF under-decimation discriminator** (`experiments/positivity/e3aa_edf_under_decimation.py`).
    Minimum eigenvalue of the half-matched form $Q_{t,e^{t/2}}$ at $t=8,9,10$, plus the
    single-prime $p=2$ dip at the $\xi=2\pi/\log2$ packet. Outcome: if these forms come
    out nonnegative (against the predicted clear negativity), the critical-window
    mechanism is dead in one run, independent of RH.
+   **RAN 2026-06-09 (LEARNINGS #77): both sub-tests fired POSITIVE.** The matched
+   Weil form stays marginally positive ($+0.029/+0.025/+0.020$ at $t=8/9/10$) while
+   under-decimation collapses it to $-46/-78/-129$, deepening monotonically, with the
+   negative direction the broadest (low-frequency) mode, exactly the predicted
+   mechanism (large primes resonate at low frequency near the archimedean trough
+   $\Omega(0)\approx-5.4$). The single-prime companion is exact: the angular-mean-one
+   center-fixed-point identity to $\sim10^{-16}$, the dip depth $-3.3468$ to the closed
+   form, the resonance value $-2.98$ and a genuine $V_8$ packet $-1.70$ both in
+   $[-3.2,-1.0]$. Honest scope: a falsification instrument that came out positive, not a
+   proof; D-H also goes negative under decimation ($-6.0/-1.8/-2.2$), so the clean
+   Euler-structured content is the center identity and the resonance dip (no D-H
+   analogue), not the bare sign flip. EDF stays a live PURSUE direction.
 
 3. **ECC spectral-leakage test** (`experiments/spectral/e1x_euler_crystal.py`). Build
    the truncated prime crystal as a transfer recursion and compute $m_X(i)$ for
