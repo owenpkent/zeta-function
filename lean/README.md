@@ -6,6 +6,8 @@
 
 ## Status
 
+**Update (2026-06-12):** `CrystalCocycle.lean` added: the #82 LCC/BC-transport lemma pair (V1/V2/V3, all PROVED sorry-free, `#print axioms` = `[propext, Classical.choice, Quot.sound]` for all four theorems). V2 is Lemma 1 (quasi-invariance collapse) in both the full-semigroup and the prime-generated form (induction along the minimal prime factor); V3 is increment nonnegativity of the integrated comb `B = 1 * b`; V1 is Lemma 2 (cocycle rigidity): `B(p*n) - B(n) = log p` for all primes `p`, `n ≥ 1` IFF `b n = Λ n` for `n ≥ 2` (`b 1` free), proved via `ArithmeticFunction.vonMangoldt_sum` plus a divisor-sum determination lemma (cheap Moebius inversion by strong induction). K1-clean by construction: only `ℕ`, divisors, and `Real.log` appear. V4 (the B1 G_log rigidity lemma) is logged as an open target with a feasibility note in the file. Build green (full library, 3146 jobs).
+
 **Update (2026-06-04c):** `FrobeniusAlgebra.lean` added as the formation-level spec for Direction 8A's arithmetic Frobenius algebra / cup target. It introduces `EulerProductData`, `FrobeniusTateTwist`, and `FrobeniusCupTarget`, with the structural theorem `cupTarget_requires_eulerProduct : CanFormCupTarget L -> L.has_euler_product`. The Davenport-Heilbronn control is now a no-sorry K2 guard: `no_dh_cupTarget : ¬ CanFormCupTarget davenport_heilbronn`, because D-H's `has_euler_product` field is `False`. `PrismaticCohomology.Q3a_*` and `HodgeIndex.hodge_index_K2_safe` now point to this guard. This proves only formation/non-formation, not polarization or RH.
 
 **Phase 1 substrate, GREEN BUILD as of 2026-05-25.** Project infrastructure is set up, the placeholder `True` predicates have been upgraded to typed-but-stubbed predicates with concrete VERIFIER targets, and `lake build` succeeds end-to-end against Mathlib v4.13.0 on Windows + Lean 4.13.0. All 2250 modules compile. The remaining warnings are exactly the documented `sorry` markers in the VERIFIER-target table below.
@@ -67,6 +69,7 @@ lean/
     ├── TraceBlindObstruction.lean   # Direction 8E Class C no-go: no t-blind signature decides Hasse-Weil (sorry-free)
     ├── KillCriteria.lean            # K1-K4 formalizations
     ├── AccidentAudit.lean           # Cheap-probe 5: de-smuggling audit of the C_mu Weil form (sorry-free non-circularity certificate)
+    ├── CrystalCocycle.lean          # #82 LCC/BC-transport lemmas: V1 cocycle rigidity, V2 flat-ray collapse, V3 monotonicity (all sorry-free)
     └── RHEquivalences.lean          # RH equivalence hub (Robin/Lagarias/Mertens/Li/Nyman-Beurling) + the Π⁰₁ kernel witness RH_arith
 ```
 
@@ -112,6 +115,10 @@ Each `sorry` introduced in the Phase 1 substrate carries a VERIFIER target ID fo
 | #MT-1      | RHEquivalences.lean           | `mertens_criterion`: the Mertens bound `M(x) = O(x^{1/2+ε})` ⟺ RH. Sorry. |
 | #LI-1      | RHEquivalences.lean           | `li_criterion`: Li/Keiper positivity `∀ n ≥ 1, λ_n ≥ 0` ⟺ RH, given the `LiData` Keiper-Li representation. Sorry. #LI-def (the convergent symmetric-pairing form of the sum-over-zeros identity) is the `LiData.keiperLi` field's deep content. |
 | #NB-1      | RHEquivalences.lean           | `nymanBeurling_criterion`: the Báez-Duarte distances `d_N → 0` ⟺ RH, given `NymanBeurlingData`. Sorry. #NB-def (the tie of `dist` to the actual L²(0,1) closure of dilated fractional parts) is the opaque data. |
+| V1         | CrystalCocycle.lean           | #82 Lemma 2 (cocycle rigidity): `increments_eq_log_iff_eq_vonMangoldt`, the increments `B(p*n) - B(n) = log p` (all primes `p`, all `n ≥ 1`) ⟺ `b n = Λ n` for `n ≥ 2` with `b 1` free. **PROVED** (sorry-free; axioms = `[propext, Classical.choice, Quot.sound]`). |
+| V2         | CrystalCocycle.lean           | #82 Lemma 1 (quasi-invariance collapse): `flat_ray_of_quasiInvariance` (full ℕ× form) and `flat_ray_of_prime_quasiInvariance` (prime-generated form, induction on the minimal prime factor); the quasi-invariant combs are exactly the flat ray `c n = c 1 * n^(-β)`. **PROVED** (sorry-free). |
+| V3         | CrystalCocycle.lean           | #82 increment nonnegativity: `divisorSum_le_divisorSum_mul_of_nonneg`, `0 ≤ b → B n ≤ B (p*n)` via `Nat.divisors_subset_of_dvd`. **PROVED** (sorry-free). |
+| V4         | CrystalCocycle.lean           | #86 B1 G_log rigidity (`b1_glog_rigidity.md`): prime-translate quasi-invariant Radon measures on ℝ form the ray `c·exp(-βx)dx`. **OPEN** (not attempted). Mathlib ingredients exist: `AddSubgroup.dense_or_cyclic`, `Measure.withDensity`, `MeasureTheory.Measure.isAddLeftInvariant_eq_smul` (Haar uniqueness); the missing assembly is the vague-continuity upgrade from dense-translate invariance to full translation invariance. Feasibility note at the end of `CrystalCocycle.lean`. |
 
 ## Mathlib coverage gaps
 
