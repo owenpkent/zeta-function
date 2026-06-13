@@ -5,6 +5,14 @@
 > - **Li coefficients** $\lambda_n = \sum_\rho [1 - (1 - 1/\rho)^n]$: RH iff $\lambda_n \geq 0$ for all $n \geq 1$ (Li 1997).
 > - **Weil quadratic form** $Q(f) = \sum_\rho \hat f(\rho)\overline{\hat f(\bar\rho)}$: RH iff $Q$ is positive semi-definite on Schwartz functions (Weil 1952).
 
+## Front-door filter: the off-line-zero flip test
+
+**Status:** reusable tool (2026-06-13, LEARNINGS #96).
+
+[offline_flip_test.py](offline_flip_test.py) operationalizes the project's four-level framing as a one-call screen: given a candidate functional $Q$ of the zero configuration, move ONE zero off the critical line ($\beta: 1/2 \to 1/2 + \delta$, height $\gamma$ unchanged) and check whether $\mathrm{sign}(Q)$ flips. A LEVEL-4 (RH-equivalent) functional flips; a LEVEL-3 (statistical) functional does not. The sharp reason: RH is about the real parts $\beta$, but every spacing / diffraction / pair-correlation statistic is a functional of the heights $\{\gamma\}$ alone, which the off-line move leaves exactly invariant.
+
+Demonstrated contrast (15 zeta zeros, one zero to $\beta=0.8$): the Weil-form min eigenvalue flips $+1.1\times10^{-2} \to -2.3\times10^{-1}$ (Level 4, RH-sensitive); the diffraction power at $\log 2$ and the pair-correlation variance are bit-for-bit invariant (Level 3, blind). Born as the byproduct of the 7-candidate crazy-idea screen (#96), where all seven failed exactly this test. Use `flip_test(Q, zeros)` to screen any new detector before a deep dive.
+
 ## 3A: Zeta Li coefficients
 
 **Status:** complete; positivity confirmed for $n = 1, \ldots, 500$.
