@@ -1194,6 +1194,37 @@ specification with a fixed target intersection form.
 
 ---
 
+### 9.5 The acoustic / passive-network path (2026-06-13)
+
+Section 4 specifies the new framework abstractly (an arithmetic Frobenius §4.1, a
+cohomology that knows the archimedean place §4.2, a discrete-continuous bridge §4.4).
+A passive-network reading of the explicit formula
+([`acoustic_passive_lossless.md`](acoustic_passive_lossless.md), LEARNINGS #90-94)
+reaches the same specification from Berry-Keating-style physical intuition (§6.1)
+made operational, and sharpens it:
+
+- The impedance $Z=-\zeta'/\zeta=\sum\Lambda(n)n^{-s}$ is a **passive** medium iff
+  there is an Euler product (positive von Mangoldt comb); this is the "easy half"
+  realization, unconditional, and is exactly what Davenport-Heilbronn lacks.
+- RH is the separate statement that the medium is **lossless** (resonances on the
+  critical line). The coupling **passive $+$ reciprocal (functional equation)
+  $\Rightarrow$ lossless** is Weil's two-sided argument as network theory.
+- The missing structure (§2.2's "source of positivity") is the energy form that
+  **halves** the free passive bound $\mathrm{Re}\le 1 \to \mathrm{Re}\le\tfrac12$.
+  The halving is Poincaré duality placing the self-dual middle weight at the
+  geometric mean of the extremes ($q^{1/2}=\sqrt{q^0\cdot q^1}$): exactly the
+  §4.1/§4.2 weight-graded cohomology, i.e. Deninger's program, with a one-line job
+  description.
+
+This unifies three of the document's walls in one frame: the analytic $2/3$ ceiling
+(§5.3) is the halving attempted analytically rather than geometrically; the
+discrete-continuous bridge (§4.4) is the canonical-system / Krein-string realization;
+and marginal positivity is reciprocity saturating passivity. The construction route
+(Darlington synthesis $=$ lossless 2-port $+$ one resistor $=$ the one archimedean
+place) lands on Suzuki's canonical system, which is RH-equivalent. So this is a
+unifying language confirming the §4 specification from a new direction, not the
+construction §4 still calls for.
+
 ## Further Reading
 
 - **Deninger, C.** (1992–) — The cohomological program for Spec(Z)

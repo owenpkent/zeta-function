@@ -106,6 +106,8 @@ Why it is hard, localized by the project's recent coordinates:
 - A new structural obstruction: the prismatic Sen operator is **not semisimple** in general (Petrov,
   Annals), so the polarization cannot be built eigenspace-by-eigenspace; it must be intrinsic.
 
+A passive-network reading ([`acoustic_passive_lossless.md`](acoustic_passive_lossless.md), LEARNINGS #90-94) gives the (i)/(ii)/(iii) template a physical name: (i) trace $=$ a **passive** medium ($Z=-\zeta'/\zeta$ has a positive von Mangoldt comb $\Leftrightarrow$ Euler product, unconditional); (ii) FE-duality $=$ **reciprocity**; (iii) polarization $=$ **losslessness**, the signature that **halves** the free passive bound $\mathrm{Re}\le 1 \to \mathrm{Re}\le\tfrac12$. The halving is Poincaré duality placing the self-dual middle weight at the geometric mean of the extremes ($q^{1/2}=\sqrt{q^0\cdot q^1}$), so (iii) is precisely "supply the weight filtration whose self-dual middle is $\mathrm{Re}=\tfrac12$." This confirms the universal gap from the acoustic side and explains why (i) is free while (iii) is RH: passivity is the Euler product, losslessness is the missing signature. It is a clarifying language, not a new construction (the network synthesis route lands on Suzuki's canonical system, RH-equivalent).
+
 ## 5. Closest candidates and what each would need
 
 - **Faltings-Hriljac / Gillet-Soule + a constructed product.** The positivity is already a theorem on
