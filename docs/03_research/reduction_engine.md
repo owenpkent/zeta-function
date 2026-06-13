@@ -178,12 +178,12 @@ The engine does not lower the difficulty of M4. It localizes it, protects effort
 | **Executable D-H oracle (compute, not flag)** | **Missing, specced** | section 2 increment 1; build-ready spec in [`experiments/lemma_db/oracle_spec.md`](../../experiments/lemma_db/oracle_spec.md) |
 | **Flip-test as a callable falsifier** | **Missing, specced** | part of the oracle (disqualifier D2) |
 | Residual + four-bit collision engine | **Killed** (2026-06-13 adversary) | section 3; mechanically inert, discrimination lives in the oracle |
-| **Asserted-vs-proven gap reporter** | **New, scoped** | section 3 honest residue, increment 2' |
-| **Value function (ranked by depth + proven support)** | **Missing** | section 4 increment 3 |
+| **Asserted-vs-proven gap reporter** | **Built** | `asserted_vs_proven` view; M4 computes to gap 16 (17 annotation, 1 load) |
+| **Value function (ranked by depth + proven support)** | **Built** | `node_support` + `frontier_ranked` views, surfaced in `build_db.py` |
 | **The loop driver** | **Missing** | section 6 increment 4 |
 | **Lean closability hook** | **Missing** | section 5 increment 5 |
 
-The state object is roughly two-thirds built. The engine's missing third is the executable oracle (specced), the value ranking, the asserted-vs-proven reporter, and the driver. The original "collision engine" is not in that list: the adversary showed the discrimination it promised already lives, honestly, in the oracle.
+As of 2026-06-13 the executable oracle (increment 1), the value ranking and the asserted-vs-proven reporter (increment 3) are built and green on the existing graph. What remains is the loop driver (increment 4) that runs ingest -> falsify -> route -> score -> report as one cycle, and the Lean closability hook (increment 5). The original "collision engine" is not on that list: the adversary showed the discrimination it promised already lives, honestly, in the oracle.
 
 ---
 
@@ -195,7 +195,7 @@ Each increment is small and lands on existing infrastructure. None requires new 
 
 **Increment 2' (the rescoped residual layer).** *The four-bit collision engine is killed (section 3).* What replaces it is thin and honest: (a) route every new candidate through increment 1's oracle and flag it for human/Lean adjudication only when its objective verdict differs from the curated brackets; (b) a DB view reporting the asserted-versus-proven gap (annotation in-degree minus load-bearing in-degree) per frontier node, $17 - 1$ for M4. No signature hashing, no auto-wired collisions. The discrimination the original increment 2 promised lives in the oracle of increment 1, where it is checked against D-H rather than asserted.
 
-**Increment 3: the value function.** A DB view `frontier_ranked` joining `frontier` to a depth and load-bearing-in-degree count from `rh_transitive_deps`, plus a distance-to-floor measure. Ranks by depth and *proven* support, never asserted support. The asserted-versus-proven gap rides alongside as a separate column (increment 2').
+**Increment 3: the value function (built 2026-06-13).** Three DB views in `schema.sql`: `node_support` (per-node `rh_depth`, `load_in_degree` = proven support, `annotation_in_degree` = asserted support), `frontier_ranked` (the frontier ordered by depth then proven support, never asserted support), and `asserted_vs_proven` (the gap diagnostic). `build_db.py` prints both rankings; M4's `TGT-m4-hodge-standard` computes to gap 16 (17 annotation edges, 1 load-bearing), the adversary's hand-found number now first-class. Queries Q10, Q11 in `queries.sql`.
 
 **Increment 4: the loop driver.** A script `experiments/lemma_db/engine.py` that runs ingest -> falsify -> route -> score -> report for one candidate, prints the kill/shrink counts (the anti-theater metric), and appends the cycle to a monotone log. This is the engine made runnable; the orchestrator drives candidates through it.
 
