@@ -200,6 +200,38 @@ $2/3$ analytic ceiling (the halving is geometric, not analytic), the D-H discipl
 saturates passivity). That convergence is a confirmation of the target, not a new
 construction of it.
 
+## Step 5 (EAC.5): Darlington synthesis - from specify to construct, and where it stalls
+
+[`eac5_darlington_synthesis.py`](../../experiments/acoustic/eac5_darlington_synthesis.py).
+The constructive question: network synthesis BUILDS a passive system from a
+prescribed response, so does it build the weight filtration? Darlington's theorem:
+every passive impedance $=$ a lossless 2-port terminated in a SINGLE resistor (all
+dissipation in that one resistor). Read on the critical circle $|s|=1$
+($s=\alpha/\sqrt q$), the weight ladder IS a Darlington network: $H^0$
+($|s|=1/\sqrt q$, inside) $=$ the RESISTOR; $H^1$ ($|s|=1$, on the circle) $=$ the
+LOSSLESS reactive 2-port (the zeros); $H^2$ ($|s|=\sqrt q$, outside) $=$ the SOURCE;
+with $H^0\leftrightarrow H^2$ paired by the functional equation. Verified 7/7
+curves. The reactive sections are Blaschke factors $(z-s_i)/(1-\bar s_i z)$; under RH
+each is DEGENERATE (zero $=$ pole on the circle), an off-line zero would split it
+into a dissipative C-section (zero inside, pole outside). So **RH $\iff$ every
+Darlington section is degenerate** (EAC.3's all-pass story, in synthesis language).
+
+**The single-resistor insight (suggestive).** Darlington concentrates all
+dissipation in ONE resistor; the arithmetic has exactly ONE archimedean place.
+Identifying them gives the archimedean place a precise role - the sole dissipator -
+with all finite places (the Euler product) as the lossless reactive part, and RH as
+the statement that the reactive resonances sit on the lossless circle. This is a
+suggestive structural parallel (the single-resistor form is one canonical Darlington
+normalization), not a theorem.
+
+**Where it stalls (honest).** zeta's $Z$ is not rational, so the finite Darlington
+algorithm does not apply; the distributed version is the canonical system / Krein
+string $=$ Suzuki's Hamiltonian-from-$L$ (arXiv:1606.05726), constructible
+unconditionally for $\omega>1$ and lossless-for-all-$\omega>0$ IFF RH. So
+"construct it via Darlington" lands on the SAME RH-equivalent gap. The construction
+route is real but not a shortcut; the durable new content is the single-resistor /
+one-dissipative-place picture, not a lever.
+
 ## Honest scope (what is new, what is not)
 
 - **Not new to the literature.** The basic dictionary (zeros = canonical-system
