@@ -168,6 +168,27 @@ def test_dirichlet_first_zeros():
     return ok_all
 
 
+def test_oracle_flip_test():
+    print("Test 9: Reduction Engine oracle flip test (marginal-positivity wall)")
+    # Regression for increment 1. Two facts must hold or the wrong-approach
+    # detector is broken: (a) the canonical soft Li functional is BLIND to D-H
+    # (min lambda_n >= 0 on both zeta and D-H, so the flip test kills it), and
+    # (b) the off-line zero remains detectable (the separating detector fires).
+    # Import locally so the smoke test stays importable even if lemma_db changes.
+    from experiments.lemma_db.oracle import li_min_detector, offline_zero_detector
+    mp.mp.dps = 30
+    li_zeta = li_min_detector(zeta_L)
+    li_dh = li_min_detector(DavenportHeilbronn())
+    off_dh = offline_zero_detector(DavenportHeilbronn())
+    off_zeta = offline_zero_detector(zeta_L)
+    return (
+        check("Li detector blind to D-H: li_min(zeta) >= 0 and li_min(D-H) >= 0",
+              li_zeta >= 0 and li_dh >= 0, f"zeta {li_zeta:.5f}, D-H {li_dh:.5f}")
+        and check("off-line zero still detectable: offline(D-H) < 0 < offline(zeta)",
+                  off_dh < 0 < off_zeta, f"D-H {off_dh}, zeta {off_zeta}")
+    )
+
+
 def main():
     results = [
         test_zeta_evaluation(),
@@ -178,6 +199,7 @@ def main():
         test_dirichlet_known_values(),
         test_dirichlet_functional_equation(),
         test_dirichlet_first_zeros(),
+        test_oracle_flip_test(),
     ]
     print()
     n_pass = sum(results)
