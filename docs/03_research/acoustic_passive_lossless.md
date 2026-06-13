@@ -115,6 +115,51 @@ medium provably contractive. That is the missing M4 polarization, restated in
 acoustic terms. D-H fails at (ii) already (no Euler product = active medium), so
 the coupling never even starts for it: the K2 discipline, geometric face.
 
+## Step 3 (EAC.3): reverse-engineering ingredient (iii) - the halving form
+
+Pushing the reverse-engineering one level deeper:
+[`eac3_halving_and_allpass.py`](../../experiments/acoustic/eac3_halving_and_allpass.py).
+
+**The halving.** There are two bounds on the resonances. The PASSIVE (trivial)
+bound is FREE from the Euler product: function field $|\alpha_i| \le q$ (exponent
+1); zeta has no zeros in $\mathrm{Re}>1$ (abscissa 1), exactly because
+$Z=-\zeta'/\zeta=\sum\Lambda(n)n^{-s}$ is a convergent positive-comb Dirichlet
+series there. The RH bound is the SHARPENED one: $|\alpha_i|=\sqrt q$ (exponent
+$\tfrac12$); $\mathrm{Re}=\tfrac12$ (abscissa $\tfrac12$). So **RH is precisely the
+statement that the passive bound is HALVED**: exponent $1\to\tfrac12$,
+$q\to\sqrt q$, abscissa $1\to\tfrac12$. In the function field the halving is a
+theorem (the Hodge index on $C\times C$); verified on 9 curves the realized
+exponent $\log|\alpha|/\log q = 0.50000$ exactly while passivity alone only gives
+$\le 1$. **Ingredient (iii), restated sharply: the energy form whose signature
+halves the free passive exponent $1\to\tfrac12$.** This also explains the analytic
+ceiling: zero-free-region methods chip the abscissa from 1 toward $\tfrac12$
+analytically and stall at the Vinogradov-Korobov $2/3$ exponent, because the
+halving is geometric (a signature), not analytic.
+
+**On-shell vs off-shell (a clarification that prevents a trap).** The zeros-side
+Weil Gram $W(f)=\sum_\rho \hat f(\rho)^2$ is positive-DEFINITE under RH (signature
+$(K,0)$, since the $\hat f(\rho)$ are real; e3c2/e3r). The function-field
+intersection form that PRODUCES the bound is LORENTZIAN $(1,n-1)$ (e2g). These are
+different forms. The acoustic reading names the difference: the Weil Gram is the
+ON-SHELL, lossless spectral form (it already sums over the true zeros, hence
+circular); ingredient (iii) is the OFF-SHELL energy form on arithmetic divisor
+classes, Lorentzian, from whose signature the zeros emerge. lossless-vs-passive
+maps onto on-shell-definite-vs-off-shell-Lorentzian. Do not mistake the (definite,
+circular) Weil Gram for the (Lorentzian, productive) polarization.
+
+**The all-pass mechanism (why passivity is necessary but not sufficient).** The
+functional equation makes the completed $L$ a lossless all-pass / para-unitary
+system, for BOTH zeta and D-H. An off-line zero $\rho$ carries a full orbit
+$\{\rho,1-\rho,\bar\rho,1-\bar\rho\}$: a genuine 4-point all-pass section (mirror
+pairs straddling the line). An on-line zero degenerates ($1-\rho=\bar\rho$) to a
+2-point pair on the axis. So **RH $\iff$ every all-pass section is degenerate
+(pinned to the axis)**. Verified: a zeta zero gives a degenerate 2-point orbit;
+D-H's $\rho\approx 0.808+85.7i$ gives a genuine 4-point quad. Passivity forbids
+sections only in $\mathrm{Re}>1$; the strip $\tfrac12<\beta<1$ is the gap (iii)
+must close. D-H's active impedance (signed comb) permits the quad; zeta's passive
+impedance does not in $\mathrm{Re}>1$, but passivity alone cannot reach
+$\mathrm{Re}=\tfrac12$ - that is the halving form's job.
+
 ## Honest scope (what is new, what is not)
 
 - **Not new to the literature.** The basic dictionary (zeros = canonical-system
