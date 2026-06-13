@@ -160,6 +160,46 @@ must close. D-H's active impedance (signed comb) permits the quad; zeta's passiv
 impedance does not in $\mathrm{Re}>1$, but passivity alone cannot reach
 $\mathrm{Re}=\tfrac12$ - that is the halving form's job.
 
+## Step 4 (EAC.4): where the halving comes from - Poincare duality
+
+[`eac4_arithmetic_diagonal.py`](../../experiments/acoustic/eac4_arithmetic_diagonal.py).
+EAC.3 said (iii) must halve the bound; EAC.4 reverse-engineers *why a halving is even
+possible*. The answer: **Poincare duality places the self-dual middle weight at the
+geometric mean of the two extremes.** Frobenius acts on a curve's cohomology with
+
+$$|H^0| = 1 = q^0, \qquad |H^1| = q^{1/2}, \qquad |H^2| = q = q^1,$$
+
+and the RH modulus $q^{1/2}$ is *exactly* the geometric mean $\sqrt{|H^0|\cdot|H^2|}
+= \sqrt{1\cdot q}$ (verified on every curve). Poincare duality $H^i\cong
+H^{2-i}(-1)$ pairs $H^0$ with $H^2$ (the two poles of $\zeta_C$) and makes $H^1$
+*self-dual*, hence forced onto the self-dual locus $|\alpha|=\sqrt q$ = the critical
+line. **The halving is Poincare duality + self-duality of the middle weight, not a
+separate positivity.** Equivalently in the primitive intersection form: $|\Delta_0^2|
+= 2g$ is $q$-free (the diagonal / weight-0 leg) while $|\Gamma_0^2| = 2gq$ carries
+the $q$ (the Frobenius / prime leg); the bound $2g\sqrt q$ is their geometric mean,
+and the exponent $\tfrac12$ is the average of the leg weights $\{0,1\}$.
+
+**Arithmetic.** The functional equation $\xi(s)=\xi(1-s)$ IS this Poincare duality:
+it pairs the pole at $s=1$ (the weight-2 / $H^2$ leg, residue 1) with the structure
+at $s=0$ (the weight-0 / $H^0$ leg), and its fixed locus is $\mathrm{Re}=\tfrac12$ -
+the self-dual middle where the zeros (the $H^1$ analogue) must live (FE verified
+numerically, residual $\sim 10^{-32}$). zeta HAS the duality (FE) and the passive
+medium (Euler product, EAC.1). **The missing ingredient (iii) is the weight-graded
+cohomology whose self-dual middle is forced to $\mathrm{Re}=\tfrac12$** -
+equivalently, the statement that the arithmetic "$\Delta^2$" (diagonal
+self-intersection) is the $q$-free, weight-0 leg. This is exactly Deninger's missing
+motivic cohomology, now with a one-line job description: **supply the weight
+filtration whose self-dual middle is $\mathrm{Re}=\tfrac12$.** D-H has no pole (it is
+entire) = no $H^2$ leg = no geometric mean can form: the geometric face of "D-H has
+no surface, no weight ladder, no halving."
+
+The reverse-engineering has thus converged, from the acoustic side, onto the known
+Deninger/motivic-weight target - but via a path that simultaneously explains the
+$2/3$ analytic ceiling (the halving is geometric, not analytic), the D-H discipline
+(no weight ladder without an Euler product), and marginal positivity (reciprocity
+saturates passivity). That convergence is a confirmation of the target, not a new
+construction of it.
+
 ## Honest scope (what is new, what is not)
 
 - **Not new to the literature.** The basic dictionary (zeros = canonical-system
