@@ -220,3 +220,26 @@ ORDER BY n_candidates DESC, r.resolves_to;
 -- PROP-carries-trace; NODE-debranges-too-strong / PROP-rh-equivalent); 2 on the
 -- K1 wall; 2 pre-realization. Collapse count (9) dominates; off-to-side count (4
 -- candidates over 3 distinct nodes) brackets but does not dissolve the gap.
+
+-- ===========================================================================
+-- Q10. VALUE RANKING  (Reduction Engine increment 3)
+-- Rank the frontier by DEPTH in the load-bearing graph and PROVEN support
+-- (load_in_degree), never by asserted support. M4 (AX-polarization) ranks high
+-- by depth; ranking it by annotation_in_degree instead would be the circular
+-- "all roads converge" count the engine refuses. asserted_minus_proven rides
+-- alongside as a diagnostic, never a score to maximize.
+-- ===========================================================================
+SELECT id, layer, milestone, rh_depth, load_in_degree, annotation_in_degree,
+       asserted_minus_proven
+FROM frontier_ranked;
+
+-- ===========================================================================
+-- Q11. ASSERTED-VS-PROVEN GAP  (the engine's headline diagnostic)
+-- For every node with support, the gap between asserted (annotation) and proven
+-- (load-bearing) in-degree. TGT-m4-hodge-standard tops it: 17 CAND-* edges
+-- ASSERT convergence onto it; only 1 is a load-bearing reduction (gap 16). A
+-- large gap = much believed, little reduced, and names the edges to go prove.
+-- ===========================================================================
+SELECT id, layer, milestone, annotation_in_degree, load_in_degree, gap
+FROM asserted_vs_proven
+WHERE gap > 0;

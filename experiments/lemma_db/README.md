@@ -16,7 +16,8 @@ for D-H. The database lets you prove that property holds, not just assert it.
 
 | File | Role |
 |------|------|
-| `schema.sql` | DuckDB DDL: tables `node`, `edge`, `obstruction_link`; views `frontier`, `rh_transitive_deps`, `dh_audit`, `open_signature_nodes`, `dischargeable_axioms`, `load_edge`. |
+| `schema.sql` | DuckDB DDL: tables `node`, `edge`, `obstruction_link`; views `frontier`, `rh_transitive_deps`, `dh_audit`, `open_signature_nodes`, `dischargeable_axioms`, `load_edge`, and the Reduction Engine value-function views `node_support`, `frontier_ranked`, `asserted_vs_proven`. |
+| `oracle.py`, `oracle_spec.md`, `test_oracle.py` | The Reduction Engine executable falsifier oracle (increment 1): the structured `Candidate` schema and four cheap-first disqualifiers (level, K1, computed `dh_buildable`, flip test). Kills or parks, never validates. See [`docs/03_research/reduction_engine.md`](../../docs/03_research/reduction_engine.md). |
 | `seed_lemmas.json` | The graph itself: 60 nodes, 96 edges. Single sink `TGT-rh`. Reconciled with the adversary audit (see below). The 36-node core (the RH proof skeleton) plus the 2026-06-05 candidate import: the four gap-property conjuncts (`PROP-global`, `PROP-carries-trace`, `PROP-rh-equivalent`, `PROP-noncircular`) and the 17 `CAND-*` Spec(Z) cohomology candidates wired by annotation edges to the node each resolves onto. |
 | `build_db.py` | Idempotent loader (duckdb + stdlib only). Validates the DAG is acyclic, checks the single-sink property, loads the seed, and prints the frontier + RH-dependency count + D-H audit. |
 | `queries.sql` | Named, commented example queries (frontier, RH transitive deps, open signature nodes, D-H audit, dischargeable axioms, K1 guard, milestone ladder). |
@@ -92,7 +93,7 @@ This split is the load-bearing distinction. The whole D-H firewall rests on it:
 the realization spine reaches `TGT-rh` only through annotation edges, so it is a
 dead end with respect to the proof obligation.
 
-## The five queries this DB makes cheap
+## The queries this DB makes cheap
 
 1. **Frontier** (`frontier` view) - open nodes all of whose load-bearing
    dependencies are proven. Where work can start now. The deep prize is
@@ -112,6 +113,14 @@ dead end with respect to the proof obligation.
    proven in a model (`proven_ff` / `proven_char0`) but open over Z, joined to
    their proven function-field face by a `specializes` edge. The M1 -> M4/M5
    lift templates.
+6. **Value ranking** (`frontier_ranked` view, query Q10) - the frontier ordered
+   by DEPTH and PROVEN support (`load_in_degree`), never asserted support. M4
+   ranks high by depth, not by the 17 annotation edges (that would be circular).
+7. **Asserted-vs-proven gap** (`asserted_vs_proven` view, query Q11) - the
+   engine's honesty diagnostic. For each node, annotation in-degree minus
+   load-bearing in-degree. `TGT-m4-hodge-standard` tops it at gap 16 (17
+   annotation, 1 load-bearing): the convergence is much believed, little reduced,
+   and the gap names exactly which edges to go prove.
 
 ## Adversary reconciliation (applied to the seed)
 

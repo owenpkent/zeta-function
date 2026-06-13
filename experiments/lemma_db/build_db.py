@@ -286,6 +286,17 @@ def report(con: duckdb.DuckDBPyConnection) -> dict[str, Any]:
     open_sig = con.execute("SELECT count(*) FROM open_signature_nodes").fetchone()[0]
     dischargeable = con.execute("SELECT count(*) FROM dischargeable_axioms").fetchone()[0]
 
+    # Value function (increment 3): rank the frontier by depth + PROVEN support,
+    # and the asserted-vs-proven gap diagnostic.
+    frontier_ranked = con.execute(
+        "SELECT id, layer, coalesce(milestone,''), rh_depth, load_in_degree, "
+        "annotation_in_degree, asserted_minus_proven FROM frontier_ranked LIMIT 8"
+    ).fetchall()
+    gap_rows = con.execute(
+        "SELECT id, layer, coalesce(milestone,''), annotation_in_degree, "
+        "load_in_degree, gap FROM asserted_vs_proven WHERE gap > 0 LIMIT 8"
+    ).fetchall()
+
     print("=" * 70)
     print("RH LEMMA GRAPH  (experiments/lemma_db)")
     print("=" * 70)
@@ -302,6 +313,19 @@ def report(con: duckdb.DuckDBPyConnection) -> dict[str, Any]:
     print()
     print(f"OPEN SIGNATURE-LAYER nodes (the real work): {open_sig}")
     print(f"DISCHARGEABLE AXIOMS (proven in a model, open over Z): {dischargeable}")
+    print()
+    print("VALUE RANKING (frontier by DEPTH, then PROVEN support; top 8):")
+    print(_fmt_table(
+        frontier_ranked,
+        ["id", "layer", "milestone", "rh_depth", "load_in", "ann_in", "asserted-proven"],
+    ))
+    print()
+    print("ASSERTED-VS-PROVEN GAP (annotation in-degree minus load-bearing; top 8):")
+    print("  large gap = much believed, little reduced; points at edges to go prove.")
+    print(_fmt_table(
+        gap_rows,
+        ["id", "layer", "milestone", "ann_in", "load_in", "gap"],
+    ))
     print()
     if dh_violations:
         print(f"D-H AUDIT: {len(dh_violations)} VIOLATION(S) "

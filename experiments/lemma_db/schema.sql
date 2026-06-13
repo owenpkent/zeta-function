@@ -18,6 +18,9 @@
 -- and the layer column (foundation / realization / signature / bridge).
 
 -- Idempotent (re)build: drop in dependency order (views before tables).
+DROP VIEW IF EXISTS frontier_ranked;
+DROP VIEW IF EXISTS asserted_vs_proven;
+DROP VIEW IF EXISTS node_support;
 DROP VIEW IF EXISTS dischargeable_axioms;
 DROP VIEW IF EXISTS open_signature_nodes;
 DROP VIEW IF EXISTS dh_audit;
@@ -228,3 +231,61 @@ JOIN node ff      ON ff.id      = sp.to_id
 WHERE sp.kind = 'specializes'
   AND open_ax.status IN ('open','conjectured','numerical_only')
   AND ff.status IN ('proven_ff','proven_char0');
+
+-- ---------------------------------------------------------------------------
+-- node_support: per-node support metrics, the substrate for the value function
+-- and the asserted-vs-proven gap (Reduction Engine increment 3).
+--   load_in_degree       = LOAD-BEARING dependents: how many nodes logically
+--                          REQUIRE this one. This is PROVEN support.
+--   annotation_in_degree = non-load (annotation) edges pointing at it
+--                          (instantiates / motivates / contradicts / ...). This
+--                          is ASSERTED support: it carries no proof obligation.
+--   rh_depth             = shortest load-bearing distance from TGT-rh (0 if off
+--                          the RH load path).
+-- The convergence onto the signature is almost entirely ASSERTED, and the gap
+-- between the two in-degrees is the engine's honesty diagnostic.
+-- ---------------------------------------------------------------------------
+CREATE VIEW node_support AS
+SELECT
+    n.id, n.kind, n.name, n.status, n.layer, n.milestone, n.dh_buildable,
+    COALESCE((SELECT r.depth FROM rh_transitive_deps r WHERE r.id = n.id), 0) AS rh_depth,
+    (SELECT COUNT(*) FROM load_edge e WHERE e.to_id = n.id) AS load_in_degree,
+    (SELECT COUNT(*) FROM edge e
+       WHERE e.to_id = n.id
+         AND e.kind NOT IN ('depends_on','specializes')) AS annotation_in_degree
+FROM node n;
+
+-- ---------------------------------------------------------------------------
+-- frontier_ranked: the value function. Rank the live edge of the search by
+-- DEPTH in the load-bearing graph and PROVEN support, never asserted support.
+-- M4 (AX-polarization) dominates by DEPTH: its load_in_degree is small and its
+-- annotation_in_degree is large, and ranking by the latter would be the
+-- circular "all roads converge" count the engine refuses. asserted_minus_proven
+-- rides alongside as the honesty diagnostic, never as a score to maximize.
+-- ---------------------------------------------------------------------------
+CREATE VIEW frontier_ranked AS
+SELECT
+    s.id, s.kind, s.name, s.status, s.layer, s.milestone, s.dh_buildable,
+    s.rh_depth, s.load_in_degree, s.annotation_in_degree,
+    (s.annotation_in_degree - s.load_in_degree) AS asserted_minus_proven
+FROM node_support s
+JOIN frontier f ON f.id = s.id
+ORDER BY s.rh_depth DESC, s.load_in_degree DESC, asserted_minus_proven DESC, s.id;
+
+-- ---------------------------------------------------------------------------
+-- asserted_vs_proven: the engine's headline diagnostic. For every node carrying
+-- any support, the gap between asserted (annotation) and proven (load-bearing)
+-- in-degree. A large gap = "much believed, little reduced." The deepest open
+-- kernel tops this list: many CAND-* instantiation edges ASSERT that candidates
+-- converge on it, while almost none is a PROVEN reduction. The gap points at
+-- exactly which annotation edges to go prove. It is a diagnostic to read, never
+-- a loss to minimize (minimizing it by declining to survey is gaming, not work).
+-- ---------------------------------------------------------------------------
+CREATE VIEW asserted_vs_proven AS
+SELECT
+    id, kind, name, status, layer, milestone,
+    annotation_in_degree, load_in_degree,
+    (annotation_in_degree - load_in_degree) AS gap
+FROM node_support
+WHERE annotation_in_degree > 0 OR load_in_degree > 0
+ORDER BY gap DESC, annotation_in_degree DESC, id;
