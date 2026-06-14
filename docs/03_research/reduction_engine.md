@@ -4,7 +4,7 @@
 >
 > This document makes explicit the meta-search the project has been running implicitly across the Davenport-Heilbronn discipline, the K1-K4 kill criteria, the scorecards, the convergence finding ([`all_roads_to_the_signature.md`](all_roads_to_the_signature.md)), and the DuckDB lemma graph ([`experiments/lemma_db/`](../../experiments/lemma_db/)). Most of the state object already exists. The engine is what closes the loop around it.
 >
-> **Relation to siblings.** [`proof_program.md`](proof_program.md) says *what to build* (Architecture 2, the Hodge index slot) on a multi-decade timeline. This document says *how to search*: the procedure that decides, at each step, which candidate to ingest, which to kill, and where the kernel currently sits. The proof program is the destination; the engine is the navigation.
+> **Relation to siblings.** [`proof_program.md`](proof_program.md) says *what to build* (Architecture 2, the Hodge index slot) on a multi-decade timeline. This document says *how to search*: the procedure that decides, at each step, which candidate to ingest, which to kill, and where the kernel currently sits. The proof program is the destination; the engine is the navigation. This engine is the **evaluate** half of a math-iteration loop; its companion [`generative_engine.md`](generative_engine.md) designs the **generate** half (move-library + transfer-search + quality-diversity), built around the value-signal blind spot. This disposes; that proposes.
 
 Status: 2026-06-13. First spec. Sections 7 and 8 are the honest accounting of what is built versus what is missing.
 
