@@ -32,11 +32,13 @@ quadratic X^2 - tX + q gives alpha * conj(alpha) = q, and alpha * conj(alpha) = 
 -/
 
 import ZetaRH.HodgeIndex
+import ZetaRH.IsogenyDegree
 import Mathlib.Data.Complex.Basic
 
 namespace ZetaRH.FunctionFieldRH
 
 open ZetaRH.HodgeIndex.IntersectionSignature
+open ZetaRH.IsogenyDegree
 
 /-! ## M-0 (lever B roadmap): the discriminant bridge lemma
 
@@ -155,5 +157,43 @@ theorem functionfield_RH_elliptic_of_hodge {q t : ℝ} (_hq : 0 < q)
 theorem functionfield_RH_elliptic (C : EllipticFrobeniusData)
     {α : ℂ} (hroot : α ^ 2 - (C.t : ℂ) * α + (C.q : ℂ) = 0) : Complex.normSq α = C.q :=
   functionfield_RH_elliptic_of_hodge C.hq (negDef_of_curve C) hroot
+
+/-! ## M-1 (lever B roadmap): the curve datum from the genuine degree-positivity input
+
+    The structure `EllipticFrobeniusData` carries the Hasse bound `t² < 4q` as a raw
+    numeric field. M-1 (see `IsogenyDegree.lean` and `docs/03_research/lever_b_function_field_plan.md`)
+    DERIVES that bound from the true geometric source: the Frobenius degree form is
+    non-negative on the endomorphism lattice ("every isogeny has non-negative degree").
+    The constructor below builds the curve datum from that input over a prime field, so the
+    whole chain to RH now flows from `deg ≥ 0`, not from an assumed inequality. The single
+    remaining geometric gap is that `deg` really IS this non-negative quadratic form for a
+    real curve (the isogeny/degree API Mathlib lacks), now isolated as the hypothesis `hdeg`. -/
+
+/-- **M-1 constructor (prime field).** Build the curve datum from the genuine Hasse input:
+    `p` prime, integral trace `tz`, and the degree form `m² + tz·m·n + p·n²` non-negative on
+    the lattice `ℤ·1 ⊕ ℤ·φ`. The strict bound `tz² < 4p` is produced sorry-free by the Hasse
+    bridge (`disc_nonpos_of_int_nonneg`) plus the boundary exclusion (`hasse_strict_of_prime`,
+    using that `4p` is never a perfect square for prime `p`). -/
+def EllipticFrobeniusData.ofDegreeNonneg {p : ℕ} {tz : ℤ} (hp : p.Prime)
+    (hdeg : ∀ m n : ℤ, 0 ≤ degForm (tz : ℝ) (p : ℝ) (m : ℝ) (n : ℝ)) :
+    EllipticFrobeniusData where
+  q := (p : ℝ)
+  t := (tz : ℝ)
+  hq := by exact_mod_cast hp.pos
+  hodge_index := hasse_strict_of_prime hp (disc_nonpos_of_int_nonneg hdeg)
+
+/-- **Function-field RH for an elliptic curve over a prime field, from the genuine geometric
+    input (SORRY-FREE).** If `p` is prime, the trace `tz` is integral, and every isogeny
+    `m·1 + n·φ` has non-negative degree (`degForm ≥ 0` on the lattice), then any Frobenius
+    root `α` of `X² − tz·X + p` has `|α|² = p`: the curve's zeta zeros lie on `Re = 1/2`.
+
+    This is the M-1 endpoint: the Hasse bound is now a THEOREM (derived from degree
+    positivity by `disc_nonpos_of_int_nonneg` + `hasse_strict_of_prime`), not a hypothesis.
+    The only unformalized input is `hdeg` (that `deg` is this non-negative quadratic form for
+    a real curve), the irreducible scheme-theoretic content of M-1 that Mathlib still lacks. -/
+theorem functionfield_RH_elliptic_of_degree {p : ℕ} {tz : ℤ} (hp : p.Prime)
+    (hdeg : ∀ m n : ℤ, 0 ≤ degForm (tz : ℝ) (p : ℝ) (m : ℝ) (n : ℝ)) {α : ℂ}
+    (hroot : α ^ 2 - ((tz : ℝ) : ℂ) * α + ((p : ℝ) : ℂ) = 0) : Complex.normSq α = (p : ℝ) :=
+  functionfield_RH_elliptic (EllipticFrobeniusData.ofDegreeNonneg hp hdeg) hroot
 
 end ZetaRH.FunctionFieldRH
