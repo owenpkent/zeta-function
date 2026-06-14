@@ -18,11 +18,14 @@ everything except the one geometric step that Mathlib lacks. The chain:
                and a non-real root has |alpha|^2 = q              -- `eigenvalue_modulus`, PROVED here
   (RH)         |alpha| = sqrt(q): the curve's zeta zeros lie on |s| = q^{-1/2}, i.e. Re = 1/2.
 
-The implication "Hodge index => RH for the curve" is therefore SORRY-FREE here
-(`functionfield_RH_elliptic_of_hodge`); the only `sorry` is the geometric input,
-isolated as `hodge_index_curve_elliptic`. That sorry is the lever-B gap: Mathlib has
-no algebraic-curve intersection theory, so the Castelnuovo-Severi step is absent (it is
-a theorem in the literature, ~medium effort to formalize once curves/Chow groups exist).
+This file is now FULLY SORRY-FREE. The chain "Hodge index => RH for the curve" is proved
+(`functionfield_RH_elliptic_of_hodge`, `functionfield_RH_elliptic`); the one geometric
+input (Castelnuovo-Severi, `t^2 < 4q`) is carried as an explicit hypothesis field of the
+`EllipticFrobeniusData` structure, NOT a `sorry`. So the function-field RH chain is a
+sorry-free CONDITIONAL theorem whose single assumption is the curve-intersection geometry
+Mathlib lacks (a theorem in the literature, ~medium effort to formalize once curves/Chow
+groups exist). This also repairs the previous `hodge_index_curve_elliptic`, which admitted
+a FALSE proposition (`NegDef 1 q t` for all `q,t`, false when `t^2 ≥ 4q`) via `sorry`.
 
 The eigenvalue extraction proved here is the new sorry-free link: Vieta on the real
 quadratic X^2 - tX + q gives alpha * conj(alpha) = q, and alpha * conj(alpha) = |alpha|^2.
@@ -75,18 +78,29 @@ theorem root_nonreal (t q : ℝ) (α : ℂ)
     exact_mod_cast hc
   nlinarith [sq_nonneg (t - 2 * α.re), hHW, hr]
 
-/-- **The one open geometric step (SORRY = the lever-B gap).** For a smooth projective
-    genus-1 curve `C/F_q` with Frobenius trace `t`, the primitive intersection form on
-    `C × C` is negative-definite (Castelnuovo-Severi / Weil's Hodge index theorem).
+/-- The geometric input for a genus-1 curve, packaged honestly. The Castelnuovo-Severi
+    / Hodge-index inequality `t^2 < 4q` (equivalently the primitive intersection form on
+    `C × C` is negative-definite, equivalently `|t| < 2 sqrt q`) is a THEOREM over a real
+    curve, but Mathlib has no algebraic-curve intersection theory to derive it from the
+    curve's definition. So it is carried here as an explicit hypothesis field `hodge_index`
+    -- the lever-B gap, made honest: a hypothesis, not a `sorry`.
 
-    This is a theorem in the literature, but Mathlib has no algebraic-curve intersection
-    theory, so it cannot yet be stated against a real curve, let alone proved. The
-    `hcurve` hypothesis is a placeholder for the curve data. This `sorry` is exactly
-    where the function-field formalization stops; filling it (after building curves /
-    Chow groups in Lean) closes the chain. -/
-theorem hodge_index_curve_elliptic (q t : ℝ) (hq : 0 < q) (hcurve : True) :
-    NegDef 1 q t := by
-  sorry
+    (This repairs the previous `hodge_index_curve_elliptic`, which stated `NegDef 1 q t`
+    behind a vacuous `True` hypothesis -- a FALSE proposition for `t^2 ≥ 4q`, admitted by
+    `sorry`. The constraint must live in the data, and it does, as `hodge_index`.) -/
+structure EllipticFrobeniusData where
+  q : ℝ
+  t : ℝ
+  hq : 0 < q
+  /-- Castelnuovo-Severi / the Hodge index for the curve: the one geometric input (#FF-geom). -/
+  hodge_index : t ^ 2 < 4 * q
+
+/-- The Hodge-index input gives negative-definiteness of the primitive form. SORRY-FREE:
+    the geometric content is the explicit `hodge_index` field; the keystone #2G-1 does the
+    rest. -/
+theorem negDef_of_curve (C : EllipticFrobeniusData) : NegDef 1 C.q C.t := by
+  have h : C.t ^ 2 < 4 * 1 ^ 2 * C.q := by nlinarith [C.hodge_index]
+  exact (negDef_iff_hasseWeil (by norm_num)).mpr h
 
 /-- **Hodge index => RH for the curve (SORRY-FREE implication).** Given the geometric
     Hodge-index input (`NegDef`, i.e. the primitive form is negative-definite) and a
@@ -100,12 +114,14 @@ theorem functionfield_RH_elliptic_of_hodge {q t : ℝ} (_hq : 0 < q)
   have hHW' : t ^ 2 < 4 * q := by nlinarith [hHW]
   exact eigenvalue_modulus t q α hroot (root_nonreal t q α hroot hHW')
 
-/-- **The full function-field RH chain (genus 1).** Combining the geometric step (the
-    one `sorry`) with the proved implication: a Frobenius root of a genus-1 curve over
-    `F_q` has `|α|^2 = q`. The single `sorry` is `hodge_index_curve_elliptic` (the
-    Castelnuovo-Severi geometry); everything downstream of it is proved. -/
-theorem functionfield_RH_elliptic (q t : ℝ) (hq : 0 < q) (hcurve : True)
-    {α : ℂ} (hroot : α ^ 2 - (t : ℂ) * α + (q : ℂ) = 0) : Complex.normSq α = q :=
-  functionfield_RH_elliptic_of_hodge hq (hodge_index_curve_elliptic q t hq hcurve) hroot
+/-- **The full function-field RH chain (genus 1), SORRY-FREE modulo one explicit
+    geometric hypothesis.** Given the curve datum `C` (which carries the Castelnuovo-Severi
+    inequality as its `hodge_index` field) and a Frobenius root `α`, the modulus is `√q`.
+    The entire chain -- the keystone #2G-1, the eigenvalue extraction, and this assembly --
+    is proved; the single unformalized input is `C.hodge_index` (the curve-intersection
+    geometry Mathlib lacks), now an explicit, true hypothesis rather than a `sorry`. -/
+theorem functionfield_RH_elliptic (C : EllipticFrobeniusData)
+    {α : ℂ} (hroot : α ^ 2 - (C.t : ℂ) * α + (C.q : ℂ) = 0) : Complex.normSq α = C.q :=
+  functionfield_RH_elliptic_of_hodge C.hq (negDef_of_curve C) hroot
 
 end ZetaRH.FunctionFieldRH
