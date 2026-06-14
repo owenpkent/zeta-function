@@ -38,6 +38,38 @@ namespace ZetaRH.FunctionFieldRH
 
 open ZetaRH.HodgeIndex.IntersectionSignature
 
+/-! ## M-0 (lever B roadmap): the discriminant bridge lemma
+
+    See `docs/03_research/lever_b_function_field_plan.md`. In the elementary proof of the
+    Hasse bound, "every isogeny has non-negative degree" gives
+    `deg(m + n φ) = m^2 + m n t + n^2 q ≥ 0`, a positive-(semi)definite binary quadratic
+    form, and a positive-(semi)definite form has non-positive discriminant `t^2 ≤ 4q`.
+    These two lemmas are that bridge. They are the positive mirror of the keystone #2G-1
+    (`negDef_iff_hasseWeil`). The remaining glue for milestone M-3 -- the form is `≥ 0`
+    for all *real* m,n, obtained from `≥ 0` for integer m,n by homogeneity and density --
+    is not done here; M-0 is just the discriminant step. -/
+
+/-- A positive-semidefinite real binary quadratic form `m^2 + t·m·n + q·n^2 ≥ 0` (for all
+    real `m, n`) has non-positive discriminant: `t^2 ≤ 4q`. Proof: evaluate at
+    `(m, n) = (-t/2, 1)`, where the form equals `q - t^2/4`. -/
+theorem disc_nonpos_of_posSemidef {t q : ℝ}
+    (h : ∀ m n : ℝ, 0 ≤ m ^ 2 + t * m * n + q * n ^ 2) : t ^ 2 ≤ 4 * q := by
+  have hmin := h (-t / 2) 1
+  nlinarith [hmin]
+
+/-- A positive-definite real binary quadratic form (`> 0` off the origin) has negative
+    discriminant: `t^2 < 4q` (the strict Hasse bound). This is the form M-0 the chain
+    needs: the Frobenius degree form is positive-DEFINITE (`deg ψ = 0 ↔ ψ = 0`), and the
+    strict bound feeds `t^2 < 4q ⇒ non-real roots ⇒ |α| = √q`. -/
+theorem disc_neg_of_posDef {t q : ℝ}
+    (h : ∀ m n : ℝ, (m, n) ≠ (0, 0) → 0 < m ^ 2 + t * m * n + q * n ^ 2) :
+    t ^ 2 < 4 * q := by
+  have hne : ((-t / 2 : ℝ), (1 : ℝ)) ≠ (0, 0) := by
+    intro hc
+    exact one_ne_zero (Prod.ext_iff.mp hc).2
+  have hmin := h (-t / 2) 1 hne
+  nlinarith [hmin]
+
 /-- **Eigenvalue extraction (PROVED).** A genuinely complex (non-real) root `α` of the
     Frobenius characteristic polynomial `X^2 - tX + q` (real `t, q`) has `|α|^2 = q`.
 
