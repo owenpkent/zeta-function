@@ -74,6 +74,16 @@ Each face is missing exactly what the other has: AHK has the indefinite combinat
 - **9A.4** State (P5) over $\mathbb{Z}$ and verify the off-line-flip test fires on $Q_\ell$ (the K1 sanity check, #96). (~5 pp.)
 - **9A.5 [OPEN]** (P6): prove Hodge-Riemann for the decorated arithmetic lattice. This is M4. Not scheduled as a finite milestone; it is the open kernel.
 
+## 6A. The 9A.1-9A.3 attempt (2026-06-14): the gap narrows to P3
+
+A first instantiation run ([`../../../experiments/arithmetic_geometric/e2uu_ahk_lattice_attempt.py`](../../../experiments/arithmetic_geometric/e2uu_ahk_lattice_attempt.py), LEARNINGS #105) executed 9A.1-9A.3 on the smallest case, and the result sharpens this spec:
+
+- **9A.3 verified (FF).** On NS($C\times C$), genus 1: the degree map gives $\Gamma\cdot\Delta = \#C(\mathbb{F}_q) = q+1-t$ (P3 holds, carries $t$) and the primitive form is negative-definite iff $|t|<2\sqrt q$ (P6 = the Weil bound). The spec is right where M4 is a theorem.
+- **9A.1-9A.2 done (abstract lattice).** The Boolean lattice $B_2$ on $\{2,3\}$ has P1 (the rank-generating polynomial $(1+x)^2$ factors over the atoms) and P2 (Whitney $(1,2,1)$, rank-symmetric). P4 and P5 hold by AHK + #48 -- **but P5 is unconditional, i.e. t-blind**, and the degree map is a combinatorial integer with no $t$-slot: **P3 fails.**
+- **The gap is P3.** The bare combinatorial lattice already supplies P1, P2, P4, P5; the single missing property is the **t-carrying degree map** (P3), and P3 is what makes P6 (the primitive polarization) t-dependent and RH-meaningful. **P5 is demoted:** the $(1,n-1)$ signature is free and t-blind (#48), not the discriminator; the earlier P5 wording ("the *primitive* form is indefinite $(1,n-1)$") is corrected -- the $(1,n-1)$ is the *full* form, the *primitive* part is negative-definite and IS the polarization (the carries-$t$-not-definite-vs-indefinite refinement, #101/e2qq).
+
+So the BUILDER target narrows from "build a 6-property object" to **"build a graded prime-lattice whose degree map yields $q+1-t$"**; everything else is combinatorial. P3 (over $\mathbb{Z}$: an arithmetic intersection theory whose Lefschetz numbers are the local Frobenius traces) is the AHK face of the M4 coupling (#104). This is the one place to spend construction effort; do not work P1/P2/P4/P5.
+
 ## 7. Honest scope and probability
 
 The probability that (P6) falls easily is low (single digits), the same order as Direction 8.A: (P6) IS the arithmetic Hodge standard conjecture, and no road has produced it. What this spec changes is the **shape of the remaining work**, and that is real progress in the project's sense (a coordinate that narrows the search):
