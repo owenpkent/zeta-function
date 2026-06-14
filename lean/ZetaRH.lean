@@ -12,6 +12,7 @@ import ZetaRH.FrobeniusAlgebra
 import ZetaRH.PrismaticCohomology
 import ZetaRH.PrismaticFoliation
 import ZetaRH.HodgeIndex
+import ZetaRH.FunctionFieldRH
 import ZetaRH.EulerSenLinearAlgebra
 import ZetaRH.SenDefiniteObstruction
 import ZetaRH.TraceBlindObstruction
