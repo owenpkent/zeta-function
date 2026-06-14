@@ -79,6 +79,8 @@ The engines matched theorem *statements* (6b transfer-search) and converged. The
 
 The honest reading of "breadth is the AI edge" that this produced: it is not the romantic "the machine finds the secret foreign bridge." For RH breadth is three things, a convergence-detector (N distant fields collapsing to one node), a corpus-completer (the sweep surfaced Boucksom-Jonsson, absent from the 6b corpus, then killed it as valuative at a single Berkovich place and archimedean-blind; now recorded in `transfer_search.py` with `role='killed'`), and a spec-sharpener. The one retained positive coordinate is **AHK**, the unique K1-clean witness that a Hodge-index signature is manufacturable with no variety; the sweep's product is the sharpened BUILDER target [`research_directions/09A_ahk_arithmetic_lattice.md`](research_directions/09A_ahk_arithmetic_lattice.md) (a $t$-carrying submodular Lefschetz element + an indefinite $(1,n-1)$ primitive form on a finite prime-lattice, positivity = M4 left open). This is the loop doing what section 5 said remained: it did not build M4, it walked the transfer shortlist one level deeper and handed the construction work a strictly sharper, K1-clean specification. The still-unspent axis is a regime-two frame-audit (collapse two M4 conjuncts at once); do not run a sixth from-below engine, the off-line-flip and $t$-blindness walls predict the kill.
 
+The turn after that (2026-06-14, [`optimizing_rh_for_ai.md`](optimizing_rh_for_ai.md), LEARNINGS #98) addressed the loop's own blind spot directly: the reason the engines map-to-the-doorway-but-do-not-walk-through is that there is no value signal at M4. Two value-function levers shipped. The evaluate stack gained a new positive organ, the **proven-case shadow battery** (increment 6f, [`shadow_battery.py`](../../experiments/lemma_db/shadow_battery.py)): it generalizes the function-field shadow (6d) from one mirror into five graded proven-case checkpoints, turning "no gradient at M4" into "k of 5 proven cases plus the D-H firewall," a signal the generate-evaluate loop can climb (the positive mirror of the oracle's negative filter). And the frame-audit ran and converged a fifth time, isolating the blind spot P5 in the M4 property graph. The loop now has a graded value function; what it still lacks, by the marginal-positivity finding, is a value signal AT the kernel, which only the Lean floor (lever B) can eventually supply.
+
 ## 7. Run the artifacts
 
 ```
@@ -88,6 +90,7 @@ python -m experiments.lemma_db.fq_shadow         # the function-field positive c
 python -m experiments.lemma_db.generator         # the move-library: propose and prune
 python -m experiments.lemma_db.branch_specs      # the forcing questions off the gap + the M4 spec
 python -m experiments.lemma_db.transfer_search   # the bridge-finder: the transfer shortlist
+python -m experiments.lemma_db.shadow_battery     # 6f: the proven-case value-function battery
 python experiments/lemma_db/build_db.py          # the graph + the value ranking + the asserted-vs-proven gap
 ```
 
