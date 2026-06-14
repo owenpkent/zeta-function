@@ -73,7 +73,13 @@ The odds are long and honest (see the proof program's own accounting). What the 
 
 ---
 
-## 6. Run the artifacts
+## 6. The first turn after the loop: breadth over proof-engines (2026-06-14)
+
+The engines matched theorem *statements* (6b transfer-search) and converged. The natural next question, and the first move into the construction-grade work, was to match **proof engines**: the mechanism by which a theorem manufactures a $(1,n-1)$ signature. An 11-agent sweep (LEARNINGS #97) fingerprinted five from-below signature-manufacturing engines against the seven-property M4 spec and ran each through five kill-criteria (off-line-flip / indefinite-gate / euler-archimedean / fq-shadow / k1-noncircular): Adiprasito-Huh-Katz flip-induction, Lorentzian polynomials, semismall / relative Hodge-Riemann, tropical / non-archimedean Monge-Ampere (Boucksom-Jonsson), and CKS limit-MHS on the prismatic Sen operator. **All five killed; zero bridges survived.** Breadth-over-engines converged exactly like breadth-over-statements: a fourth all-roads confirmation.
+
+The honest reading of "breadth is the AI edge" that this produced: it is not the romantic "the machine finds the secret foreign bridge." For RH breadth is three things, a convergence-detector (N distant fields collapsing to one node), a corpus-completer (the sweep surfaced Boucksom-Jonsson, absent from the 6b corpus, then killed it as valuative at a single Berkovich place and archimedean-blind; now recorded in `transfer_search.py` with `role='killed'`), and a spec-sharpener. The one retained positive coordinate is **AHK**, the unique K1-clean witness that a Hodge-index signature is manufacturable with no variety; the sweep's product is the sharpened BUILDER target [`research_directions/09A_ahk_arithmetic_lattice.md`](research_directions/09A_ahk_arithmetic_lattice.md) (a $t$-carrying submodular Lefschetz element + an indefinite $(1,n-1)$ primitive form on a finite prime-lattice, positivity = M4 left open). This is the loop doing what section 5 said remained: it did not build M4, it walked the transfer shortlist one level deeper and handed the construction work a strictly sharper, K1-clean specification. The still-unspent axis is a regime-two frame-audit (collapse two M4 conjuncts at once); do not run a sixth from-below engine, the off-line-flip and $t$-blindness walls predict the kill.
+
+## 7. Run the artifacts
 
 ```
 python -m experiments.lemma_db.oracle            # the falsifier: the marginal-positivity two-move trap

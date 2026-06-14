@@ -39,7 +39,7 @@ class Theorem:
     name: str
     setting: str
     features: Features
-    role: str              # 'template' | 'imported' | 'candidate' | 'fresh'
+    role: str              # 'template' | 'imported' | 'candidate' | 'fresh' | 'killed'
     note: str
 
 
@@ -73,6 +73,16 @@ CORPUS = [
     Theorem("Adiprasito-Huh-Katz (matroid Hodge theory)", "Chow ring of a matroid",
             _F("indefinite", "combinatorial", "lorentzian", False, False),
             "candidate", "Hodge-Riemann for matroids; in the candidate set, bracketed on carries-trace"),
+    Theorem("Boucksom-Jonsson non-archimedean Monge-Ampere / K-stability",
+            "energy positivity on the Berkovich analytification",
+            _F("definite", "convex", "valuative", False, False),
+            "killed", "KILLED (breadth sweep 2026-06-14, LEARNINGS #97): surfaced by the engine, "
+            "then demoted. The K-energy / NA-Monge-Ampere positivity on offer is convex one-sided, "
+            "not the indefinite (1,n-1) Hodge index M4 needs (the NA Hodge-index inequality, where it "
+            "exists, is the existing 'Hodge index theorem' node over a NA base, no new transfer). "
+            "Valuative at a single Berkovich place => blind to the archimedean continuation where the "
+            "zeros sit (Re(s)<1); arithmetic-blind, no t-slot; cannot separate zeta from D-H. "
+            "Kept in-corpus with this annotation so future sweeps neither lose it nor re-propose it."),
     Theorem("Bost-Connes KMS uniqueness", "the BC C*-dynamical system",
             _F("uniqueness", "state", "ergodic-rigidity", True, True),
             "imported", "the KMS simplex is a point: a continuous spectrum PINNED by Euler structure"),
@@ -95,7 +105,7 @@ _KIND = {"indefinite": 4, "uniqueness": 2, "definite": 0}
 _CARRIER = {"cohomology": 2, "intersection": 2, "convex": 1, "combinatorial": 1,
             "moment": 1, "state": 1, "measure": 1, "height": 0, "hilbert": 0}
 _SOURCE = {"polarization": 2, "lorentzian": 2, "ergodic-rigidity": 1, "flat-extension": 1,
-           "positive-definite": 0, "analytic": 0}
+           "positive-definite": 0, "analytic": 0, "valuative": 0}
 
 
 def match_score(f: Features, target: Features = M4_RESIDUAL) -> int:

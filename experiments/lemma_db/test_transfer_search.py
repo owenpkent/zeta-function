@@ -86,6 +86,23 @@ def test_brackets_low():
     )
 
 
+def test_killed_node_demoted():
+    print("Test 6: a killed corpus node stays in-corpus but ranks low and never reads as live")
+    s = _scores()
+    bj = "Boucksom-Jonsson non-archimedean Monge-Ampere / K-stability"
+    in_corpus = next((t for t in CORPUS if t.name == bj), None)
+    fresh_indef = [t for t, _ in rank()
+                   if t.role == "fresh" and t.features.positivity_kind == "indefinite"]
+    return (
+        check("Boucksom-Jonsson is present in the corpus (not lost)", in_corpus is not None)
+        and check("it is flagged role='killed' (never re-proposed as live)",
+                  in_corpus is not None and in_corpus.role == "killed")
+        and check("it ranks below every fresh indefinite-Hodge-index sibling (demoted)",
+                  bool(fresh_indef) and all(s[bj] < s[t.name] for t in fresh_indef),
+                  f"Boucksom-Jonsson={s[bj]}")
+    )
+
+
 def main():
     results = [
         test_templates_top(),
@@ -93,6 +110,7 @@ def main():
         test_validation_bost_connes(),
         test_novelty_surface(),
         test_brackets_low(),
+        test_killed_node_demoted(),
     ]
     print()
     n_pass = sum(results)

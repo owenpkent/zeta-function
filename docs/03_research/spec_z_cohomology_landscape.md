@@ -51,7 +51,8 @@ counterexample); "Open step" is the single sharpest missing object.
 | **Lorscheid** blueprints | ✗/◑ | open | ✗ | ✓ | intersection theory + cycle class on the (2-dim) blueprint surface |
 | **Borger** $\Lambda$-rings / $\mathrm{Spec}(W(\mathbb{Z}))$ | ◑ (Frobenius built in) | open | ✗ | ✓ | a finite 2-dim $\Lambda$-cohomology of $\mathrm{Spec}(W(\mathbb{Z}))$ with an intersection form |
 | **Soule / Kurokawa** $q\to1$ absolute zeta | ◑ (formal) | ◑ (by hand) | ✗ | weak/untested | a genuine cohomology behind the $q\to1$ bookkeeping |
-| **Adiprasito-Huh-Katz** matroid Hodge theory | ✗ | ✗ | ◑ **PROVEN signature, no variety, but arithmetic-blind** | structure only | inject the Frobenius trace $t$ into the Chow-ring HR form |
+| **Adiprasito-Huh-Katz** matroid Hodge theory | ✗ | ✗ | ◑ **PROVEN signature, no variety, but arithmetic-blind** | structure only | the sharpened AHK lattice ([09A](research_directions/09A_ahk_arithmetic_lattice.md)): a $t$-carrying submodular Lefschetz element + an indefinite $(1,n-1)$ primitive form |
+| **Boucksom-Jonsson** NA Monge-Ampere / K-stability | ✗ | ✗ | ✗ (convex one-sided, not indefinite) | structure only | **killed (#97):** valuative at a single Berkovich place, archimedean-blind, no $t$-slot (the AHK too-blind bracket in new vocabulary) |
 
 **2P+ sharpening (2026-06-05, LEARNINGS #71, [memo](../../experiments/arithmetic_geometric/2P_recent_global_signed_trace_pairing_probe.md)).** A targeted audit of the three strongest recent constructions against the (iii)-polarization column (a signed pairing on the global $H^1$ whose value sees the trace $t$, not just the $(1,p)$ bidegree), after 2LO (#70) named $t$ as the single missing datum. **None supplies it; they stop at three different adjacent inputs that are three two-thirds of the SAME construction:** Tang's prismatic Poincare duality ([arXiv:2210.14279](https://arxiv.org/abs/2210.14279), Compositio; F-gauge perfect duality $R\Gamma(X)^\vee\simeq R\Gamma(X)\{d\}[2d]$ + trace maps) gives **perfectness, not the Hodge-Riemann/Rosati sign**; Gurney's *Prismatization over $\mathbf{Z}$* ([arXiv:2301.12392](https://arxiv.org/abs/2301.12392)) gives the **global substrate, not the cup/sign/$t$**; Connes-Consani's 2026 Jacobian ([arXiv:2602.15941](https://arxiv.org/abs/2602.15941)) gives the **trace/realization, not a signed product pairing**. So the post-2LO gap is unchanged and identical for all three: construct $\Gamma_S$, form the primitive cup into the Euler-pole $H^2$, and prove the sign without RH input. Perfectness is free (even for D-H, 2HH/#61); the polarization carrying $t$ is the whole gap.
 
@@ -72,7 +73,17 @@ way**. A third, the de Branges pairing, overshoots. Together they bracket the mi
   variety**, exactly the shape Weil's proof wants. It fails because it is **arithmetic-blind**: it
   takes no Frobenius trace $t$ (the project's #40 mixed-volume probe reads the same $(1,3)$ signature
   for $t=2$ and $t=100$), and its log-concavity defect tracks non-Euler-ness, not RH-failure (e3n:
-  the non-Euler RH-true Epstein control has the *most* violations). *Too blind.*
+  the non-Euler RH-true Epstein control has the *most* violations). *Too blind.* **But it is the one
+  retained positive coordinate of the 2026-06-14 breadth-over-proof-engines sweep (#97):** alone among
+  the five from-below engines it is K1-clean (the signature comes from a submodular flip, not the
+  zeros), so the response is not to drop it but to repair the blindness. The sharpened BUILDER target
+  [`research_directions/09A_ahk_arithmetic_lattice.md`](research_directions/09A_ahk_arithmetic_lattice.md)
+  asks for a finite graded prime-lattice whose degree map carries $t$ ($= q+1-t$ on the function-field
+  shadow) and whose primitive form is born indefinite $(1,n-1)$, leaving only the positivity (= M4)
+  open. The same sweep killed the Lorentzian / tropical / non-archimedean-Monge-Ampere (Boucksom-Jonsson)
+  family as the AHK too-blind bracket in new vocabulary, and killed CKS limit-MHS as a transport (it
+  imports the polarization $Q$ that $\mathrm{Spec}(\mathbb{Z})$ lacks). *Too blind, but the one face
+  worth grafting arithmetic onto.*
 - **de Branges (too strong).** The de Branges space of $\xi$ realizes the continuation as a signed
   reproducing-kernel inner product that **does** reach the global zeros, but its positivity is
   **strictly stronger than RH** (it implies GRH for all Dirichlet $L$ at once) and Conrey-Li proved
