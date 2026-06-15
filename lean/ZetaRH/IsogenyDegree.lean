@@ -38,6 +38,7 @@ import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.LinearAlgebra.QuadraticForm.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic
 
 namespace ZetaRH.IsogenyDegree
@@ -242,5 +243,47 @@ theorem hasse_of_matrix (A : Matrix (Fin 2) (Fin 2) ℤ)
   rw [det_smul_one_add_smul] at h
   simp only [degForm]
   exact_mod_cast h
+
+/-! ## Concrete realization: the companion matrix (non-vacuity of the matrix bridge)
+
+    The matrix endpoints (`functionfield_RH_elliptic_of_matrix(_general)`) take the rank-2 Frobenius
+    representation `A` and its non-negative isogeny degrees as HYPOTHESES. To guard against the
+    hypothesis being vacuous -- the project's known failure mode (#106, the false-vacuous
+    `hodge_index_curve_elliptic` sorry) -- we exhibit the explicit witness: the COMPANION matrix of
+    `X² − t·X + q`, the canonical rank-2 representation with trace `t` and determinant `q`. It realizes
+    the degree form exactly, and for any Hasse-valid `(q, t)` its isogeny degrees are non-negative. So
+    the matrix-endpoint hypothesis is satisfiable and is *exactly* equivalent to the Hasse bound (no
+    stronger assumption is smuggled in). This is a CONSISTENCY check, not a step in the RH proof: it
+    assumes Hasse to produce `deg ≥ 0`, the reverse of the real chain (where `deg ≥ 0` is geometric and
+    Hasse is its consequence). -/
+
+/-- The companion matrix of `X² − t·X + q`: the canonical rank-2 integer representation with trace `t`
+    and determinant `q` (any faithful rank-2 representation of Frobenius has this characteristic
+    polynomial; this is the explicit witness). -/
+def companion (t q : ℤ) : Matrix (Fin 2) (Fin 2) ℤ := !![0, -q; 1, t]
+
+@[simp] theorem companion_det (t q : ℤ) : (companion t q).det = q := by
+  simp [companion, Matrix.det_fin_two]
+
+@[simp] theorem companion_trace (t q : ℤ) : (companion t q).trace = t := by
+  simp [companion, Matrix.trace_fin_two]
+
+/-- The companion matrix realizes the degree form:
+    `det(m·1 + n·companion t q) = m² + t·m·n + q·n²`. -/
+theorem companion_degForm (t q m n : ℤ) :
+    (m • (1 : Matrix (Fin 2) (Fin 2) ℤ) + n • companion t q).det = m ^ 2 + t * m * n + q * n ^ 2 := by
+  rw [det_smul_one_add_smul, companion_trace, companion_det]
+
+/-- **Non-vacuity of the matrix-endpoint hypothesis.** For any Hasse-valid `(q, t)` (`t² ≤ 4q`), the
+    companion matrix of `X² − t·X + q` has non-negative isogeny degrees `det(m·1 + n·A) ≥ 0` for all
+    integers `m, n`. So the hypothesis of `functionfield_RH_elliptic_of_matrix(_general)` is
+    SATISFIABLE -- the endpoint is not vacuous, and the hypothesis is exactly the Hasse bound. Proof:
+    `4·(m² + t·m·n + q·n²) = (2m + t·n)² + (4q − t²)·n² ≥ 0`. (Assumes Hasse, so this is a consistency
+    check, not a proof of RH.) -/
+theorem companion_degForm_nonneg {t q : ℤ} (hHasse : t ^ 2 ≤ 4 * q) (m n : ℤ) :
+    0 ≤ (m • (1 : Matrix (Fin 2) (Fin 2) ℤ) + n • companion t q).det := by
+  rw [companion_degForm]
+  nlinarith [sq_nonneg (2 * m + t * n), mul_nonneg (by linarith : (0 : ℤ) ≤ 4 * q - t ^ 2)
+    (sq_nonneg n)]
 
 end ZetaRH.IsogenyDegree

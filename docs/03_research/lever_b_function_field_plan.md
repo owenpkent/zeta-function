@@ -232,6 +232,14 @@ rank-2 integer Frobenius matrix $A$ with non-negative isogeny degrees, every eig
 $|\alpha|^2=\det A$, over every finite field $\mathbb{F}_q$. Sorry-free, axiom-clean. So the M-4
 boundary wire is done; the prime-field endpoints remain as the sharper-statement specializations.
 
+**Non-vacuity witness (2026-06-15).** To guard against the matrix endpoints being true-but-vacuous
+(the project's #106 failure mode), `IsogenyDegree.lean` exhibits the explicit witness: the companion
+matrix `companion t q = !![0,-q;1,t]` of $X^2-tX+q$ (`companion_degForm`,
+`companion_degForm_nonneg` -- for any Hasse-valid $(q,t)$ its isogeny degrees are $\ge 0$, via
+$4\,\mathrm{degForm}=(2m+tn)^2+(4q-t^2)n^2$). So the matrix-endpoint hypothesis is satisfiable and
+exactly equivalent to Hasse, and the degForm endpoint and matrix endpoint coincide through it. A
+consistency check, not part of the RH proof (it assumes Hasse to produce $\deg\ge 0$).
+
 ## Effort, risk, upstreaming
 
 - **Done:** M-0 (the real-form discriminant bridge), **M-1 algebraic core** (#FF-M1: the lattice
