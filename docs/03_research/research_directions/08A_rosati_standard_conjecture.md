@@ -55,6 +55,8 @@ This replaces "20-50 postdoc-years, probability <1%" with a sequence of attackab
 - **M4.** Pass to the limit $P\to\infty$: control the archimedean-dominates-prime balance (the hard core, #20/3M) and prove positivity survives. This is the arithmetic Hodge standard conjecture.
 - **M5.** Derive RH for $\zeta$ from M4 (the eigenvalue/zero consequence), and verify K1/K2/K3.
 
+**Lean: the M4/M5 face formalized at the zero level (2026-06-15, #M4-1).** [`lean/ZetaRH/ArithmeticPolarization.lean`](../../../lean/ZetaRH/ArithmeticPolarization.lean) makes the "perfectness is free, positivity is the gap" decomposition machine-checked, lifting the function-field eigenvalue extraction ([`FunctionFieldRH.lean`](../../../lean/ZetaRH/FunctionFieldRH.lean), `eigenvalue_modulus`) to Spec($\mathbb{Z}$). `fe_partner_mem_nonTrivialZeros` proves the **functional equation provides the perfect pairing** $\rho\leftrightarrow 1-\rho$ on the nontrivial zeros (via Mathlib's `riemannZeta_one_sub`; genuine, not vacuous), and `riemannHypothesis_zeta_iff_fe_polarization` proves **RH $\iff$ that pairing is conjugation** ($1-\rho=\overline\rho$, the cup-is-a-polarization condition). Same mechanism as the function-field case (a conjugate/dual pairing pinned to the symmetry locus: circle $|\alpha|^2=q$ there, line $\mathrm{Re}=1/2$ here). Sorry-free, axiom-clean. The deep step -- that a *polarization* FORCES $1-\rho=\overline\rho$ -- is M4 itself and is not formalized.
+
 M2 is done. M3 produced a numerical discriminator but not the polarization it sought; the genuine M3/M4 step (the geometric source of positivity for $\zeta$, then its $P\to\infty$ survival) is the immediate work. M4 is the deep step. M5 is bookkeeping once M4 lands.
 
 ## 5. The immediate next experiment
