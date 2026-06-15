@@ -164,13 +164,22 @@ lattice, with `deg 1 = 1` and `deg φ_Frob = q`.
    with `a=q+1-#W(κ)`, `q=#κ` -- the trace/count now Mathlib-native); `localPolynomial_root_normSq`
    (the roots of Mathlib's `localPolynomial` have `|·|²=1/q`, given the Hasse bound). Sorry-free,
    axiom-clean. The Hasse bound is the only open input.
-3. **O1 (route choice):** `End(E)` + `deg`. Route A′: morphism/field-extension degree. Route B: the
-   $T_\ell$ action. Coordinate with FLT for B.
-4. **O2 (the crux):** additivity of the dual (Route A′, theorem of the cube) OR $\deg=\det$ on $T_\ell$
-   (Route B, Weil pairing). This is the multi-month piece and the genuine Mathlib contribution.
-5. **Wire:** instantiate the M-1.5 contract from O1+O2+O3, discharge `hdeg`, make
-   `functionfield_RH_elliptic_of_degree` unconditional, and state it as the Hasse bound for
-   `WeierstrassCurve.localPolynomial` (the upstreamable form).
+3. **Phase A: deg = det, the rank-2 representation bridge (DONE 2026-06-14):** `IsogenyDegree.lean` --
+   `det_smul_one_add_smul` (the 2×2 mixed-determinant identity `det(m·1+n·A)=m²+tr(A)·m·n+det(A)·n²`)
+   and `hasse_of_matrix` (`A : Matrix (Fin 2) (Fin 2) ℤ`, `det(m·1+n·A) ≥ 0` on the lattice ⟹
+   `(tr A)² ≤ 4·(det A)`). Sorry-free, axiom-clean. This is the route-agnostic linear-algebra core
+   ("deg is a quadratic form" = "det of a 2×2 is a quadratic form"), reusing Mathlib's
+   `Matrix.det_fin_two`/`trace_fin_two`. It SHARPENS the residual (below) from "deg is a quadratic
+   form" to "construct the integer matrix `A`".
+4. **O1+O2 (the residual, route choice, ~months):** construct the rank-2 integer Frobenius
+   representation -- a faithful `End(E) → Matrix (Fin 2) (Fin 2) ℤ` with `det(m·1+n·A) ≥ 0` (every
+   isogeny has non-negative degree, `deg = det`), `det A = q`, `trace A = a = q+1-#E`. Route B (Tate
+   module: `det = deg` on $T_\ell$, makes O2 free -- Phase A IS this route's O2; needs E[n]/Weil
+   pairing/$T_\ell$). Route A′ (dual isogeny: additivity of the dual via the theorem of the cube;
+   needs isogeny/`End`/Pic⁰). Both Mathlib-contribution scale; coordinate with FLT. Kept open.
+5. **Wire:** feed `A` to `hasse_of_matrix` (or the M-1.5 contract) + the O3 `localPolynomial_root_normSq`,
+   discharge `hdeg`, make `functionfield_RH_elliptic_of_degree` unconditional, state it as the Hasse
+   bound for `WeierstrassCurve.localPolynomial` (the upstreamable form).
 
 ## A correctness subtlety to flag (boundary case)
 
@@ -182,9 +191,11 @@ The current chain routes through `eigenvalue_modulus`, which needs the Frobenius
 
 - **Done:** M-0 (the real-form discriminant bridge), **M-1 algebraic core** (#FF-M1: the lattice
   Hasse bridge, the strict prime boundary, the RH endpoint), **M-1.5** (the `QuadraticForm`
-  contract: `quadratic_eq_basis` + `hasse_of_quadratic`), and **O3 wiring** (#FF-O3: `LocalFactor.lean`
+  contract: `quadratic_eq_basis` + `hasse_of_quadratic`), **Phase A** (the deg=det matrix bridge:
+  `det_smul_one_add_smul` + `hasse_of_matrix`), and **O3 wiring** (#FF-O3: `LocalFactor.lean`
   connects the chain to Mathlib's `WeierstrassCurve.localPolynomial`) -- all sorry-free and axiom-clean.
-- **Next:** O1+O2 (the scheme-theoretic `deg`), the critical path, via route A′ or B.
+- **Next:** O1+O2 (the scheme-theoretic `deg`: construct the rank-2 Frobenius representation), the
+  critical path, ~months, via route A′ or B (kept open). Coordinate with FLT.
 - **Critical path (O1+O2, several expert-months):** the isogeny/degree API and the additivity of the
   dual (or $\deg=\det$ on $T_\ell$). This is the flagship Mathlib contribution; the whole package
   (isogenies, degree, dual / Weil pairing, Hasse) is something Mathlib wants, and it overlaps the FLT

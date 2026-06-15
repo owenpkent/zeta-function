@@ -36,6 +36,8 @@ modulus `√p`, the function-field Riemann Hypothesis for the curve.
 
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.LinearAlgebra.QuadraticForm.Basic
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Tactic
 
 namespace ZetaRH.IsogenyDegree
@@ -194,5 +196,51 @@ theorem hasse_of_quadratic (Q : QuadraticForm ℤ (ℤ × ℤ)) (h1 : Q ((1 : �
   simp only [degForm]
   push_cast at hge'
   nlinarith [hge']
+
+/-! ## Phase A (M-1 residual): deg = det, the rank-2 representation bridge
+
+    See `docs/03_research/lever_b_function_field_plan.md` (M-1, Phase A). The deepest route to
+    "deg is a quadratic form" is the Tate-module/representation one: an endomorphism `φ` of a rank-2
+    free module has `deg φ = det φ`, `trace = tr`, and `det` of a 2×2 is AUTOMATICALLY a quadratic
+    form. We package that route-agnostic linear-algebra core here over `Matrix (Fin 2) (Fin 2) ℤ`
+    (the Frobenius represented on a rank-2 integer lattice / the Tate module).
+
+    The mixed-determinant identity `det(m·1 + n·A) = m² + tr(A)·m·n + det(A)·n²` shows the degree
+    form IS `degForm` with `t = tr A`, `q = det A`. So if every isogeny `m·1 + n·φ` has non-negative
+    degree (`det(m·1 + n·A) ≥ 0` on the lattice), the Hasse bound `t² ≤ 4q` follows. This SHARPENS
+    the M-1 residual to: construct the rank-2 integer Frobenius representation `A` with
+    `det(m·1 + n·A) ≥ 0`, `det A = q`, `trace A = t = q+1-#E` (the open scheme-theoretic content;
+    routes A′/B in the plan). -/
+
+/-- **The 2×2 mixed-determinant identity.** `det(m·1 + n·A) = m² + tr(A)·m·n + det(A)·n²`. This is
+    why `deg = det` is a quadratic form in `(m, n)`: the degree of `m·1 + n·φ` is exactly `degForm`
+    with `t = tr A`, `q = det A`. -/
+theorem det_smul_one_add_smul (A : Matrix (Fin 2) (Fin 2) ℤ) (m n : ℤ) :
+    (m • (1 : Matrix (Fin 2) (Fin 2) ℤ) + n • A).det
+      = m ^ 2 + A.trace * m * n + A.det * n ^ 2 := by
+  have o00 : (1 : Matrix (Fin 2) (Fin 2) ℤ) 0 0 = 1 := Matrix.one_apply_eq 0
+  have o11 : (1 : Matrix (Fin 2) (Fin 2) ℤ) 1 1 = 1 := Matrix.one_apply_eq 1
+  have o01 : (1 : Matrix (Fin 2) (Fin 2) ℤ) 0 1 = 0 := Matrix.one_apply_ne (by decide)
+  have o10 : (1 : Matrix (Fin 2) (Fin 2) ℤ) 1 0 = 0 := Matrix.one_apply_ne (by decide)
+  simp only [Matrix.det_fin_two, Matrix.trace_fin_two, Matrix.add_apply, Matrix.smul_apply,
+    smul_eq_mul, o00, o11, o01, o10]
+  ring
+
+/-- **Hasse bound from a rank-2 representation (deg = det).** If Frobenius is represented by an
+    integer 2×2 matrix `A` whose degree form `det(m·1 + n·A)` is non-negative on the lattice -- the
+    content "every isogeny `m·1 + n·φ` has non-negative degree" with `deg = det` -- then the Hasse
+    bound `(tr A)² ≤ 4·(det A)` holds. With `tr A = t` (the Frobenius trace) and `det A = q` (the
+    degree of Frobenius), this is exactly `t² ≤ 4q`. Proof: `det_smul_one_add_smul` turns the degree
+    form into `degForm`, then the Hasse bridge `disc_nonpos_of_int_nonneg` closes it. The "deg is a
+    quadratic form" step (the crux of M-1, route B's O2) is here free: `det` of a 2×2 is quadratic. -/
+theorem hasse_of_matrix (A : Matrix (Fin 2) (Fin 2) ℤ)
+    (hpos : ∀ m n : ℤ, 0 ≤ (m • (1 : Matrix (Fin 2) (Fin 2) ℤ) + n • A).det) :
+    (A.trace : ℝ) ^ 2 ≤ 4 * (A.det : ℝ) := by
+  apply disc_nonpos_of_int_nonneg
+  intro m n
+  have h := hpos m n
+  rw [det_smul_one_add_smul] at h
+  simp only [degForm]
+  exact_mod_cast h
 
 end ZetaRH.IsogenyDegree
