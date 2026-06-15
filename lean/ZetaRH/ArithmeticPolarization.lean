@@ -25,14 +25,19 @@ that the FE pairing IS conjugation -- is exactly RH. This is the #61/2HH decompo
 conjecture") made machine-checked at the zero level. The deep content -- WHY a polarization forces
 `1 − ρ = conj ρ` -- is M4 itself and is not in this file.
 
-Note (reflection): classically `conj ρ` is also a zero (ζ has real Dirichlet coefficients,
-`ζ(s̄) = conj ζ(s)`), so `1 − ρ = conj ρ` is literally "two genuine zeros coincide". Mathlib's
-`riemannZeta` does not yet carry that conjugation lemma, so only the FE half (`1 − ρ` is a zero) is
-formalized here; the reflection half is noted, not proved.
+Reflection (now proved): `conj ρ` is also a zero, because ζ has real Dirichlet coefficients, giving
+`ζ(s̄) = conj ζ(s)` (`riemannZeta_conj`, proved here from the L-series on `Re s > 1` plus the identity
+principle, since Mathlib carries the functional equation but not this reflection). So both `1 − ρ` and
+`conj ρ` are genuine nontrivial zeros (`fe_partner_mem_nonTrivialZeros`,
+`reflection_mem_nonTrivialZeros`), and the polarization condition `1 − ρ = conj ρ` is literally "the
+FE-partner zero and the conjugate zero coincide".
 -/
 
 import ZetaRH.Basic
 import Mathlib.NumberTheory.LSeries.RiemannZeta
+import Mathlib.Analysis.Calculus.Deriv.Star
+import Mathlib.Analysis.Analytic.Uniqueness
+import Mathlib.Analysis.Normed.Module.Connected
 
 namespace ZetaRH.ArithmeticPolarization
 
@@ -80,6 +85,83 @@ theorem fe_partner_mem_nonTrivialZeros {ρ : ℂ} (hρ : ρ ∈ nonTrivialZeros 
     have h1 : (1 - ρ) = 1 := hmem
     have hre : (1 - ρ).re = (1 : ℂ).re := congrArg Complex.re h1
     rw [Complex.sub_re, Complex.one_re] at hre
+    linarith
+
+/-- **Reflection: `ζ(s̄) = conj ζ(s)`** (for `s ≠ 1`). ζ has real Dirichlet coefficients, so on
+    `Re s > 1` the termwise identity `conj(ζ(conj s)) = ζ(s)` holds (`zeta_eq_tsum_one_div_nat_cpow`
+    plus `conj((n)^w) = (n)^(conj w)`), and the **identity principle** for analytic functions
+    (`AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq`) propagates it across the connected domain
+    `ℂ ∖ {1}`. Mathlib carries the functional equation but not this reflection, so it is proved here.
+    Analyticity of `conj ∘ ζ ∘ conj` is the anti-holomorphic composition `HasDerivAt.conj_conj`. -/
+theorem riemannZeta_conj {s : ℂ} (hs : s ≠ 1) :
+    riemannZeta ((starRingEnd ℂ) s) = (starRingEnd ℂ) (riemannZeta s) := by
+  -- `g = conj ∘ ζ ∘ conj` is analytic on `{1}ᶜ`
+  have hg_diff : DifferentiableOn ℂ
+      (fun z => (starRingEnd ℂ) (riemannZeta ((starRingEnd ℂ) z))) {1}ᶜ := by
+    intro z hz
+    have hzz : z ≠ 1 := hz
+    have hcz : (starRingEnd ℂ) z ≠ 1 := fun h => hzz (by
+      have := congrArg (starRingEnd ℂ) h
+      rwa [Complex.conj_conj, map_one] at this)
+    have hgd := ((differentiableAt_riemannZeta hcz).hasDerivAt).conj_conj
+    rw [Complex.conj_conj] at hgd
+    exact hgd.differentiableAt.differentiableWithinAt
+  have hg_an : AnalyticOnNhd ℂ
+      (fun z => (starRingEnd ℂ) (riemannZeta ((starRingEnd ℂ) z))) {1}ᶜ :=
+    hg_diff.analyticOnNhd isOpen_compl_singleton
+  -- `g = ζ` on `Re > 1`, termwise
+  have hgz : ∀ z : ℂ, 1 < z.re →
+      (starRingEnd ℂ) (riemannZeta ((starRingEnd ℂ) z)) = riemannZeta z := by
+    intro z hz1
+    have hcz1 : 1 < ((starRingEnd ℂ) z).re := by rw [Complex.conj_re]; exact hz1
+    have hterm : ∀ n : ℕ,
+        (starRingEnd ℂ) (1 / (n : ℂ) ^ ((starRingEnd ℂ) z)) = 1 / (n : ℂ) ^ z := by
+      intro n
+      have harg : (n : ℂ).arg ≠ Real.pi := by
+        rw [show (n : ℂ) = (((n : ℝ)) : ℂ) by push_cast; ring,
+          Complex.arg_ofReal_of_nonneg (by positivity)]
+        exact Real.pi_pos.ne
+      have hpow : (starRingEnd ℂ) ((n : ℂ) ^ ((starRingEnd ℂ) z)) = (n : ℂ) ^ z := by
+        have hcc := Complex.conj_cpow (n : ℂ) z harg
+        rw [Complex.conj_natCast] at hcc
+        exact hcc.symm
+      rw [map_div₀, map_one, hpow]
+    rw [zeta_eq_tsum_one_div_nat_cpow hcz1, Complex.conj_tsum,
+      zeta_eq_tsum_one_div_nat_cpow hz1]
+    exact tsum_congr hterm
+  -- identity principle on the connected `{1}ᶜ`, anchored at `s = 2`
+  have hfg : (fun z => (starRingEnd ℂ) (riemannZeta ((starRingEnd ℂ) z))) =ᶠ[nhds (2 : ℂ)]
+      riemannZeta :=
+    Filter.eventuallyEq_of_mem
+      ((isOpen_lt continuous_const Complex.continuous_re).mem_nhds (by norm_num))
+      (fun z hz => hgz z hz)
+  have hU : IsPreconnected ({1}ᶜ : Set ℂ) :=
+    (isConnected_compl_singleton_of_one_lt_rank
+      (by rw [Complex.rank_real_complex]; norm_num) 1).isPreconnected
+  have heq := hg_an.eqOn_of_preconnected_of_eventuallyEq analyticOn_riemannZeta hU
+    (by norm_num : (2 : ℂ) ∈ ({1}ᶜ : Set ℂ)) hfg
+  have key : (starRingEnd ℂ) (riemannZeta ((starRingEnd ℂ) s)) = riemannZeta s := heq hs
+  have hkey := congrArg (starRingEnd ℂ) key
+  rwa [Complex.conj_conj] at hkey
+
+/-- **Reflection provides the other pairing `ρ ↔ conj ρ` (free).** If `ρ` is a nontrivial zero of ζ,
+    so is its conjugate `conj ρ` (via `riemannZeta_conj`: `ζ(conj ρ) = conj(ζ ρ) = 0`). Together with
+    `fe_partner_mem_nonTrivialZeros` this makes the polarization condition `1 − ρ = conj ρ` literally
+    "two genuine zeros (the FE-partner and the conjugate) coincide". -/
+theorem reflection_mem_nonTrivialZeros {ρ : ℂ} (hρ : ρ ∈ nonTrivialZeros zeta) :
+    (starRingEnd ℂ) ρ ∈ nonTrivialZeros zeta := by
+  obtain ⟨hzero, hpos, hlt, _⟩ := hρ
+  have hρ1 : ρ ≠ 1 := by intro h; rw [h, Complex.one_re] at hlt; exact lt_irrefl 1 hlt
+  have hz : riemannZeta ρ = 0 := hzero
+  have hconj : riemannZeta ((starRingEnd ℂ) ρ) = 0 := by
+    rw [riemannZeta_conj hρ1, hz, map_zero]
+  refine ⟨hconj, ?_, ?_, ?_⟩
+  · rw [Complex.conj_re]; exact hpos
+  · rw [Complex.conj_re]; exact hlt
+  · intro hmem
+    have h1 : (starRingEnd ℂ) ρ = 1 := hmem
+    have hre : ((starRingEnd ℂ) ρ).re = (1 : ℂ).re := congrArg Complex.re h1
+    rw [Complex.conj_re, Complex.one_re] at hre
     linarith
 
 /-- **RH for ζ is the FE-duality polarization condition (M4 face, the Spec(ℤ) lift of
