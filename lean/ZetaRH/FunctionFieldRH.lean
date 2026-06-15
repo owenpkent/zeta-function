@@ -114,6 +114,31 @@ theorem root_nonreal (t q : ℝ) (α : ℂ)
     exact_mod_cast hc
   nlinarith [sq_nonneg (t - 2 * α.re), hHW, hr]
 
+/-- **Eigenvalue extraction at the boundary (PROVED).** Under only the NON-strict Hasse bound
+    `t² ≤ 4q`, every root `α` of `X² − tX + q` (real `t, q`) has `|α|² = q`. This subsumes the
+    strict case (non-real roots, `eigenvalue_modulus`) AND the boundary `t² = 4q` (the supersingular
+    double real root `α = t/2`, where `(t/2)² = q`), so the function-field RH chain covers ALL finite
+    fields `𝔽_q`, not only prime fields (where `4q` is never a perfect square so `t² < 4q` is
+    automatic). Proof: case on whether `α` is real. Non-real ⟹ `eigenvalue_modulus`. Real
+    (`α = α.re`) ⟹ the root equation and `t² ≤ 4q` force `(α.re − t/2)² ≤ 0`, hence `α.re = t/2`, so
+    `|α|² = α.re² = (t/2)² = q`. -/
+theorem eigenvalue_modulus_le (t q : ℝ) (α : ℂ)
+    (hroot : α ^ 2 - (t : ℂ) * α + (q : ℂ) = 0) (hHasse : t ^ 2 ≤ 4 * q) :
+    Complex.normSq α = q := by
+  by_cases h : α = (starRingEnd ℂ) α
+  · have him : α.im = 0 := Complex.conj_eq_iff_im.mp h.symm
+    have hre : α = (α.re : ℂ) := by apply Complex.ext <;> simp [him]
+    have hr : α.re ^ 2 - t * α.re + q = 0 := by
+      have hc : ((α.re ^ 2 - t * α.re + q : ℝ) : ℂ) = 0 := by push_cast; rw [← hre]; exact hroot
+      exact_mod_cast hc
+    have hsq : (α.re - t / 2) ^ 2 = 0 :=
+      le_antisymm (by nlinarith [hr, hHasse]) (sq_nonneg _)
+    have hre_eq : α.re = t / 2 := by linarith [sq_eq_zero_iff.mp hsq]
+    rw [hre, Complex.normSq_ofReal]
+    rw [hre_eq] at hr ⊢
+    linear_combination -hr
+  · exact eigenvalue_modulus t q α hroot h
+
 /-- The geometric input for a genus-1 curve, packaged honestly. The Castelnuovo-Severi
     / Hodge-index inequality `t^2 < 4q` (equivalently the primitive intersection form on
     `C × C` is negative-definite, equivalently `|t| < 2 sqrt q`) is a THEOREM over a real
@@ -276,5 +301,23 @@ theorem functionfield_RH_elliptic_of_matrix {A : Matrix (Fin 2) (Fin 2) ℤ} {p 
   have hroot : α ^ 2 - (A.trace : ℂ) * α + (p : ℂ) = 0 := by
     push_cast at hroot0; linear_combination hroot0
   exact functionfield_RH_elliptic_of_matrix_root hp hdetp hpos hroot
+
+/-- **Function-field RH from the Frobenius matrix, ALL finite fields (boundary included).** Drops the
+    prime-field restriction of `functionfield_RH_elliptic_of_matrix`: for ANY rank-2 integer Frobenius
+    matrix `A` with non-negative isogeny degrees (`det(m·1 + n·A) ≥ 0` on the lattice), every Frobenius
+    eigenvalue `α` (the complex spectrum of `A`) has `|α|² = det A`. This covers the supersingular
+    boundary `(tr A)² = 4·det A` (real eigenvalues `±√q`) via the non-strict eigenvalue extraction
+    `eigenvalue_modulus_le`, so it holds over every finite field `𝔽_q` (`q = det A` = the degree of
+    Frobenius), not only prime fields. The Hasse bound `(tr A)² ≤ 4·det A` comes from `hasse_of_matrix`
+    (Phase A) with no strictness needed; `matrix_charpoly_root` supplies the root. -/
+theorem functionfield_RH_elliptic_of_matrix_general {A : Matrix (Fin 2) (Fin 2) ℤ}
+    (hpos : ∀ m n : ℤ, 0 ≤ (m • (1 : Matrix (Fin 2) (Fin 2) ℤ) + n • A).det)
+    {α : ℂ} (hα : α ∈ spectrum ℂ (A.map (Int.castRingHom ℂ))) :
+    Complex.normSq α = (A.det : ℝ) := by
+  have hHasse : (A.trace : ℝ) ^ 2 ≤ 4 * (A.det : ℝ) := hasse_of_matrix A hpos
+  have hroot0 := matrix_charpoly_root hα
+  have hroot' : α ^ 2 - (((A.trace : ℝ)) : ℂ) * α + (((A.det : ℝ)) : ℂ) = 0 := by
+    rw [Complex.ofReal_intCast, Complex.ofReal_intCast]; exact hroot0
+  exact eigenvalue_modulus_le (A.trace : ℝ) (A.det : ℝ) α hroot' hHasse
 
 end ZetaRH.FunctionFieldRH

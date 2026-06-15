@@ -198,11 +198,21 @@ lattice, with `deg 1 = 1` and `deg φ_Frob = q`.
    `localPolynomial` upstreamable form (`localPolynomial_root_normSq`, O3) is the same statement on
    Mathlib's object, waiting on the same `A`.
 
-## A correctness subtlety to flag (boundary case)
+## The boundary case (RESOLVED 2026-06-15: all finite fields, not just prime)
 
-The current chain routes through `eigenvalue_modulus`, which needs the Frobenius roots to be **non-real** (`root_nonreal` requires the strict $t^2<4q$). The Hasse bound gives $t^2\le 4q$. The boundary $t^2=4q$ (supersingular, real eigenvalues $\pm\sqrt q$) occurs only for prime-power $q$ that is a perfect square; **for $q$ prime it never occurs** ($4q$ is not a perfect square, so $t^2<4q$ is automatic). So:
-- For $q$ prime (the case `FunctionFieldRH`'s `b_e(p,t)` uses), Hasse already gives the strict $t^2<4q$ the chain needs.
-- For general prime-power $q$, add a one-line boundary case to `FunctionFieldRH.lean`: when $t^2=4q$ the roots are real and equal $\pm\sqrt q$, so $|\alpha|^2=q$ directly. Small, do it in M-4.
+The strict-bound chain routes through `eigenvalue_modulus` + `root_nonreal`, which need the Frobenius
+roots **non-real** (the strict $t^2<4q$). The Hasse bound only gives $t^2\le 4q$, and the boundary
+$t^2=4q$ (supersingular, real eigenvalues $\pm\sqrt q$) occurs for prime-power $q$ that is a perfect
+square; for $q$ prime it never occurs ($4q$ is not a perfect square, so $t^2<4q$ is automatic).
+
+This boundary is now handled in `FunctionFieldRH.lean` by `eigenvalue_modulus_le`: under only the
+NON-strict $t^2\le 4q$, every root $\alpha$ of $X^2-tX+q$ has $|\alpha|^2=q$ -- it cases on whether
+$\alpha$ is real (non-real $\Rightarrow$ `eigenvalue_modulus`; real $\Rightarrow$ the root equation
+plus $t^2\le 4q$ force $(\alpha.\mathrm{re}-t/2)^2\le 0$, hence $\alpha=t/2$ and $|\alpha|^2=(t/2)^2=q$).
+The endpoint `functionfield_RH_elliptic_of_matrix_general` then drops the prime restriction: for ANY
+rank-2 integer Frobenius matrix $A$ with non-negative isogeny degrees, every eigenvalue has
+$|\alpha|^2=\det A$, over every finite field $\mathbb{F}_q$. Sorry-free, axiom-clean. So the M-4
+boundary wire is done; the prime-field endpoints remain as the sharper-statement specializations.
 
 ## Effort, risk, upstreaming
 
