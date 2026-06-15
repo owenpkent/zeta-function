@@ -34,6 +34,8 @@ quadratic X^2 - tX + q gives alpha * conj(alpha) = q, and alpha * conj(alpha) = 
 import ZetaRH.HodgeIndex
 import ZetaRH.IsogenyDegree
 import Mathlib.Data.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
 
 namespace ZetaRH.FunctionFieldRH
 
@@ -195,5 +197,84 @@ theorem functionfield_RH_elliptic_of_degree {p : ℕ} {tz : ℤ} (hp : p.Prime)
     (hdeg : ∀ m n : ℤ, 0 ≤ degForm (tz : ℝ) (p : ℝ) (m : ℝ) (n : ℝ)) {α : ℂ}
     (hroot : α ^ 2 - ((tz : ℝ) : ℂ) * α + ((p : ℝ) : ℂ) = 0) : Complex.normSq α = (p : ℝ) :=
   functionfield_RH_elliptic (EllipticFrobeniusData.ofDegreeNonneg hp hdeg) hroot
+
+/-! ## Phase A endpoint (route B): RH for the curve directly from the Frobenius matrix
+
+    See `docs/03_research/lever_b_function_field_plan.md` (M-1, Phase A; task 5, "Wire"). Phase A
+    in `IsogenyDegree.lean` (`hasse_of_matrix`) showed that a rank-2 integer representation `A` of
+    Frobenius -- the action on the Tate module `T_ℓ E ≅ ℤ²`, where `deg = det` and `trace = tr` --
+    whose isogeny degrees are non-negative (`det(m·1 + n·A) ≥ 0` on the lattice) satisfies the Hasse
+    bound `(tr A)² ≤ 4·det A`. This section closes the loop to RH for the curve by grounding the
+    Frobenius "roots" of the previous theorems in the genuine eigenvalues of `A`.
+
+    The bridge is Cayley-Hamilton at rank 2: the eigenvalues of `A` (the complex spectrum of the
+    complexification `A.map (ℤ → ℂ)`) are exactly the roots of the characteristic polynomial
+    `X² − (tr A)·X + (det A)` (`Matrix.charpoly_fin_two`). Feeding those roots through the eigenvalue
+    extraction proved above gives `|α|² = det A = q`, the function-field Riemann Hypothesis for the
+    curve. The single open input is unchanged: that such an integer matrix `A` (the Frobenius on the
+    Tate module, `det A = q`, `tr A = q+1-#E`, non-negative isogeny degrees) EXISTS for a real curve
+    -- the scheme-theoretic O1+O2 residual of M-1 (route B), coordinated with the FLT project. -/
+
+/-- **Eigenvalue ⟹ characteristic-polynomial root (rank 2).** A complex number `α` in the spectrum
+    of the complexified integer matrix `A.map (ℤ → ℂ)` is a root of `X² − (tr A)·X + (det A)`. This
+    grounds the abstract Frobenius-root hypothesis of the chain above in the genuine eigenvalues of
+    the rank-2 Frobenius representation. Proof: `Matrix.mem_spectrum_iff_isRoot_charpoly` over the
+    field `ℂ`, then `Matrix.charpoly_fin_two`, with `trace`/`det` commuting through the cast. -/
+theorem matrix_charpoly_root {A : Matrix (Fin 2) (Fin 2) ℤ} {α : ℂ}
+    (hα : α ∈ spectrum ℂ (A.map (Int.castRingHom ℂ))) :
+    α ^ 2 - (A.trace : ℂ) * α + (A.det : ℂ) = 0 := by
+  have hr : Polynomial.eval α (A.map (Int.castRingHom ℂ)).charpoly = 0 :=
+    Matrix.mem_spectrum_iff_isRoot_charpoly.mp hα
+  have htr : (A.map (Int.castRingHom ℂ)).trace = (A.trace : ℂ) := by
+    rw [← AddMonoidHom.map_trace (Int.castRingHom ℂ) A]; simp
+  have hdet : (A.map (Int.castRingHom ℂ)).det = (A.det : ℂ) := by
+    rw [← RingHom.mapMatrix_apply, ← RingHom.map_det]; simp
+  rw [Matrix.charpoly_fin_two, htr, hdet] at hr
+  simpa [Polynomial.eval_add, Polynomial.eval_sub, Polynomial.eval_mul, Polynomial.eval_pow,
+    Polynomial.eval_C, Polynomial.eval_X] using hr
+
+/-- **Function-field RH from the Frobenius matrix, abstract-root form.** Over a prime field `q = p`,
+    a rank-2 integer Frobenius matrix `A` with `det A = p` and non-negative isogeny degrees
+    (`det(m·1 + n·A) ≥ 0` on the lattice) forces any root `α` of `X² − (tr A)·X + p` to have
+    `|α|² = p`. Proof: `hasse_of_matrix` (Phase A) gives `(tr A)² ≤ 4p`, `hasse_strict_of_prime`
+    upgrades it to the strict bound, then the eigenvalue extraction (`root_nonreal`,
+    `eigenvalue_modulus`) closes it. -/
+theorem functionfield_RH_elliptic_of_matrix_root {A : Matrix (Fin 2) (Fin 2) ℤ} {p : ℕ}
+    (hp : p.Prime) (hdetp : A.det = (p : ℤ))
+    (hpos : ∀ m n : ℤ, 0 ≤ (m • (1 : Matrix (Fin 2) (Fin 2) ℤ) + n • A).det)
+    {α : ℂ} (hroot : α ^ 2 - (A.trace : ℂ) * α + (p : ℂ) = 0) :
+    Complex.normSq α = (p : ℝ) := by
+  have hHasse : (A.trace : ℝ) ^ 2 ≤ 4 * (A.det : ℝ) := hasse_of_matrix A hpos
+  rw [hdetp] at hHasse
+  have hHasse2 : (A.trace : ℝ) ^ 2 ≤ 4 * (p : ℝ) := by push_cast at hHasse ⊢; linarith
+  have hstrict : (A.trace : ℝ) ^ 2 < 4 * (p : ℝ) := hasse_strict_of_prime hp hHasse2
+  have hroot' : α ^ 2 - (((A.trace : ℝ)) : ℂ) * α + (((p : ℝ)) : ℂ) = 0 := by
+    push_cast; linear_combination hroot
+  exact eigenvalue_modulus (A.trace : ℝ) (p : ℝ) α hroot'
+    (root_nonreal (A.trace : ℝ) (p : ℝ) α hroot' hstrict)
+
+/-- **Function-field RH for an elliptic curve from its Frobenius matrix (route B endpoint).** Let
+    `A : Matrix (Fin 2) (Fin 2) ℤ` represent Frobenius on the rank-2 lattice `T_ℓ E ≅ ℤ²` over a
+    prime field, with `det A = p` (the degree of Frobenius) and every isogeny `m·1 + n·φ` of
+    non-negative degree (`det(m·1 + n·A) ≥ 0`, i.e. `deg = det`). Then every Frobenius eigenvalue
+    `α` (the complex spectrum of `A`) has `|α|² = p`: the curve's zeta zeros lie on `Re = 1/2`.
+
+    This is the route-B endpoint of M-1: the literal finite-field rehearsal of the M4 target
+    ("`deg = det = norm` is a quadratic form whose positivity is RH", here proved). The whole chain
+    -- the deg=det quadratic-form structure (`det_smul_one_add_smul`), the Hasse bridge
+    (`disc_nonpos_of_int_nonneg`), the strict prime boundary, the eigenvalue grounding
+    (`matrix_charpoly_root`), and the eigenvalue extraction -- is machine-checked. The one open input
+    is the EXISTENCE of `A` (the scheme-theoretic Frobenius-on-Tate-module construction, O1+O2;
+    coordinate with FLT). -/
+theorem functionfield_RH_elliptic_of_matrix {A : Matrix (Fin 2) (Fin 2) ℤ} {p : ℕ}
+    (hp : p.Prime) (hdetp : A.det = (p : ℤ))
+    (hpos : ∀ m n : ℤ, 0 ≤ (m • (1 : Matrix (Fin 2) (Fin 2) ℤ) + n • A).det)
+    {α : ℂ} (hα : α ∈ spectrum ℂ (A.map (Int.castRingHom ℂ))) :
+    Complex.normSq α = (p : ℝ) := by
+  have hroot0 := matrix_charpoly_root hα
+  rw [hdetp] at hroot0
+  have hroot : α ^ 2 - (A.trace : ℂ) * α + (p : ℂ) = 0 := by
+    push_cast at hroot0; linear_combination hroot0
+  exact functionfield_RH_elliptic_of_matrix_root hp hdetp hpos hroot
 
 end ZetaRH.FunctionFieldRH

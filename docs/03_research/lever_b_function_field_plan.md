@@ -14,6 +14,14 @@ Hasse bound is therefore **no longer the input** -- it is derived. The *one* rem
 geometric hypothesis `hdeg`: that $\deg$ really is this non-negative quadratic form for a real curve.
 How to discharge it is the subject of the section ["Discharging `hdeg`"](#discharging-hdeg-making-deg-a-non-negative-quadratic-form-for-a-real-curve) below.
 
+**Status (2026-06-15).** The Phase A endpoint is wired (task 5, "Wire"): `FunctionFieldRH.lean` now
+proves `functionfield_RH_elliptic_of_matrix` -- over a prime field, a rank-2 integer Frobenius matrix
+$A$ with $\det A = p$ and non-negative isogeny degrees ($\det(m\cdot 1 + n\cdot A)\ge 0$) forces every
+Frobenius eigenvalue to have $|\alpha|^2 = p$ -- with `matrix_charpoly_root` grounding the eigenvalues
+in `spectrum ℂ (A.map (ℤ→ℂ))` via `charpoly_fin_two`. Sorry-free, axiom-clean. The whole chain from
+"Frobenius is the matrix $A$, $\deg = \det$" to "RH for the curve" is machine-checked. The single open
+input is now the **existence** of $A$ (the scheme-theoretic O1+O2), nothing downstream of it.
+
 ## The route: elementary Hasse (degree is a positive-definite quadratic form)
 
 Do **not** route through full surface intersection theory (the $C\times C$ / Hodge-index path is general-genus but far from Mathlib). For genus 1, the shortest path is the classical elementary proof of Hasse:
@@ -177,9 +185,18 @@ lattice, with `deg 1 = 1` and `deg φ_Frob = q`.
    module: `det = deg` on $T_\ell$, makes O2 free -- Phase A IS this route's O2; needs E[n]/Weil
    pairing/$T_\ell$). Route A′ (dual isogeny: additivity of the dual via the theorem of the cube;
    needs isogeny/`End`/Pic⁰). Both Mathlib-contribution scale; coordinate with FLT. Kept open.
-5. **Wire:** feed `A` to `hasse_of_matrix` (or the M-1.5 contract) + the O3 `localPolynomial_root_normSq`,
-   discharge `hdeg`, make `functionfield_RH_elliptic_of_degree` unconditional, state it as the Hasse
-   bound for `WeierstrassCurve.localPolynomial` (the upstreamable form).
+5. **Wire (DONE 2026-06-15, modulo the existence of `A`):** the matrix endpoint in
+   `FunctionFieldRH.lean`. `matrix_charpoly_root` grounds the abstract Frobenius "roots" of the chain
+   in the genuine eigenvalues of the rank-2 representation (a complex `α ∈ spectrum ℂ (A.map (ℤ→ℂ))`
+   is a root of `X²−(tr A)·X+(det A)`, via `Matrix.mem_spectrum_iff_isRoot_charpoly` +
+   `Matrix.charpoly_fin_two`). `functionfield_RH_elliptic_of_matrix` (the route-B endpoint): over a
+   prime field, a rank-2 integer Frobenius matrix `A` with `det A = p` and non-negative isogeny degrees
+   (`det(m·1+n·A) ≥ 0` on the lattice) forces every Frobenius eigenvalue to have `|α|² = p` -- the
+   function-field RH for the curve. Sorry-free, axiom-clean. So the ENTIRE chain from
+   "Frobenius is the integer matrix `A` with `deg = det`" to "RH for the curve" is machine-checked; the
+   only open input is now the EXISTENCE of `A` (the scheme-theoretic O1+O2 of task 4). The
+   `localPolynomial` upstreamable form (`localPolynomial_root_normSq`, O3) is the same statement on
+   Mathlib's object, waiting on the same `A`.
 
 ## A correctness subtlety to flag (boundary case)
 
@@ -192,10 +209,13 @@ The current chain routes through `eigenvalue_modulus`, which needs the Frobenius
 - **Done:** M-0 (the real-form discriminant bridge), **M-1 algebraic core** (#FF-M1: the lattice
   Hasse bridge, the strict prime boundary, the RH endpoint), **M-1.5** (the `QuadraticForm`
   contract: `quadratic_eq_basis` + `hasse_of_quadratic`), **Phase A** (the deg=det matrix bridge:
-  `det_smul_one_add_smul` + `hasse_of_matrix`), and **O3 wiring** (#FF-O3: `LocalFactor.lean`
-  connects the chain to Mathlib's `WeierstrassCurve.localPolynomial`) -- all sorry-free and axiom-clean.
-- **Next:** O1+O2 (the scheme-theoretic `deg`: construct the rank-2 Frobenius representation), the
-  critical path, ~months, via route A′ or B (kept open). Coordinate with FLT.
+  `det_smul_one_add_smul` + `hasse_of_matrix`), **O3 wiring** (#FF-O3: `LocalFactor.lean`
+  connects the chain to Mathlib's `WeierstrassCurve.localPolynomial`), and the **Phase A endpoint**
+  (2026-06-15: `matrix_charpoly_root` + `functionfield_RH_elliptic_of_matrix`, the route-B
+  matrix-to-RH endpoint) -- all sorry-free and axiom-clean.
+- **Next:** O1+O2 (the scheme-theoretic `deg`: construct the rank-2 Frobenius representation `A`), the
+  critical path and now the **sole** open input, ~months, via route A′ or B (kept open). Everything
+  downstream of `A` is machine-checked. Coordinate with FLT.
 - **Critical path (O1+O2, several expert-months):** the isogeny/degree API and the additivity of the
   dual (or $\deg=\det$ on $T_\ell$). This is the flagship Mathlib contribution; the whole package
   (isogenies, degree, dual / Weil pairing, Hasse) is something Mathlib wants, and it overlaps the FLT
