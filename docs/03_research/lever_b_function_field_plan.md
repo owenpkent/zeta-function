@@ -33,6 +33,15 @@ $\Rightarrow|\alpha|^2=\det A$, all finite fields). Sorry-free, axiom-clean. So 
 strictly to **O1**: construct $A$ (Frobenius on $T_\ell$), the Weil pairing, and $\deg\ge 0$ -- the
 scheme-theoretic content (coordinate with FLT). O2 is closed.
 
+The same file now also carries the **coordinate-free** layer, matching the actual Tate module ($T_\ell E$
+is free of rank 2 with no canonical basis, and $e_\ell$ is an abstract alternating perfect pairing):
+`bilin_alt_two` (an alternating form on a rank-2 module is determined by $\omega(b_0,b_1)$),
+`det_transform` (the symplectic determinant law $\omega(fx,fy)=(\det f)\,\omega(x,y)$ on an abstract
+module -- the genuine basis-free reason $\deg=\det$), `scaling_eq_det_free`, and
+`functionfield_RH_of_tate` (the route-B endpoint over a rank-2 $\mathbb Z$-lattice $M$ with abstract
+$\omega$ and Frobenius `frob`: degree-as-Weil-scaling $+\deg\ge 0\Rightarrow|\alpha|^2=\det\,$`frob`,
+all finite fields). All sorry-free, axiom-clean. O2 is now a theorem on the abstract Tate module.
+
 ## The route: elementary Hasse (degree is a positive-definite quadratic form)
 
 Do **not** route through full surface intersection theory (the $C\times C$ / Hodge-index path is general-genus but far from Mathlib). For genus 1, the shortest path is the classical elementary proof of Hasse:
