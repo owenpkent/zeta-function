@@ -22,6 +22,17 @@ in `spectrum ℂ (A.map (ℤ→ℂ))` via `charpoly_fin_two`. Sorry-free, axiom-
 "Frobenius is the matrix $A$, $\deg = \det$" to "RH for the curve" is machine-checked. The single open
 input is now the **existence** of $A$ (the scheme-theoretic O1+O2), nothing downstream of it.
 
+**Status (2026-06-15, cont.).** Route B's **O2** ("$\deg$ is a quadratic form") is now itself a
+theorem, not an assumption. The new module `TateModule.lean` formalizes the Weil-pairing mechanism:
+`weilForm` (the symplectic form modelling $e_\ell$ on $T_\ell E\cong\mathbb Z^2$), `weilForm_mulVec`
+(the **symplectic determinant law** $e(Ax,Ay)=(\det A)\,e(x,y)$ -- the rank-2 reason
+$e(\varphi x,\varphi y)=e(x,y)^{\deg\varphi}$ forces $\deg=\det$), `scaling_eq_det` (the Weil-pairing
+degree IS $\det$), and `functionfield_RH_of_weil_pairing` (the route-B endpoint stated INTRINSICALLY,
+no $\det$ in the hypotheses: $A$ + the degree given as the Weil-pairing scaling factor + $\deg\ge 0$
+$\Rightarrow|\alpha|^2=\det A$, all finite fields). Sorry-free, axiom-clean. So the residual narrows
+strictly to **O1**: construct $A$ (Frobenius on $T_\ell$), the Weil pairing, and $\deg\ge 0$ -- the
+scheme-theoretic content (coordinate with FLT). O2 is closed.
+
 ## The route: elementary Hasse (degree is a positive-definite quadratic form)
 
 Do **not** route through full surface intersection theory (the $C\times C$ / Hodge-index path is general-genus but far from Mathlib). For genus 1, the shortest path is the classical elementary proof of Hasse:
@@ -179,12 +190,19 @@ lattice, with `deg 1 = 1` and `deg φ_Frob = q`.
    ("deg is a quadratic form" = "det of a 2×2 is a quadratic form"), reusing Mathlib's
    `Matrix.det_fin_two`/`trace_fin_two`. It SHARPENS the residual (below) from "deg is a quadratic
    form" to "construct the integer matrix `A`".
-4. **O1+O2 (the residual, route choice, ~months):** construct the rank-2 integer Frobenius
+3.5. **Route-B O2 internalized (DONE 2026-06-15):** `TateModule.lean` -- `weilForm` (the symplectic
+   model of the Weil pairing on $T_\ell E\cong\mathbb Z^2$), `weilForm_mulVec` (the symplectic
+   determinant law $e(Ax,Ay)=(\det A)e(x,y)$), `scaling_eq_det` (the Weil-pairing degree IS $\det$),
+   `functionfield_RH_of_weil_pairing` (the route-B endpoint stated intrinsically: $A$ + degree-as-
+   Weil-scaling + $\deg\ge 0$ ⟹ $|\alpha|^2=\det A$, all finite fields). Sorry-free, axiom-clean.
+   This makes route B's O2 ("$\deg$ is a quadratic form") a THEOREM (the rank-2 symplectic determinant
+   law), not an assumption, leaving only O1 below.
+4. **O1 (the residual, route choice, ~months):** construct the rank-2 integer Frobenius
    representation -- a faithful `End(E) → Matrix (Fin 2) (Fin 2) ℤ` with `det(m·1+n·A) ≥ 0` (every
    isogeny has non-negative degree, `deg = det`), `det A = q`, `trace A = a = q+1-#E`. Route B (Tate
-   module: `det = deg` on $T_\ell$, makes O2 free -- Phase A IS this route's O2; needs E[n]/Weil
-   pairing/$T_\ell$). Route A′ (dual isogeny: additivity of the dual via the theorem of the cube;
-   needs isogeny/`End`/Pic⁰). Both Mathlib-contribution scale; coordinate with FLT. Kept open.
+   module: `det = deg` on $T_\ell$, with O2 now DONE via `TateModule.lean`; the open part is E[n]/Weil
+   pairing/$T_\ell$ + $\deg\ge 0$). Route A′ (dual isogeny: additivity of the dual via the theorem of
+   the cube; needs isogeny/`End`/Pic⁰). Both Mathlib-contribution scale; coordinate with FLT. Kept open.
 5. **Wire (DONE 2026-06-15, modulo the existence of `A`):** the matrix endpoint in
    `FunctionFieldRH.lean`. `matrix_charpoly_root` grounds the abstract Frobenius "roots" of the chain
    in the genuine eigenvalues of the rank-2 representation (a complex `α ∈ spectrum ℂ (A.map (ℤ→ℂ))`
@@ -222,18 +240,23 @@ boundary wire is done; the prime-field endpoints remain as the sharper-statement
   `det_smul_one_add_smul` + `hasse_of_matrix`), **O3 wiring** (#FF-O3: `LocalFactor.lean`
   connects the chain to Mathlib's `WeierstrassCurve.localPolynomial`), and the **Phase A endpoint**
   (2026-06-15: `matrix_charpoly_root` + `functionfield_RH_elliptic_of_matrix`, the route-B
-  matrix-to-RH endpoint) -- all sorry-free and axiom-clean.
-- **Next:** O1+O2 (the scheme-theoretic `deg`: construct the rank-2 Frobenius representation `A`), the
-  critical path and now the **sole** open input, ~months, via route A′ or B (kept open). Everything
-  downstream of `A` is machine-checked. Coordinate with FLT.
-- **Critical path (O1+O2, several expert-months):** the isogeny/degree API and the additivity of the
-  dual (or $\deg=\det$ on $T_\ell$). This is the flagship Mathlib contribution; the whole package
-  (isogenies, degree, dual / Weil pairing, Hasse) is something Mathlib wants, and it overlaps the FLT
-  project. Note O3 (the trace and point count) is **already in Mathlib** (`localPolynomial`), so the
-  remaining work is O1+O2, not the trace data.
-- **Risk:** O2 is the genuine theorem (additivity of the dual = theorem of the cube, Route A′; or the
-  Weil-pairing/$T_\ell$ comparison, Route B). Route B's deps (Tate module, Weil pairing) are larger
-  but FLT-aligned and make O2 free; Route A′ is self-contained but the theorem of the cube is costly.
+  matrix-to-RH endpoint), the **boundary case** (2026-06-15: `eigenvalue_modulus_le` +
+  `functionfield_RH_elliptic_of_matrix_general`, all finite fields), and **route-B O2**
+  (#FF-M1B: `TateModule.lean` -- the Weil-pairing/symplectic-determinant law `weilForm_mulVec`,
+  `scaling_eq_det`, `functionfield_RH_of_weil_pairing`) -- all sorry-free and axiom-clean.
+- **Next:** O1 (the scheme-theoretic objects: construct the rank-2 Frobenius representation `A` on the
+  Tate module, the Weil pairing, and $\deg\ge 0$), now the **sole** open input, ~months. O2 is closed
+  (route B, `TateModule.lean`). Everything downstream of `A` is machine-checked. Coordinate with FLT.
+- **Critical path (O1, several expert-months):** the isogeny/degree API and `T_\ell E\cong\mathbb Z^2`
+  + the Weil pairing (Route B) -- or the dual isogeny / Pic⁰ (Route A′). This is the flagship Mathlib
+  contribution; the package (isogenies, degree, dual / Weil pairing, Tate module) is something Mathlib
+  wants and overlaps the FLT project. Note O3 (the trace and point count) is **already in Mathlib**
+  (`localPolynomial`), and O2 ("$\deg$ is a quadratic form") is now done in this repo, so the remaining
+  work is O1 alone.
+- **Risk:** O1 is the genuine scheme-theoretic work. Route B's deps (Tate module, Weil pairing) are
+  larger but FLT-aligned, and with O2 already proved (`TateModule.lean`), the residual is exactly
+  "build $A$ + the Weil pairing + $\deg\ge 0$." Route A′ is self-contained but the theorem of the cube
+  is costly. Route B is now the clear recommendation (O2 free AND already formalized here).
 
 ## Genus-$g$ generalization (out of scope here, noted)
 

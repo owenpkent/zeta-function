@@ -15,6 +15,7 @@ import ZetaRH.HodgeIndex
 import ZetaRH.IsogenyDegree
 import ZetaRH.FunctionFieldRH
 import ZetaRH.LocalFactor
+import ZetaRH.TateModule
 import ZetaRH.EulerSenLinearAlgebra
 import ZetaRH.SenDefiniteObstruction
 import ZetaRH.TraceBlindObstruction
