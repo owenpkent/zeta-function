@@ -81,13 +81,15 @@ Relies on: `Complex.Gamma_mul_Gamma_one_sub`, `Complex.Gamma_ne_zero`,
 `Complex.differentiableAt_Gamma`, `logDeriv_comp`, `logDeriv_mul`, `logDeriv_div`,
 `logDeriv_apply`, `Complex.sin_eq_zero_iff`.
 
-Note on the RHS form: the verified statement spells the cotangent out as
-`cos (pi * s) / sin (pi * s)` to stay agnostic about whether a `Complex.cot` exists in the
-target master. If current master has `Complex.cot`, a maintainer may prefer the RHS
-`(Real.pi : ℂ) * Complex.cot ((Real.pi : ℂ) * s)`; the equality is definitional given
-`Complex.cot = cos / sin`, so the change is a one-line `rw [Complex.cot]` (or `unfold`) at the
-end of the proof, or simply restating the goal. Decide this against master before opening the
-PR (see the checklist in section 4).
+Note on the RHS form (RESOLVED against the pinned Mathlib v4.30.0): `Complex.cot` DOES exist
+(`Mathlib/Analysis/Complex/Trigonometric.lean`, `def cot (z : ℂ) : ℂ`), along with
+`Complex.cot_eq_cos_div_sin : cot x = cos x / sin x`. So a maintainer will almost certainly prefer
+the RHS `(Real.pi : ℂ) * Complex.cot ((Real.pi : ℂ) * s)`. To switch to it, state the theorem goal
+with `Complex.cot` and add `rw [Complex.cot_eq_cos_div_sin]` as the FIRST step of the proof (turning
+the `cot` goal into the verified `cos / sin` form), after which the existing proof body closes
+verbatim. The verified unit currently ships the explicit `cos / sin` form; both are correct, so this
+is purely a maintainer-preference cosmetic. (Re-confirm `Complex.cot` is still present on whatever
+master commit you rebase onto; it has been stable.)
 
 ### 3.3 Duplication
 
@@ -154,11 +156,10 @@ This repository cannot open the PR. The following are manual GitHub steps. Do th
       `namespace Complex ... end Complex` block. Place them after `digamma_apply_add_one`
       (recurrence) and near the special-value lemmas. Add only the imports shake says are
       missing (section 3.4).
-- [ ] **Decide the reflection RHS form.** Check whether current master defines `Complex.cot`.
-      If yes, prefer the RHS `(Real.pi : ℂ) * Complex.cot ((Real.pi : ℂ) * s)` and add the
-      one-line unfolding step at the end of the reflection proof (see section 3.2). If `Complex.cot`
-      is absent, keep the explicit `cos / sin` form as verified. Either way, re-run the proof to
-      confirm it still closes.
+- [ ] **Reflection RHS form (already resolved).** `Complex.cot` is present in v4.30.0
+      (`Complex.cot_eq_cos_div_sin`), so prefer the RHS `(Real.pi : ℂ) * Complex.cot ((Real.pi : ℂ) * s)`:
+      state the goal with `Complex.cot` and add `rw [Complex.cot_eq_cos_div_sin]` as the first proof
+      step (see section 3.2). Re-run the proof to confirm it still closes on your rebase commit.
 - [ ] **Build the touched file.** From the mathlib4 root, build just the target to confirm green:
       `lake build Mathlib.Analysis.SpecialFunctions.Gamma.Digamma`
       (a full `lake build` is unnecessary and slow). Confirm the three `#print axioms` outputs
