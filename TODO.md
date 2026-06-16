@@ -189,7 +189,8 @@ Each item is a `P#` discovery from [`PUBLICATIONS.md`](PUBLICATIONS.md). Run the
 - [x] **P4 outline DONE (2026-06-16): `publications/P4_survey_outline.md`.** Three pillars (all-roads realization / Spec(Z) scorecard / marginal positivity); bundles P3, P5, P7, P8 as evidence. Distinctive thesis = the convergence claim operationalized by the scorecard.
 - [ ] **P4 prose: blocked on prerequisites** (sequence after P1/P2 ship): a full survey-landscape lit-check (position vs Connes 2602.04022, Conrey Notices 2003, Bombieri Clay) + an expert reader for the scorecard's polarization column. Do not start prose before these.
 - [x] **P6 lit-check DONE (2026-06-16): CONFIRMED viable** (not pre-empted). Hasse-Weil bound is absent from every proof assistant + an explicit Mathlib future goal; FLT project does not target it. The one research/formalization candidate that survived its lit-check intact.
-- [ ] **P6 decision (Owen-gated): (a) publish the conditional reduction now, vs (b) aim for the unconditional Hasse bound via the elementary Stepanov-Bombieri route.** Recommendation: (b) is higher-value (unconditional, Mathlib-bound, no FLT dependency); keep the current conditional chain as the (a) fallback.
+- [x] **P6 path (b) scoped DONE (2026-06-16): `publications/P6_hasse_bound_scope.md`.** Key finding: general Stepanov-Bombieri needs Riemann-Roch (Mathlib lacks it), but the elliptic-curve specialization dodges the wall via explicit Weierstrass $R_n$ ($\dim R_n \ge n$ elementary). Milestone plan M-b1.1..M-b1.5.
+- [ ] **P6 next: a one-week M-b1.3 feasibility probe** (can "#zeros = #poles" for the Weierstrass curve be built from current Mathlib without scheme cohomology?). If yes -> build path (b1), the clean unconditional Mathlib-bound Hasse bound. If no -> fall back to the (a) conditional reduction + coordinate the Tate module with FLT. Owen-gated (which to pursue).
 
 ## Open — experimental
 

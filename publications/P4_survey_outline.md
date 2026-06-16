@@ -125,11 +125,29 @@ These are the evidence base, presented as sharp exhibits inside the pillars, not
 - Connes assessment: `docs/03_research/connes_2602_letter_to_riemann.md`.
 - LEARNINGS: #30, #46, #52, #56, #61, #63, #73 (and the P3/P5/P8 finding clusters).
 
+## Lit-check (2026-06-16, provisional: thesis survives)
+
+A first survey-landscape pass found two real competitors and no pre-emption of the convergence thesis:
+
+- **Connes, [arXiv:2602.04022](https://arxiv.org/abs/2602.04022)** (2026): a 165-year overview that
+  argues *from* the noncommutative-geometry / trace-formula program toward RH. Not the convergence
+  framing; it is one program's vantage. Must be positioned against, in full.
+- **"A Brief Survey on the Riemann Hypothesis and Some Attempts to Prove It"**, MDPI *Symmetry* 17(2):225
+  (2025; preprint [202412.2223](https://www.preprints.org/manuscript/202412.2223)): a brief catalog of
+  attempts. Cataloging, not a convergence thesis; lower-tier venue.
+- Noise: several crank / AI-generated "proofs of RH" (noncommutative-spectral-geometry "frameworks", a
+  "Spectral-Geometric Proof ... Lean 4"). Not credible; ignore, but be aware the space is noisy, which
+  *raises* the bar for a credible new survey.
+
+**Provisional verdict:** P4's distinctive thesis (all roads $\to$ one polarization gap, located by the
+Spec($\mathbb{Z}$) scorecard, explained by marginal positivity) is **not pre-empted** by either real
+competitor. It survives the first pass. Two prerequisites remain before prose.
+
 ## Prerequisites before writing the paper (not the outline)
 
-- **A full survey-landscape lit-check.** Beyond Conrey/Bombieri/Connes: the recent prismatic /
-  THH-over-$\mathbb{Z}$ programs, Deninger's program surveys, and any existing "approaches to RH"
-  review from 2020-2026. The convergence thesis must be checked for prior statement.
+- **Full reads of the two competitors** (Connes 2602.04022 and the MDPI Symmetry 2025 survey) plus a
+  deeper pass on the recent prismatic / THH-over-$\mathbb{Z}$ program surveys and Deninger's program,
+  to lock the positioning and confirm the convergence thesis is genuinely unstated elsewhere.
 - **An expert reader** for the arithmetic-geometry pillar (the scorecard's (iii) column makes precise
   claims about what each cohomology does and does not supply).
 

@@ -190,10 +190,11 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **RH-independence.** Surveys the open problem; self-contained as a survey.
 - **Venue / next.** Expository (arXiv math.HO/NT survey or an expository journal). Outline written:
   [`publications/P4_survey_outline.md`](publications/P4_survey_outline.md). Scope decided: it **bundles
-  P3, P5, P7, P8** as evidence inside the three pillars. **Next (sequenced after P1/P2 ship):** a full
-  survey-landscape lit-check (must position against Connes [2602.04022](https://arxiv.org/abs/2602.04022),
-  Conrey Notices 2003, Bombieri Clay) + an expert reader for the scorecard's polarization column,
-  before any prose. This is the long pole.
+  P3, P5, P7, P8** as evidence inside the three pillars. **Survey lit-check (provisional, 2026-06-16):
+  thesis NOT pre-empted** by the two real competitors (Connes [2602.04022](https://arxiv.org/abs/2602.04022)
+  argues from NCG; the MDPI *Symmetry* 2025 brief survey catalogs attempts); P4's convergence-plus-scorecard
+  framing is distinct. **Next (sequenced after P1/P2 ship):** full reads of both competitors + an expert
+  reader for the scorecard's polarization column, before any prose. This is the long pole.
 
 ### P5 {#p5}
 **No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant.** 🟡 DEVELOPING
@@ -270,8 +271,13 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
     cleaner artifact, and a natural Mathlib target) without waiting on `A`. A different formalization
     effort, not an extension of the current chain.
 
-  **Next:** decide (a) vs (b). Recommendation: scope (b) as the higher-value target (unconditional,
-  Mathlib-bound, no FLT dependency), keeping the current conditional chain as the (a) fallback.
+  **Next:** decide (a) vs (b). Scoping done: [`publications/P6_hasse_bound_scope.md`](publications/P6_hasse_bound_scope.md).
+  Key finding: the general (b) route hits the Riemann-Roch wall (Mathlib lacks scheme sheaf cohomology),
+  but the **elliptic-curve specialization dodges it** (the spaces $R_n$ are the explicit Weierstrass
+  monomials, so $\dim R_n \ge n$ is elementary). Recommendation: gate path (b1) on a one-week
+  feasibility probe of milestone M-b1.3 (build "#zeros = #poles" for the Weierstrass curve from current
+  Mathlib without scheme cohomology); if it passes, (b1) is the clean Mathlib-bound target, else fall
+  back to the (a) conditional reduction and coordinate the Tate module with FLT.
 
 ### P7 {#p7}
 **RH is Π⁰₁, and the Lean kernel witness.** 🟡 DEVELOPING
@@ -361,3 +367,9 @@ Kept so they are not re-proposed as novel.
   the one research/formalization candidate that survived its lit-check intact. Strategic fork recorded:
   (a) publish the conditional reduction now, vs (b) aim for the unconditional Hasse bound via the
   elementary Stepanov-Bombieri route (recommended; Mathlib-bound, no FLT dependency).
+- 2026-06-16: **P6 path (b) scoped** ([`publications/P6_hasse_bound_scope.md`](publications/P6_hasse_bound_scope.md))
+  and **P4 survey lit-checked (provisional, survives).** P6 scoping: general Stepanov-Bombieri hits the
+  Riemann-Roch wall, but the elliptic-curve specialization dodges it (explicit Weierstrass $R_n$);
+  recommend gating (b1) on a one-week M-b1.3 feasibility probe (#zeros = #poles without scheme
+  cohomology). P4 lit-check: thesis not pre-empted by Connes 2602.04022 or the MDPI Symmetry 2025
+  brief survey; full reads + expert reader still required before prose.
