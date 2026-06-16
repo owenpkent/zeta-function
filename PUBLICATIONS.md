@@ -190,11 +190,13 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **RH-independence.** Surveys the open problem; self-contained as a survey.
 - **Venue / next.** Expository (arXiv math.HO/NT survey or an expository journal). Outline written:
   [`publications/P4_survey_outline.md`](publications/P4_survey_outline.md). Scope decided: it **bundles
-  P3, P5, P7, P8** as evidence inside the three pillars. **Survey lit-check (provisional, 2026-06-16):
-  thesis NOT pre-empted** by the two real competitors (Connes [2602.04022](https://arxiv.org/abs/2602.04022)
-  argues from NCG; the MDPI *Symmetry* 2025 brief survey catalogs attempts); P4's convergence-plus-scorecard
-  framing is distinct. **Next (sequenced after P1/P2 ship):** full reads of both competitors + an expert
-  reader for the scorecard's polarization column, before any prose. This is the long pole.
+  P3, P5, P7, P8** as evidence inside the three pillars. **Survey lit-check (2026-06-16, deep read of the
+  main competitor): thesis CONFIRMED distinctive.** A deep read of Connes [2602.04022](https://arxiv.org/abs/2602.04022)
+  (the strongest competitor) found all three distinctive moves absent there: no convergence thesis (he
+  argues from NCG), no Spec(ℤ) scorecard, Weil positivity treated as one reformulation among many, D-H
+  not used as a discipline. The MDPI *Symmetry* 2025 survey is a flat catalog. **Remaining prerequisite:**
+  an expert reader for the scorecard's (iii) polarization column. Then prose. Still the long pole, but
+  de-risked: the thesis is novel against the field's best recent survey.
 
 ### P5 {#p5}
 **No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant.** 🟡 DEVELOPING
@@ -271,13 +273,15 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
     cleaner artifact, and a natural Mathlib target) without waiting on `A`. A different formalization
     effort, not an extension of the current chain.
 
-  **Next:** decide (a) vs (b). Scoping done: [`publications/P6_hasse_bound_scope.md`](publications/P6_hasse_bound_scope.md).
-  Key finding: the general (b) route hits the Riemann-Roch wall (Mathlib lacks scheme sheaf cohomology),
-  but the **elliptic-curve specialization dodges it** (the spaces $R_n$ are the explicit Weierstrass
-  monomials, so $\dim R_n \ge n$ is elementary). Recommendation: gate path (b1) on a one-week
-  feasibility probe of milestone M-b1.3 (build "#zeros = #poles" for the Weierstrass curve from current
-  Mathlib without scheme cohomology); if it passes, (b1) is the clean Mathlib-bound target, else fall
-  back to the (a) conditional reduction and coordinate the Tate module with FLT.
+  **Next:** scoping + M-b1.3 probe DONE ([`publications/P6_hasse_bound_scope.md`](publications/P6_hasse_bound_scope.md),
+  probed against the Mathlib v4.30 source). **Verdict: no cheap unconditional path.** Mathlib has the
+  EC development (Affine/Projective/Jacobian/Weierstrass/DivisionPolynomial/LFunction/Reduction) but
+  **no curve divisor theory at all**, so M-b1.3 ("#zeros = #poles") cannot be borrowed; it needs either
+  general curve divisor theory (blocked) or an elementary resultant build (weeks). **Both P6 paths are
+  multi-month** (path (a) needs the Tate module / deg-as-quadratic-form, FLT-adjacent; path (b1) needs
+  the resultant build). The only finished, citable artifact is the path-(a) **conditional reduction**.
+  Decision: ship the conditional reduction now (modest, honest) and/or budget an unconditional build as
+  a real multi-month project (route (b1)(ii), M-b1.3 first), Owen-gated.
 
 ### P7 {#p7}
 **RH is Π⁰₁, and the Lean kernel witness.** 🟡 DEVELOPING
@@ -373,3 +377,15 @@ Kept so they are not re-proposed as novel.
   recommend gating (b1) on a one-week M-b1.3 feasibility probe (#zeros = #poles without scheme
   cohomology). P4 lit-check: thesis not pre-empted by Connes 2602.04022 or the MDPI Symmetry 2025
   brief survey; full reads + expert reader still required before prose.
+- 2026-06-16: **P6 M-b1.3 probe resolved against the Mathlib v4.30 source.** Mathlib has **no curve
+  divisor theory** (no Weil/Cartier divisor, degree, Picard, or Riemann-Roch; the EC dev avoids
+  divisors), so M-b1.3 needs either curve divisor theory (blocked) or an elementary resultant build
+  (weeks). **Both P6 paths are multi-month**; the only finished artifact is the path-(a) conditional
+  reduction. Recommendation: ship the conditional reduction now and/or budget an unconditional build
+  (route (b1)(ii)) as a real project. The probe did its job: killed the cheap-win hope, located the
+  exact blocker.
+- 2026-06-16: **P4 thesis CONFIRMED distinctive** via a deep read of the main competitor (Connes
+  2602.04022): no convergence thesis there, no Spec(ℤ) scorecard, Weil positivity is one reformulation
+  among many, D-H not used as a discipline. P4's convergence-plus-scorecard-plus-D-H framing is novel
+  against the field's best recent survey. The only remaining prerequisite before prose is an expert
+  reader for the scorecard's polarization column. Positioning recorded in the P4 outline.

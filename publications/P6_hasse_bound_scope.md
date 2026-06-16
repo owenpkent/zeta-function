@@ -50,25 +50,31 @@ R_3 = \langle 1, x, y, x^2\rangle,\ \dots$$
 3$). So $\dim R_n \ge n$ for $n \ge 1$ is **proved by exhibiting the basis**, with no general
 Riemann-Roch and no sheaf cohomology. This is the workaround to the Mathlib RR wall.
 
-## Mathlib dependency audit
+## Mathlib dependency audit (probed against the v4.30.0 source cache, 2026-06-16)
 
 **Present (usable):**
-- Weierstrass curves, the affine model, and the group law (Angdinata-Xu, ITP 2023;
-  `Mathlib.AlgebraicGeometry.EllipticCurve.*`).
+- A substantial `Mathlib.AlgebraicGeometry.EllipticCurve.*`: `Affine`, `Projective`, `Jacobian`,
+  `Weierstrass`, `DivisionPolynomial`, `Reduction`, and an `LFunction.lean` (the Hasse-Weil
+  $L$-function). The group law (Angdinata-Xu, ITP 2023) is here.
 - Finite fields, $\sqrt q$ bounds, basic field theory.
-- The repo's own `IsogenyDegree.lean` / `FunctionFieldRH.lean` (the path-(a) downstream chain), reusable
-  for the final $t^2 \le 4q \Rightarrow |\alpha|^2 = q$ step if the bound is obtained.
+- `Mathlib.NumberTheory.FunctionField` (the *rational* function field $\mathbb{F}_q(t)$ as a global
+  field, with places + ring of integers) and `Mathlib.AlgebraicGeometry.FunctionField` (the function
+  field of a scheme as the generic-point stalk, a definition).
+- The repo's own `IsogenyDegree.lean` / `FunctionFieldRH.lean` (the path-(a) downstream chain, pure
+  linear algebra), reusable for the final $t^2 \le 4q \Rightarrow |\alpha|^2 = q$ step.
 
-**Absent (the real work), roughly in dependency order:**
-1. The pole-order filtration $R_n$ on the Weierstrass function field and $\dim R_n \ge n$ (elementary,
-   but needs the function field + a pole-order valuation at $\infty$; partially constructible from
-   Mathlib's coordinate ring).
-2. The Frobenius endomorphism on $E/\mathbb{F}_q$ and the fact that its fixed points are exactly
-   $E(\mathbb{F}_q)$ (needs Frobenius on the curve; status unclear, likely partial).
-3. Rational functions on $C \times C$ and the pole-order bookkeeping for $V = R_\ell \otimes R_m$.
-4. "#zeros = #poles on a projective curve" (a divisor-degree statement; this is the one piece closest
-   to needing real divisor theory, and the likeliest hidden cost).
-5. The lower-bound trick ($\mathbb{F}_{q^2}$ non-residue or the functional equation).
+**Absent (the real work):**
+1. **No algebraic-curve divisor theory at all.** A source grep finds **no** Weil/Cartier divisor, no
+   divisor degree, no Picard group, no Riemann-Roch for curves. The only `*Divisor*` of a function is
+   `Analysis/Meromorphic/Divisor.lean` (complex-analytic, wrong setting); every other `*Divisor*` file
+   is `NonZeroDivisors` / arithmetic divisor functions / `ChainOfDivisors`. The EC development is built
+   **without** divisors (consistent with the Lean precedent that did the group law via the ideal class
+   group, ~1500 lines, precisely to avoid the ~6500-line divisor route). So **M-b1.3 cannot reuse
+   existing machinery**.
+2. The pole-order filtration $R_n$ on the Weierstrass function field and $\dim R_n \ge n$ (M-b1.1):
+   elementary but to be built from the coordinate ring + a pole-order valuation at $\infty$.
+3. Frobenius on $E/\mathbb{F}_q$ with fixed points $= E(\mathbb{F}_q)$ (M-b1.2): to be built.
+4. The lower-bound trick (M-b1.5).
 
 ## Milestone plan (path b1, elliptic curves)
 
@@ -78,22 +84,35 @@ Riemann-Roch and no sheaf cohomology. This is the workaround to the Mathlib RR w
 - **M-b1.4** the auxiliary function on $C \times C$ + the injectivity/degree-count upper bound.
 - **M-b1.5** the lower bound; assemble $|t| \le 2\sqrt q$; wire into the existing eigenvalue step.
 
-## Verdict
+## Verdict (M-b1.3 probe resolved, 2026-06-16)
 
-**Path (b1) is the better unconditional target, but it is still a multi-month formalization.** It is
-genuinely more tractable than (a) because it avoids the Tate module / Galois-representation machinery
-(no FLT dependency) and, specialized to elliptic curves, avoids general Riemann-Roch. The honest cost
-center is M-b1.3 (divisor degree / #zeros = #poles), the one step that brushes against the divisor
-theory Mathlib only partially has; it should be the **first feasibility probe** before committing,
-because if it needs general scheme cohomology the wall is back.
+**There is no cheap unconditional path in Mathlib v4.30.** The probe killed the hope that (b1) was a
+quick win and located the precise blocker: Mathlib has **no curve divisor theory**, so M-b1.3
+("#zeros = #poles") cannot be borrowed. Two sub-routes for M-b1.3:
 
-**Recommendation.**
-- **Short term:** the only *finished* artifact is the path-(a) conditional reduction. If a paper is
-  wanted now, it is "a conditional Lean formalization reducing function-field RH to the existence of
-  $A$" (modest, honest).
-- **Higher-value target:** path (b1). **Gate it on a one-week M-b1.3 feasibility probe** (can
-  #zeros = #poles for the Weierstrass curve be built from current Mathlib without scheme cohomology?).
-  If yes, (b1) is a clean, citable, Mathlib-bound contribution and the right thing to build. If no,
-  fall back to the conditional reduction and coordinate the Tate-module piece with the FLT project.
+- **(i) general curve divisor theory:** BLOCKED. Building Weil divisors + degree + "principal $\Rightarrow$
+  degree 0" for curves is itself a major Mathlib contribution Mathlib has deliberately avoided.
+- **(ii) elementary resultant route (elliptic-curve-specific):** PLAUSIBLE but substantial. A function
+  $a(x) + b(x)\,y \in R_n$ has poles only at $\infty$, and its affine zeros are the roots of the
+  resultant $a(x)^2 - b(x)^2 (x^3 + ax + b)$, whose degree equals the pole order at $\infty$. So
+  #zeros = #poles becomes a polynomial-degree identity, doable without divisor theory but needing the
+  resultant API + careful multiplicity bookkeeping at $\infty$ and at branch points ($y = 0$, $b(x) =
+  0$). Weeks, not days.
 
-This is the one research/formalization candidate that survived its lit-check; it is worth the probe.
+So **both P6 paths require months of Mathlib-absent infrastructure**: path (a) needs the Tate module /
+deg-as-quadratic-form (FLT-adjacent), path (b1) needs either curve divisor theory (i) or the explicit
+resultant build (ii). There is no shortcut.
+
+**Recommendation (updated).**
+- **The only finished, citable artifact is the path-(a) conditional reduction.** If a paper is wanted
+  in the near term, it is exactly that: "a conditional Lean formalization reducing function-field RH
+  for elliptic curves to the existence of the Frobenius Tate-module representation $A$." Modest, honest,
+  real, and done.
+- **An unconditional Lean Hasse bound is a genuine multi-month project either way.** If pursued, route
+  (b1)(ii) (the explicit resultant build) is the most self-contained (no FLT dependency, no scheme
+  cohomology), and **M-b1.3(ii) is the first build target to de-risk**, not a one-week probe. Route (a)
+  is the alternative and is best coordinated with whatever Tate-module / Galois-representation
+  infrastructure the FLT project produces.
+
+This is the one research/formalization candidate that survived its lit-check, but the probe shows it is
+a project, not a paper-in-waiting. Decide deliberately.

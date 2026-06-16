@@ -125,23 +125,38 @@ These are the evidence base, presented as sharp exhibits inside the pillars, not
 - Connes assessment: `docs/03_research/connes_2602_letter_to_riemann.md`.
 - LEARNINGS: #30, #46, #52, #56, #61, #63, #73 (and the P3/P5/P8 finding clusters).
 
-## Lit-check (2026-06-16, provisional: thesis survives)
+## Lit-check (2026-06-16: thesis CONFIRMED distinctive after a deep read of the main competitor)
 
-A first survey-landscape pass found two real competitors and no pre-emption of the convergence thesis:
+The strongest competitor was read in depth; the result is decisively in P4's favor.
 
-- **Connes, [arXiv:2602.04022](https://arxiv.org/abs/2602.04022)** (2026): a 165-year overview that
-  argues *from* the noncommutative-geometry / trace-formula program toward RH. Not the convergence
-  framing; it is one program's vantage. Must be positioned against, in full.
-- **"A Brief Survey on the Riemann Hypothesis and Some Attempts to Prove It"**, MDPI *Symmetry* 17(2):225
-  (2025; preprint [202412.2223](https://www.preprints.org/manuscript/202412.2223)): a brief catalog of
-  attempts. Cataloging, not a convergence thesis; lower-tier venue.
-- Noise: several crank / AI-generated "proofs of RH" (noncommutative-spectral-geometry "frameworks", a
-  "Spectral-Geometric Proof ... Lean 4"). Not credible; ignore, but be aware the space is noisy, which
-  *raises* the bar for a credible new survey.
+**Connes, [arXiv:2602.04022](https://arxiv.org/abs/2602.04022)** (2026), a 165-year overview + a
+"Letter to Riemann" original contribution (the prolate-spheroidal / Weil-quadratic-form method). The
+deep read found that all three of P4's distinctive moves are **absent** there:
 
-**Provisional verdict:** P4's distinctive thesis (all roads $\to$ one polarization gap, located by the
-Spec($\mathbb{Z}$) scorecard, explained by marginal positivity) is **not pre-empted** by either real
-competitor. It survives the first pass. Two prerequisites remain before prose.
+1. **No convergence thesis.** Connes acknowledges multiple approaches but argues *from* one program
+   (noncommutative geometry / trace formula) toward RH. He does not claim the approaches converge on a
+   single missing ingredient. P4's "all roads $\to$ one polarization gap" is not his framing.
+2. **No Spec($\mathbb{Z}$) scorecard.** He discusses cohomology theories (étale, de Rham, crystalline,
+   motives) but does **not** rank them against an RH-equivalent-polarization requirement. P4's central
+   figure has no analogue there.
+3. **Weil positivity is "one equivalent reformulation among many,"** not framed as THE universal
+   polarization every approach lacks. And the **Davenport-Heilbronn discipline is not mentioned.**
+
+   Note: Connes' "Letter to Riemann" uses exactly the prolate-spheroidal method that P4's Pillar 3 / P8
+   engages with, so cite 2602.04022 as both the competitor survey *and* the source of that method (the
+   repo's own assessment is [`connes_2602_letter_to_riemann.md`](../docs/03_research/connes_2602_letter_to_riemann.md)).
+
+**"A Brief Survey on the RH and Some Attempts to Prove It"**, MDPI *Symmetry* 17(2):225 (2025): a brief
+flat catalog of attempts (confirmed at abstract level; full text paywalled). No convergence thesis, no
+scorecard. Lower-tier venue. Not a competitor on thesis.
+
+Noise: several crank / AI-generated "proofs of RH". Not credible, but the noisy space *raises* the bar
+for a credible new survey, which the scorecard + D-H discipline help clear.
+
+**Verdict:** P4's distinctive thesis (all roads $\to$ one polarization gap, located by the
+Spec($\mathbb{Z}$) scorecard, explained by marginal positivity, disciplined by D-H) is **confirmed
+distinctive** against the strongest competitor. The survey is worth writing. One prerequisite remains:
+an expert reader for the scorecard's (iii) polarization column.
 
 ## Prerequisites before writing the paper (not the outline)
 
