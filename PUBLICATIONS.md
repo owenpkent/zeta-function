@@ -184,9 +184,12 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   expository/landscape work, valuable precisely as a map.
 - **D-H soundness.** The thesis is built on the discipline (P3 is a sub-section).
 - **RH-independence.** Surveys the open problem; self-contained as a survey.
-- **Venue / next.** Expository (arXiv math.HO/NT survey or an expository journal). **Next:** an outline
-  and a scope decision (does it bundle P3, P7, P8, or stay tight?). This is the largest item; treat as
-  the long pole.
+- **Venue / next.** Expository (arXiv math.HO/NT survey or an expository journal). Outline written:
+  [`publications/P4_survey_outline.md`](publications/P4_survey_outline.md). Scope decided: it **bundles
+  P3, P5, P7, P8** as evidence inside the three pillars. **Next (sequenced after P1/P2 ship):** a full
+  survey-landscape lit-check (must position against Connes [2602.04022](https://arxiv.org/abs/2602.04022),
+  Conrey Notices 2003, Bombieri Clay) + an expert reader for the scorecard's polarization column,
+  before any prose. This is the long pole.
 
 ### P5 {#p5}
 **No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant.** 🟡 DEVELOPING
@@ -326,3 +329,8 @@ Kept so they are not re-proposed as novel.
   instrument (Schur counting law + Epstein generalization + CI gate), recommended home P4. Added the
   **Portfolio read** section: standalone-publishable = {P1, P2, P6}; everything else folds into the
   survey P4.
+- 2026-06-16: **P4 outline written** ([`publications/P4_survey_outline.md`](publications/P4_survey_outline.md)).
+  Scope decided (bundles P3, P5, P7, P8 as evidence in three pillars: all-roads realization /
+  Spec(ℤ) scorecard / marginal positivity). Distinctive thesis vs existing surveys = the convergence
+  claim operationalized by the scorecard. Sequenced after P1/P2 ship + a full survey lit-check + an
+  expert reader.

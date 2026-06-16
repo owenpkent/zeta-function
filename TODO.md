@@ -186,7 +186,8 @@ Each item is a `P#` discovery from [`PUBLICATIONS.md`](PUBLICATIONS.md). Run the
 - [x] **P3 lit-check DONE (2026-06-16): thesis is canonical Selberg-class folklore** (Bombieri Clay, Conrey Notices AMS 2003). Dropped to DEVELOPING; residue = the quantitative instrument (Schur counting law + Epstein). Recommended home: fold into P4.
 - [ ] **Portfolio decision (Owen-gated): the standalone-publishable set is {P1, P2 Mathlib, P6 formalization}; P3/P5/P7/P8 fold into the P4 survey.** Confirm this shape before investing drafting effort.
 - [ ] **P8 (analytic note): lit-check the stealth-window quantification vs Connes arXiv:2602.04022** to isolate the genuinely-new delta (exp(-4πx) rate + the D-H-aware defect).
-- [ ] **P4 (survey, long pole): outline the all-roads / marginal-positivity / Spec(Z)-scorecard expository paper** and decide the bundle (does it absorb P3, P7, P8?).
+- [x] **P4 outline DONE (2026-06-16): `publications/P4_survey_outline.md`.** Three pillars (all-roads realization / Spec(Z) scorecard / marginal positivity); bundles P3, P5, P7, P8 as evidence. Distinctive thesis = the convergence claim operationalized by the scorecard.
+- [ ] **P4 prose: blocked on prerequisites** (sequence after P1/P2 ship): a full survey-landscape lit-check (position vs Connes 2602.04022, Conrey Notices 2003, Bombieri Clay) + an expert reader for the scorecard's polarization column. Do not start prose before these.
 - [ ] **P6 (formalization): decide conditional-paper vs wait-for-O1** for the function-field RH Lean chain; scope the write-up if conditional.
 
 ## Open — experimental
