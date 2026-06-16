@@ -148,10 +148,13 @@ $55$, $69$, and $123$, yet they sum to a form of norm about $0.33$, a cancellati
 one, and the archimedean block on its own is indefinite. The positivity is not a cushion plus a small
 perturbation; it is a near-exact cancellation that lands just on the positive side.
 
-Sharper still, the margin collapses doubly exponentially in the cutoff. Through the Slepian
-prolate-concentration eigenvalues, the minimal eigenvalue behaves like $\varepsilon(x) \sim e^{-4\pi x}$
-as the prime cutoff $x$ grows. It crosses below double-precision by $x \approx 3$ and is around
-$10^{-71}$ at the cutoffs the constructive programs need. This is why any finite, structure-blind
+Sharper still, the margin collapses doubly exponentially in the cutoff. The exponential decay of the
+Slepian prolate-concentration eigenvalues is classical ($1 - \lambda \sim e^{-\pi s}$, Fuchs 1964,
+Slepian 1965, Widom), and Connes applies the same prolate operator to the truncated Weil form, his
+Figure 1 plotting the smallest eigenvalue tracking $1 - \chi_2 \sim e^{-4\pi e^L}$ (his "near radical").
+In the project's prime-cutoff variable this is $\varepsilon(x) \sim e^{-4\pi x}$: it crosses below
+double-precision by $x \approx 3$ and is around $10^{-71}$ at the cutoffs the constructive programs
+need. This is why any finite, structure-blind
 computation sees $\zeta$ and Davenport-Heilbronn as indistinguishable: the off-line obstruction sits
 below the cancellation floor, in a stealth window.
 
@@ -206,6 +209,11 @@ property, and the search has been narrowed to exactly that.
   $\gamma\approx 85.7$, $e^{\gamma}\approx 10^{37}$) **verified 2026-06-16 against
   `soft_detector_wall.md`** (the frozen consolidation of LEARNINGS #52, #56, #63). A final check against
   the raw `e3v` / `e3y` outputs is still prudent immediately before submission.
+- §5 attribution (P8 lit-check, 2026-06-16): the $e^{-4\pi x}$ rate is **prior, not project-novel** -
+  classical prolate asymptotics (Fuchs 1964, Slepian 1965, Widom) + Connes' Figure 1 ($1-\chi_2 \sim
+  e^{-4\pi e^L}$, his "near radical"). Cite both; the project's residue is the cancellation anatomy and
+  the D-H-awareness. A human should pin Connes' exact figure/equation number (the arXiv-HTML fetch could
+  not re-surface it).
 - §2 deliberately states only the Level-3-vs-Level-4 cut precisely and defers the full four-level
   definitions to the cited project doc, to avoid overstating a framing not yet written up for referees.
 - §3 keeps the realization claims at the level the project has validated (Hesselholt determinant

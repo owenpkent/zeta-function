@@ -112,7 +112,7 @@ the real standalone output.
 | [P5](#p5) | No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant | Negative (closed branch) | Rigorous (line-restriction lemma) + SDP/LP certificates | 🟡 DEVELOPING | arXiv math.NT note / fold into P4 | lit-checked |
 | [P6](#p6) | Lean formalization of function-field RH for elliptic curves (deg = det route) | Formalization (positive) | Lean, axiom-clean (conditional on existence of A) | 🟡 DEVELOPING | Formalization venue | lit-checked ✓ viable |
 | [P7](#p7) | RH is Π⁰₁ + the Lean kernel witness | Expository note | Lean anchors; logical fact classical | 🟡 DEVELOPING | Note / bundle into P4 | evaluated |
-| [P8](#p8) | The stealth window quantified (e^{-4πx} wall, 370× cancellation, D-H-aware defect) | Analytic note | Numerical + prolate analysis | 🟡 DEVELOPING | Section of P4 | evaluated |
+| [P8](#p8) | The stealth window quantified (e^{-4πx} wall, 370× cancellation, D-H-aware defect) | Analytic note | Numerical + prolate analysis | 🟡 DEVELOPING | Fold into P4 (no standalone) | lit-checked: rate is prior (Fuchs+Connes) |
 
 ---
 
@@ -345,19 +345,34 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   (primes to e^γ), not intrinsic blindness (LEARNINGS #63).
 - **Verification.** Numerical + the prolate-concentration analysis (semi-rigorous). The collapse rate
   is archimedean (shared with D-H); the floor is the discriminator.
-- **Novelty (adversary LOW-8, sharpened).** Overlaps Connes' constructive Weil positivity (the
-  project's stealth window = Connes' ε(λ) near-radical; see the assessment of arXiv:2602.04022 in
-  [`docs/03_research/connes_2602_letter_to_riemann.md`](docs/03_research/connes_2602_letter_to_riemann.md)).
-  The exp(−4πx) **rate is most likely Connes' own** (per LEARNINGS #52, Connes' Figure 1 *is* the
-  exp(−4π·) law and the project recovered *his* constant), so it is **not** project-novel and must be
-  cited to Connes. The genuinely-new residue is the **D-H-aware defect** D(γ) = |1 − 2β| (0 for ζ,
-  0.617 spike for D-H), which gives each L its true zero locus from one mechanism. **Open action:**
-  confirm the rate is Connes' in 2602.04022 §6.x, then frame P8 as "rate cited from Connes, defect
-  new." Do not cite P8's rate as a quantitative core until this is done.
+- **Novelty (lit-checked 2026-06-16, LOW-8 RESOLVED): the rate is doubly prior, not project-novel.**
+  (i) The exponential collapse of prolate concentration eigenvalues, `1 − λ ~ e^{−πs}`, is **classical
+  analysis** (Fuchs 1964, *On the eigenvalues of an integral equation arising in the theory of
+  band-limited signals*; Slepian 1965; Widom), decades before any RH application. (ii) Connes
+  2602.04022 applies the same **Slepian-Pollak-Landau** prolate operator to the truncated Weil form,
+  and his **Figure 1** plots the smallest eigenvalue tracking `1 − χ₂ ~ e^{−4π e^L}` (his "near radical
+  of the Weil form"); the project's `e3v` is an **independent re-measurement** of exactly this (the
+  project's own dossier:
+  [`connes_2602_letter_to_riemann.md`](docs/03_research/connes_2602_letter_to_riemann.md) §3, "two
+  instruments, one wall"). So the `e^{−4πx}` rate must be cited to **Fuchs/Slepian + Connes' Figure 1**,
+  never as project-novel. The scalar defect `D(γ) = |1 − 2β|` is itself trivial (the project's own
+  #61/#63 demotion: `|1 − 2Re(ρ)| = 0` is a tautology). **P8's only project-specific residue** is the
+  **quantitative anatomy of the marginal cancellation** (e3y/#56: the 55/69/123 → 0.33 three-block
+  decomposition, A_arch indefinite, correcting the old "cushion" claim) plus the **D-H-awareness** of
+  the reading (Connes never uses D-H, confirmed absent from 2602.04022). Those are computational
+  exhibits, not theorems.
+- **Verdict: NO standalone novelty. Fold into P4 Pillar 3.** Carry the citations: the rate to Fuchs
+  1964 + Connes Figure 1; the stealth-window/near-radical equivalence to Connes' ε(λ); the project's
+  exhibits (cancellation anatomy + D-H-awareness) as the one new framing.
+- **Caveat:** the live re-fetch of 2602.04022 did not independently re-surface Figure 1 (arXiv-HTML
+  figures/equations render poorly to the fetch tool); the citation rests on the project's careful
+  internal dossier. A human should eyeball Connes' Figure 1 / §6.x to fix the exact figure/equation
+  number before submission.
 - **D-H soundness.** The whole point is the D-H-aware defect.
 - **RH-independence.** Self-contained as an analytic benchmark.
-- **Venue / next.** A section of P4, or a standalone analytic note if the delta vs. Connes survives.
-  **Next:** the Connes lit check.
+- **Venue / next.** **Fold into P4 Pillar 3 (decided; the Connes lit-check is done).** No standalone
+  note. **Next:** carry the Fuchs-1964 + Connes-Figure-1 citation into the P4 §5 prose (done), and have
+  a human pin Connes' exact figure/equation number before submission.
 
 ---
 
@@ -446,6 +461,14 @@ Kept so they are not re-proposed as novel.
   **LOW-7** P4 count inconsistencies. **LOW-8** P8's exp(−4πx) rate is Connes', not project-novel.
   What PASSED the attack: the §5 marginal-positivity numbers, the P1/P2 Mathlib novelty, the P6 core
   absence claim, the live D-H control (smoke test 9/9).
+- 2026-06-16: **P8 rate-vs-Connes lit-check DONE (adversary LOW-8 resolved).** The `e^{−4πx}` collapse
+  rate is doubly prior: classical prolate asymptotics (Fuchs 1964, Slepian 1965, Widom, `1−λ~e^{−πs}`)
+  + Connes' Figure 1 (`1−χ₂~e^{−4π e^L}`, his "near radical"; the prolate operator is
+  Slepian-Pollak-Landau). The scalar defect `D(γ)=|1−2β|` is trivial (project's own #61/#63 demotion).
+  P8's only residue = the cancellation anatomy (e3y) + D-H-awareness (Connes uses no D-H). Verdict: **no
+  standalone novelty; fold into P4 Pillar 3** with the rate cited to Fuchs + Connes. Citations carried
+  into the P4 §5 draft. (A human should pin Connes' exact figure number; the arXiv-HTML fetch could not
+  re-surface it.)
 - 2026-06-16: **adversary HIGH-2 repo-hygiene fixes landed.** Disambiguated the LEARNINGS.md #21
   numbering collision (a banner on the Session-003 cluster: the `**Finding #N**` labels are
   session-local and collide with the canonical `### N.` headers; cite by experiment ID). Refreshed
