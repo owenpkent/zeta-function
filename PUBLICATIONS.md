@@ -240,10 +240,11 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   verified ratio = 1.0000 in the `.npz`), and Putinar/Schmüdgen SOS (4E.8 / `e4e8_sos_sdp`, LEARNINGS
   #15). Cite escape routes by **experiment ID**, not LEARNINGS number: the adversary (HIGH-2) found
   4E.9 was mis-cited to "LEARNINGS #21", which under the doc's canonical numbering is the function-field
-  Hodge index (`### 21.` / e2g); LEARNINGS.md has a #21 numbering collision (header at line 646 vs an
-  embedded "Finding #21" at line 1256). Two repo-hygiene fixes are pending before P5 drafts cleanly:
-  resolve that collision, and add 4E.8/4E.9 to the stale `experiments/zero_free/README.md` (which still
-  lists 4E.8 as "open").
+  Hodge index (`### 21.` / e2g). **Both repo-hygiene fixes are now DONE (2026-06-16):** the LEARNINGS.md
+  Session-003 cluster carries a disambiguation banner (cite by experiment ID; the `**Finding #N**`
+  labels are session-local and collide with the canonical `### N.` headers), and
+  `experiments/zero_free/README.md` now documents 4E.8 and 4E.9 (no longer lists 4E.8 as "open"). P5 can
+  now cite a consistent source.
 - **Verification.** The line-restriction lemma is rigorous and elementary; the escape-route closures
   carry LP/SDP optimality certificates (cvxpy + CLARABEL/SCS). Self-contained.
 - **Novelty (post-lit-check, honest).** The **1D part is NOT novel**: the cosine-polynomial method, the
@@ -445,3 +446,9 @@ Kept so they are not re-proposed as novel.
   **LOW-7** P4 count inconsistencies. **LOW-8** P8's exp(−4πx) rate is Connes', not project-novel.
   What PASSED the attack: the §5 marginal-positivity numbers, the P1/P2 Mathlib novelty, the P6 core
   absence claim, the live D-H control (smoke test 9/9).
+- 2026-06-16: **adversary HIGH-2 repo-hygiene fixes landed.** Disambiguated the LEARNINGS.md #21
+  numbering collision (a banner on the Session-003 cluster: the `**Finding #N**` labels are
+  session-local and collide with the canonical `### N.` headers; cite by experiment ID). Refreshed
+  `experiments/zero_free/README.md`: added the 4E.8 (SOS) and 4E.9 (Heath-Brown multi-zero SDP) sections
+  and corrected the stale "4E.8 is the remaining open direction" to "the LP/SDP/SOS family is fully
+  closed." P5's cited source is now consistent.

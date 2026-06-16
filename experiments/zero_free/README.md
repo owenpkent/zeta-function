@@ -485,17 +485,38 @@ This is research-grade combination beyond this experiment. The translation to a 
 - `e4e7_multi_zero_lp.npz`: single-zero / two-zero / balanced-sum / Heath-Brown data
 - `e4e7_multi_zero_lp.png`: three-panel summary (single-zero shape vs N, joint vs independent log-scale, balanced-sum LP sweep)
 
+## 4E.8: Polynomial-ideal SOS via SDP ([e4e8_sos_sdp.py](e4e8_sos_sdp.py), [.md](e4e8_sos_sdp.md))
+
+**Status:** complete. **The SOS/SDP relaxation does NOT escape the 4E.3 line-restriction lemma; it saturates the Fejér wall exactly.** The last LP/SDP-*style* escape route (LEARNINGS finding #12 taxonomy).
+
+Replaces 4E.6's LP K-point sampling with a direct semidefinite (cos $\times$ cos SOS) formulation (cvxpy + CLARABEL). Four findings:
+
+- **Phase A:** the cos $\times$ cos SOS-SDP matches the 4E.2 K-sampling LP to floating point, so the +25% Cauchy-Schwarz gap is **real**, not a sampling artifact (2D Fejér-Riesz holds in the tested bidegree-(2,2) slice, though the general 2D statement fails per Scheiderer).
+- **Phase C:** full-trig SOS (allowing $\sin$ terms) gives the same cos $\times$ cos projection as cos $\times$ cos SOS; the cross terms do not help.
+- **Phase D (decisive):** an SDP directly maximizing $c_1$ of the $\phi = 2\theta$ line restriction over cos $\times$ cos SOS at bidegree (2,2) **saturates the 1D Fejér bound at effective degree 6 exactly** (ratio $1.0000$), via $Q = (1+\cos\theta)(1+\cos\phi)$. The 4E.3 lemma is tight, not violated.
+- The Putinar/Schmüdgen polynomial-ideal SOS for the prime-coupling ideal $\{\phi = 2\theta\}$ is bounded above by this saturation, so it does not exceed the wall either.
+
+So the SDP can **achieve** the Fejér line-restriction bound (via a different polynomial than the 4E.2 LP-optimum) but cannot **exceed** it. The +25% C-S gap is real but, per 4E.3, does not translate to the single-zero MT zero-free constant at any bidegree. This closes the polynomial-ideal SOS escape route.
+
+## 4E.9: Heath-Brown multi-zero MT SDP ([e4e9_heath_brown_sdp.py](e4e9_heath_brown_sdp.py))
+
+**Status:** complete (Direction 7). **The multi-zero MT shape factor does NOT exceed the 1D Fejér ceiling: best ratio $\le 1$, optimal certificate rank 2. The LP/SDP/SOS family is now fully closed.**
+
+Targets the **multi-zero** MT shape factor directly in an SDP over the cos $\times$ cos SOS cone, sweeping the zero-coupling $g = \gamma_2/\gamma_1$ and bidegree $N \in \{2,3,4\}$, combining 4E.7's cross-frequency term with 4E.2's higher harmonics. The best multi-zero MT / Fejér ratio is $\le 1$ (saturates, never exceeds), with the optimal certificate at **rank 2** (sharpening 4E.7's rank-1 result: the multi-zero higher-harmonic structure is genuinely 2D yet still capped). The line restriction folds any cos $\times$ cos SOS polynomial into a 1D non-negative polynomial, and the multi-zero ledger redistributes harmonic weight but cannot manufacture trick-frequency weight beyond the Fejér cap. This closes the last LP/SDP escape from the 4E.3 lemma; **Architecture 4 is numerically closed across the entire LP/SDP/SOS family.** (The D-H discipline does not apply: pure trig-polynomial optimization, L-function-agnostic.) See LEARNINGS Session-003 "Finding #21" (= `e4e9`; cite by experiment ID, not LEARNINGS number).
+
+**Output:** `e4e9_heath_brown_sdp.npz` (ratio sweep over $g$, $N$; certificate ranks), `e4e9_heath_brown_sdp.png`.
+
 ## 4A + 4C: Vinogradov-Korobov and the conditional landscape ([4a_4c_vinogradov_korobov.md](4a_4c_vinogradov_korobov.md))
 
 **Status:** complete (unified literature dossier).
 
-The 4B-4E.7 thread covers **Input 2** (the auxiliary non-neg trig polynomial) of the classical analytic route. 4A and 4C cover **Inputs 1 and 3** (explicit formula + exponential sum bounds via Vinogradov's mean value theorem) and the conditional improvement landscape (Heath-Brown / Pintz / Ford / BDG / density hypothesis / LH).
+The 4B-4E.9 thread covers **Input 2** (the auxiliary non-neg trig polynomial) of the classical analytic route. 4A and 4C cover **Inputs 1 and 3** (explicit formula + exponential sum bounds via Vinogradov's mean value theorem) and the conditional improvement landscape (Heath-Brown / Pintz / Ford / BDG / density hypothesis / LH).
 
 **Headline findings of the dossier:**
 
 - The **$2/3$ exponent** in $\sigma \geq 1 - c/(\log|t|)^{2/3}(\log\log|t|)^{1/3}$ has held for 67 years. It comes directly from Vinogradov's mean value theorem (V-MVT), which was resolved at its sharp form by Bourgain-Demeter-Guth (2016) via $\ell^2$-decoupling. **Within the V-K recipe, $2/3$ is now a proven ceiling.** That is a finished sub-result: the recipe is solved to its limit, so progress on the exponent has to come from a different class of input, not from more work inside this one.
 - The **auxiliary inequality input (4B-4E.7) is saturated**: 4B confirms numerically that the LP for $\max c_1$ at degree $N$ hits Fejér exactly, and the multivariate generalizations (4D-4E.7) cannot escape the 1D Fejér ceiling under line restriction (4E.3 lemma) or naïve domain relaxation (4E.6) or naïve multi-zero coupling (4E.7). **The auxiliary-inequality input is therefore solved to its ceiling; the V-K bottleneck in Input 3 has to be addressed by a different input class, not a sharper inequality.**
 - The **conditional landscape** (RH / density hypothesis / LH / Heath-Brown / Pintz / Ford / BDG) sharpens constants and uniformities but **none of the named conditionals would push the exponent from $2/3$ down**. Pushing the exponent requires a fundamentally new input class: most plausibly the Architecture 2 (arithmetic-geometric) exponential-sum machinery á la Deligne, or the Architecture 1 (Connes) spectral identification.
-- **Architecture 4 is a constraint-mapping architecture**: it gives the tightest currently-provable unconditional bound, and it precisely locates its own ceiling rather than routing all the way to RH. The 4B-4E.7 thread quantifies exactly where the architecture saturates. The 67-year plateau reflects a structural ceiling rather than insufficient effort, which is useful: it tells us this architecture's job is to map the constraint, and the RH-closing work belongs to Arch 2 / Arch 3.
+- **Architecture 4 is a constraint-mapping architecture**: it gives the tightest currently-provable unconditional bound, and it precisely locates its own ceiling rather than routing all the way to RH. The 4B-4E.9 thread quantifies exactly where the architecture saturates. The 67-year plateau reflects a structural ceiling rather than insufficient effort, which is useful: it tells us this architecture's job is to map the constraint, and the RH-closing work belongs to Arch 2 / Arch 3.
 
-This closes the Architecture 4 literature TODOs (4A, 4C). The remaining open computational direction is **4E.8** (polynomial-ideal SOS via Putinar/Schmüdgen, requires SDP not LP), still the only LP-style escape route from 4E.3 per the LEARNINGS finding-12 taxonomy.
+This closes the Architecture 4 literature TODOs (4A, 4C). **The LP/SDP/SOS family is now fully closed:** 4E.8 (polynomial-ideal SOS via Putinar/Schmüdgen) saturates the 4E.3 Fejér wall without exceeding it, and 4E.9 (Heath-Brown multi-zero MT SDP) confirms the multi-zero shape factor does not exceed the 1D ceiling (ratio $\le 1$, rank-2 certificate). The only remaining escape routes are outside the LP/SDP family: Bombieri variational SOS (allow polynomial negativity with an $L^2$ penalty; research-grade), or a fundamentally different input class (Arch 2 arithmetic-geometric exponential sums, Arch 1 spectral identification).

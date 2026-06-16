@@ -1207,6 +1207,16 @@ Remaining open directions (NOT closed by 4E.3, NOT in the restriction route):
 
 ## Session 003 findings (2026-05-28): second control, function-field target, last analytic escape
 
+> **Numbering note (added 2026-06-16, adversary HIGH-2).** The `**Finding #19-#22**` labels in THIS
+> section are Session-003-LOCAL working numbers. They do NOT correspond to the canonical `### 19.`
+> through `### 22.` headers at the top of this file, which were later assigned to DIFFERENT results.
+> In particular canonical `### 21.` is the function-field Hodge index (`e2g`), whereas Session-003
+> "Finding #21" below is the `e4e9` Heath-Brown SDP. To avoid the collision, **cite Session-003
+> results by experiment ID**: #19 = `e3l` (Epstein control, Arch 3L), #20 = `e2f` (function-field
+> sweep, Arch 2F), #21 = `e4e9` (Heath-Brown multi-zero SDP, Arch 4E.9), #22 = `e3b4` (second Li
+> witness, Arch 3B.4). The back-references inside this section ("Finding #21 closes Architecture 4")
+> are internally consistent and refer to these local numbers.
+
 **Finding #19 (Arch 3, the wrong-approach detector GENERALISES beyond D-H).**
 [`e3l_epstein_control.py`](positivity/e3l_epstein_control.py) builds a second,
 structurally independent off-line-zero control: the Epstein zeta function of a

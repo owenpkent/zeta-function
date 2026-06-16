@@ -200,7 +200,7 @@ Each item is a `P#` discovery from [`PUBLICATIONS.md`](PUBLICATIONS.md). Run the
 
 All findings folded into the dossiers/drafts. Remaining repo-hygiene + research actions:
 
-- [ ] **(HIGH-2) Resolve the LEARNINGS.md #21 numbering collision** (header `### 21.` = function-field Hodge index at ~line 646 vs embedded "Finding #21" at ~line 1256) and **add 4E.8/4E.9 sections to `experiments/zero_free/README.md`** (currently lists 4E.8 as "open"). Needed before P5 drafts cleanly.
+- [x] **(HIGH-2) DONE (2026-06-16): LEARNINGS.md #21 collision disambiguated + zero_free/README refreshed.** Added a numbering banner to the Session-003 cluster (the `**Finding #N**` labels are session-local, collide with the canonical `### N.` headers; cite by experiment ID). Added 4E.8 (SOS) + 4E.9 (Heath-Brown SDP) sections to `experiments/zero_free/README.md` and corrected the stale "4E.8 is open" line to "the LP/SDP/SOS family is fully closed."
 - [ ] **(HIGH-1) P4: do the Deninger + one prismatic/THH survey read** before any "confirmed distinctive" language; the convergence framing's obvious unchecked sources.
 - [ ] **(LOW-8) P8: confirm the exp(-4πx) rate is Connes' own** (2602.04022 §6.x); if so, cite the rate to Connes and frame the D-H-aware defect D(γ)=|1-2β| as the project residue.
 - [ ] **(MED-5) Apply the new K1 circularity gate question retroactively** to any future candidate; P4 and P8 are already flagged circularity-adjacent.
