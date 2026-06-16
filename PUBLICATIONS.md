@@ -194,9 +194,12 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   main competitor): thesis CONFIRMED distinctive.** A deep read of Connes [2602.04022](https://arxiv.org/abs/2602.04022)
   (the strongest competitor) found all three distinctive moves absent there: no convergence thesis (he
   argues from NCG), no Spec(ℤ) scorecard, Weil positivity treated as one reformulation among many, D-H
-  not used as a discipline. The MDPI *Symmetry* 2025 survey is a flat catalog. **Remaining prerequisite:**
-  an expert reader for the scorecard's (iii) polarization column. Then prose. Still the long pole, but
-  de-risked: the thesis is novel against the field's best recent survey.
+  not used as a discipline. The MDPI *Symmetry* 2025 survey is a flat catalog. **First prose pass
+  written** ([`publications/P4_survey_draft.md`](publications/P4_survey_draft.md)): the gate-free
+  sections (intro, four-level framing, realizations, marginal positivity, logical status, conclusion)
+  are drafted; §4 (the scorecard) is a stub. **Remaining prerequisite:** an expert reader for the
+  scorecard's (iii) polarization column, then write §4 + a full revision. De-risked: thesis novel
+  against the field's best recent survey, and the skeleton is on the page.
 
 ### P5 {#p5}
 **No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant.** 🟡 DEVELOPING
@@ -389,3 +392,7 @@ Kept so they are not re-proposed as novel.
   among many, D-H not used as a discipline. P4's convergence-plus-scorecard-plus-D-H framing is novel
   against the field's best recent survey. The only remaining prerequisite before prose is an expert
   reader for the scorecard's polarization column. Positioning recorded in the P4 outline.
+- 2026-06-16: **P4 first prose pass written** ([`publications/P4_survey_draft.md`](publications/P4_survey_draft.md)):
+  the gate-free sections (§1 intro, §2 four-level framing, §3 realizations, §5 marginal positivity, §6
+  logical status, conclusion) are drafted; §4 (the Spec(ℤ) scorecard) is a stub pending the expert
+  reader. Numbers in §5 flagged for re-verification against the experiments before submission.
