@@ -76,11 +76,15 @@ So the honest portfolio is:
 
 - **Standalone-publishable, math finished:** P1, P2 (Mathlib PRs).
 - **Standalone-publishable as a formalization artifact:** P6 (the Lean function-field RH chain; novelty
-  is the development, not the classical math).
+  is the development, not the classical math). **Lit-check confirmed viable (2026-06-16):** the
+  Hasse-Weil bound is absent from every proof assistant and is an explicit Mathlib future goal, so this
+  is genuine territory. The one candidate that survived its lit-check intact.
 - **One survey that absorbs the rest:** P4, bundling P3, P5, P7, P8 as operationalized coordinates.
 
-Lit-check every research candidate before drafting it. Both research-tier checks so far have moved the
-item from STRONG to DEVELOPING. Treat that as the prior.
+Lit-check every research candidate before drafting it. The scorecard so far: P3 and P5 moved STRONG →
+DEVELOPING (pre-empted theses); P6 confirmed viable. The pattern: the *positivity/analytic*
+"discoveries" are operationalized folklore (fold into P4); the *formal* contributions (P1, P2, P6) are
+the real standalone output.
 
 ---
 
@@ -93,7 +97,7 @@ item from STRONG to DEVELOPING. Treat that as the prior.
 | [P3](#p3) | The Davenport-Heilbronn discipline, operationalized (Schur counting law + Epstein) | Methodology | Numerical (validated) + rigorous Li at n=336k | 🟡 DEVELOPING | Fold into P4 | lit-checked |
 | [P4](#p4) | All-roads convergence + marginal-positivity thesis + Spec(ℤ) scorecard | Survey | Synthesis | 🟡 DEVELOPING | Expository / arXiv | evaluated |
 | [P5](#p5) | No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant | Negative (closed branch) | Rigorous (line-restriction lemma) + SDP/LP certificates | 🟡 DEVELOPING | arXiv math.NT note / fold into P4 | lit-checked |
-| [P6](#p6) | Lean formalization of function-field RH for elliptic curves (deg = det route) | Formalization (positive) | Lean, axiom-clean (conditional on existence of A) | 🟡 DEVELOPING | Formalization venue | evaluated |
+| [P6](#p6) | Lean formalization of function-field RH for elliptic curves (deg = det route) | Formalization (positive) | Lean, axiom-clean (conditional on existence of A) | 🟡 DEVELOPING | Formalization venue | lit-checked ✓ viable |
 | [P7](#p7) | RH is Π⁰₁ + the Lean kernel witness | Expository note | Lean anchors; logical fact classical | 🟡 DEVELOPING | Note / bundle into P4 | evaluated |
 | [P8](#p8) | The stealth window quantified (e^{-4πx} wall, 370× cancellation, D-H-aware defect) | Analytic note | Numerical + prolate analysis | 🟡 DEVELOPING | Section of P4 | evaluated |
 
@@ -241,16 +245,33 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **Verification.** Kernel-verified, axiom-clean, conditional on the single explicit hypothesis: the
   **existence of A** (the scheme-theoretic Frobenius-on-Tate-module construction, Mathlib-absent,
   FLT-adjacent). Everything downstream of A is machine-checked.
-- **Novelty.** Function-field RH for elliptic curves is classical (Hasse 1936). The contribution is
-  the *formalization* and the clean reduction to one geometric input. Note the rank-2 symplectic
-  determinant law is **not** itself a Mathlib gap (Mathlib has the general `LinearMap.det` /
-  `AlternatingMap` version; see [`lean/upstream/README.md`](lean/upstream/README.md) "Not staged").
+- **Novelty (lit-checked 2026-06-16, CONFIRMED viable).** Function-field RH for elliptic curves is
+  classical math (Hasse 1936), but it is **absent from every proof assistant**, so the formalization is
+  genuine: Mathlib has the Weierstrass group law (Angdinata-Xu, ITP 2023,
+  [arXiv:2302.10640](https://arxiv.org/abs/2302.10640)) and basic elliptic-curve definitions, but the
+  Hasse-Weil bound / Weil conjectures are an explicit *future goal*, not a completed result; the FLT
+  project ([blueprint](https://imperialcollegelondon.github.io/FLT/blueprint/sect0001.html)) builds
+  Tate modules / Weil pairings as infrastructure toward modularity but does **not** target
+  function-field RH; and no Lean/Isabelle/Coq formalization of the Weil conjectures for curves exists.
+  Note the rank-2 symplectic determinant law is **not** itself a Mathlib gap (Mathlib has the general
+  `LinearMap.det` / `AlternatingMap` version; see [`lean/upstream/README.md`](lean/upstream/README.md)
+  "Not staged"). Unlike P3/P5, this candidate survived its lit-check intact.
 - **D-H soundness.** Arch 2; exempt by construction (it requires the Euler product D-H lacks).
 - **RH-independence.** Self-contained as a conditional formalization; the open input is geometric, not RH.
 - **Venue / next.** A formalization venue (ITP/CPP/JAR) as "a conditional Lean formalization of
-  function-field RH, reduced to the existence of the Frobenius Tate-module representation," or upstream
-  the conditional chain coordinated with the FLT project. **Next:** decide conditional-paper vs. wait
-  for O1; scope the write-up.
+  function-field RH, reduced to the existence of the Frobenius Tate-module representation `A`." Two
+  honest paths, with a strategic fork:
+  - **(a) Publish the conditional reduction now.** The chain downstream of `A` is sorry-free and
+    axiom-clean (done). Modest but real: it formalizes the linear-algebra/eigenvalue half and isolates
+    `A` (the scheme-theoretic Frobenius-on-Tate-module + deg≥0) as the one open input. Coordinate with
+    FLT, which may supply that infrastructure.
+  - **(b) Aim for the unconditional Hasse bound via the elementary route.** The Stepanov-Bombieri proof
+    avoids the Tate module entirely and could yield an *unconditional* Lean Hasse bound (a stronger,
+    cleaner artifact, and a natural Mathlib target) without waiting on `A`. A different formalization
+    effort, not an extension of the current chain.
+
+  **Next:** decide (a) vs (b). Recommendation: scope (b) as the higher-value target (unconditional,
+  Mathlib-bound, no FLT dependency), keeping the current conditional chain as the (a) fallback.
 
 ### P7 {#p7}
 **RH is Π⁰₁, and the Lean kernel witness.** 🟡 DEVELOPING
@@ -334,3 +355,9 @@ Kept so they are not re-proposed as novel.
   Spec(ℤ) scorecard / marginal positivity). Distinctive thesis vs existing surveys = the convergence
   claim operationalized by the scorecard. Sequenced after P1/P2 ship + a full survey lit-check + an
   expert reader.
+- 2026-06-16: **P6 lit-checked, CONFIRMED viable.** The Hasse-Weil bound / Weil conjectures for curves
+  are absent from every proof assistant (Mathlib has only the Weierstrass group law + basic defs, the
+  bound is an explicit future goal; the FLT project does not target it). P6 stays 🟡 DEVELOPING but is
+  the one research/formalization candidate that survived its lit-check intact. Strategic fork recorded:
+  (a) publish the conditional reduction now, vs (b) aim for the unconditional Hasse bound via the
+  elementary Stepanov-Bombieri route (recommended; Mathlib-bound, no FLT dependency).
