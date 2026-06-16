@@ -129,9 +129,9 @@ step is uniformly hard. The answer is quantitative, and it is the heart of the c
 Take the natural truncated form of the Weil quadratic form, built from the archimedean factor and the
 primes out to a cutoff. For $\zeta$, its minimal eigenvalue is positive, but only barely: it is a
 cancellation residue. In the project's computations the three constituent blocks have norms of order
-$55$, $69$, and $123$, yet they sum to a form of norm about $0.33$, a cancellation of more than two
-orders of magnitude, and the archimedean block on its own is indefinite. The positivity is not a
-cushion plus a small perturbation; it is a near-exact cancellation that lands just on the positive side.
+$55$, $69$, and $123$, yet they sum to a form of norm about $0.33$, a cancellation of roughly $370$ to
+one, and the archimedean block on its own is indefinite. The positivity is not a cushion plus a small
+perturbation; it is a near-exact cancellation that lands just on the positive side.
 
 Sharper still, the margin collapses doubly exponentially in the cutoff. Through the Slepian
 prolate-concentration eigenvalues, the minimal eigenvalue behaves like $\varepsilon(x) \sim e^{-4\pi x}$
@@ -141,11 +141,11 @@ computation sees $\zeta$ and Davenport-Heilbronn as indistinguishable: the off-l
 below the cancellation floor, in a stealth window.
 
 The discriminating quantity, when one writes it exactly, is the duality-versus-polarization defect
-$D(\gamma) = |1 - 2\beta|$, which is identically zero for $\zeta$ and spikes at Davenport-Heilbronn's
-off-line height. The defect is a clean structural quantity; what is expensive is evaluating it without
-assuming the answer, because resolving the relevant height needs primes out to $e^{\gamma}$. The
-positivity is exact and the obstruction is real; only the soft, reachable reconstruction is blind to
-it.
+$D(\gamma) = |1 - 2\beta|$, which is identically zero for $\zeta$ and spikes to $0.617$ at
+Davenport-Heilbronn's off-line height $\gamma \approx 85.7$. The defect is a clean structural quantity;
+what is expensive is evaluating it without assuming the answer, because resolving that height through
+the non-circular prime side needs primes out to $e^{\gamma}$, about $10^{37}$. The positivity is exact
+and the obstruction is real; only the soft, reachable reconstruction is blind to it.
 
 The reading is directional. Marginal positivity does not say RH is too hard. It says no soft or
 structure-blind method has room to work, because there is no slack to absorb an approximation. The proof
@@ -184,9 +184,11 @@ property, and the search has been narrowed to exactly that.
 ### Drafting notes (not for the paper)
 
 - §4 is the gating section; everything else is gate-free and drafted above.
-- Numbers in §5 (norms $55/69/123 \to 0.33$; $\varepsilon \sim e^{-4\pi x}$; $D(\gamma)=|1-2\beta|$)
-  come from the project's `soft_detector_wall.md` (LEARNINGS #52, #56, #63). Re-verify against the
-  experiments before submission.
+- Numbers in §5 (norms $55/69/123 \to 0.33$, $\sim 370\times$; $\varepsilon \sim e^{-4\pi x}$, crosses
+  float64 by $x\approx 3$, $\sim 10^{-71}$ at Connes' $x=13$; $D(\gamma)=|1-2\beta|$, $0.617$ spike at
+  $\gamma\approx 85.7$, $e^{\gamma}\approx 10^{37}$) **verified 2026-06-16 against
+  `soft_detector_wall.md`** (the frozen consolidation of LEARNINGS #52, #56, #63). A final check against
+  the raw `e3v` / `e3y` outputs is still prudent immediately before submission.
 - §2 deliberately states only the Level-3-vs-Level-4 cut precisely and defers the full four-level
   definitions to the cited project doc, to avoid overstating a framing not yet written up for referees.
 - §3 keeps the realization claims at the level the project has validated (Hesselholt determinant
