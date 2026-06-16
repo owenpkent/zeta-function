@@ -11,6 +11,10 @@ smaller subset that could leave the repo as a contribution, scored honestly.
 A discovery and a paper are not the same thing. Each row below is a *discovery* (a `P#` id); a paper
 may bundle several. The "Venue / bundle" field records the intended container.
 
+**How to use this system:** [`publications/README.md`](publications/README.md) (the workflow guide).
+**Adversarial review of this system:** [`publications/ADVERSARY_REVIEW.md`](publications/ADVERSARY_REVIEW.md)
+(its findings are folded into the dossiers below, tagged "adversary HIGH/MED/LOW-n").
+
 ---
 
 ## Evaluation gate
@@ -32,6 +36,12 @@ check that catches the things that *feel* publishable but are not.
    respect the wrong-approach discipline, i.e. does it correctly NOT prove the analogous false
    statement for Davenport-Heilbronn? A method that "works" for D-H is wrong and is not publishable
    as an RH advance. Architecture 2 (arithmetic-geometric) and pure formal results are exempt.
+4b. **K1 circularity (the project's primary RH-specific filter).** Does the discovery provably imply RH
+   *and* does RH provably imply it? If both, it is a reformulation of RH, not a step toward it: it is
+   publishable only as an explicitly-labeled equivalence, never as "progress toward RH." A
+   reformulation passes 1-4 and 5-6 cleanly (it is D-H-sound because it *is* RH), so this question is
+   what catches it. Applies to P4's convergence thesis and P8 by construction; both must be framed as
+   operationalizations/equivalences, not new content.
 5. **Honest framing (negative results).** A closed branch is first-class publishable when stating it
    saves the community effort: it must be a *provable* ceiling/no-go/blindness, not a failure to
    find. Frame as a coordinate, keep the math exactly as rigorous as it is.
@@ -75,10 +85,13 @@ provably map their own ceiling" is exactly the evidence the survey is built on.
 So the honest portfolio is:
 
 - **Standalone-publishable, math finished:** P1, P2 (Mathlib PRs).
-- **Standalone-publishable as a formalization artifact:** P6 (the Lean function-field RH chain; novelty
-  is the development, not the classical math). **Lit-check confirmed viable (2026-06-16):** the
-  Hasse-Weil bound is absent from every proof assistant and is an explicit Mathlib future goal, so this
-  is genuine territory. The one candidate that survived its lit-check intact.
+- **Standalone-publishable as a formalization artifact:** P6 (the **conditional** Lean reduction of
+  function-field RH to the existence of `A`; novelty is the development, not the classical math).
+  **Lit-check confirmed viable (2026-06-16):** the Hasse-Weil bound is absent from every proof assistant
+  and is an explicit Mathlib future goal, so this is genuine territory. The one candidate that survived
+  its lit-check intact. Caveat (adversary MED-6): the *finished* artifact is the linear-algebra half
+  downstream of an unconstructed, FLT-adjacent `A`, so "standalone" means the conditional reduction, a
+  real-but-modest formalization, not the unconditional Hasse bound.
 - **One survey that absorbs the rest:** P4, bundling P3, P5, P7, P8 as operationalized coordinates.
 
 Lit-check every research candidate before drafting it. The scorecard so far: P3 and P5 moved STRONG →
@@ -180,26 +193,34 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   cancellation residue with no buffer for soft proofs, so any proof must engage the exact structure of
   ζ (LEARNINGS #52, #56). (iii) The **Spec(ℤ) cohomology scorecard**
   ([`docs/03_research/spec_z_cohomology_landscape.md`](docs/03_research/spec_z_cohomology_landscape.md)):
-  17 candidate cohomologies collapse onto one gap node, an RH-equivalent polarization that none
-  supplies (LEARNINGS #73).
+  ~17 candidate cohomologies collapse onto one gap node: a polarization that is global AND
+  trace-carrying AND RH-equivalent AND noncircular, the conjunction of four proven-droppable properties
+  that no candidate has all of (LEARNINGS #73). Note: two *partial* polarizations are proven
+  (Faltings-Hriljac, AHK); they miss the conjunction (too-local / arithmetic-blind), so the claim is
+  "none has all four," not "none has a polarization."
 - **Verification.** Synthesis of validated experiments + literature survey. The framing is the
   contribution; individual facts are mostly established.
-- **Novelty.** The synthesis and the "all roads → one signature" framing are the novel part. This is
-  expository/landscape work, valuable precisely as a map.
+- **Novelty (adversary HIGH-1, honest).** The bare convergence claim (RH = the missing polarization =
+  the arithmetic Hodge standard conjecture / Rosati positivity) is **known folklore** the project's own
+  spine calls "the arithmetic analogue of Grothendieck's Hodge standard conjecture" and
+  `soft_detector_wall.md` demotes to "write-down-not-research." So P4 is held to the same standard P3
+  was: the defensible novelty is the **operationalization** (the Spec(ℤ) scorecard as a figure + the
+  D-H discipline as a method), not the convergence thesis.
+- **K1 circularity.** The convergence thesis is RH-equivalent by construction (the missing polarization
+  IS RH), so it must be framed as an organizing equivalence, never as "progress toward RH."
 - **D-H soundness.** The thesis is built on the discipline (P3 is a sub-section).
 - **RH-independence.** Surveys the open problem; self-contained as a survey.
-- **Venue / next.** Expository (arXiv math.HO/NT survey or an expository journal). Outline written:
-  [`publications/P4_survey_outline.md`](publications/P4_survey_outline.md). Scope decided: it **bundles
-  P3, P5, P7, P8** as evidence inside the three pillars. **Survey lit-check (2026-06-16, deep read of the
-  main competitor): thesis CONFIRMED distinctive.** A deep read of Connes [2602.04022](https://arxiv.org/abs/2602.04022)
-  (the strongest competitor) found all three distinctive moves absent there: no convergence thesis (he
-  argues from NCG), no Spec(ℤ) scorecard, Weil positivity treated as one reformulation among many, D-H
-  not used as a discipline. The MDPI *Symmetry* 2025 survey is a flat catalog. **First prose pass
-  written** ([`publications/P4_survey_draft.md`](publications/P4_survey_draft.md)): the gate-free
-  sections (intro, four-level framing, realizations, marginal positivity, logical status, conclusion)
-  are drafted; §4 (the scorecard) is a stub. **Remaining prerequisite:** an expert reader for the
-  scorecard's (iii) polarization column, then write §4 + a full revision. De-risked: thesis novel
-  against the field's best recent survey, and the skeleton is on the page.
+- **Venue / next.** Expository (arXiv math.HO/NT survey or an expository journal). Outline + first prose
+  pass written ([`publications/P4_survey_outline.md`](publications/P4_survey_outline.md),
+  [`publications/P4_survey_draft.md`](publications/P4_survey_draft.md); §4 scorecard is a stub). It
+  **bundles P3, P5, P7, P8** as evidence. **Survey lit-check (2026-06-16): provisionally distinctive on
+  the OPERATIONALIZATION, not the convergence claim.** A deep read of Connes
+  [2602.04022](https://arxiv.org/abs/2602.04022) found the scorecard + the convergence-as-organizing-
+  principle + the D-H discipline absent there (he argues from NCG; the MDPI *Symmetry* 2025 survey is a
+  flat catalog). But "provisionally" not "confirmed": this rests on one competitor read.
+  **Prerequisites before any 'confirmed' / prose-finalization:** (1) read Deninger's program + at least
+  one prismatic/THH survey (the obvious unchecked sources for the convergence framing); (2) an expert
+  reader for the scorecard's polarization column.
 
 ### P5 {#p5}
 **No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant.** 🟡 DEVELOPING
@@ -215,8 +236,14 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   trig polynomial, hence bounded by the 1D optimum at matched effective degree. The escape routes that
   fail: multivariate balanced-sum LPs (4E/4E.2/4E.4/4E.5, where a +25%/+51%/+62% Cauchy-Schwarz gap is
   real but does NOT transfer), constrained-domain LPs (4E.6), naive multi-zero couplings (4E.7),
-  Heath-Brown multi-zero SDP (4E.9, best ratio ≤ 1, rank-2 certificate, LEARNINGS #21), and
-  Putinar/Schmüdgen SOS (4E.8, LEARNINGS #15).
+  Heath-Brown multi-zero SDP (4E.9 / `e4e9_heath_brown_sdp`, best ratio ≤ 1, rank-2 certificate;
+  verified ratio = 1.0000 in the `.npz`), and Putinar/Schmüdgen SOS (4E.8 / `e4e8_sos_sdp`, LEARNINGS
+  #15). Cite escape routes by **experiment ID**, not LEARNINGS number: the adversary (HIGH-2) found
+  4E.9 was mis-cited to "LEARNINGS #21", which under the doc's canonical numbering is the function-field
+  Hodge index (`### 21.` / e2g); LEARNINGS.md has a #21 numbering collision (header at line 646 vs an
+  embedded "Finding #21" at line 1256). Two repo-hygiene fixes are pending before P5 drafts cleanly:
+  resolve that collision, and add 4E.8/4E.9 to the stale `experiments/zero_free/README.md` (which still
+  lists 4E.8 as "open").
 - **Verification.** The line-restriction lemma is rigorous and elementary; the escape-route closures
   carry LP/SDP optimality certificates (cvxpy + CLARABEL/SCS). Self-contained.
 - **Novelty (post-lit-check, honest).** The **1D part is NOT novel**: the cosine-polynomial method, the
@@ -279,10 +306,15 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   **Next:** scoping + M-b1.3 probe DONE ([`publications/P6_hasse_bound_scope.md`](publications/P6_hasse_bound_scope.md),
   probed against the Mathlib v4.30 source). **Verdict: no cheap unconditional path.** Mathlib has the
   EC development (Affine/Projective/Jacobian/Weierstrass/DivisionPolynomial/LFunction/Reduction) but
-  **no curve divisor theory at all**, so M-b1.3 ("#zeros = #poles") cannot be borrowed; it needs either
-  general curve divisor theory (blocked) or an elementary resultant build (weeks). **Both P6 paths are
-  multi-month** (path (a) needs the Tate module / deg-as-quadratic-form, FLT-adjacent; path (b1) needs
-  the resultant build). The only finished, citable artifact is the path-(a) **conditional reduction**.
+  **no curve divisor theory at all**, so M-b1.3 ("#zeros = #poles") cannot be borrowed via divisors.
+  Correction (adversary MED-3): the elementary resultant route (b1)(ii) is better-located than first
+  stated. The **resultant API is already present** in v4.30 (`RingTheory/Polynomial/Resultant/Basic`:
+  `resultant_eq_prod_roots_sub`, `resultant_eq_prod_eval`; `Algebra/Polynomial/Roots`: `card_roots`),
+  so the degree-count primitive is borrowable; the real residual work is the **multiplicity bookkeeping
+  at infinity and at branch points**, not the resultant API. **Both P6 paths are still multi-month**
+  (path (a) needs the Tate module / deg-as-quadratic-form, FLT-adjacent; path (b1)(ii) needs the
+  multiplicity bookkeeping), but the (b1)(ii) blocker is smaller and sharper than "build divisor
+  theory." The only finished, citable artifact is the path-(a) **conditional reduction**.
   Decision: ship the conditional reduction now (modest, honest) and/or budget an unconditional build as
   a real multi-month project (route (b1)(ii), M-b1.3 first), Owen-gated.
 
@@ -312,11 +344,15 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   (primes to e^γ), not intrinsic blindness (LEARNINGS #63).
 - **Verification.** Numerical + the prolate-concentration analysis (semi-rigorous). The collapse rate
   is archimedean (shared with D-H); the floor is the discriminator.
-- **Novelty.** Overlaps Connes' constructive Weil positivity (the project's stealth window =
-  Connes' ε(λ) near-radical; see the assessment of arXiv:2602.04022 in
+- **Novelty (adversary LOW-8, sharpened).** Overlaps Connes' constructive Weil positivity (the
+  project's stealth window = Connes' ε(λ) near-radical; see the assessment of arXiv:2602.04022 in
   [`docs/03_research/connes_2602_letter_to_riemann.md`](docs/03_research/connes_2602_letter_to_riemann.md)).
-  **Open action: lit check vs. Connes** to find the genuinely-new delta (the explicit exp(−4πx) rate +
-  the D-H-aware defect are candidates).
+  The exp(−4πx) **rate is most likely Connes' own** (per LEARNINGS #52, Connes' Figure 1 *is* the
+  exp(−4π·) law and the project recovered *his* constant), so it is **not** project-novel and must be
+  cited to Connes. The genuinely-new residue is the **D-H-aware defect** D(γ) = |1 − 2β| (0 for ζ,
+  0.617 spike for D-H), which gives each L its true zero locus from one mechanism. **Open action:**
+  confirm the rate is Connes' in 2602.04022 §6.x, then frame P8 as "rate cited from Connes, defect
+  new." Do not cite P8's rate as a quantitative core until this is done.
 - **D-H soundness.** The whole point is the D-H-aware defect.
 - **RH-independence.** Self-contained as an analytic benchmark.
 - **Venue / next.** A section of P4, or a standalone analytic note if the delta vs. Connes survives.
@@ -396,3 +432,16 @@ Kept so they are not re-proposed as novel.
   the gate-free sections (§1 intro, §2 four-level framing, §3 realizations, §5 marginal positivity, §6
   logical status, conclusion) are drafted; §4 (the Spec(ℤ) scorecard) is a stub pending the expert
   reader. Numbers in §5 flagged for re-verification against the experiments before submission.
+- 2026-06-16: **usage guide written** ([`publications/README.md`](publications/README.md)).
+- 2026-06-16: **ADVERSARY review run and folded in** ([`publications/ADVERSARY_REVIEW.md`](publications/ADVERSARY_REVIEW.md);
+  no FAIL verdicts, the bones are sound). Fixes applied: **HIGH-1** P4 "CONFIRMED distinctive" downgraded
+  to "provisionally distinctive on the operationalization" (the convergence claim is project-admitted
+  folklore; novelty = scorecard + D-H method; read Deninger + a prismatic/THH survey before "confirmed").
+  **HIGH-2** P5 cite-by-experiment-ID (4E.9 was mis-cited to LEARNINGS #21, a numbering collision; stale
+  `zero_free/README.md` flagged). **MED-3** P6: the resultant API *is* present in v4.30, so the (b1)(ii)
+  blocker is multiplicity bookkeeping, not the resultant. **MED-4** P4 §3 "none reaches the polarization"
+  to be qualified by the four properties (FH/AHK are proven partial polarizations). **MED-5** added the
+  K1 circularity question (4b) to the gate. **MED-6** P6 Portfolio one-liner marked "conditional."
+  **LOW-7** P4 count inconsistencies. **LOW-8** P8's exp(−4πx) rate is Connes', not project-novel.
+  What PASSED the attack: the §5 marginal-positivity numbers, the P1/P2 Mathlib novelty, the P6 core
+  absence claim, the live D-H control (smoke test 9/9).

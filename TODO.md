@@ -187,14 +187,23 @@ Each item is a `P#` discovery from [`PUBLICATIONS.md`](PUBLICATIONS.md). Run the
 - [ ] **Portfolio decision (Owen-gated): the standalone-publishable set is {P1, P2 Mathlib, P6 formalization}; P3/P5/P7/P8 fold into the P4 survey.** Confirm this shape before investing drafting effort.
 - [ ] **P8 (analytic note): lit-check the stealth-window quantification vs Connes arXiv:2602.04022** to isolate the genuinely-new delta (exp(-4πx) rate + the D-H-aware defect).
 - [x] **P4 outline DONE (2026-06-16): `publications/P4_survey_outline.md`.** Three pillars (all-roads realization / Spec(Z) scorecard / marginal positivity); bundles P3, P5, P7, P8 as evidence. Distinctive thesis = the convergence claim operationalized by the scorecard.
-- [x] **P4 survey lit-check DONE (2026-06-16): thesis CONFIRMED distinctive** via a deep read of Connes 2602.04022 (no convergence thesis, no Spec(Z) scorecard, no D-H discipline there). Positioning recorded in `publications/P4_survey_outline.md`.
+- [x] **P4 survey lit-check DONE (2026-06-16): operationalization is PROVISIONALLY distinctive; convergence claim is folklore** (corrected per adversary HIGH-1). A deep read of Connes 2602.04022 found the scorecard + D-H discipline + convergence-as-organizing-principle absent there, but the bare convergence claim is known folklore (the project's own spine calls it the arithmetic Hodge standard conjecture). P4 held to the same standard as P3: novelty = the operationalization, not the thesis.
 - [x] **P4 first prose pass DONE (2026-06-16): `publications/P4_survey_draft.md`** (gate-free sections §1-3, §5-6 + conclusion; §4 scorecard is a stub).
 - [x] **P4 §5 numbers verified (2026-06-16)** against `soft_detector_wall.md` (55/69/123→0.33 ~370x; ε~e^{-4πx}, float64 by x≈3, ~1e-71 at x=13; D(γ)=|1-2β|, 0.617 spike at γ≈85.7, e^γ≈1e37). Draft sharpened with the exact figures. A final raw-output check vs e3v/e3y is still prudent pre-submission.
 - [ ] **P4 next: an expert reader for the scorecard's (iii) polarization column**, then write §4 + a full revision. Sequence after P1/P2 ship.
 - [x] **P6 lit-check DONE (2026-06-16): CONFIRMED viable** (not pre-empted). Hasse-Weil bound is absent from every proof assistant + an explicit Mathlib future goal; FLT project does not target it. The one research/formalization candidate that survived its lit-check intact.
 - [x] **P6 path (b) scoped DONE (2026-06-16): `publications/P6_hasse_bound_scope.md`.** Key finding: general Stepanov-Bombieri needs Riemann-Roch (Mathlib lacks it), but the elliptic-curve specialization dodges the wall via explicit Weierstrass $R_n$ ($\dim R_n \ge n$ elementary). Milestone plan M-b1.1..M-b1.5.
 - [x] **P6 M-b1.3 probe DONE (2026-06-16, vs Mathlib v4.30 source): no cheap path.** Mathlib has NO curve divisor theory (no Weil/Cartier divisor, degree, Picard, Riemann-Roch; the EC dev avoids divisors). M-b1.3 needs either curve divisor theory (blocked) or an elementary resultant build (weeks). Both P6 paths are multi-month.
-- [ ] **P6 decision (Owen-gated): ship the path-(a) conditional reduction now (done, modest), and/or budget an unconditional Hasse bound as a real multi-month project** (route (b1)(ii) resultant build, M-b1.3 first; or path (a) coordinated with FLT's Tate-module infrastructure).
+- [ ] **P6 decision (Owen-gated): ship the path-(a) conditional reduction now (done, modest), and/or budget an unconditional Hasse bound as a real multi-month project** (route (b1)(ii): the resultant API is present in Mathlib v4.30, so the residual is multiplicity bookkeeping at infinity/branch points, not the resultant; or path (a) coordinated with FLT's Tate-module infrastructure).
+
+### Adversary review follow-ups (publications/ADVERSARY_REVIEW.md, 2026-06-16)
+
+All findings folded into the dossiers/drafts. Remaining repo-hygiene + research actions:
+
+- [ ] **(HIGH-2) Resolve the LEARNINGS.md #21 numbering collision** (header `### 21.` = function-field Hodge index at ~line 646 vs embedded "Finding #21" at ~line 1256) and **add 4E.8/4E.9 sections to `experiments/zero_free/README.md`** (currently lists 4E.8 as "open"). Needed before P5 drafts cleanly.
+- [ ] **(HIGH-1) P4: do the Deninger + one prismatic/THH survey read** before any "confirmed distinctive" language; the convergence framing's obvious unchecked sources.
+- [ ] **(LOW-8) P8: confirm the exp(-4πx) rate is Connes' own** (2602.04022 §6.x); if so, cite the rate to Connes and frame the D-H-aware defect D(γ)=|1-2β| as the project residue.
+- [ ] **(MED-5) Apply the new K1 circularity gate question retroactively** to any future candidate; P4 and P8 are already flagged circularity-adjacent.
 
 ## Open — experimental
 

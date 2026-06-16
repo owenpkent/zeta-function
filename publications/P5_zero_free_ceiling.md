@@ -105,11 +105,17 @@ gain at the wrong figure of merit transfers to zero gain at the right one.
 
 ## Source material in-repo
 
-- `experiments/zero_free/README.md` (the full 4B-4E.9 + 4A/4C writeup).
-- Experiments: `e4b_nonneg_trig.py`, `e4e_offdiag_lp.py`, `e4e2_sum_sweep.py`,
-  `e4e3_mt_translation.py` (the lemma), `e4e4..e4e6`, `e4e7_multi_zero_lp.py`, `e4e8_sos_sdp.py`,
-  `e4e9_heath_brown_sdp.py`, `4a_4c_vinogradov_korobov.md`.
-- LEARNINGS #8, #9, #12, #13, #14, #15, #21.
+- `experiments/zero_free/README.md` (covers 4B-4E.7 + 4A/4C). **STALE (adversary HIGH-2):** it still
+  lists 4E.8 as "the remaining open computational direction" and documents neither 4E.8 nor 4E.9. Add
+  4E.8/4E.9 sections to it (or write `e4e9_heath_brown_sdp.md`) before P5 cites it as a source; a reader
+  following the current README would conclude the SDP/SOS closures are unfinished.
+- Experiments (cite escape routes by experiment ID): `e4b_nonneg_trig.py`, `e4e_offdiag_lp.py`,
+  `e4e2_sum_sweep.py`, `e4e3_mt_translation.py` (the lemma), `e4e4..e4e6`, `e4e7_multi_zero_lp.py`,
+  `e4e8_sos_sdp.py` (SOS), `e4e9_heath_brown_sdp.py` (Heath-Brown SDP; ratio = 1.0000 in the `.npz`),
+  `4a_4c_vinogradov_korobov.md`.
+- LEARNINGS #8, #9, #12, #13, #14, #15. **Do NOT cite LEARNINGS #21 for the Heath-Brown SDP**
+  (adversary HIGH-2): under the canonical numbering `### 21.` is the function-field Hodge index (e2g);
+  LEARNINGS.md has a #21 collision (an embedded "Finding #21" at ~line 1256). Cite 4E.9 by experiment ID.
 
 ## Go/no-go
 

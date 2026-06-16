@@ -125,9 +125,11 @@ These are the evidence base, presented as sharp exhibits inside the pillars, not
 - Connes assessment: `docs/03_research/connes_2602_letter_to_riemann.md`.
 - LEARNINGS: #30, #46, #52, #56, #61, #63, #73 (and the P3/P5/P8 finding clusters).
 
-## Lit-check (2026-06-16: thesis CONFIRMED distinctive after a deep read of the main competitor)
+## Lit-check (2026-06-16: the OPERATIONALIZATION is provisionally distinctive; the convergence claim is folklore)
 
-The strongest competitor was read in depth; the result is decisively in P4's favor.
+The strongest competitor was read in depth. The operational moves (scorecard, D-H discipline,
+convergence-as-organizing-principle) are absent there, but the bare convergence claim is known folklore
+(see the corrected Verdict below, per the adversary review HIGH-1).
 
 **Connes, [arXiv:2602.04022](https://arxiv.org/abs/2602.04022)** (2026), a 165-year overview + a
 "Letter to Riemann" original contribution (the prolate-spheroidal / Weil-quadratic-form method). The
@@ -153,10 +155,15 @@ scorecard. Lower-tier venue. Not a competitor on thesis.
 Noise: several crank / AI-generated "proofs of RH". Not credible, but the noisy space *raises* the bar
 for a credible new survey, which the scorecard + D-H discipline help clear.
 
-**Verdict:** P4's distinctive thesis (all roads $\to$ one polarization gap, located by the
-Spec($\mathbb{Z}$) scorecard, explained by marginal positivity, disciplined by D-H) is **confirmed
-distinctive** against the strongest competitor. The survey is worth writing. One prerequisite remains:
-an expert reader for the scorecard's (iii) polarization column.
+**Verdict (corrected after the adversary review, HIGH-1):** what is distinctive is the
+**operationalization** (the Spec($\mathbb{Z}$) scorecard as a figure + the D-H discipline as a method),
+not the bare convergence claim. The convergence claim itself (RH = the missing polarization = the
+arithmetic Hodge standard conjecture / Rosati positivity) is **known folklore** the project's own spine
+calls "the arithmetic analogue of Grothendieck's Hodge standard conjecture," and it is RH-equivalent by
+construction (K1-circular as a "step"). So P4 is held to the same standard P3 was: a real
+contribution, but as an *operationalized survey of a known convergence*, not as new mathematics. The
+"distinctive" claim is **provisional** (one competitor deep-read); it is not "confirmed" until the
+two prerequisites below are done. The survey is still worth writing on that honest framing.
 
 ## Prerequisites before writing the paper (not the outline)
 

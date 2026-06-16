@@ -11,11 +11,13 @@ Every mature framework for the Riemann Hypothesis succeeds at one task and stops
 Spectral (Hilbert-Polya), arithmetic-geometric (Deninger, $\mathbb{F}_1$), direct positivity
 (Weil-Li), the analytic zero-free method, and the recent prismatic and topological-Hochschild programs
 all *realize* the zeta function as a determinant or a trace of some operator or correspondence. None of
-them supplies the one further ingredient that would force the zeros onto the critical line: a
-polarization, an RH-equivalent positivity or Hodge-index signature on that realization. We organize the
+them supplies that ingredient in the form that would force the zeros onto the critical line: a
+polarization that is at once global, carries the Frobenius trace, and is RH-equivalent. Partial
+polarizations are known (the Faltings-Hriljac height pairing, the Adiprasito-Huh-Katz package), but
+each misses at least one of these properties, which is exactly why none closes RH. We organize the
 landscape around this single observation. We grade candidate cohomology theories for
-$\mathrm{Spec}(\mathbb{Z})$ against one requirement (does the candidate carry an RH-equivalent
-polarization?), we argue that the reason the gap is universal is *marginal positivity* (the relevant
+$\mathrm{Spec}(\mathbb{Z})$ against that conjunction of properties, we argue that the reason the gap is
+universal is *marginal positivity* (the relevant
 positivity is a near-zero cancellation residue with no slack), and we use the Davenport-Heilbronn
 L-function as the operational test that keeps the classification honest. The posture is that this is a
 compass, not a verdict: locating the gap as a single, precisely-identified polarization tells the field
@@ -35,9 +37,12 @@ makes this precise and complete: the zeta function of a curve $C/\mathbb{F}_q$ i
 characteristic polynomials of Frobenius acting on cohomology, and the Riemann Hypothesis for $C$ is the
 statement that a certain intersection form is a polarization (the Hodge index theorem on $C \times C$).
 Over $\mathbb{Q}$, every program reaches the first half of this picture (a realization of $\zeta$ as a
-determinant or trace) and none reaches the second (the polarization). The gap is not incidental to one
-approach. It is the same gap in all of them, and supplying it is itself equivalent to the Riemann
-Hypothesis.
+determinant or trace) and none reaches the second: a polarization with all the properties RH needs at
+once (global, trace-carrying, RH-equivalent, noncircular). Partial polarizations exist, but each fails
+at least one property. The gap is not incidental to one approach. It is the same gap in all of them, and
+supplying it is itself equivalent to the Riemann Hypothesis. Because that equivalence is exact, the
+convergence thesis is an organizing claim, not a step toward a proof; what is new here is the
+operationalization (the scorecard and the discipline), not the equivalence, which is classical.
 
 This is not the framing of the field's standard references. Bombieri's problem description and Conrey's
 *The Riemann Hypothesis* (Notices AMS, 2003) catalog approaches and evidence. Connes' recent survey
@@ -100,20 +105,30 @@ the positivity, which is RH-equivalent and unproven.
 with a flow whose regularized determinant is the completed zeta function, and the recent
 prismatic and topological-Hochschild programs supply concrete operators (a Frobenius $F$ and a Sen
 operator $\Theta$) whose traces recover the Euler factors and the archimedean factor. Again: the
-realization is delivered; the polarization is not.
+realization is delivered; a polarization with all four required properties is not.
+
+A qualifier is essential here, and Section 4 makes it precise. Two *partial* polarizations are proven
+over the arithmetic base: the Faltings-Hriljac height pairing (a genuine positive pairing, but local to
+one arithmetic surface) and the Adiprasito-Huh-Katz package (Hodge-Riemann positivity on any matroid,
+but arithmetic-blind, it loses the Frobenius trace). Each is a real polarization; each misses the
+conjunction RH needs. So the claim of this survey is not "no one has a polarization," it is "no one has
+a polarization that is simultaneously global, trace-carrying, RH-equivalent, and noncircular."
 
 The common shape is unmistakable. Each framework produces $\zeta$ as $\det$ or $\mathrm{Tr}$. The
-Riemann Hypothesis is never the realization. It is the signature, the positivity, the polarization on
-the realized object, and it is the same object in every framework. That is the irreducible content, and
-it is what Section 4 grades the candidates against.
+Riemann Hypothesis is never the realization. It is the signature on the realized object, the same
+signature in every framework. That is the irreducible content, and it is what Section 4 grades the
+candidates against.
 
 ## 4. The Spec(Z) scorecard [STUB, pending expert reader]
 
-> This section is intentionally not drafted. It is the technical core: a table of candidate cohomology
-> theories for $\mathrm{Spec}(\mathbb{Z})$ (Deninger foliated, Connes / Connes-Consani, prismatic /
-> WCart / Gurney, Hesselholt THH-TC, Arakelov / Faltings-Hriljac, $\mathbb{F}_1$, AHK) graded against
-> three columns: (i) realizes $\zeta$ as a trace, (ii) functional-equation duality / perfectness,
-> (iii) an RH-equivalent polarization. The claim to be defended is that every candidate has (i), most
+> This section is intentionally not drafted. It is the technical core: a table of about 17 candidate
+> cohomology theories for $\mathrm{Spec}(\mathbb{Z})$, grouped into 7 named families (Deninger foliated,
+> Connes / Connes-Consani, prismatic / WCart / Gurney, Hesselholt THH-TC, Arakelov / Faltings-Hriljac,
+> $\mathbb{F}_1$, AHK), graded against three columns: (i) realizes $\zeta$ as a trace, (ii)
+> functional-equation duality / perfectness, (iii) an RH-equivalent polarization. Two families carry a
+> *partial* (iii) (Faltings-Hriljac, AHK), so the claim is precise: no candidate has (iii) as the full
+> conjunction (global $\wedge$ trace-carrying $\wedge$ RH-equivalent $\wedge$ noncircular). The claim to
+> be defended is that every candidate has (i), most
 > have (ii), and none has (iii); and that (iii) is the conjunction of a small number of
 > proven-droppable properties, so that an object with all of them proves RH. These are precise
 > arithmetic-geometry assertions about what each theory does and does not supply, and they must be
@@ -164,9 +179,11 @@ effective bounds needed at the arithmetically extreme (highly composite) inputs 
 uniform soft bound covering all of them, which is the logic-layer shadow of marginal positivity.
 
 We end where we began, on posture. The convergence we document is not a wall. It is a localization. The
-field has, across five independent frameworks, narrowed the missing step to a single object: an
-RH-equivalent polarization on the arithmetic realization of $\zeta$, equivalently the arithmetic Hodge
-standard conjecture, equivalently Rosati positivity in the arithmetic setting. Knowing that the gap is
+field has, across the major frameworks (spectral, arithmetic-geometric, direct positivity, the analytic
+zero-free method, and the recent prismatic and topological-Hochschild programs), narrowed the missing
+step to a single object: an RH-equivalent polarization on the arithmetic realization of $\zeta$,
+equivalently the arithmetic Hodge standard conjecture, equivalently Rosati positivity in the arithmetic
+setting. Knowing that the gap is
 one precisely-identified positivity, and knowing from marginal positivity that it cannot be supplied
 softly, is real progress. It tells us what to build.
 

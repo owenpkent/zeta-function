@@ -62,15 +62,20 @@ Riemann-Roch and no sheaf cohomology. This is the workaround to the Mathlib RR w
   field of a scheme as the generic-point stalk, a definition).
 - The repo's own `IsogenyDegree.lean` / `FunctionFieldRH.lean` (the path-(a) downstream chain, pure
   linear algebra), reusable for the final $t^2 \le 4q \Rightarrow |\alpha|^2 = q$ step.
+- **The resultant API** (corrected per adversary MED-3, present in v4.30):
+  `Mathlib.RingTheory.Polynomial.Resultant.Basic` has `resultant_eq_prod_roots_sub` and
+  `resultant_eq_prod_eval`, and `Mathlib.Algebra.Polynomial.Roots` has `card_roots`. These are the
+  degree-count primitives the route-(b1)(ii) "#affine zeros = degree of the resultant" step needs, so
+  that step is **borrowable**, not absent. The first audit missed this.
 
 **Absent (the real work):**
-1. **No algebraic-curve divisor theory at all.** A source grep finds **no** Weil/Cartier divisor, no
+1. **No algebraic-curve divisor theory.** A source grep finds **no** Weil/Cartier divisor, no
    divisor degree, no Picard group, no Riemann-Roch for curves. The only `*Divisor*` of a function is
    `Analysis/Meromorphic/Divisor.lean` (complex-analytic, wrong setting); every other `*Divisor*` file
    is `NonZeroDivisors` / arithmetic divisor functions / `ChainOfDivisors`. The EC development is built
    **without** divisors (consistent with the Lean precedent that did the group law via the ideal class
-   group, ~1500 lines, precisely to avoid the ~6500-line divisor route). So **M-b1.3 cannot reuse
-   existing machinery**.
+   group, ~1500 lines, precisely to avoid the ~6500-line divisor route). So the *divisor-theoretic*
+   route (i) to M-b1.3 is blocked; the resultant route (ii) is not (see the verdict).
 2. The pole-order filtration $R_n$ on the Weierstrass function field and $\dim R_n \ge n$ (M-b1.1):
    elementary but to be built from the coordinate ring + a pole-order valuation at $\infty$.
 3. Frobenius on $E/\mathbb{F}_q$ with fixed points $= E(\mathbb{F}_q)$ (M-b1.2): to be built.
@@ -92,16 +97,19 @@ quick win and located the precise blocker: Mathlib has **no curve divisor theory
 
 - **(i) general curve divisor theory:** BLOCKED. Building Weil divisors + degree + "principal $\Rightarrow$
   degree 0" for curves is itself a major Mathlib contribution Mathlib has deliberately avoided.
-- **(ii) elementary resultant route (elliptic-curve-specific):** PLAUSIBLE but substantial. A function
+- **(ii) elementary resultant route (elliptic-curve-specific):** the better-located option. A function
   $a(x) + b(x)\,y \in R_n$ has poles only at $\infty$, and its affine zeros are the roots of the
   resultant $a(x)^2 - b(x)^2 (x^3 + ax + b)$, whose degree equals the pole order at $\infty$. So
-  #zeros = #poles becomes a polynomial-degree identity, doable without divisor theory but needing the
-  resultant API + careful multiplicity bookkeeping at $\infty$ and at branch points ($y = 0$, $b(x) =
-  0$). Weeks, not days.
+  #zeros = #poles becomes a polynomial-degree identity. Corrected per adversary MED-3: the **resultant
+  API for this is already in Mathlib** (`resultant_eq_prod_roots_sub`, `resultant_eq_prod_eval`,
+  `card_roots`), so the degree-count primitive is borrowable. The real residual work is the
+  **multiplicity bookkeeping at $\infty$ and at branch points** ($y = 0$, $b(x) = 0$), which is a
+  smaller and sharper task than "build divisor theory."
 
-So **both P6 paths require months of Mathlib-absent infrastructure**: path (a) needs the Tate module /
-deg-as-quadratic-form (FLT-adjacent), path (b1) needs either curve divisor theory (i) or the explicit
-resultant build (ii). There is no shortcut.
+So **both P6 paths are still multi-month**, but the (b1)(ii) blocker is now correctly located: path (a)
+needs the Tate module / deg-as-quadratic-form (FLT-adjacent); path (b1)(ii) needs the multiplicity
+bookkeeping (the resultant primitive is present, the divisor route is not needed). The "no shortcut"
+conclusion holds, but (b1)(ii) is meaningfully more tractable than the first pass implied.
 
 **Recommendation (updated).**
 - **The only finished, citable artifact is the path-(a) conditional reduction.** If a paper is wanted
