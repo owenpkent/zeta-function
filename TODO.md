@@ -176,6 +176,19 @@
 
 - [x] **experiments/multifractal/** — E0 benchmarks, E1 zeta MFDFA, E2 FHK max fit, E3 psi MFDFA
 
+## Publications (registry: PUBLICATIONS.md)
+
+Each item is a `P#` discovery from [`PUBLICATIONS.md`](PUBLICATIONS.md). Run the evaluation gate there before promoting a new finding.
+
+- [ ] **P1 + P2 (Mathlib PRs, READY): submit `riemannZeta_conj` and the digamma identities.** Bodies in hand (`lean/upstream/`); only the human GitHub/CLA/fork/rebase steps remain. Submit digamma first per `lean/upstream/README.md`. (Owen-gated; this repo cannot open PRs.)
+- [x] **P5 lit-check DONE (2026-06-16): 1D headline pre-empted** (Mossinghoff-Trudgian 1410.3926 / 2212.06867 / Optimal Cosine Polynomials 2411.01385). Reframed to the negative closure of the higher-dimensional/SDP/SOS escape routes (4E.3 line-restriction lemma); dropped to DEVELOPING. Draft skeleton: `publications/P5_zero_free_ceiling.md`.
+- [ ] **P5 decision: fold into P4's Architecture-4 section, or develop the standalone note?** Recommendation is fold-into-P4 (the residue is narrow). Owen-gated. Standalone only if an expert confirms the multivariate/SDP/SOS negative closure is genuinely absent from the literature.
+- [x] **P3 lit-check DONE (2026-06-16): thesis is canonical Selberg-class folklore** (Bombieri Clay, Conrey Notices AMS 2003). Dropped to DEVELOPING; residue = the quantitative instrument (Schur counting law + Epstein). Recommended home: fold into P4.
+- [ ] **Portfolio decision (Owen-gated): the standalone-publishable set is {P1, P2 Mathlib, P6 formalization}; P3/P5/P7/P8 fold into the P4 survey.** Confirm this shape before investing drafting effort.
+- [ ] **P8 (analytic note): lit-check the stealth-window quantification vs Connes arXiv:2602.04022** to isolate the genuinely-new delta (exp(-4πx) rate + the D-H-aware defect).
+- [ ] **P4 (survey, long pole): outline the all-roads / marginal-positivity / Spec(Z)-scorecard expository paper** and decide the bundle (does it absorb P3, P7, P8?).
+- [ ] **P6 (formalization): decide conditional-paper vs wait-for-O1** for the function-field RH Lean chain; scope the write-up if conditional.
+
 ## Open — experimental
 
 - [x] **Milestone M2.5 (done): recompute A_arch from the bilinear Bombieri physical-space integral** (e2v_rosati_balance_M2_5.py, LEARNINGS #33). Ported 3F's validated archimedean integral into the matrix as a cross-b bilinear block; VALIDATED by T_max-convergence (residual vs the zero-side Gram -> 0, so #32's contamination was the zero-side truncation, not the block); corrected the diagnostic to min eig(A_arch + P_fin + B_pole) (the pencil "balance" wrongly presumed A_arch PD). RESULT: the non-circular Weil form for zeta is POSITIVE, min eig = +0.035 (stable +0.03..+0.05 across K=5..8), computed from the Gamma factor + primes with no zeros. Necessary-not-sufficient (finite-K truncation of the target positivity).

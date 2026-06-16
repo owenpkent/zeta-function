@@ -109,6 +109,7 @@ zeta-function/
 | `TODO.md` | Task tracking (`- [ ]` checkbox format) |
 | `OPERATIONS.md` | How to operate this repo as the AI-only proof program substrate |
 | `PHASE_STATE.md` | Current phase, sub-task, falsifiability triggers, next-session plan |
+| `PUBLICATIONS.md` | Publishable-discovery registry + evaluation gate (formal Mathlib + arXiv); what is shippable and how we score a new finding |
 | `docs/research_atlas/` | Master research map; all approaches, failures, ML directions |
 | `docs/03_research/proof_program.md` | The AI-augmented operational proof program |
 | `docs/03_research/proof_program_ai_only.md` | Speculative AI-only execution variant |
