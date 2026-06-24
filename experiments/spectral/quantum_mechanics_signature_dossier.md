@@ -38,6 +38,8 @@ side** and writes down an explicit positivity *strategy*. Its positivity is **a 
 theorem**, with a standing K1 risk - but the door is genuinely **ajar** (R3.5 leaves
 intersection-theoretic positivity open by construction), not closed.
 
+> **Dug into (2026-06-24); see the dedicated dossier [`../../docs/03_research/ccm_semilocal_prolate.md`](../../docs/03_research/ccm_semilocal_prolate.md) and LEARNINGS #114.** Refined verdict: the terminal object is M4, but the operator-algebra framing **factors** the road through a genuinely-different, separately-attackable sub-problem (construct the deferred self-adjoint operator $W_{\lambda,S}$; identify its negative eigenspace = the Sonin space) before reaching the M4 core (the $S\to\infty$ uniform domination). R3.5 status sharpens from "K1 risk" to **conditionally escaping**: the archimedean fragment *proves* the sign can be geometric (the $\rho{=}1$ jump + Sonin projection, not zeros), so escape-vs-K1 turns on one bit -- whether $W_{\lambda,S}$ admits a **zero-free** construction. A cheap density surrogate ([`e1f`](e1f_ccm_semilocal_prolate.py)) reproduces the archimedean sign-source faithfully but *cannot* settle the semilocal question (its projection isn't idempotent, so its eigenvalues aren't spectral invariants); the BUILDER target is a *faithful* operator from the proven Hardy-Titchmarsh form, not a surrogate.
+
 ---
 
 ## 1. The consolidated scorecard
