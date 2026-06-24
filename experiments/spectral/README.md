@@ -127,3 +127,21 @@ The numerical experiments in 1A-1C do not produce such a construction. They conf
 The 1D literature review documents what Connes' framework adds beyond the operators of 1A-1C, what would be needed for a rigorous numerical implementation (research-grade work), and how the construction integrates with Arch 2 (geometric) and Arch 3 (positivity, K1-blocked per R3.5).
 
 **Cross-cut**: deep dive on Connes from the Arch 2 (geometric) angle is in [2A_connes_dossier.md](../arithmetic_geometric/2A_connes_dossier.md). 1D is the Arch 1 (spectral) angle.
+
+## 1E: Arithmetic input as an additive potential ([e1d_arithmetic_spectral_dh.py](e1d_arithmetic_spectral_dh.py))
+
+**Status:** complete; honest NULL. Additive arithmetic injection does not break the zeta-vs-D-H symmetry.
+
+**Motivation.** 1A-1C used L-function-agnostic operators, so they could not discriminate zeta from D-H. The open question: does an operator *with* arithmetic input behave differently under the D-H discipline?
+
+**Method.** $H = H_0 + g\,V_{\text{arith}}$ on $L^2(\mathbb{R}, du)$, $u = \log x$. $H_0 = -i\,d/du$ is the scaling (Berry-Keating) generator; $V_{\text{arith}}$ is a Hermitian multiplicative-convolution kernel from the L-function's explicit-formula comb (von-Mangoldt weights at $u = k\log p$ for zeta = Euler product; period-5 Dirichlet coefficients at $u = \log n$ for D-H = no Euler product). A well-defined proxy for the Connes adele-class-space operator; reduces to bare BK at $g=0$. Reuses the 1C best-affine + discrimination-ratio $r = \mathrm{RMS}_\zeta/\mathrm{RMS}_{DH}$ methodology.
+
+**Findings.** The zeta comb at $g=4$ drops $\mathrm{RMS}_\zeta$ from $3.21$ to $1.87$ and $r$ from $0.71$ to $0.34$ - which *looks* like discrimination. Three controls kill it: (C1) a **random** comb of the same richness lowers $\mathrm{RMS}_\zeta$ just as much ($1.85 \pm 0.33$ over 20 trials; the random comb slightly *beats* the real one); (C2) scrambling the von-Mangoldt weights barely moves it; (C3, the smoking gun) the D-H-built operator still prefers zeta ($3.23 < 4.41$). The apparent signal is generic perturbation richness amplified by the lower variance of the zeta gammas, not arithmetic content.
+
+**Verdict.** NULL: arithmetic input as an *additive* potential/kernel does not break the zeta-vs-D-H symmetry. It must enter the **geometry** (per-prime $\mathbb{Q}_p$ structure), not as a perturbation of the dilation generator. Scoped to the additive route; does not test or kill the geometric route. This sharpens 1A-1C by locating *where* arithmetic has to live.
+
+## QM/spectral synthesis dossier (2026-06-23)
+
+The full survey of the quantum-mechanics / spectral approach, brought current through the Connes-Consani prolate / semilocal program (2019-2025) and Bender-Brody-Muller (2017), with the modular/KMS positivity analysis and adversary verification, is in [quantum_mechanics_signature_dossier.md](quantum_mechanics_signature_dossier.md). Headline: every QM construction realizes zeta but none reaches the signature (the sixth all-roads confirmation); the one live thread is the 2024 semilocal prolate operator (arXiv:2310.18423), whose positivity is a strategy-not-theorem with the door genuinely ajar.
+
+**Bender-Brody-Muller note (the canonical circular-spectral example).** BBM (2017, arXiv:1608.03679) propose a PT-symmetric Hamiltonian whose eigenvalues track the zeros, then conjecture a metric making it Hermitian. By the quasi-Hermiticity theorem, "Hermitian in the conjectured metric" $\iff$ "spectrum real" $\iff$ RH, so naming the metric *asserts* RH (the R3.5/K1 wall). Bellissard (arXiv:1704.02644) additionally kills it at operator existence: momentum on $L^2(0,\infty)$ has deficiency indices $(1,0)$, so no self-adjoint extension exists. It is also Euler-blind (cannot separate zeta from D-H). Cite BBM when illustrating why a PT/pseudo-Hermitian spectral proof is circular.

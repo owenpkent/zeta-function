@@ -7,6 +7,8 @@
 > This document is a literature review summarizing what Connes' framework adds beyond the operators tested in 1A-1C, and what would be needed for it to produce a rigorous spectral identification with $\{\gamma_n\}$.
 >
 > **Cross-cut**: deep dive on Connes' framework from the Architecture 2 (geometric) angle is in [2A_connes_dossier.md](../arithmetic_geometric/2A_connes_dossier.md). This 1D doc is the Architecture 1 (spectral / Hilbert-Pólya) angle.
+>
+> **Currency update (2026-06-24).** This review is built on Connes 1995/1999 and predates the Connes-Consani prolate / semilocal program (2019-2025). The structural verdict below (realization yes, positivity K1-blocked) is UNCHANGED and confirmed by the newer work. For the current state of the quantum-mechanics / spectral approach (the prolate spheroidal operator that dissolves the 1A density mismatch from the inside, the PROVEN-but-archimedean-only Weil-positivity fragment, the 2024 semilocal prolate operator that crosses onto the Frobenius side, and Bender-Brody-Müller 2017 as the canonical circular-spectral instance) see the synthesis dossier [`quantum_mechanics_signature_dossier.md`](quantum_mechanics_signature_dossier.md).
 
 ## 1. What 1A-1C established (recap)
 

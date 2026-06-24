@@ -10,7 +10,7 @@ Every architecture and every new direction produces the **realization** of $\zet
 
 | Framework | What it realizes (the easy half) | Where RH-positivity sits (the hard half) | Status of the hard half |
 |---|---|---|---|
-| **Arch 1** (Connes spectral / NCG) | adelic trace formula = Weil explicit formula | positivity of the Weil distribution (trace-side) | R3.5-circular (K1): a trace identity, not a signature |
+| **Arch 1** (Connes spectral / NCG) | adelic trace formula = Weil explicit formula | positivity of the Weil distribution (trace-side) | R3.5-circular (K1): a trace identity, not a signature. Brought current 2026-06 (Connes-Consani prolate/semilocal 2019-2025): archimedean positivity PROVEN but K2-blind, Frobenius-side semilocal positivity a strategy (K1 risk, door ajar); [QM dossier](../../experiments/spectral/quantum_mechanics_signature_dossier.md) |
 | **Arch 2 / Dir 8** (Weil / Deninger) | intersection form on a surface; Frobenius correspondence | **Hodge-index signature** $(1,k)$ on the primitive part | the target; function-field case exact (2G), Spec(Z) open |
 | **Arch 3** (Weil / Li positivity) | the Weil quadratic form / Li coefficients | positivity of the form $\Leftrightarrow$ archimedean dominates the prime obstruction | marginal (#18-20): no soft input-side bookkeeping manufactures it |
 | **Arch 4** (zero-free regions) | non-negative trig-polynomial inequalities | (not a signature route) | capped at V-K $2/3$ (#14-15); constraint-mapping, not RH |
