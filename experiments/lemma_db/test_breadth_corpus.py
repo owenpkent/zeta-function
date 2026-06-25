@@ -67,13 +67,24 @@ def test_unconditional_entries_never_transfer_candidates():
             assert screen(e.skel)["transfer_candidate"] is False
 
 
-def test_aim_refined_to_full_fingerprint():
-    """After acq1, the aim is the full fingerprint (contingent+complex-root was necessary-not-sufficient)."""
+def test_aim_converged_after_acq2():
+    """After acq2 the breadth search has converged: aim() reports the status + the pivot to construction."""
     a = aim()
-    assert "necessary_not_sufficient" in a
-    assert "line-axis" in a["refined_aim"]
-    assert "output-indefinite" in a["refined_aim"]
-    assert "prohibitive" in a["refined_aim"]
+    assert "CONVERGED" in a["status"]
+    assert "pivot" in a
+    assert "M4" in a["status"] or "polarization" in a["status"]
+
+
+def test_acq2_selection_not_sign_screen():
+    """The Bridgeland near-miss (indefinite form, but membership flips not the sign) fires the #121 screen."""
+    bridgeland = _S(1,1,1,0,1,"unconditional",1,"realization",0,"na","na","na","curative","output-selection")
+    assert any("selection-not-sign" in r for r in battery(bridgeland))
+
+
+def test_acq2_special_value_regime_screen():
+    """The Gamma-conjecture near-miss (zeta values at k>=2) fires the special-value/period screen."""
+    gamma = _S(0,0,1,0,0,"na",1,"realization",0,"special-value","na")
+    assert any("special-value" in r for r in battery(gamma))
 
 
 def test_acq1_wrong_axis_screen():

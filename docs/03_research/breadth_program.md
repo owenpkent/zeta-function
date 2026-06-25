@@ -165,18 +165,41 @@ The first aimed acquisition batch (acq1, #120) added four more, the **fingerprin
     Schur class)? Input-class membership is a kernel property coefficient multiplicativity does not touch,
     hence structurally Euler-blind (it holds for the whole extended Selberg class, D-H included).
 
-**The M4 polarity fingerprint (the acq1 yield).** Screens 2 + 8 + 9 + 10 compose into a near
-necessary-and-sufficient profile: a contingent positivity is a transfer candidate iff it is **contingent +
-complex-root + line-axis + output-indefinite + prohibitive-on-a-fixed-locus**, and that profile *is* a
-polarization (Weil/Rosati). The program aimed at the #119 complement and got back a fingerprint of the
-target; the remaining search is less "find a positivity" and more "find a fixed-locus duality whose
-primitive form is definite" = the M4 construction itself. Encoded in `breadth_corpus.py` (`FINGERPRINT`,
-`battery()`, `aim()`).
+The second aimed batch (acq2, #121) tested the fingerprint against its three best candidates and added two
+more screens:
+
+11. **The selection-not-sign screen (#121, refines #120).** When a field offers a genuine fixed indefinite
+    form *and* a contingency, ask **which object the contingency acts on**: does the **sign** of the form
+    flip (definite ↔ indefinite) on a *fixed object set*, or does **class-membership** (which objects are
+    in the positive cone) flip while the signature stays fixed? Selection-not-sign is realization (the
+    selection moves, curatively). Bridgeland's support-property $Q$ is the type case: a fixed indefinite
+    form whose signature *never* flips. So an indefinite form is necessary but not sufficient; the *sign*
+    must be the thing that flips.
+12. **The special-value / period regime screen (#121, a third tier of #113).** Three increasing distances
+    of zeta-contact: zero-*location* (RH), central-*value* / order-of-vanishing (BSD = #113), and
+    special-*value* / period ($\zeta(k)$ for $k\geq 2$, periods, Chern-class coefficients; the Gamma
+    conjecture, Apery constants). The third tier reads zeta *values* in the convergent half-plane where
+    $\zeta$ has no zeros, disqualified by regime *even when structurally deep* (the $\hat\Gamma$-integral
+    lattice is a real integral structure, not numerology).
+
+**The M4 polarity fingerprint (the acq1 yield, sharpened by acq2).** Screens 2 + 8 + 9 + 10 + 11 compose
+into a near necessary-and-sufficient profile: a contingent positivity is a transfer candidate iff it is
+**contingent + complex-root + line-axis + output-indefinite-with-the-sign-flipping + prohibitive-on-a-fixed-
+locus**, and that profile *is* a polarization (Weil/Rosati). **acq2 converged the search:** tested against
+its three best candidates (Bridgeland, the scattering sign, Frobenius manifolds), the fixed-indefinite-form
+space outside arithmetic geometry is now mapped and shown *insufficient* (the rare ingredient exists; the
+sign-flip + the Frobenius $t$-slot do not). The closest non-arithmetic candidate (Bridgeland) is off by
+*exactly one Hodge weight* (its $(2,n{-}2)$ is the weight-2 Mukai polarization; Weil uses the weight-1
+$(1,n{-}1)$). So the residual profile **is** M4, and the productive next move is the construction (09A AHK,
+Faltings-Hriljac + $\Gamma_S$, lever B) and the `R3_5.lean` VERIFIER target (a discrete-vs-continuous
+spectrum predicate separating the Selberg operator-exists case from the zeta scattering-resonance case), not
+more breadth draws until a genuinely new orbit point appears. Encoded in `breadth_corpus.py` (`FINGERPRINT`,
+`battery()`, `aim()` now reports CONVERGED).
 
 **The battery is the real output.** A sweep is scored not by "areas covered" but by **disqualifiers
 produced**. Each new disqualifier is a permanent compression of the search space for every future sweep.
 The program's success metric is the *growth and sharpening of this battery*, plus any P1 transfer source or
-P3 component. (Tally so far: 11 screens, 4 from acq1.)
+P3 component. (Tally so far: ~13 screens, 4 from acq1, 2 from acq2; the search has CONVERGED, #121.)
 
 ## 5. Breadth acquisition: how to reach the UNEXPECTED locations
 

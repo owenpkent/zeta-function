@@ -39,6 +39,10 @@ kills it) | TARGET (an actual standing M4 construction target).
 | **Transfer operator / Ruelle / Selberg dynamical zeta** (acq1) | thermodynamic formalism | contingent, **strip-width** axis | realization | yes (closed orbits) | all-heights | DISQUALIFIED (spectral-gap=zero-free-region #120, K1) | gap = a strip not the line; zeta's zeros are scattering resonances off the self-adjoint axis |
 | **Berry-Tabor / GUE level statistics** (acq1) | quantum chaos | contingent, **spacing** axis | realization | no | Level-3 | DISQUALIFIED (wrong-axis #120) | repels in the height direction, orthogonal to Re=1/2 |
 | **Katz-Sarnak symmetry type** (acq1) | automorphic / RMT | contingent, **central-rank** axis | realization | yes (monodromy) | L-value | DISQUALIFIED (wrong-axis #120 + #113 + circular) | governs the central point (rank), corollary of RH where proven |
+| **Bridgeland stability + support-property form** (acq2) | derived categories | unconditional (**selection**, not sign) | realization | no | n/a | DISQUALIFIED (selection-not-sign #121 + curative #120) | the closest non-AG near-miss: a FIXED indefinite Q (weight-2 Mukai), but membership flips not the sign; off by one Hodge weight |
+| **Frobenius manifolds / Dubrovin connection** (acq2) | GW theory | static skeleton, no contingent polarity | realization | no | n/a | DISQUALIFIED (curative #120) | fixed indefinite $\eta$ + spectral connection, but the contingency is semisimplicity (eigenvalue collision), curative |
+| **Gamma conjecture / Apery constants** (acq2) | GW theory / Hodge | n/a | realization | no | special-value | DISQUALIFIED (special-value/period #121) | zeta VALUES $\zeta(k)$, $k\ge2$, in the convergent half-plane (no zeros); one tier beyond #113 |
+| **Scattering / Eisenstein resonance sign** (acq2) | automorphic spectral | unconditional, **line** axis | realization | yes (carries $\xi$) | all-heights | DISQUALIFIED (K1 + de Branges #43) | F3 line-axis HIT, but a half-plane dissipativity bound not a line signature; closes onto Connes/CCM/de Branges |
 | **Connes 1999 adele trace formula** | NCG / operator algebras | n/a (K1) | realization | on $F$ | all-heights | DISQUALIFIED (R3.5 K1 wall) | the paradigm K1 case |
 | **Connes-Consani archimedean Weil positivity** | NCG | contingent (proved at $\infty$) | signature (at $\infty$) | no | all-heights | COMPONENT (K2-blind, $\Gamma$-factor half) | proves the sign can be GEOMETRIC (the $\rho{=}1$ jump) |
 | **CCM semilocal prolate $W_{\lambda,S}$** | NCG / metaplectic | contingent (strategy) | signature (strategy) | yes (Euler $dm_S$) | all-heights | TARGET (door ajar, = M4 at core) | the un-eliminated metaplectic route |
@@ -72,12 +76,18 @@ spectral avatar of the polarization sign; a VERIFIER target on `R3_5.lean`) and 
 $(1,n{-}1)$ central charge on a FIXED heart, the rare fixed-locus + output-indefinite combination outside
 algebraic geometry).
 
-**Orbit-map aim (5.2).** Under-visited points in the Hodge-Riemann orbit and the "functional-equation-as-
-duality" orbit:
-- Bridgeland stability conditions on triangulated categories (a $(1,n{-}1)$-flavored central charge)
-- Schur / cluster-algebra positivity; the Hodge theory of cluster varieties
-- quantum cohomology / Frobenius-manifold flatness; the Dubrovin connection
-- the Weil-Petersson / Hodge-metric positivity
+**Orbit-map aim (5.2) -- partly DONE (acq2, #121); the search has CONVERGED.** Bridgeland stability and
+quantum cohomology / Frobenius manifolds were drawn (acq2) and both CLOSE: they supply the rare ingredient
+(a FIXED indefinite form), but the **sign never flips** (selection-not-sign #121) and there is **no
+Frobenius $t$-slot**. acq2 sharpened the fingerprint (F4: the SIGN must flip, not class-membership) and
+showed the fixed-indefinite-form space outside arithmetic geometry is mapped and **insufficient** -- the
+residual profile IS M4 (Bridgeland is off by exactly one Hodge weight: its weight-2 $(2,n{-}2)$ vs Weil's
+weight-1 $(1,n{-}1)$). **PIVOT (engine `aim()` = CONVERGED):** the productive work is now the M4
+construction (09A AHK lattice, Faltings-Hriljac + $\Gamma_S$, lever B) and the `R3_5.lean` VERIFIER target
+(a discrete-vs-continuous spectrum predicate), not more breadth draws until a genuinely new orbit point
+appears. Remaining unvisited orbit points (only if a new structural reason emerges): Schur / cluster-algebra
+positivity; the Weil-Petersson / Hodge-metric positivity; the limiting-MHS / Sen degeneration (08D, likely
+on file).
 
 **Distant-field queue (5.4; blind sampling, lower priority than the aimed draws).** quantum information
 (entanglement monogamy, relative-entropy positivity); integrable systems (tau-functions, Riemann-Hilbert);

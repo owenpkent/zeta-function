@@ -157,6 +157,29 @@ CORPUS = [
           _S(1,1,1,1,1,"contingent",1,"realization",1,"L-value","complex","central-rank","na","na"),
           "DISQUALIFIED", "wrong-axis (#120) + L-value (#113) + circular (S7)",
           "acq1: arithmetic, but governs the CENTRAL POINT (rank); a corollary of RH where proven"),
+    # --- acq2 batch (#121): the full-fingerprint test; the closest non-AG near-misses ---
+    Entry("Bridgeland stability + support-property form", "derived categories / stability",
+          _S(1,1,1,0,1,"unconditional",1,"realization",0,"na","na","na","curative","output-selection"),
+          "DISQUALIFIED", "selection-not-sign (#121) + curative-flip (#120) + e3r (#48)",
+          "acq2: a fixed indefinite Q on a fixed Mukai lattice (the rare ingredient), but Q's signature "
+          "(2,n-2) NEVER flips -- class-MEMBERSHIP flips (selection), wall-crossing is curative; Q IS the "
+          "WEIGHT-2 Hodge-Riemann polarization, one weight above Weil's weight-1 (1,n-1)"),
+    Entry("Frobenius manifolds / Dubrovin connection", "GW theory / integrable systems",
+          _S(0,0,1,0,0,"na",1,"realization",0,"na","na","na","curative","na"),
+          "DISQUALIFIED", "curative-flip (#120) + D-H",
+          "acq2: the static skeleton (fixed indefinite eta + spectral-parameter connection) but NO "
+          "contingent polarization; the contingency is semisimplicity (eigenvalue collision), curative"),
+    Entry("Gamma conjecture / Apery (quantum-cohomology zeta-values)", "GW theory / Hodge",
+          _S(0,0,1,0,0,"na",1,"realization",0,"special-value","na","na","na","na"),
+          "DISQUALIFIED", "special-value/period regime (#121)",
+          "acq2: zeta VALUES zeta(k), k>=2, in the convergent half-plane where zeta has NO zeros; "
+          "structurally deep (the Gamma-hat integral lattice) but one tier beyond #113"),
+    Entry("Scattering / Eisenstein resonance sign (modular surface)", "automorphic spectral theory",
+          _S(1,1,1,1,1,"unconditional",1,"realization",1,"all-heights","complex","line","curative","na"),
+          "DISQUALIFIED", "K1 + de Branges #43 (Lax-Phillips = de Branges space of xi)",
+          "acq2: F3 line-axis HIT (the one improvement over acq1 strip-width), but the positivity is a "
+          "half-plane dissipativity bound (unconditional), not a line signature; resonances sit in the "
+          "continuous spectrum where self-adjointness is inert; closes onto Connes/CCM/de Branges"),
     # --- realization / K1 / perfectness rows (earlier sweeps) ---
     Entry("Hirzebruch signature operator", "index theory",
           _S(1,1,1,0,1,"na",1,"realization",0,"all-heights","na"),
@@ -217,7 +240,8 @@ def match_score(s: Skeleton, target: Skeleton = M4) -> int:
         score += 2
     if s.noncircular:
         score += 1
-    score += {"all-heights": 2, "Re(s)>1": 0, "na": 0, "Level-3": -2, "L-value": -3}.get(s.regime, 0)
+    score += {"all-heights": 2, "Re(s)>1": 0, "na": 0,
+              "Level-3": -2, "L-value": -3, "special-value": -3}.get(s.regime, 0)
     if s.dh_engages:
         score += 1
     if s.root_half == "complex":
@@ -235,7 +259,7 @@ def match_score(s: Skeleton, target: Skeleton = M4) -> int:
         score -= 2
     if s.side == "output-indefinite":
         score += 2
-    elif s.side == "input-definite":
+    elif s.side in ("input-definite", "output-selection"):
         score -= 2
     return score
 
@@ -265,6 +289,13 @@ def battery(s: Skeleton) -> list:
         fired.append("curative-flip screen #120 (locus relocates and zeros track it; K1 made concrete)")
     if s.side == "input-definite":
         fired.append("input/output split #120 (definite on the input measure-class; Euler-blind)")
+    # acq2 refinements (#121)
+    if s.side == "output-selection":
+        fired.append("selection-not-sign screen #121 (indefinite form present, but class-MEMBERSHIP "
+                     "flips while the SIGNATURE stays fixed; selection = realization, the Bridgeland miss)")
+    if s.regime == "special-value":
+        fired.append("special-value/period regime #121 (zeta VALUES at k>=2 / periods, not zero-LOCATION; "
+                     "one tier beyond the #113 central-value/BSD regime)")
     return fired
 
 
@@ -299,29 +330,38 @@ FINGERPRINT = {
     "polarity": ("contingent", "the signature flips when a zero moves (not unconditional)"),
     "root_half": ("complex", "#119: t^2-4q < 0 (not the real-root convex/log-concave half)"),
     "axis": ("line", "#120: flips on the Re=1/2 LINE (not vertical spacing, central rank, or strip width)"),
-    "side": ("output-indefinite", "#120: an indefinite signature of the OUTPUT zeros (not a definite "
-             "condition on the INPUT measure-class)"),
+    "side": ("output-indefinite", "#120/#121: an indefinite signature of the OUTPUT zeros whose SIGN "
+             "FLIPS (not a definite INPUT-class condition #120, and not class-MEMBERSHIP selection on a "
+             "fixed-signature form #121 -- the Bridgeland near-miss)"),
     "flip": ("prohibitive", "#120: failure is forbidden on a FIXED locus (not curative, where the locus "
              "relocates and the zeros track it)"),
 }
 
 
 def aim() -> dict:
-    """Read the next aimed acquisition off the active disqualifiers. After acq1, the
-    #119 complement is mapped: contingent+complex-root is necessary but NOT sufficient.
-    The refined aim is the FULL fingerprint, which is essentially 'a polarization'."""
+    """Read the next aimed acquisition off the active disqualifiers. After acq2 the breadth search
+    has CONVERGED: the fixed-indefinite-form space outside algebraic geometry is mapped (Bridgeland =
+    the closest near-miss) and shown INSUFFICIENT. The fingerprint is now so tight that the residual
+    profile IS M4 itself, so the productive next move is the construction, not more breadth draws."""
     return {
-        "from": "the acq1 fingerprint (the #119 complement, fully mapped)",
-        "necessary_not_sufficient": "contingent + complex-root (the four acq1 fields are the gap)",
-        "refined_aim": "contingent + complex-root + line-axis + output-indefinite + prohibitive-fixed-locus",
-        "implication": "the full fingerprint IS a polarization (Weil/Rosati); the remaining search is "
-                       "less 'find a positivity' and more 'find a fixed-locus duality whose primitive "
-                       "form is definite', i.e. the M4 construction itself.",
-        "next_draws": [
-            "orbit-map (5.2): Bridgeland stability (a (1,n-1) central charge on a FIXED heart) -- "
-            "the rare fixed-locus + output-indefinite combination outside algebraic geometry",
-            "the SCATTERING-RESONANCE sign (acq1 transfer-op): the modular-surface absorption sign as "
-            "the spectral avatar of M4's polarization sign -- a VERIFIER target on R3_5.lean",
+        "status": "CONVERGED (acq2): the full fingerprint is essentially 'a weight-1 (1,n-1) polarization "
+                   "with a Frobenius t-slot whose SIGN flips, prohibitive on a fixed locus' = M4.",
+        "what_acq2_showed": "Bridgeland supplies a fixed indefinite form but its SIGNATURE never flips "
+                            "(selection, not sign; weight-2 not weight-1); the scattering sign is line-axis "
+                            "but unconditional (a half-plane bound, not a line signature); Frobenius gives "
+                            "the static skeleton with no contingent polarization. The rare ingredient "
+                            "(a fixed indefinite form) exists in several fields; the SIGN-FLIP + the "
+                            "Frobenius t-slot do not, outside arithmetic geometry.",
+        "pivot": "breadth has done its compression job. The productive work is now the M4 CONSTRUCTION "
+                 "(09A AHK arithmetic lattice; Faltings-Hriljac product + Gamma_S; the lever-B Spec(Z) "
+                 "lift) and the R3_5.lean VERIFIER target (a discrete-vs-continuous predicate separating "
+                 "the Selberg operator-exists case from the zeta scattering-resonance case).",
+        "residual_breadth_draws": [
+            "weight-1 sign-flipping forms with a Frobenius t-slot: the limiting MHS / Sen non-"
+            "semisimplicity where the polarization DEGENERATES contingently (08D) -- but likely already "
+            "on file; a genuinely new orbit point is required to justify another draw",
+            "the BUILDER toy model: the self-inversive Schur-Cohn / Bezoutian form (acq1 Lee-Yang "
+            "Reading B) -- a finite contingent (1,n-1) sign-flip to test arguments before the lift",
         ],
     }
 
@@ -358,18 +398,15 @@ def demo() -> int:
         fired = battery(sk)
         print(f"     {nm:30} -> {fired[0] if fired else 'survives'}")
 
-    print("\n  REFINED AIM (off the fully-mapped #119 complement):")
+    print("\n  AIM (post-acq2: the breadth search has CONVERGED):")
     a = aim()
-    print(f"     necessary-not-sufficient: {a['necessary_not_sufficient']}")
-    print(f"     refined aim:              {a['refined_aim']}")
-    print(f"     implication:              {a['implication']}")
-    for d in a["next_draws"]:
-        print(f"       -> {d}")
+    print(f"     status: {a['status']}")
+    print(f"     pivot:  {a['pivot']}")
 
     print("\n  HONEST NOTE: RETRIEVAL + SCREENING, a prior + a filter, not a transfer certificate.")
-    print("  The scored output is the growth of the disqualifier battery (now 12 screens, 4 from")
-    print("  acq1), not the count of areas surveyed. Every new row passes a builder->adversary +")
-    print("  D-H/polarity control before entry.")
+    print("  The scored output is the growth of the disqualifier battery (now ~13 screens; 4 from")
+    print("  acq1, 2 from acq2), not the count of areas surveyed. Every new row passes a")
+    print("  builder->adversary + D-H/polarity control before entry. AIM: CONVERGED (see above).")
     print("=" * 88)
     return 0
 
