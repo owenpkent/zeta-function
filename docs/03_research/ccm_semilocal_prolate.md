@@ -192,6 +192,42 @@ the prime signature. It does **not** touch CCM's actual open step -- the deferre
 Hardy-Titchmarsh Jacobi matrix of $dm_S$ -- which remains genuinely open. Full writeup:
 `scratchpad/ccm_faithful/01_builder.md`.
 
+## The faithful degree-domain build (e1h): the third cheap route, also signature-blind
+
+[`e1h_ccm_degree_prolate.py`](../../experiments/spectral/e1h_ccm_degree_prolate.py) attacks the *degree*
+domain -- the place the `e1g` band-in-$s$ cancellation does not reach -- with the genuine operator
+$W_{\lambda,S} = (H+\tfrac12)^2 + \lambda^2 N_S$ ($H$ = the Jacobi matrix of $dm_S$; $N_S$ = the diagonal
+degree number-operator). BUILDER -> ADVERSARY, two framings corrected.
+
+- **Archimedean gate VALIDATES exactly (a clean new identity).** The Jacobi matrix of
+  $dm_\infty = \pi^{-1/2}|\Gamma(\tfrac14-\tfrac{is}{2})|^2 ds$ **is the Meixner-Pollaczek orthogonal
+  polynomials** ($\lambda_{MP}=\tfrac14$, $\phi=\tfrac{\pi}{2}$: $\alpha_k=0$, $\beta_k^2=k(k-\tfrac12)$),
+  re-derived independently in 60-digit exact arithmetic to $5\times10^{-60}$. So $H=J_\infty$ is genuinely
+  the proven Hardy-Titchmarsh scaling operator -- a citable special-function fact.
+- **$W$ is genuine and correctly POSITIVE.** Its spectrum is normalization-invariant ($3\times10^{-13}$,
+  the `e1f` gate). It is positive-definite ($n_{\text{neg}}=0$) -- and this is *right*: the actual
+  Connes-Moscovici prolate operator $PW_\lambda = -\tfrac{d}{dx}[(\lambda^2-x^2)\tfrac{d}{dx}]+(2\pi\lambda x)^2$
+  is itself positive (diagonalized, $n_{\text{neg}}=0$). There is **no** "negative eigenspace = Sonin"
+  tension at the prolate operator; that splitting lives in *different* objects -- the concentration
+  operator $T$ (the `e1g` $[0,1]$ object, reweighting-blind) and the IR Dirac $D^2$ -- which `e1h` does not
+  build. (The first-pass "needs a metaplectic sign-structure" caveat was mis-framed and is withdrawn.)
+- **SIGNATURE-BLIND (genuine, hardened).** $W$ is a deterministic function of the moments (the Jacobi
+  matrix), so it distinguishes *any* two measures equally and reads moments, not arithmetic. It escapes
+  `e1g`'s *specific* failure (it is not reproduced by the $\omega=1.37$ control), but the discrimination is
+  **generic**: prime-2's distances to non-arithmetic controls overlap the non-arith-vs-non-arith spread,
+  prime-2 is never an outlier. The adversary steelmanned the positive (the inverse risk) with four
+  arithmetic-keyed observables and **killed its own $z=+2.29$ false positive** -- a non-arithmetic
+  Lorentzian at the identical frequency $\log 2$ scores equally, because a single prime's factor
+  $|L_p(\tfrac12-is)|^2$ carries no arithmetic content beyond its frequency $\log p$; the joint
+  $\{2,3,5\}$ Mahalanobis test lands in the cloud body (52nd percentile in-code, 18th in the adversary's
+  panel), not the tail.
+
+**Upshot.** All **three** cheap orthogonal-polynomial-data routes are signature-blind by three distinct
+mechanisms -- `e1f` (non-idempotent, not a spectral invariant), `e1g` (reweighting-blind, L-function-blind),
+`e1h` (reads moments, not arithmetic). `e1h` does **not** prove the metaplectic route necessary; it
+reinforces it **by elimination** as the one route none of the cheap OP-data surrogates captures. The
+deferred metaplectic operator stays the open step. Full writeup: `scratchpad/ccm_degree/01_builder.md`.
+
 ## The precise open statement (and the BUILDER target)
 
 > Construct a self-adjoint semilocal prolate operator $W_{\lambda,S}$ (for finite $S \ni \infty$ and at
