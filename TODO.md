@@ -33,6 +33,12 @@
 - [x] Arch 1A: Berry-Keating discretization; density-mismatch with zeta documented
 - [x] Arch 1B: Sierra-Townsend modifications (centrifugal, Coulomb, modular log); all L-function-agnostic
 - [x] Arch 1C: L-function discrimination test — best-affine RMS ratio spans factor 3 around 1
+- [x] **Eight-angle sweep (2026-06-24/25, LEARNINGS #111-#117, synthesis [`docs/03_research/eight_angle_sweep_2026-06.md`](docs/03_research/eight_angle_sweep_2026-06.md))** — all eight reduce to M4 (realization everywhere, the signature only at M4):
+  - [x] Arch 1D brought current + QM/spectral signature dossier (#111, Connes-Consani prolate/semilocal + Bender-Brody-Müller; `quantum_mechanics_signature_dossier.md`); `e1d` additive-arithmetic-injection NULL (1E)
+  - [x] NP-1: finite-prime modular carrier does not continue into the strip as a t_p-detector — reduces to M4/#104 (#112, `e2vv`)
+  - [x] String theory angle (#113, `string_theory_rh.md`): corpus closes onto existing kills; the L-value/L-derivative BSD-regime discriminator extracted
+  - [x] Cryptography angle (#116, `cryptography_rh.md`): RH-as-tool (inverted dependency) + the function-field-RH shadow; corpus-completing closure
+  - [x] CCM semilocal prolate deep dive (#114/#115/#117, `ccm_semilocal_prolate.md`): factored, conditionally escaping; three cheap operator builds `e1f`/`e1g`/`e1h` all signature-blind by distinct mechanisms; archimedean = Meixner-Pollaczek (exact). The deferred metaplectic operator is the un-eliminated route by elimination.
 - [x] Arch 4B: non-negative trig polynomial LP saturates Fejér bound
 - [x] Arch 4D, 4D.2: single-coefficient d-variate LPs decompose to tensor products
 - [x] Arch 4E: balanced-sum LP max c_{1,1} + c_{2,2} exceeds tensor bound by 12% at N=2
