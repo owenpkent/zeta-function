@@ -108,7 +108,14 @@ constructions are exhausted, and all eight reduce to the same M4 signature. The 
 unchanged in location but sharper in description:
 
 - **CCM's deferred metaplectic operator** -- the one un-eliminated route, research-grade, the place a
-  zero-free construction would decide R3.5-escape vs K1 (#114, #117).
+  zero-free construction would decide R3.5-escape vs K1 (#114, #117). A follow-up (#118, `e1i`) attacked
+  its **finite-local** model (the finite Weil representation over $\mathbb{F}_p$): the metaplectic
+  sign-structure is genuine (an exact gate, $\mathrm{Tr}(F_p)=\varepsilon_p$ plus the double-cover
+  cocycle), but the finite-local quadratic sign-structure does **not** survive a finite Sonin positivity
+  compression as arithmetic discrimination (concentration-matched Arbiter, 5/5 body, false-negative-probed).
+  This does **not** eliminate the route -- CCM's actual semilocal $W_{\lambda,S}$ (the global
+  $\widetilde{SL(2,\mathbb{A}_S)}$ operator) is untouched -- but it sharpens where the metaplectic
+  arithmetic does and does not survive positivity: only in the global $S\to\infty$ assembly, which is M4.
 - **The standing construction-grade M4 targets**, all four faces of the same coupling: the AHK arithmetic
   lattice ([`research_directions/09A_ahk_arithmetic_lattice.md`](research_directions/09A_ahk_arithmetic_lattice.md)),
   the Faltings-Hriljac product + $\Gamma_S$, the function-field lever B $\mathrm{Spec}(\mathbb{Z})$ lift

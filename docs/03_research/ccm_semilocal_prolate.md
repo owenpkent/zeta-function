@@ -228,6 +228,34 @@ mechanisms -- `e1f` (non-idempotent, not a spectral invariant), `e1g` (reweighti
 reinforces it **by elimination** as the one route none of the cheap OP-data surrogates captures. The
 deferred metaplectic operator stays the open step. Full writeup: `scratchpad/ccm_degree/01_builder.md`.
 
+## The finite-local metaplectic build (e1i): the deferred route's sign-structure, attacked directly
+
+[`e1i_metaplectic_weil_index.py`](../../experiments/spectral/e1i_metaplectic_weil_index.py) attacks the
+route the three OP-data surrogates left un-eliminated. Since e1f/g/h are blind because they build from the
+modulus-squared measure $dm_S$, and the metaplectic arithmetic (the Weil index, the quadratic character)
+is a **phase/sign**, e1i builds the **finite Weil representation over $\mathbb{F}_p$** as a computable
+model of that sign-structure and tests whether it survives the positivity compression. Builder ->
+self-corrected false positive -> ADVERSARY (five corrections applied; `scratchpad/ccm_metaplectic/03_adversary.md`).
+
+- **Exact gate (genuine metaplectic structure).** (i) the trace of the normalized metaplectic Fourier is
+  the Weil index, $\mathrm{Tr}(F_p)=\varepsilon_p$ ($1$ or $i$ by $p\bmod4$, the Gauss-sum sign theorem,
+  to $\sim10^{-15}$, reproduced for all primes $3..59$); (ii) the metaplectic **2-cocycle** $F^2$ vs
+  $\rho(m(-1))=(-1|p)\cdot\text{parity}$ is non-trivial exactly for $p\equiv3\bmod4$ (the double-cover
+  obstruction). The metaplectic analogue of e1h's Meixner-Pollaczek identity. (The torus
+  character-multiplicativity alone would pass with the trivial sign, so the cocycle is the real test.)
+- **The result: finite-local signature-blindness.** The scalar Weil index **cancels** in $g^*g$
+  ($|\varepsilon_p|^2=1$), and a **concentration-matched, shear-free Arbiter** (a cloud of smooth
+  quadratic chirps) places the genuine chirp's Sonin-concentration spectrum in the body for all five
+  tested primes (false-negative-probed: a planted outlier reads 100% tail, the genuine reads deep body).
+  So the finite-local quadratic sign-structure does **not** survive the finite Sonin positivity
+  compression as arithmetic discrimination.
+- **Scope (does NOT close this dossier's open step).** This is the finite-local quadratic (Gauss-sum)
+  sign-structure at one place, **not** CCM's actual semilocal $W_{\lambda,S}$ (the metaplectic rep of
+  $\widetilde{SL(2,\mathbb{A}_S)}$ from the degree-1 Euler factors, with the global $S$-dependent
+  coupling). e1i does **not** eliminate the metaplectic route; it sharpens the map: the metaplectic
+  arithmetic is genuine, but the place it survives positivity (if anywhere) is the global $S\to\infty$
+  assembly, which **is** M4 (steps 1-2 below stay the open BUILDER target). Full writeup: LEARNINGS #118.
+
 ## The precise open statement (and the BUILDER target)
 
 > Construct a self-adjoint semilocal prolate operator $W_{\lambda,S}$ (for finite $S \ni \infty$ and at
