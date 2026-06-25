@@ -155,6 +155,43 @@ buildable sub-problem with a multiplication-by-density surrogate for the deferre
   requires CCM's **actual deferred operator** (the metaplectic Jacobi matrix of $dm_S$), not a
   multiplication surrogate.
 
+## The faithful build (e1g): the e1f bug fixed; the band-in-$s$ route eliminated by control
+
+[`e1g_ccm_faithful_prolate.py`](../../experiments/spectral/e1g_ccm_faithful_prolate.py) rebuilds the
+operator from **genuine** orthogonal projections (the explicit e1f fix), so the eigenvalues are TRUE
+spectral invariants this time. On $L^2(\mathbb{R}, du)$ (scaling = translation), with $D(s) = \prod_{v\in S}
+L_v(\tfrac12 - is)$ and the Hardy-Titchmarsh isometry $M_S = D^{-1}\cdot F$, the cutoffs are
+$P_T = \mathbf{1}_{|u|\le U_0}$ and $P_W^{(S)} = M_S^{-1}\mathbf{1}_{|s|\le S_0} M_S$ (a genuine
+projection, $(\text{isometry})^{-1}\cdot(\text{indicator})\cdot(\text{isometry})$), and
+$T_S = P_W^{(S)} P_T P_W^{(S)}$.
+
+- **TIER 1 VALIDATES (the reusable result).** The Slepian/PSWF eigenvalues are reproduced at $c = U_0 S_0$
+  ($\lambda_0 = 0.567, 0.875, 0.995$ at $c = 1, 2, 4$ vs the sinc-kernel reference $0.573, 0.881, 0.996$);
+  $P_T^2 = P_T$ exactly, $P_W^2 = P_W$ to $\sim 10^{-16}$; and **the eigenvalues are normalization-INVARIANT**
+  (rescaling $dm_S$ by $\alpha \in \{0.01, 3.7, 10^6\}$ moves them by $\sim 10^{-15}$). The e1f
+  non-invariance bug is provably fixed.
+- **TIER 2 = a GENUINE NEGATIVE (both parts adversary-confirmed by control, run in-code).**
+  - **(A) The band-in-$s$ concentration route is REWEIGHTING-BLIND.** $T_S$ is unitarily equivalent (via
+    $M_S$) to the **bare archimedean** concentration operator for **any** nonvanishing multiplier $D$, not
+    just the L-factors: since the band indicator $\mathbf{1}_{|s|\le S_0}$ commutes with multiplication-by-$D$,
+    $M_S^{-1} P_W^{(S)} M_S = F^{-1}\mathbf{1}_s F$, a diagonal-similarity fact. **Control:** a random
+    non-arithmetic multiplier gives the **identical** spectrum ($\sim 10^{-16}$), exactly like the primes.
+    So the route is **L-function-blind / D-H-blind by type** (D-H factors would give the identical
+    archimedean spectrum) and is **ruled out by elimination**. This is NOT a "prime cancellation" -- the
+    whole multiplier is invisible, the phase of $D$ carries no content.
+  - **(B) The $dm_S$ orthogonal-polynomial / Jacobi band cutoff is SIGNATURE-BLIND.** Its spectrum DOES move
+    under reweighting (the Jacobi $\beta_0$ shrinks $0.61 \to 0.38$ for prime-2), but **control:** a
+    non-arithmetic periodic factor ($\omega = 1.37$, not log of a prime) of matched amplitude reproduces the
+    same shrink ($\beta_0 \to 0.30$) and the same OP spectrum-drift. So the OP motion is the generic "a
+    positive factor shifts a measure's orthogonal polynomials" effect (the e1f-K3 / NP-1 decorative mode),
+    **not** an arithmetic signal. The earlier "primes survive here" reading is withdrawn.
+
+**Upshot.** The faithful build validates the archimedean harness and **rules out the band-in-$s$
+concentration route** (reweighting-blind) and the degree/Jacobi surrogate (signature-blind) as ways to read
+the prime signature. It does **not** touch CCM's actual open step -- the deferred metaplectic /
+Hardy-Titchmarsh Jacobi matrix of $dm_S$ -- which remains genuinely open. Full writeup:
+`scratchpad/ccm_faithful/01_builder.md`.
+
 ## The precise open statement (and the BUILDER target)
 
 > Construct a self-adjoint semilocal prolate operator $W_{\lambda,S}$ (for finite $S \ni \infty$ and at
