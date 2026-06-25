@@ -15,11 +15,19 @@ aim off the active kills (where to look next). It never certifies a transfer; th
 stays a human/LLM judgement on the shortlist (the builder -> adversary loop).
 
 THE MASTER DISCRIMINATOR is S6, POLARITY. Almost every positivity theorem in
-mathematics is S1-S5 with UNCONDITIONAL polarity (Kahler/matroid/convex/Lorentzian
-Hodge-Riemann): a (1, n-1) signature for every valid input, so it can never flip to
-flag a violation. M4 needs CONTINGENT polarity: the Weil/Rosati form flips
-PSD -> indefinite exactly when a zero leaves the line. The first question to any
-candidate is "does your signature flip, and on what?".
+mathematics is S1-S5 with UNCONDITIONAL polarity. M4 needs CONTINGENT polarity.
+But the first aimed acquisition batch (acq1, the #119 disqualifier-complement)
+found that CONTINGENT + complex-root is NECESSARY but NOT SUFFICIENT: the complement
+is occupied by four distinct flavors of "contingent but still wrong", each giving a
+screen. Together they form a near necessary-and-sufficient FINGERPRINT of M4's
+polarity (a polarization = Weil/Rosati form):
+
+  contingent  AND  complex-root half (#119, discriminant: t^2-4q < 0)
+              AND  line axis        (not vertical spacing / central rank / strip width)
+              AND  output-indefinite (a signature of the zeros, not a definite condition
+                                      on the input measure-class)
+              AND  prohibitive flip on a FIXED locus (failure forbidden; not curative,
+                                      where the locus relocates and the zeros track it).
 
 Run:
   python -m experiments.lemma_db.breadth_corpus
@@ -27,11 +35,13 @@ Run:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field as _field
+from dataclasses import dataclass
 
 
 # ---------------------------------------------------------------------------
 # The field-agnostic M4 skeleton (the query keys). See breadth_program.md sec 1.
+# The last three axes (axis / flip / positivity_side) are the acq1 fingerprint
+# dimensions; they default to 'na' so older rows need not set them.
 # ---------------------------------------------------------------------------
 @dataclass(frozen=True)
 class Skeleton:
@@ -40,13 +50,17 @@ class Skeleton:
     duality: bool          # S3 a perfect pairing (the functional equation)
     t_slot: bool           # S4 a slot for the trace datum t (the Frobenius eigenvalue)
     signature: bool        # S5 a primitive-definite signature exists (a polarization)
-    polarity: str          # S6 'contingent' (right) | 'unconditional' (wrong) | 'na'  <- THE DISCRIMINATOR
+    polarity: str          # S6 'contingent' (right) | 'unconditional' (wrong) | 'na'  <- DISCRIMINATOR
     noncircular: bool      # S7 proved without inputting the answer
     # context axes
     produces: str          # 'signature' | 'perfectness' | 'realization'
     dh_engages: bool       # engages the Euler product (distinguishes zeta from Davenport-Heilbronn)
     regime: str            # 'all-heights' | 'L-value' | 'Level-3' | 'na'
-    root_half: str         # 'complex' | 'real' | 'na'  (the #119 discriminant axis: t^2-4q vs 0)
+    root_half: str         # 'complex' | 'real' | 'na'  (#119 discriminant: t^2-4q vs 0)
+    # acq1 fingerprint dimensions (why a CONTINGENT positivity can still be wrong)
+    axis: str = "na"           # 'line' (RH) | 'spacing' | 'central-rank' | 'strip-width' | 'na'
+    flip: str = "na"           # 'prohibitive' (fixed locus) | 'curative' (locus relocates) | 'na'
+    side: str = "na"           # 'output-indefinite' (RH) | 'input-definite' (measure-class) | 'na'
 
 
 @dataclass
@@ -59,45 +73,50 @@ class Entry:
     note: str = ""
 
 
-# The M4 target, as a skeleton (everything true, contingent polarity, complex-root half).
+# The M4 target, fully fingerprinted.
 M4 = Skeleton(
     lefschetz=True, primitive=True, duality=True, t_slot=True, signature=True,
     polarity="contingent", noncircular=True,
     produces="signature", dh_engages=True, regime="all-heights", root_half="complex",
+    axis="line", flip="prohibitive", side="output-indefinite",
 )
 
 
-def _S(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root):
-    return Skeleton(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root)
+def _S(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root,
+       axis="na", flip="na", side="na"):
+    return Skeleton(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root, axis, flip, side)
 
 
 # ---------------------------------------------------------------------------
-# The corpus (seeded from breadth_corpus.md: the eight-angle + four-area sweeps,
-# the cohomology landscape, the transfer shortlist). Append-only, deduplicated.
+# The corpus. Append-only, deduplicated. Seeded from the eight-angle + four-area
+# sweeps, the cohomology landscape, the transfer shortlist, and the acq1 batch.
 # ---------------------------------------------------------------------------
 CORPUS = [
+    # --- transfer candidates / targets (the contingent, fully-fingerprinted rows) ---
     Entry("Weil/Rosati form on a surface /F_q", "algebraic geometry",
-          _S(1,1,1,1,1,"contingent",1,"signature",1,"all-heights","complex"),
+          _S(1,1,1,1,1,"contingent",1,"signature",1,"all-heights","complex",
+             "line","prohibitive","output-indefinite"),
           "TRANSFER-CANDIDATE", "", "the master column = function-field RH = lever B; the template"),
     Entry("Faltings-Hriljac arithmetic Hodge index", "Arakelov geometry",
-          _S(1,1,1,0,1,"contingent",1,"signature",1,"all-heights","complex"),
+          _S(1,1,1,0,1,"contingent",1,"signature",1,"all-heights","complex",
+             "line","prohibitive","output-indefinite"),
           "TARGET", "", "proven, single surface; needs the PRODUCT Spec(Z)^2 + Frobenius Gamma_S"),
     Entry("CCM semilocal prolate W_{lambda,S}", "NCG / metaplectic",
-          _S(1,1,1,1,1,"contingent",1,"signature",1,"all-heights","complex"),
+          _S(1,1,1,1,1,"contingent",1,"signature",1,"all-heights","complex",
+             "line","prohibitive","output-indefinite"),
           "TARGET", "", "door ajar = M4 at core; the un-eliminated metaplectic route"),
+    Entry("Ihara zeta / Ramanujan graphs", "spectral graph theory",
+          _S(1,0,1,1,1,"contingent",1,"signature",1,"all-heights","complex",
+             "line","prohibitive","output-indefinite"),
+          "COMPONENT", "", "the function-field RH shadow in graph clothing (lever B)"),
+    Entry("Connes-Consani archimedean Weil positivity", "NCG",
+          _S(1,1,1,0,1,"contingent",1,"signature",0,"all-heights","complex",
+             "line","prohibitive","output-indefinite"),
+          "COMPONENT", "", "proves the sign can be GEOMETRIC (rho=1 jump); K2-blind, Gamma-factor half"),
     Entry("Adiprasito-Huh-Katz (matroids)", "combinatorics",
           _S(1,1,1,0,1,"unconditional",1,"signature",0,"na","na"),
           "TARGET", "", "09A AHK lattice: needs a t-carrying Lefschetz element; sign source, wrong polarity bare"),
-    Entry("Ihara zeta / Ramanujan graphs", "spectral graph theory",
-          _S(1,0,1,1,1,"contingent",1,"signature",1,"all-heights","complex"),
-          "COMPONENT", "", "the function-field RH shadow in graph clothing (lever B)"),
-    Entry("Connes-Consani archimedean Weil positivity", "NCG",
-          _S(1,1,1,0,1,"contingent",1,"signature",0,"all-heights","complex"),
-          "COMPONENT", "", "proves the sign can be GEOMETRIC (rho=1 jump); K2-blind, Gamma-factor half"),
-    Entry("Hirzebruch signature operator", "index theory",
-          _S(1,1,1,0,1,"na",1,"realization",0,"all-heights","na"),
-          "DISQUALIFIED", "supertrace/grading split (#119)",
-          "realizes the integer sigma but presupposes Hodge-Riemann; its grading IS the polarization"),
+    # --- the wrong-polarity convex/log-concave engine (real-root half) ---
     Entry("Hodge-Riemann (Kahler)", "complex geometry",
           _S(1,1,1,0,1,"unconditional",1,"signature",0,"na","na"),
           "DISQUALIFIED", "e3r polarity (#48)", "the canonical wrong-polarity source"),
@@ -110,31 +129,59 @@ CORPUS = [
     Entry("Tropical / Berkovich Hodge-Riemann", "tropical geometry",
           _S(1,1,1,0,1,"unconditional",1,"signature",0,"na","real"),
           "DISQUALIFIED", "discriminant (#119) + #97", "same family, real-root half"),
-    Entry("Lee-Yang circle theorem", "statistical mechanics",
-          _S(0,0,1,0,1,"unconditional",1,"signature",0,"na","real"),
-          "DISQUALIFIED", "discriminant (#119) + #95", "all-positive on a circle; real-root half"),
+    Entry("Lee-Yang circle theorem (+ failure regime)", "statistical mechanics",
+          _S(0,0,1,0,1,"contingent",1,"signature",0,"na","real","na","na","input-definite"),
+          "DISQUALIFIED", "input/output split (#120) + discriminant (#119) + #95",
+          "acq1: failure = measure leaves Laguerre-Polya class (input-definite, Euler-blind, Dobner S^#)"),
     Entry("Boucksom-Jonsson NA Monge-Ampere", "non-archimedean geometry",
           _S(0,0,1,0,1,"unconditional",0,"signature",0,"na","real"),
           "DISQUALIFIED", "#97", "valuative single place, archimedean-blind, no t-slot"),
+    # --- acq1 batch: the #119 complement, occupied by four flavors of 'contingent but wrong' ---
+    Entry("Riemann-Hilbert / equilibrium-measure transitions", "integrable systems / RMT",
+          _S(0,0,1,0,1,"contingent",0,"realization",0,"Level-3","complex","na","curative","na"),
+          "DISQUALIFIED", "curative-flip screen (#120)",
+          "acq1: S-curves on the complex-root half, but the flip RELOCATES the band (curative), "
+          "underlying energy convexity unconditional; K1 made concrete (locus solved-for)"),
+    Entry("Transfer operator / Ruelle / Selberg dynamical zeta", "thermodynamic formalism",
+          _S(1,0,1,1,1,"contingent",1,"realization",1,"all-heights","complex","strip-width","na","na"),
+          "DISQUALIFIED", "spectral-gap=zero-free-region screen (#120) + K1",
+          "acq1: the gap is contingent but controls a STRIP WIDTH (Arch 4), not the line; Selberg-RH "
+          "reaches the line by self-adjointness but has no zeta; zeta's zeros are SCATTERING RESONANCES "
+          "off the self-adjoint axis (the absorption sign = M4's polarization sign)"),
+    Entry("Berry-Tabor / GUE level-statistics transition", "quantum chaos",
+          _S(0,0,0,0,0,"contingent",1,"realization",0,"Level-3","na","spacing","na","na"),
+          "DISQUALIFIED", "wrong-axis screen (#120) + Level-3 (#1)",
+          "acq1: level repulsion flips on the VERTICAL spacing law, orthogonal to the line; "
+          "compatible with beta=0.51"),
+    Entry("Katz-Sarnak symmetry type (low-lying zeros)", "automorphic / RMT",
+          _S(1,1,1,1,1,"contingent",1,"realization",1,"L-value","complex","central-rank","na","na"),
+          "DISQUALIFIED", "wrong-axis (#120) + L-value (#113) + circular (S7)",
+          "acq1: arithmetic, but governs the CENTRAL POINT (rank); a corollary of RH where proven"),
+    # --- realization / K1 / perfectness rows (earlier sweeps) ---
+    Entry("Hirzebruch signature operator", "index theory",
+          _S(1,1,1,0,1,"na",1,"realization",0,"all-heights","na"),
+          "DISQUALIFIED", "supertrace/grading split (#119)",
+          "realizes the integer sigma but presupposes Hodge-Riemann; its grading IS the polarization"),
+    Entry("Eta-invariant / APS signature defect", "index theory",
+          _S(1,1,1,0,1,"na",1,"realization",0,"L-value","na"),
+          "DISQUALIFIED", "L-value rule (#113, #119)", "eta = Shimizu L-value; special-value regime"),
+    Entry("SUSY Witten index Tr(-1)^F", "physics / index theory",
+          _S(1,1,1,0,0,"na",1,"realization",0,"L-value","na"),
+          "DISQUALIFIED", "supertrace/grading split (#119) + L-value (#113)",
+          "= Euler characteristic; the SIGNATURE grading is a different index theorem = M4"),
+    Entry("Kudla arithmetic theta lift", "automorphic forms",
+          _S(1,1,1,1,1,"contingent",1,"realization",1,"L-value","complex"),
+          "DISQUALIFIED", "L-value rule (#113)", "native output a central L-derivative (BSD/Gross-Zagier)"),
+    Entry("de Branges / Conrey-Li pairing", "analysis",
+          _S(0,0,1,0,1,"contingent",1,"signature",1,"all-heights","complex",
+             "line","prohibitive","output-indefinite"),
+          "DISQUALIFIED", "#43 (strictly stronger than RH)", "fails for zeta at k=34; must be RH-EQUIVALENT"),
     Entry("Connes 1999 adele trace formula", "NCG / operator algebras",
           _S(1,0,1,1,0,"na",0,"realization",1,"all-heights","na"),
           "DISQUALIFIED", "R3.5 / K1 wall", "spectrum=zeros => positivity <=> RH, no content (paradigm K1)"),
     Entry("Bost-Connes / KMS type III_1", "operator algebras",
           _S(0,0,1,0,0,"na",1,"realization",1,"Re(s)>1","na"),
           "DISQUALIFIED", "K1 + Buchholz-Longo (#119)", "blind to the strip; graded-KMS modulus ~ ungraded"),
-    Entry("SUSY Witten index Tr(-1)^F", "physics / index theory",
-          _S(1,1,1,0,0,"na",1,"realization",0,"L-value","na"),
-          "DISQUALIFIED", "supertrace/grading split (#119) + L-value (#113)",
-          "= Euler characteristic; the SIGNATURE grading is a different index theorem = M4"),
-    Entry("Eta-invariant / APS signature defect", "index theory",
-          _S(1,1,1,0,1,"na",1,"realization",0,"L-value","na"),
-          "DISQUALIFIED", "L-value rule (#113, #119)", "eta = Shimizu L-value; special-value regime"),
-    Entry("Kudla arithmetic theta lift", "automorphic forms",
-          _S(1,1,1,1,1,"contingent",1,"realization",1,"L-value","complex"),
-          "DISQUALIFIED", "L-value rule (#113)", "native output a central L-derivative (BSD/Gross-Zagier)"),
-    Entry("de Branges / Conrey-Li pairing", "analysis",
-          _S(0,0,1,0,1,"contingent",1,"signature",1,"all-heights","complex"),
-          "DISQUALIFIED", "#43 (strictly stronger than RH)", "fails for zeta at k=34; must be RH-EQUIVALENT"),
     Entry("Metaplectic / Weil rep over F_p (e1i)", "rep theory / harmonic analysis",
           _S(0,0,1,0,0,"na",1,"realization",0,"na","na"),
           "DISQUALIFIED", "finite-local sign cancels (#118)", "the Weil index is a phase the measure discards"),
@@ -155,44 +202,51 @@ CORPUS = [
 
 
 # ---------------------------------------------------------------------------
-# Skeleton match score. POLARITY is the hard gate (the e3r kill, encoded):
-# an UNCONDITIONAL signature scores near zero however many S1-S5 it has, because
-# it can never flag an off-line zero. CONTINGENT polarity is the prize.
+# Skeleton match score. POLARITY is the hard gate; the acq1 fingerprint dimensions
+# (axis/flip/side) reward the M4 profile and penalize the wrong-but-contingent ones.
 # ---------------------------------------------------------------------------
 def match_score(s: Skeleton, target: Skeleton = M4) -> int:
     score = 0
-    # S6 polarity: the discriminator.
     if s.polarity == "contingent":
         score += 6
     elif s.polarity == "unconditional":
-        score -= 4                       # wrong polarity: actively demoted (cannot flip)
-    # what it produces
+        score -= 4
     score += {"signature": 4, "perfectness": 1, "realization": 0}.get(s.produces, 0)
-    # S1-S5 structural presence
     score += sum([s.lefschetz, s.primitive, s.duality, s.signature])
-    if s.t_slot and target.t_slot:       # S4 a place for the trace datum
+    if s.t_slot and target.t_slot:
         score += 2
-    if s.noncircular:                    # S7
+    if s.noncircular:
         score += 1
-    # regime: all-heights is RH; L-value is BSD (disqualified); Level-3 is statistical
     score += {"all-heights": 2, "Re(s)>1": 0, "na": 0, "Level-3": -2, "L-value": -3}.get(s.regime, 0)
-    if s.dh_engages:                     # engages the Euler product
+    if s.dh_engages:
         score += 1
-    if s.root_half == "complex":         # the #119 discriminant half RH lives on
+    if s.root_half == "complex":
         score += 1
     elif s.root_half == "real":
+        score -= 2
+    # acq1 fingerprint dimensions
+    if s.axis == "line":
+        score += 2
+    elif s.axis in ("spacing", "central-rank", "strip-width"):
+        score -= 2
+    if s.flip == "prohibitive":
+        score += 2
+    elif s.flip == "curative":
+        score -= 2
+    if s.side == "output-indefinite":
+        score += 2
+    elif s.side == "input-definite":
         score -= 2
     return score
 
 
 # ---------------------------------------------------------------------------
-# The disqualifier battery (EVALUATE). Each predicate screens a NEW candidate's
-# skeleton and returns the killing rule, or None if it survives that gate.
-# These are the structurally-encodable members; K1, cheap-spectral and the
-# supertrace/grading split need a human/LLM read and are applied as entry tags.
+# The disqualifier battery (EVALUATE). Structurally-encodable members. K1, the
+# cheap-spectral pair, and the supertrace/grading split need a human/LLM read and
+# are applied as entry tags. The acq1 batch added four screens (the fingerprint).
 # ---------------------------------------------------------------------------
 def battery(s: Skeleton) -> list:
-    """Return the list of disqualifier rules that fire on this skeleton (empty = survives)."""
+    """Return the disqualifier rules that fire on this skeleton (empty = survives)."""
     fired = []
     if not s.dh_engages:
         fired.append("Davenport-Heilbronn (does not engage the Euler product)")
@@ -204,12 +258,19 @@ def battery(s: Skeleton) -> list:
         fired.append("L-value/order-of-vanishing rule #113 (BSD/Gross-Zagier regime, not all-heights)")
     if s.regime == "Level-3":
         fired.append("Level-3 (statistical; compatible with a beta=0.51 zero)")
+    # acq1 fingerprint screens (the #120 batch)
+    if s.axis in ("spacing", "central-rank", "strip-width"):
+        fired.append(f"wrong-axis screen #120 (flips on the {s.axis} axis, not the line)")
+    if s.flip == "curative":
+        fired.append("curative-flip screen #120 (locus relocates and zeros track it; K1 made concrete)")
+    if s.side == "input-definite":
+        fired.append("input/output split #120 (definite on the input measure-class; Euler-blind)")
     return fired
 
 
 def screen(s: Skeleton) -> dict:
     """Screen a candidate: its score, the rules that fire, and whether it survives to a
-    TRANSFER-CANDIDATE (contingent polarity + a t-slot + a duality + survives the battery)."""
+    TRANSFER-CANDIDATE (the full M4 fingerprint + survives the battery)."""
     fired = battery(s)
     is_candidate = (s.polarity == "contingent" and s.t_slot and s.duality
                     and s.produces == "signature" and not fired)
@@ -217,13 +278,12 @@ def screen(s: Skeleton) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# The skeleton query (GENERATE): return contingent-polarity rows with a t-slot and
-# a duality, ranked by match. The transfer shortlist, read by structure.
+# The skeleton query (GENERATE) and ranking.
 # ---------------------------------------------------------------------------
 def query_transfer_candidates(corpus=CORPUS) -> list:
     hits = [e for e in corpus
             if e.skel.polarity == "contingent" and e.skel.t_slot and e.skel.duality
-            and not battery(e.skel)]
+            and e.skel.produces == "signature" and not battery(e.skel)]
     return sorted(hits, key=lambda e: -match_score(e.skel))
 
 
@@ -232,67 +292,85 @@ def rank(corpus=CORPUS) -> list:
 
 
 # ---------------------------------------------------------------------------
-# Disqualifier-complement aim (Pillar 5.5): every kill names a HALF of the space;
-# the productive next search is the complement. The discriminant screen kills the
-# real-root half, so the aim is the contingent / complex-root / spectral-gap half.
+# The M4 polarity FINGERPRINT (the acq1 yield): the near necessary-and-sufficient
+# profile a contingent positivity must have to be a transfer candidate for M4.
 # ---------------------------------------------------------------------------
-COMPLEMENT_AIM = {
-    "discriminant screen #119": {
-        "kills": "the real-root half (t^2-4q >= 0): the convex/log-concave/Lee-Yang engine",
-        "search": "CONTINGENT, complex-root, spectral-gap positivity (t^2-4q < 0)",
-        "fields": [
-            "Riemann-Hilbert / Plancherel-Rotach transitions (real roots becoming complex)",
-            "the Lee-Yang FAILURE regime (zeros leaving the circle)",
-            "transfer-operator / Ruelle spectral-gap positivity (contingent on the gap)",
-            "the Berry-Tabor -> GUE transition (the contingency of level repulsion)",
-        ],
-    },
+FINGERPRINT = {
+    "polarity": ("contingent", "the signature flips when a zero moves (not unconditional)"),
+    "root_half": ("complex", "#119: t^2-4q < 0 (not the real-root convex/log-concave half)"),
+    "axis": ("line", "#120: flips on the Re=1/2 LINE (not vertical spacing, central rank, or strip width)"),
+    "side": ("output-indefinite", "#120: an indefinite signature of the OUTPUT zeros (not a definite "
+             "condition on the INPUT measure-class)"),
+    "flip": ("prohibitive", "#120: failure is forbidden on a FIXED locus (not curative, where the locus "
+             "relocates and the zeros track it)"),
 }
 
 
 def aim() -> dict:
-    """Read the next aimed acquisition off the active disqualifiers (the sharp draw)."""
-    return COMPLEMENT_AIM
+    """Read the next aimed acquisition off the active disqualifiers. After acq1, the
+    #119 complement is mapped: contingent+complex-root is necessary but NOT sufficient.
+    The refined aim is the FULL fingerprint, which is essentially 'a polarization'."""
+    return {
+        "from": "the acq1 fingerprint (the #119 complement, fully mapped)",
+        "necessary_not_sufficient": "contingent + complex-root (the four acq1 fields are the gap)",
+        "refined_aim": "contingent + complex-root + line-axis + output-indefinite + prohibitive-fixed-locus",
+        "implication": "the full fingerprint IS a polarization (Weil/Rosati); the remaining search is "
+                       "less 'find a positivity' and more 'find a fixed-locus duality whose primitive "
+                       "form is definite', i.e. the M4 construction itself.",
+        "next_draws": [
+            "orbit-map (5.2): Bridgeland stability (a (1,n-1) central charge on a FIXED heart) -- "
+            "the rare fixed-locus + output-indefinite combination outside algebraic geometry",
+            "the SCATTERING-RESONANCE sign (acq1 transfer-op): the modular-surface absorption sign as "
+            "the spectral avatar of M4's polarization sign -- a VERIFIER target on R3_5.lean",
+        ],
+    }
 
 
 # ---------------------------------------------------------------------------
 # Demo
 # ---------------------------------------------------------------------------
 def demo() -> int:
-    print("=" * 84)
+    print("=" * 88)
     print("THE BREADTH CORPUS: positivity/signature phenomena indexed by the M4 skeleton")
-    print("  master discriminator = S6 POLARITY (contingent=right, unconditional=wrong)")
-    print("=" * 84)
+    print("  master discriminator = S6 POLARITY; refined by the acq1 fingerprint (axis/flip/side)")
+    print("=" * 88)
     print(f"\n  corpus: {len(CORPUS)} phenomena.  M4 target match_score = {match_score(M4)}\n")
 
-    print("  RANKED by skeleton match (polarity-gated):")
+    print("  THE M4 POLARITY FINGERPRINT (the acq1 yield; a contingent positivity must hit ALL):")
+    for k, (v, why) in FINGERPRINT.items():
+        print(f"    {k:11} = {v:18}  {why}")
+
+    print("\n  RANKED by skeleton match:")
     for e in rank():
-        s = match_score(e.skel)
-        print(f"   {s:>3}  [{e.verdict:18}] {e.phenomenon}  ({e.skel.polarity})")
+        print(f"   {match_score(e.skel):>3}  [{e.verdict:18}] {e.phenomenon}")
 
-    print("\n  TRANSFER-CANDIDATES (contingent polarity + t-slot + duality, survive the battery):")
+    print("\n  TRANSFER-CANDIDATES (full fingerprint + survive the battery):")
     for e in query_transfer_candidates():
-        print(f"     - {e.phenomenon}  ({e.field}) -- {e.note}")
+        print(f"     - {e.phenomenon}  ({e.field})")
 
-    print("\n  DISQUALIFIER BATTERY demo (screening the wrong-polarity convex Hodge form):")
-    convex = _S(1,1,1,0,1,"unconditional",1,"signature",0,"na","real")
-    sc = screen(convex)
-    print(f"     score={sc['score']}  transfer_candidate={sc['transfer_candidate']}")
-    for r in sc["disqualifiers"]:
-        print(f"       killed by: {r}")
+    print("\n  ACQ1 SCREENS demo (each #119-complement near-miss fails a distinct fingerprint axis):")
+    for nm, sk in [
+        ("Riemann-Hilbert (curative)", _S(0,0,1,0,1,"contingent",0,"realization",0,"Level-3","complex","na","curative","na")),
+        ("transfer-operator (strip)", _S(1,0,1,1,1,"contingent",1,"realization",1,"all-heights","complex","strip-width","na","na")),
+        ("Berry-Tabor (spacing)", _S(0,0,0,0,0,"contingent",1,"realization",0,"Level-3","na","spacing","na","na")),
+        ("Lee-Yang failure (input)", _S(0,0,1,0,1,"contingent",1,"signature",0,"na","real","na","na","input-definite")),
+    ]:
+        fired = battery(sk)
+        print(f"     {nm:30} -> {fired[0] if fired else 'survives'}")
 
-    print("\n  DISQUALIFIER-COMPLEMENT AIM (the sharp next draw, off the #119 discriminant kill):")
-    a = aim()["discriminant screen #119"]
-    print(f"     kills:  {a['kills']}")
-    print(f"     search: {a['search']}")
-    for f in a["fields"]:
-        print(f"       -> {f}")
+    print("\n  REFINED AIM (off the fully-mapped #119 complement):")
+    a = aim()
+    print(f"     necessary-not-sufficient: {a['necessary_not_sufficient']}")
+    print(f"     refined aim:              {a['refined_aim']}")
+    print(f"     implication:              {a['implication']}")
+    for d in a["next_draws"]:
+        print(f"       -> {d}")
 
-    print("\n  HONEST NOTE: this is RETRIEVAL + SCREENING, a prior that says 'look here' and a")
-    print("  filter that says 'not there'. It does not certify a transfer; the builder->adversary")
-    print("  loop + a D-H/polarity control gate every new row. The scored output is the growth of")
-    print("  the disqualifier battery, not the count of areas surveyed.")
-    print("=" * 84)
+    print("\n  HONEST NOTE: RETRIEVAL + SCREENING, a prior + a filter, not a transfer certificate.")
+    print("  The scored output is the growth of the disqualifier battery (now 12 screens, 4 from")
+    print("  acq1), not the count of areas surveyed. Every new row passes a builder->adversary +")
+    print("  D-H/polarity control before entry.")
+    print("=" * 88)
     return 0
 
 

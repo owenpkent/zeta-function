@@ -35,6 +35,10 @@ kills it) | TARGET (an actual standing M4 construction target).
 | **Tropical / Berkovich Hodge-Riemann** | tropical geometry | unconditional | signature | no | n/a | DISQUALIFIED (#119; #97 Boucksom-Jonsson) | same family, real-root half |
 | **Lee-Yang circle theorem** | statistical mechanics | unconditional (real/circle) | signature | no | n/a | DISQUALIFIED (#95; #119 discriminant) | retired by the discriminant screen |
 | **Boucksom-Jonsson NA Monge-Ampere** | non-arch geometry | unconditional (convex one-sided) | signature | no | n/a | DISQUALIFIED (#97) | valuative single place, archimedean-blind |
+| **Riemann-Hilbert / equilibrium-measure transitions** (acq1) | integrable systems / RMT | contingent but **curative** | realization | no | Level-3 | DISQUALIFIED (curative-flip #120) | the locus relocates and zeros track it; K1 made concrete |
+| **Transfer operator / Ruelle / Selberg dynamical zeta** (acq1) | thermodynamic formalism | contingent, **strip-width** axis | realization | yes (closed orbits) | all-heights | DISQUALIFIED (spectral-gap=zero-free-region #120, K1) | gap = a strip not the line; zeta's zeros are scattering resonances off the self-adjoint axis |
+| **Berry-Tabor / GUE level statistics** (acq1) | quantum chaos | contingent, **spacing** axis | realization | no | Level-3 | DISQUALIFIED (wrong-axis #120) | repels in the height direction, orthogonal to Re=1/2 |
+| **Katz-Sarnak symmetry type** (acq1) | automorphic / RMT | contingent, **central-rank** axis | realization | yes (monodromy) | L-value | DISQUALIFIED (wrong-axis #120 + #113 + circular) | governs the central point (rank), corollary of RH where proven |
 | **Connes 1999 adele trace formula** | NCG / operator algebras | n/a (K1) | realization | on $F$ | all-heights | DISQUALIFIED (R3.5 K1 wall) | the paradigm K1 case |
 | **Connes-Consani archimedean Weil positivity** | NCG | contingent (proved at $\infty$) | signature (at $\infty$) | no | all-heights | COMPONENT (K2-blind, $\Gamma$-factor half) | proves the sign can be GEOMETRIC (the $\rho{=}1$ jump) |
 | **CCM semilocal prolate $W_{\lambda,S}$** | NCG / metaplectic | contingent (strategy) | signature (strategy) | yes (Euler $dm_S$) | all-heights | TARGET (door ajar, = M4 at core) | the un-eliminated metaplectic route |
@@ -56,13 +60,17 @@ kills it) | TARGET (an actual standing M4 construction target).
 
 ## Open acquisition queue (Pillar 5 of the program: where to look next)
 
-**Disqualifier-complement aim (5.5; the sharpest, from the #119 discriminant screen).** RH lives on the
-**complex-root / negative-discriminant / contingent** half. Sweep fields that produce CONTINGENT,
-complex-root, spectral-gap positivity (the complement of the convex/log-concave engine):
-- Riemann-Hilbert / Plancherel-Rotach transitions (where real roots become complex; the edge of the spectrum)
-- the Lee-Yang **failure** regime (where zeros leave the circle: the contingent side of #95)
-- transfer-operator / Ruelle spectral-gap positivity (contingent on the gap)
-- the Berry-Tabor $\to$ GUE transition (integrable vs chaotic, the contingency of level repulsion)
+**Disqualifier-complement aim (5.5; the sharpest, from the #119 discriminant screen) -- DONE (acq1, #120).**
+RH lives on the **complex-root / contingent** half; the four complement fields (Riemann-Hilbert, Lee-Yang
+failure, transfer-operator/Selberg, Berry-Tabor/GUE) were swept and ALL CLOSE. The complement is occupied,
+but by four flavors of "contingent but still wrong", each a new screen (curative-flip, wrong-axis,
+spectral-gap=strip, input/output). **Result: the M4 polarity FINGERPRINT** -- a transfer candidate must be
+*contingent + complex-root + line-axis + output-indefinite + prohibitive-on-a-fixed-locus*, which IS a
+polarization. So contingent + complex-root was necessary, not sufficient; the four acq1 fields are the gap.
+The refined aim (next draws): the **scattering-resonance sign** (the modular-surface absorption sign as the
+spectral avatar of the polarization sign; a VERIFIER target on `R3_5.lean`) and **Bridgeland stability** (a
+$(1,n{-}1)$ central charge on a FIXED heart, the rare fixed-locus + output-indefinite combination outside
+algebraic geometry).
 
 **Orbit-map aim (5.2).** Under-visited points in the Hodge-Riemann orbit and the "functional-equation-as-
 duality" orbit:

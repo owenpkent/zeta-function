@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from experiments.lemma_db.breadth_corpus import (
     M4, CORPUS, Skeleton, match_score, battery, screen,
-    query_transfer_candidates, rank, aim, _S,
+    query_transfer_candidates, rank, aim, FINGERPRINT, _S,
 )
 
 
@@ -67,11 +67,42 @@ def test_unconditional_entries_never_transfer_candidates():
             assert screen(e.skel)["transfer_candidate"] is False
 
 
-def test_complement_aim_points_at_complex_root_half():
-    """The disqualifier-complement aim off the discriminant screen targets the complex-root half."""
-    a = aim()["discriminant screen #119"]
-    assert "complex-root" in a["search"]
-    assert len(a["fields"]) >= 3
+def test_aim_refined_to_full_fingerprint():
+    """After acq1, the aim is the full fingerprint (contingent+complex-root was necessary-not-sufficient)."""
+    a = aim()
+    assert "necessary_not_sufficient" in a
+    assert "line-axis" in a["refined_aim"]
+    assert "output-indefinite" in a["refined_aim"]
+    assert "prohibitive" in a["refined_aim"]
+
+
+def test_acq1_wrong_axis_screen():
+    """A contingency that flips on the vertical-spacing or strip-width axis fires the wrong-axis screen."""
+    spacing = _S(0,0,0,0,0,"contingent",1,"realization",1,"na","complex","spacing","na","na")
+    strip = _S(1,0,1,1,1,"contingent",1,"realization",1,"all-heights","complex","strip-width","na","na")
+    assert any("wrong-axis" in r for r in battery(spacing))
+    assert any("wrong-axis" in r for r in battery(strip))
+
+
+def test_acq1_curative_flip_screen():
+    """A curative flip (locus relocates) fires the curative-flip screen even when complex-root + contingent."""
+    rh = _S(0,0,1,0,1,"contingent",1,"realization",1,"all-heights","complex","line","curative","na")
+    assert any("curative" in r for r in battery(rh))
+
+
+def test_acq1_input_output_screen():
+    """An input-definite (measure-class) positivity fires the input/output split screen."""
+    leeyang = _S(0,0,1,0,1,"contingent",1,"signature",1,"all-heights","complex","line","prohibitive","input-definite")
+    assert any("input/output" in r for r in battery(leeyang))
+
+
+def test_m4_has_full_fingerprint():
+    """The M4 target must carry every fingerprint value (it is the ideal profile)."""
+    assert M4.axis == "line"
+    assert M4.flip == "prohibitive"
+    assert M4.side == "output-indefinite"
+    for key in FINGERPRINT:
+        assert hasattr(M4, key)
 
 
 def test_rank_orders_targets_above_disqualified():

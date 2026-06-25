@@ -149,10 +149,34 @@ current battery (each retires by *regime* or *structure*, not case-by-case):
 7. **The supertrace/grading split (#119).** Is it the Euler-characteristic supertrace (free realization)
    rather than the signature, whose grading is itself the polarization?
 
+The first aimed acquisition batch (acq1, #120) added four more, the **fingerprint screens** (each catches a
+*contingent* positivity that is still wrong, which the polarity test #48 alone passes):
+
+8. **The wrong-axis screen (#120).** Does the contingency flip on the **line** axis (Re = 1/2, where RH
+   lives), or on a shadow axis: the vertical *spacing* law (level statistics), the *central rank* (symmetry
+   type, = the #113 L-value regime), or the *strip width* (a spectral-gap = zero-free region, Architecture
+   4)? Only line-axis is right.
+9. **The curative-flip screen (#120).** Is the flip **prohibitive** (failure = a forbidden configuration on
+   a locus *fixed a priori* by the duality), or **curative** (the locus relocates, support/band/S-curve
+   adapts, and the zeros track it)? Curative = realization, and circular (the locus is *solved-for*); this
+   operationalizes the K1 wall into a cheap predicate: *is the locus given, or solved-for?*
+10. **The input/output split (#120).** Is the positivity an **indefinite signature of the output** (the
+    zeros), or a **definite condition on the input** (membership in a stability / Laguerre-Polya / Polya-
+    Schur class)? Input-class membership is a kernel property coefficient multiplicativity does not touch,
+    hence structurally Euler-blind (it holds for the whole extended Selberg class, D-H included).
+
+**The M4 polarity fingerprint (the acq1 yield).** Screens 2 + 8 + 9 + 10 compose into a near
+necessary-and-sufficient profile: a contingent positivity is a transfer candidate iff it is **contingent +
+complex-root + line-axis + output-indefinite + prohibitive-on-a-fixed-locus**, and that profile *is* a
+polarization (Weil/Rosati). The program aimed at the #119 complement and got back a fingerprint of the
+target; the remaining search is less "find a positivity" and more "find a fixed-locus duality whose
+primitive form is definite" = the M4 construction itself. Encoded in `breadth_corpus.py` (`FINGERPRINT`,
+`battery()`, `aim()`).
+
 **The battery is the real output.** A sweep is scored not by "areas covered" but by **disqualifiers
 produced**. Each new disqualifier is a permanent compression of the search space for every future sweep.
 The program's success metric is the *growth and sharpening of this battery*, plus any P1 transfer source or
-P3 component.
+P3 component. (Tally so far: 11 screens, 4 from acq1.)
 
 ## 5. Breadth acquisition: how to reach the UNEXPECTED locations
 
