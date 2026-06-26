@@ -84,6 +84,15 @@ A first instantiation run ([`../../../experiments/arithmetic_geometric/e2uu_ahk_
 
 So the BUILDER target narrows from "build a 6-property object" to **"build a graded prime-lattice whose degree map yields $q+1-t$"**; everything else is combinatorial. P3 (over $\mathbb{Z}$: an arithmetic intersection theory whose Lefschetz numbers are the local Frobenius traces) is the AHK face of the M4 coupling (#104). This is the one place to spend construction effort; do not work P1/P2/P4/P5.
 
+## 6B. The breadth-fingerprint re-derivation, and the genus-1 faithfulness caveat (2026-06-25, #122)
+
+A second pass ([`e2ww_ahk_tslot_flip.py`](../../../experiments/arithmetic_geometric/e2ww_ahk_tslot_flip.py), LEARNINGS #122) ran the Breadth Program's converged M4-polarity **fingerprint** ([`../breadth_program.md`](../breadth_program.md), #120/#121) on the FF/genus-1 primitive form. The form is the **master transfer-candidate** (it passes the corpus `battery()` computationally) and its off-line flip is on the **sign** (passing the #121 selection-not-sign screen Bridgeland failed), so the breadth direction independently **recovers this spec's target object and the same constructible gap, P3**. That convergence is the whole positive content, and it is a connection, **not** an advance.
+
+Two corrections it forces on any future BUILDER work here (adversary-verified):
+
+1. **The arithmetic is the JOINT Gram, not one number.** A first-pass claim that "the arithmetic localizes to the single off-diagonal coupling $s=t$" is **false**: the diagonal $b=2gq$ carries $q$ (the flip threshold $2g\sqrt q$ moves with $q$), and the complex-root / fixed-locus structure requires the functional-equation relation $ab=4g^2q$. P3 is the joint arithmetic Gram $(2g,2gq,t)$, consistent with #104.
+2. **The faithfulness caveat (load-bearing).** Genus 1 is the *easiest* Weil case: the $2\times2$ negative-definiteness is just $\det>0$ for a binary quadratic form, which **Hasse proved in 1933** from norm-form positivity, before Weil, with no Hodge index theorem. So in the genus-1 shadow P6 looks automatic the instant P3 is supplied, which is an **artifact**. The genuine M4 difficulty (higher-**rank** Rosati positivity on a $>2$-dimensional primitive part, the archimedean $\Gamma_S$ place, the global $S\to\infty$ assembly) is exactly what the $2\times2$ genus-1 form discards. The breadth fingerprint is therefore a **genus-1-faithful shape**, necessary but silent about where M4 is actually hard; "the fingerprint localizes M4" must not be read as "M4 is elementary once P3 is supplied." The Section-7 compatibility question stays the open kernel.
+
 ## 7. Honest scope and probability
 
 The probability that (P6) falls easily is low (single digits), the same order as Direction 8.A: (P6) IS the arithmetic Hodge standard conjecture, and no road has produced it. What this spec changes is the **shape of the remaining work**, and that is real progress in the project's sense (a coordinate that narrows the search):
