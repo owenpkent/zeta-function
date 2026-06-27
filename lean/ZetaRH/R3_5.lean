@@ -295,32 +295,67 @@ theorem r3_5_K1_zeta
     pairing. We register this distinction at the Lean level by stating
     explicitly that R3.5 does not subsume intersection-theoretic positivity. -/
 
-/-- A geometric positivity statement (intersection-theoretic / Hodge-index
+/-! ### Step 8 (refined): the geometric-positivity escape clause.
+
+    A geometric positivity statement (intersection-theoretic / Hodge-index
     style) is, by hypothesis, NOT of the form "positivity of a trace-formula
-    NCG framework." We model this here as a pure Prop with no
-    `TraceFormulaNCG` argument; the R3.5 theorem above quantifies only
-    over `TraceFormulaNCG`-shaped data and therefore does not apply.
+    NCG framework." The R3.5 theorem above quantifies only over
+    `TraceFormulaNCG`-shaped data and therefore does not apply.
 
-    The geometric escape route is the content of `HodgeIndex.lean` and is
-    OUT OF SCOPE for R3.5. -/
-def GeometricPositivity (L : LFunction) : Prop :=
-  -- Place-holder: in `HodgeIndex.lean` this is fleshed out as the signature
-  -- statement on a Mumford-style intersection pairing on a constructed
-  -- surface. R3.5 does NOT entail
-  --   GeometricPositivity L → (GeometricPositivity L ↔ RiemannHypothesis L).
-  -- That is, R3.5 leaves the geometric route open as the unique candidate
-  -- for non-K1-circular positivity.
-  RiemannHypothesis L  -- placeholder
+    LEARNINGS #119 sharpens the modelling: a geometric framework supplies TWO
+    things that must be kept APART, because the cheap one is routinely mistaken
+    for the hard one:
 
-/-- R3.5 does not constrain geometric positivity. In Lean this is the
-    silent fact that `r3_5_no_shortcut_theorem` quantifies only over
-    `TraceFormulaNCG`, not over arbitrary positivity Props. We make this
-    explicit as documentation. -/
-theorem r3_5_does_not_constrain_geometric (_L : LFunction) :
-    -- "There is no theorem in this file forcing GeometricPositivity to be
-    -- RH-equivalent." We state the trivial truth that the implication
-    -- direction GeometricPositivity → RH and its converse are NOT supplied
-    -- by R3.5; they are content of `HodgeIndex.lean`.
-    True := trivial
+      * the signature INTEGER  σ = b₊ − b₋  (a Lefschetz / Euler-characteristic
+        count; the Hirzebruch signature-operator index). This is FREE -- a
+        realization, present whenever there is a graded space with a duality --
+        and it says NOTHING about RH.
+
+      * the primitive-part DEFINITENESS: the intersection / cup form is definite
+        on the primitive subspace = the arithmetic Hodge standard conjecture.
+        THIS is the part equivalent to RH, and the open target of
+        `HodgeIndex.lean`.
+
+    The #119 trap is reading "the framework realizes the signature integer" as
+    "the form is definite." We separate the two at the Lean level so that no
+    theorem here licenses that step. -/
+
+/-- (LEARNINGS #119) The signature-INTEGER realization, modelled as an opaque
+    always-true Prop: a framework can exhibit `σ = b₊ − b₋` whether or not RH
+    holds, so this is RH-blind by design. There is deliberately NO theorem
+    `RealizesSignatureInteger L → RiemannHypothesis L`. -/
+def RealizesSignatureInteger (_L : LFunction) : Prop := True
+
+/-- (LEARNINGS #119) The primitive-part DEFINITENESS = the arithmetic Hodge
+    standard conjecture, the genuine RH content. Modelled as RH-equivalent (the
+    honest placeholder for `HodgeIndex.lean`'s open construction); supplying the
+    signature integer above does NOT supply this. -/
+def PrimitivePartDefinite (L : LFunction) : Prop := RiemannHypothesis L
+
+/-- Geometric positivity (the unique K1-escape route per R3.5) is the
+    primitive-part DEFINITENESS, not the signature-integer realization. -/
+def GeometricPositivity (L : LFunction) : Prop := PrimitivePartDefinite L
+
+/-- The signature-integer realization is RH-BLIND: it holds for ζ and for
+    Davenport-Heilbronn alike (whose analogue of RH is false), so it cannot be
+    the RH content. This is the Lean encoding of #119's caution against reading
+    "realizes the signature integer" as "proves definiteness." -/
+theorem realizesSignatureInteger_rhBlind :
+    RealizesSignatureInteger zeta_function ∧
+      RealizesSignatureInteger davenport_heilbronn :=
+  ⟨trivial, trivial⟩
+
+/-- Geometric positivity IS the RH content -- but routed through
+    `PrimitivePartDefinite`, NOT through `RealizesSignatureInteger`. The
+    placeholder definiteness is RH-equivalent (the honest stand-in for
+    `HodgeIndex.lean`'s open target). -/
+theorem geometricPositivity_iff_RH (L : LFunction) :
+    GeometricPositivity L ↔ RiemannHypothesis L := Iff.rfl
+
+/-- R3.5 does not constrain geometric positivity: `r3_5_no_shortcut_theorem`
+    quantifies only over `TraceFormulaNCG`, not over the geometric route, and in
+    particular the (free) signature-integer realization yields no implication to
+    RH. The genuine definiteness is `HodgeIndex.lean`'s open target. -/
+theorem r3_5_does_not_constrain_geometric (_L : LFunction) : True := trivial
 
 end ZetaRH

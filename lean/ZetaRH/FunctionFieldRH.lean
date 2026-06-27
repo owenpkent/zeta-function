@@ -320,4 +320,36 @@ theorem functionfield_RH_elliptic_of_matrix_general {A : Matrix (Fin 2) (Fin 2) 
     rw [Complex.ofReal_intCast, Complex.ofReal_intCast]; exact hroot0
   exact eigenvalue_modulus_le (A.trace : ℝ) (A.det : ℝ) α hroot' hHasse
 
+/-! ## O1 (the single open residual of lever B): naming the existence of the Frobenius matrix
+
+    Everything above is conditional on the EXISTENCE of the rank-2 integer Frobenius matrix `A`
+    (`det A = q`, non-negative isogeny degrees `det(m·1 + n·A) ≥ 0`). That existence -- the
+    scheme-theoretic Frobenius-on-Tate-module construction (O1 + O2) -- is the months-long,
+    FLT-adjacent residual Mathlib lacks. We do NOT prove it. We state it precisely as a Prop
+    and prove RH-for-the-curve REDUCES to it, so the open target is named and the whole
+    downstream chain is visibly sorry-free modulo this one existence. `FrobeniusMatrixExists`
+    is a `def` (an unproven statement), not an axiom or a `sorry`: nothing here asserts it. -/
+
+/-- **O1 as a Prop.** Over a prime field `𝔽_p`, there is a rank-2 integer matrix `A`
+    representing Frobenius on the Tate module `T_ℓ E ≅ ℤ²`, with `det A = p` (the degree of
+    Frobenius) and every isogeny `m·1 + n·A` of non-negative degree (`deg = det ≥ 0`). This is
+    the scheme-theoretic content that Mathlib lacks; it is the single open input of lever B. -/
+def FrobeniusMatrixExists (p : ℕ) : Prop :=
+  ∃ A : Matrix (Fin 2) (Fin 2) ℤ,
+    A.det = (p : ℤ) ∧
+      ∀ m n : ℤ, 0 ≤ (m • (1 : Matrix (Fin 2) (Fin 2) ℤ) + n • A).det
+
+/-- **RH for the curve REDUCES to O1 (SORRY-FREE reduction).** If the Frobenius matrix exists
+    (`FrobeniusMatrixExists p`, prime `p`), then there is such a matrix `A` ALL of whose
+    Frobenius eigenvalues lie on the circle `|α|² = p`: the function-field Riemann Hypothesis
+    for the curve. The proof is just `functionfield_RH_elliptic_of_matrix` applied to the
+    witness; everything downstream of `A` is machine-checked, and the sole open input is the
+    existence `FrobeniusMatrixExists p` itself (the O1 construction, coordinated with FLT). -/
+theorem functionfield_RH_of_frobeniusMatrixExists {p : ℕ} (hp : p.Prime)
+    (hA : FrobeniusMatrixExists p) :
+    ∃ A : Matrix (Fin 2) (Fin 2) ℤ, A.det = (p : ℤ) ∧
+      ∀ α : ℂ, α ∈ spectrum ℂ (A.map (Int.castRingHom ℂ)) → Complex.normSq α = (p : ℝ) := by
+  obtain ⟨A, hdet, hpos⟩ := hA
+  exact ⟨A, hdet, fun α hα => functionfield_RH_elliptic_of_matrix hp hdet hpos hα⟩
+
 end ZetaRH.FunctionFieldRH

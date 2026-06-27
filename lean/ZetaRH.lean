@@ -26,3 +26,5 @@ import ZetaRH.RiemannZetaConj
 import ZetaRH.ArithmeticPolarization
 import ZetaRH.DigammaExtras
 import ZetaRH.CrystalCocycle
+import ZetaRH.VT_NP1
+import ZetaRH.ToyModel
