@@ -355,6 +355,14 @@ Concretely, the recommended posture (in priority order):
    the open kernel. Formalize these as the Arakelov-side companions to the existing
    function-field Lean substrate (IsogenyDegree / FunctionFieldRH). They harden the
    localization and add to the publishable substrate; they do not pretend to close RH.
+   **DONE (2026-06-27): `lean/ZetaRH/ArakelovAssembly.lean` (#2M-VT), sorry-free and
+   axiom-clean (`#print axioms` = `[propext, Classical.choice, Quot.sound]`; full build
+   green, 3745 jobs).** VT1 = `perPrime_negDef_iff_hasse` / `perPrime_negDef_of_hasse`
+   (honestly a specialization of `negDef_iff_hasseWeil` at `q = p`); VT2 (the new content)
+   = `conj_lowerRight` + `no_single_normalizing_scale` + `forced_scale_asymmetry_unbounded`,
+   packaged in `assembly_obstruction` (both per-prime fibres negative definite, yet no
+   single scale assembles them). The adelic-scalar SIGN (= M4) remains the open kernel,
+   untouched.
 
 2. **Watch for an EXTERNAL polarization theorem, do not try to manufacture one.** The
    open step (SHARP arithmetic Hodge-standard positivity of the single adelic scalar /

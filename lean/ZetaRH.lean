@@ -13,6 +13,7 @@ import ZetaRH.PrismaticCohomology
 import ZetaRH.PrismaticFoliation
 import ZetaRH.HodgeIndex
 import ZetaRH.IsogenyDegree
+import ZetaRH.ArakelovAssembly
 import ZetaRH.FunctionFieldRH
 import ZetaRH.LocalFactor
 import ZetaRH.TateModule
