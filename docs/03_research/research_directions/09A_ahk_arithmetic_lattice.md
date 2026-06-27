@@ -139,6 +139,8 @@ The P3 gap was attacked directly, and the AHK route to it is now a **dead branch
 
 **Net:** the AHK route cannot source the polarization without a variety (Section 7's risk, realized), and even granting $t$ its polarity is the wrong (positive-definite) signature for P6/M4. This pushes the program onto the **Arakelov face** (Section 5), the one route that natively carries both a genuine arithmetic weight (Faltings-Hriljac) and the indefinite Hodge-index signature. P3 over $\mathbb{Z}$ via AHK is recorded as a dead branch; R1 (sourcing a non-Tate $H^1$) is the FLT-adjacent residual it shares with lever B, and is not solved by combinatorics.
 
+**R1 verified as variety-gated (2026-06-27, #130, [`../sourcing_gap_r1.md`](../sourcing_gap_r1.md)).** A SURVEYOR pass (Sarnak, Fontaine-Mazur, Lafforgue, Deligne) confirmed there is no known non-geometric source for a weight-1 $\sqrt q$ carrier: every proof of weight-1 purity routes through a variety/stack, and the holomorphic-vs-Maass split dramatizes it (Ramanujan is Deligne's theorem where a modular curve exists, open for Maass forms where it does not). So R1 is the **sourcing facet** of the universal gap (over $\mathbb{F}_q$ = Deligne purity), distinct from but coincident-in-genus-1 with the **polarization facet** P6/M4 (= Weil-Rosati positivity). It is a gap, not an obstruction (no impossibility theorem).
+
 ## 7. Honest scope and probability
 
 The probability that (P6) falls easily is low (single digits), the same order as Direction 8.A: (P6) IS the arithmetic Hodge standard conjecture, and no road has produced it. What this spec changes is the **shape of the remaining work**, and that is real progress in the project's sense (a coordinate that narrows the search):

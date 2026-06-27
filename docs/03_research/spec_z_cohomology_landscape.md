@@ -27,6 +27,28 @@ The thesis "all roads to the signature" (#30) is the empirical finding that **ov
 candidate delivers (i), most deliver a partial (ii), and none delivers (iii).** (iii) is the
 irreducible content, and it equals RH.
 
+**The universal gap has two variety-gated facets (2026-06-27, #130, [`sourcing_gap_r1.md`](sourcing_gap_r1.md)).**
+Pushing the AHK route to its end ([09A](research_directions/09A_ahk_arithmetic_lattice.md) Section 6D) plus a
+literature verification (Sarnak, Fontaine-Mazur, Lafforgue, Deligne) sharpens "(iii) is the gap" into two
+distinct-but-linked facets, both variety-gated:
+
+- **(A) Sourcing / purity (R1):** produce a weight-1 carrier with $|\alpha|=\sqrt q$ in the first place.
+  Over $\mathbb{F}_q$ this is **Deligne's purity theorem** (free for any variety); the verified finding is
+  that **no non-geometric source for it is known** (every proof of weight-1 purity routes through a
+  variety/stack; the holomorphic-vs-Maass split dramatizes it: the moment you remove the variety, Ramanujan
+  becomes open). The combinatorial candidates fail HERE, before (iii): a matroid Chow ring is purely Tate
+  with no $H^1$, and the tropical objects are Frobenius-free.
+- **(B) Polarization / signature (M4):** the cup form is definite with the indefinite $(1,n-1)$ signature.
+  Over $\mathbb{F}_q$ this is **Weil / Rosati positivity**.
+
+For a curve (genus 1) the two collapse to one inequality ($|\alpha|=\sqrt q \iff$ negative-definite $\iff
+t^2<4q$, 2G); in general they are distinct theorems (a weight statement vs a positivity statement), both
+holding over the function field exactly because there is a variety. So the scorecard's "(i) free, (iii)
+missing" is more precisely: realization gives the *shape*, while both the *purity* of the carrier (A) and the
+*polarization* (B) are the variety-gated content. It is a **gap, not an obstruction** (no impossibility
+theorem); it closes only by supplying a geometric source (the FLT-adjacent problem the Arakelov face
+inherits) or by a variety-free proof of purity (itself a major theorem).
+
 ## 2. The scorecard
 
 Legend: ✓ = present/proven, ◑ = partial or proven-only-in-a-restricted-sense, ✗ = absent.
