@@ -153,20 +153,28 @@ surface" statement honest:
   yields the complete Riemann zeta as a Hasse-Weil zeta ([arXiv:1502.05580]); this
   is the "right arena" (the 3M / R3.5 NCG side), still missing the positivity, as
   the project's R3.x analyses recorded.
-- **NEW (Oct 2024): Deninger <-> Connes-Consani bridge** ([arXiv:2508.15971]). A
-  correspondence is established between Deninger's foliated dynamical systems
-  attached to abelian number fields and Connes-Consani's adelic spaces:
-  Galois-equivariant, flow-anti-equivariant, with closed orbits <-> primes matching
-  on both sides. This is the most relevant recent progress: it links the two
-  leading candidate frameworks for the "arithmetic Frobenius flow" (Deninger's
-  `R`-action, new_mathematics.md sec 4.1) on the very spaces that would carry the
-  surface. It does NOT yet build the product surface or its intersection form, but
-  it unifies the two programs that each supply half of the 2K dictionary (Deninger:
-  the flow `Gamma_S`; Connes-Consani: the arithmetic site / archimedean place).
+- **Morishita 2025 ([arXiv:2508.15971]): a Deninger <-> Connes-Consani
+  adelic-spaces correspondence.** (Authorship/date corrected 2026-06-27 by the 2L
+  Arakelov-face probe: the paper is by Masanori Morishita, first submitted
+  2025-08-21, v4 2025-12-19; it is NOT a Connes-Consani-authored "Oct 2024" bridge.
+  The companion `spec_z_cohomology_landscape.md` already had this right, so this file
+  was the stale one. The substance below is correct; only the date and authorship
+  were wrong.) A knots-and-primes-flavored correspondence between Deninger's foliated
+  dynamical systems attached to abelian number fields and Connes-Consani's adelic
+  spaces: Galois-equivariant, flow-anti-equivariant, with closed orbits <-> primes
+  matching on both sides. It links the two leading candidate frameworks for the
+  "arithmetic Frobenius flow" (Deninger's `R`-action, new_mathematics.md sec 4.1) on
+  the very spaces that would carry the surface, but it does NOT build the product
+  surface or any intersection pairing: it is trace-side only, with no polarization.
+  The newer Connes-Consani "On the Jacobian of (Spec Z)bar" ([arXiv:2602.15941],
+  2026) builds the arithmetic Picard/Jacobian monoid + Abel-Jacobi + the
+  explicit-formula-as-Lefschetz-trace, and is likewise trace-side only (no
+  intersection pairing, no polarization, no eigenvalue correspondence). See
+  [2L](2L_arakelov_face_probe.md) section 4 for the 2026 frontier scorecard.
 
 **Net for 2K:** the dictionary's two structural halves -- the Frobenius
 correspondence (Deninger flow) and the arithmetic-site geometry (Connes-Consani) --
-were bridged in 2024, but the object that would make `A_arch + P_fin + B_pole` an
+were bridged in 2025 (Morishita, arXiv:2508.15971), but the object that would make `A_arch + P_fin + B_pole` an
 honest intersection form on a 2-dimensional `S` (with `B_pole` the hyperbolic
 direction) is still unbuilt. The 2026 frontier is therefore: put a genuine
 intersection pairing on the Deninger-Connes-Consani space, with the signature 2K

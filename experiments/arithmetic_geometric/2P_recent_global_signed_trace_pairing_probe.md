@@ -92,6 +92,19 @@ This is consistent with the universal-gap reading of
 every candidate realizes the trace or a perfect pairing; none carries the
 polarization. Supplying the polarization IS RH.
 
+**Bracket update (2026-06-27, [2L](2L_arakelov_face_probe.md) §4).** The three
+candidates above are the realization-side near-misses (perfect pairing / global
+substrate / trace). The 2L Arakelov-face probe surveyed the *other* near-miss
+bracket, the single-scheme generalized arithmetic Hodge index (`NODE-fh-too-local`),
+and added three corpus nodes there: Moriwaki (higher-dimensional arithmetic Hodge
+index on a fixed variety), Cantat-Gao-Habegger-Xie (which *uses* the single-variety
+index for the geometric Bogomolov conjecture), and Bost theta-invariants
+(infinite-dimensional Arakelov over the arithmetic curve, but a Diophantine
+$h^0_\theta$ scalar = the wrong signature class). All certify a *fixed* scheme's own
+data and never reach zeta's zeros, so they do not enter this memo's global-signed-
+pairing column; they bracket the gap from the polarization-proven-but-too-local side
+while Tang/Gurney/Connes-Consani bracket it from the realization side.
+
 ## Honest scope and discipline
 
 - Structural classification, web-confirmed for Tang (F-gauge perfect duality +

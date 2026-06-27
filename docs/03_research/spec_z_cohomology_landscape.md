@@ -92,7 +92,16 @@ way**. A third, the de Branges pairing, overshoots. Together they bracket the mi
   pairing is positive-definite. This is a **real, proven polarization** (the project reproduced it
   end-to-end, 2H-2P, ranks 1-4). It fails to give RH only because it lives on one surface of
   relative dimension $\ge 1$, **not** on the product $\mathrm{Spec}(\mathbb{Z})\times\mathrm{Spec}(\mathbb{Z})$,
-  and carries no Frobenius correspondence reaching the zeta zeros. *Too local.*
+  and carries no Frobenius correspondence reaching the zeta zeros. *Too local.* The whole
+  generalized-arithmetic-Hodge-index family shares this bracket: Moriwaki's higher-dimensional
+  arithmetic Hodge index and Yuan-Zhang's adelic-line-bundle index theorem prove the same
+  negative-definiteness on a *fixed* arithmetic variety (a Dirichlet-unit / non-archimedean-Calabi
+  statement), and Cantat-Gao-Habegger-Xie *use* the single-variety index for the geometric Bogomolov
+  conjecture rather than extending it to a product (2026 Arakelov-face probe,
+  [2L](../../experiments/arithmetic_geometric/2L_arakelov_face_probe.md) §4). Bost's theta-invariant /
+  pro-Hermitian infinite-dimensional Arakelov geometry is genuinely over the arithmetic curve but is a
+  *different* miss: it produces a Diophantine $h^0_\theta$ (a non-negative scalar), the wrong signature
+  class, not an indefinite $(1,n-1)$ form.
 - **Adiprasito-Huh-Katz (too blind).** The Kahler package (including Hodge-Riemann positivity) holds
   on the Chow ring of **any** matroid, even non-realizable ones: a **signature with no underlying
   variety**, exactly the shape Weil's proof wants. It fails because it is **arithmetic-blind**: it
@@ -224,7 +233,16 @@ Connes-Consani-Moscovici prolate / "zeta spectral triples" program matches the l
 numerical accuracy and states explicitly that proving the convergence would establish RH (i.e. the
 convergence/positivity is the unproven content). Yuan-Zhang (Math. Ann. 367, 2017) extended the
 arithmetic Hodge index to adelic line bundles in higher dimension, still on a fixed scheme, never on
-the product.
+the product; Moriwaki's higher-dimensional arithmetic Hodge index (arXiv:1010.1599) and
+Cantat-Gao-Habegger-Xie (Duke 170(2), 2021, which *uses* the single-variety index for the geometric
+Bogomolov conjecture) sit on the same `NODE-fh-too-local` bracket, and Bost's theta-invariant /
+pro-Hermitian infinite-dimensional Arakelov geometry (Prog. Math. 334, 2020; arXiv:1512.08946) is over
+the arithmetic curve but produces a Diophantine $h^0_\theta$ scalar, the wrong signature class (a
+positive scalar, not an indefinite $(1,n-1)$ form). The 2026 Arakelov-face probe
+([2L](../../experiments/arithmetic_geometric/2L_arakelov_face_probe.md)) confirms the verdict is
+unmoved: no generalized arithmetic Hodge index theorem reaches zeta's zeros without the product surface,
+and the e2ae artifact computes the one specified-but-uncomputed Arakelov entry
+($\overline\omega^2 = 12\,h_{\mathrm{Fal}}$).
 
 ## 8. Honest caveats (proven vs conjectural)
 
@@ -316,7 +334,12 @@ geometry of blueprints* (Adv. Math. 2012); Borger, *$\Lambda$-rings and the fiel
 ([arXiv:0906.3146](https://arxiv.org/abs/0906.3146)); Soule (2004); Kurokawa (absolute zeta);
 Adiprasito-Huh-Katz, *Hodge theory for combinatorial geometries* (Ann. Math. 2018); Conrey-Li, *A
 note on some positivity conditions...* ([arXiv:math/9812166](https://arxiv.org/abs/math/9812166));
-Morishita ([arXiv:2508.15971](https://arxiv.org/abs/2508.15971), 2025); Gurney, *Prismatization over
+Morishita ([arXiv:2508.15971](https://arxiv.org/abs/2508.15971), 2025); Moriwaki, *Arithmetic Hodge
+index theorem* (alg-geom/9403011; *Toward a Dirichlet unit theorem on arithmetic varieties*,
+[arXiv:1010.1599](https://arxiv.org/abs/1010.1599)); Cantat-Gao-Habegger-Xie, *The geometric Bogomolov
+conjecture* (Duke Math. J. 170(2), 2021); Bost, *Theta invariants of euclidean lattices and
+infinite-dimensional Hermitian vector bundles over arithmetic curves* (Prog. Math. 334, 2020;
+[arXiv:1512.08946](https://arxiv.org/abs/1512.08946)); Gurney, *Prismatization over
 $\mathbf{Z}$* ([arXiv:2301.12392](https://arxiv.org/abs/2301.12392)); Drinfeld, *Prismatization*
 ([arXiv:2005.04746](https://arxiv.org/abs/2005.04746)); Bhatt-Lurie, *Absolute prismatic cohomology*
 ([arXiv:2201.06120](https://arxiv.org/abs/2201.06120)).
