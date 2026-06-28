@@ -16,6 +16,7 @@ import ZetaRH.IsogenyDegree
 import ZetaRH.ArakelovAssembly
 import ZetaRH.FunctionFieldRH
 import ZetaRH.LocalFactor
+import ZetaRH.FrobeniusExistence
 import ZetaRH.TateModule
 import ZetaRH.EulerSenLinearAlgebra
 import ZetaRH.SenDefiniteObstruction

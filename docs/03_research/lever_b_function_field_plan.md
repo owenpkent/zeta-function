@@ -42,6 +42,59 @@ module -- the genuine basis-free reason $\deg=\det$), `scaling_eq_det_free`, and
 $\omega$ and Frobenius `frob`: degree-as-Weil-scaling $+\deg\ge 0\Rightarrow|\alpha|^2=\det\,$`frob`,
 all finite fields). All sorry-free, axiom-clean. O2 is now a theorem on the abstract Tate module.
 
+**Status (2026-06-28). O1 is now a SINGLE typed contract on Mathlib's real object, with everything
+downstream machine-checked.** The new module [`../../lean/ZetaRH/FrobeniusExistence.lean`](../../lean/ZetaRH/FrobeniusExistence.lean)
+(#FF-O1-iface) states O1 directly on `WeierstrassCurve.localPolynomial` and derives the unconditional
+local-factor RH from it:
+
+- `FrobeniusTateData R W` (a `def` returning an existential): there is a rank-2 integer matrix `A` --
+  the Frobenius on the Tate module $T_\ell E\cong\mathbb Z^2$ -- with `A.det = qOf R` and
+  `A.trace = aOf R W` **pinned verbatim to Mathlib's own** $q=\#\kappa$ and $a=q+1-\#W(\kappa)$ (the
+  `localPolynomial` data), plus non-negative isogeny degrees `∀ m n, 0 ≤ det(m·1+n·A)`. This is the
+  single open input of lever B, named on Mathlib's actual elliptic-curve object.
+- `frobeniusTateData_exists` is the **one named axiom**: it admits exactly `FrobeniusTateData` under
+  good reduction, with a doc-comment citing Silverman III.8.6 (the Tate-module $\deg=\det$,
+  $\mathrm{tr}=\mathrm{trace}$) and V.1.1 (Hasse). It is the FLT-adjacent scheme-theoretic content the
+  pin lacks. It is **not** a `sorry` and **not** a false admit: `frobeniusTateData_companion` proves
+  (sorry-free, axiom-clean) that the companion matrix `!![0,-q;1,a]` satisfies the contract whenever
+  the Hasse bound $a^2\le 4q$ holds -- so the axiom admits a KNOWN-TRUE statement (the #106 non-vacuity
+  guard), not a vacuous or false one.
+- `localPolynomial_root_normSq_of_O1` and `functionfield_RH_localPolynomial` **derive, sorry-free**,
+  the unconditional conclusion on Mathlib's object: every complex root of `W.localPolynomial` (good
+  reduction) has $|\beta|^2 = 1/q$, i.e. the reciprocal Frobenius eigenvalues lie on $|\alpha|=\sqrt q$
+  (the critical line). The derivation routes through `hasse_of_matrix` (Phase A) and the new
+  boundary-inclusive `localFactor_root_normSq_le` (non-strict $a^2\le 4q$, so ALL finite fields incl.
+  the supersingular boundary, no primality needed). `#print axioms` on both derived results is exactly
+  `[propext, Classical.choice, Quot.sound, frobeniusTateData_exists]` -- the three foundational axioms
+  plus the one named O1 axiom, nothing else (no `sorryAx`). Build green (3746 jobs).
+
+So **O1 is now the ONLY gap**, isolated as a single typed contract; the entire chain downstream of it,
+on Mathlib's genuine `localPolynomial`, is kernel-checked.
+
+**Precise remaining Route-B dependency tree (audit re-run against the pin, Lean v4.30.0).** Discharging
+`frobeniusTateData_exists` (replacing the axiom by a proof from a real curve) needs, in order:
+
+1. **Torsion structure** $E[n]\cong(\mathbb Z/n)^2$ for $n$ coprime to char (the $\ell$-power tower).
+   *Absent.* The pin has only `twoTorsionPolynomial` (the 2-torsion *polynomial*, `Weierstrass.lean`),
+   not the group structure $E[n]$.
+2. **The Tate module** $T_\ell E=\varprojlim E[\ell^n]\cong\mathbb Z_\ell^2$ as a free rank-2 module
+   with the Galois/endomorphism action. *Absent.*
+3. **The Weil pairing** $e_\ell:T_\ell E\times T_\ell E\to\mathbb Z_\ell(1)$, alternating and perfect,
+   with the degree-scaling law $e_\ell(\varphi x,\varphi y)=e_\ell(x,y)^{\deg\varphi}$. *Absent.*
+   (Its rank-2 linear-algebra consequence $\deg=\det$ is already proved in `TateModule.lean`; only the
+   pairing itself is missing.)
+4. **The Frobenius endomorphism** $\varphi_q$ over $\mathbb F_q$ as an element of $\mathrm{End}(E)$,
+   with $\deg\varphi_q=q$ and $\deg(1-\varphi_q)=\#E(\mathbb F_q)$ (so $\mathrm{tr}=a$). *Absent* as a
+   structured endomorphism (the point count $\#E$ and trace $a$ themselves ARE present, via
+   `localPolynomial`).
+5. **`End(E)` + the degree map + `deg ≥ 0`**: isogenies as a structured object, $\mathrm{End}(E)$ as a
+   ring acting on $T_\ell E$, and every isogeny of non-negative degree. *Absent.* Route A′ would instead
+   need the dual isogeny's additivity (theorem of the cube on $E\times E$, also absent).
+
+The **FLT project is not a dependency** of this repo's pin, so none of (1)-(5) is reachable here yet;
+they are FLT targets. With O1 now a single contract pinned to `localPolynomial`, the lift is a matter of
+instantiating `FrobeniusTateData` once those land -- everything past it is machine-checked.
+
 ## The route: elementary Hasse (degree is a positive-definite quadratic form)
 
 Do **not** route through full surface intersection theory (the $C\times C$ / Hodge-index path is general-genus but far from Mathlib). For genus 1, the shortest path is the classical elementary proof of Hasse:
