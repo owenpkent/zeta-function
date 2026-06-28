@@ -5,8 +5,15 @@ contribute upstream. Each is kernel-verified (sorry-free, `#print axioms` clean)
 **Lean/Mathlib v4.30.0** (toolchain `leanprover/lean4:v4.30.0`), and each has a ready-to-submit PR
 body. This README is the single entry point: do the one-time setup once, then submit each PR.
 
-Everything machine-checkable is done. What remains for every PR is the standard Mathlib GitHub
-workflow, which must be carried out by a human account (this repository cannot open PRs).
+Everything machine-checkable is done, and **both PRs are now OPEN** on Mathlib (ported to current
+master `v4.32.0-rc1` with the new module system, built green, `#print axioms` clean, CI-green, AI-use
+disclosed per Mathlib's contribution policy): digamma
+[mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) and `riemannZeta_conj`
+[mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133). The fork lives at
+`dev/mathlib4`. What remains is the **human review engagement**: introduce yourself on the Lean Zulip,
+mention the PRs, and respond to reviewers in your own words (Mathlib's AI policy forbids LLM-written
+review comments). The per-PR workflow below is retained as a record of how the PRs were prepared; there
+is no CLA step in current Mathlib.
 
 ## The staged contributions
 

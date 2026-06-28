@@ -110,7 +110,7 @@ The 17-constraint framework for Architecture 2 candidates (see [`experiments/ari
 | Area | Status |
 |------|--------|
 | Repo structure | ✅ Complete |
-| Publications / upstreaming | 🟡 Registry live ([`PUBLICATIONS.md`](PUBLICATIONS.md)): 2 Mathlib PRs READY (`riemannZeta_conj`, digamma reflection/iterated-recurrence/duplication), 6 research/formalization candidates evaluated (D-H discipline, all-roads survey, LP/SDP/SOS ceiling, function-field RH Lean chain, Π⁰₁ note, stealth-window note); evaluation gate + scoring rubric in place |
+| Publications / upstreaming | 🟡 Registry live ([`PUBLICATIONS.md`](PUBLICATIONS.md)): 2 Mathlib PRs SUBMITTED ([mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) digamma, [#41133](https://github.com/leanprover-community/mathlib4/pull/41133) `riemannZeta_conj`; ported to current master, CI-green, AI-use disclosed), 6 research/formalization candidates evaluated (D-H discipline, all-roads survey, LP/SDP/SOS ceiling, function-field RH Lean chain, Π⁰₁ note, stealth-window note); evaluation gate + scoring rubric in place |
 | Solutions / approach catalog | ✅ `docs/solutions/` |
 | Research atlas | ✅ `docs/research_atlas/` |
 | Graduate docs (incl. log-correlated, four-level framing) | ✅ Substantial |

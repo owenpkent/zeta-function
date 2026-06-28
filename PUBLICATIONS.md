@@ -105,10 +105,10 @@ the real standalone output.
 
 | ID | Discovery | Type | Verification | Tier | Venue / bundle | Status |
 |----|-----------|------|--------------|------|----------------|--------|
-| [P1](#p1) | `riemannZeta_conj`: conjugation symmetry of ζ | Formal (positive) | Lean, axiom-clean | 🟢 READY | Mathlib PR | ready |
-| [P2](#p2) | Digamma reflection / iterated recurrence / duplication | Formal (positive) | Lean, axiom-clean | 🟢 READY | Mathlib PR | ready |
+| [P1](#p1) | `riemannZeta_conj`: conjugation symmetry of ζ | Formal (positive) | Lean, axiom-clean | 🟢 SUBMITTED | Mathlib PR | [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133) |
+| [P2](#p2) | Digamma reflection / iterated recurrence / duplication | Formal (positive) | Lean, axiom-clean | 🟢 SUBMITTED | Mathlib PR | [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) |
 | [P3](#p3) | The Davenport-Heilbronn discipline, operationalized (Schur counting law + Epstein) | Methodology | Numerical (validated) + rigorous Li at n=336k | 🟡 DEVELOPING | Fold into P4 | lit-checked |
-| [P4](#p4) | All-roads convergence + marginal-positivity thesis + Spec(ℤ) scorecard | Survey | Synthesis | 🟡 DEVELOPING | Expository / arXiv | evaluated |
+| [P4](#p4) | All-roads convergence + marginal-positivity thesis + Spec(ℤ) scorecard | Survey | Synthesis | 🟡 DEVELOPING | Expository / arXiv | draft written ([`publications/obstruction_map/`](publications/obstruction_map/)) |
 | [P5](#p5) | No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant | Negative (closed branch) | Rigorous (line-restriction lemma) + SDP/LP certificates | 🟡 DEVELOPING | arXiv math.NT note / fold into P4 | lit-checked |
 | [P6](#p6) | Lean formalization of function-field RH for elliptic curves (deg = det route) | Formalization (positive) | Lean, axiom-clean (conditional on existence of A) | 🟡 DEVELOPING | Formalization venue | lit-checked ✓ viable |
 | [P7](#p7) | RH is Π⁰₁ + the Lean kernel witness | Expository note | Lean anchors; logical fact classical | 🟡 DEVELOPING | Note / bundle into P4 | evaluated |
@@ -122,7 +122,7 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 [`experiments/LEARNINGS.md`](experiments/LEARNINGS.md).
 
 ### P1 {#p1}
-**`riemannZeta_conj`: conjugation symmetry of the Riemann zeta function.** 🟢 READY
+**`riemannZeta_conj`: conjugation symmetry of the Riemann zeta function.** 🟢 SUBMITTED
 
 - **Claim.** `ζ(conj s) = conj (ζ s)` for `s ≠ 1`, and the corollary that the zeros are
   conjugation-symmetric. The natural companion to Mathlib's `riemannZeta_one_sub`; together they
@@ -133,11 +133,10 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **Novelty.** Absent from current Mathlib (lit-checked against the RiemannZeta API).
 - **D-H soundness.** N/A (a true theorem about ζ, not an RH-method).
 - **RH-independence.** Fully independent of the open content.
-- **Venue / next.** Mathlib PR; body ready at [`lean/upstream/riemann_zeta_conj_pr_body.md`](lean/upstream/riemann_zeta_conj_pr_body.md).
-  **Next:** the human GitHub/CLA/fork/rebase steps (Owen); submit after P2 per the upstream README order.
+- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133)**: ported to current master (v4.32.0-rc1, new module system), builds green, `#print axioms` clean, CI green (Build + Lint style), AI-use disclosed per Mathlib policy. Body archived at [`lean/upstream/riemann_zeta_conj_pr_body.md`](lean/upstream/riemann_zeta_conj_pr_body.md). **Next:** Owen engages the review in his own words (Mathlib AI policy forbids LLM-written review comments).
 
 ### P2 {#p2}
-**Digamma reflection, iterated recurrence, duplication.** 🟢 READY
+**Digamma reflection, iterated recurrence, duplication.** 🟢 SUBMITTED
 
 - **Claim.** Three digamma identities absent from Mathlib: reflection (via `Complex.cot`), iterated
   recurrence, duplication.
@@ -149,8 +148,7 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   candidates. The reflection RHS-form question is resolved (`Complex.cot` exists in v4.30.0).
 - **D-H soundness.** N/A.
 - **RH-independence.** Fully independent.
-- **Venue / next.** Mathlib PR; body at [`lean/upstream/digamma_pr_body.md`](lean/upstream/digamma_pr_body.md).
-  **Next:** submit FIRST (staged longest, only open question now resolved). Human GitHub steps.
+- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132)**: ported to current master (the reflection uses the `Complex.cot` RHS), builds green, `#print axioms` clean, CI fully green, AI-use disclosed. Body archived at [`lean/upstream/digamma_pr_body.md`](lean/upstream/digamma_pr_body.md). **Next:** Owen engages the review in his own words.
 
 ### P3 {#p3}
 **The Davenport-Heilbronn discipline, operationalized.** 🟡 DEVELOPING
