@@ -85,7 +85,9 @@ counterexample); "Open step" is the single sharpest missing object.
 
 The single most useful structural fact in the landscape: there exist exactly **two proven
 Hodge-index-type signatures** anywhere near the problem, and **both miss in a precisely diagnosable
-way**. A third, the de Branges pairing, overshoots. Together they bracket the missing object.
+way**. A third, the de Branges pairing, overshoots; a fourth, the Rankin-Selberg / Deligne-Weil-II
+positivity, is a different-type bracket (a proven *analytic* positivity, non-circular and Euler-essential,
+that is too shallow to reach the line). Together they bracket the missing object from four sides.
 
 - **Faltings-Hriljac (too local).** The arithmetic intersection form on a **single** arithmetic
   surface is negative semi-definite on the primitive part; equivalently the Neron-Tate height
@@ -123,10 +125,28 @@ way**. A third, the de Branges pairing, overshoots. Together they bracket the mi
   **strictly stronger than RH** (it implies GRH for all Dirichlet $L$ at once) and Conrey-Li proved
   it **fails for $\zeta$** at the 34th zero (the project reproduced this to 12 sig figs, #43/2DB.1).
   *Too strong.*
+- **Rankin-Selberg / Deligne-Weil-II (too shallow).** Deligne's 1974 Weil-II proof reaches
+  $|\alpha|=\sqrt q$ **without** the Hodge index theorem, via global monodromy of a Lefschetz pencil
+  plus the Rankin-Selberg even-tensor-power positivity (the pole structure of $L(s,\mathrm{Sym}^{2k})$).
+  Its one variety-free number-field shadow is the classical Rankin-Selberg / de la Vallee-Poussin
+  positivity (the $3+4\cos\theta+\cos 2\theta\ge 0$ engine behind the zero-free region). That positivity
+  is **proven, non-circular** (K1-clean: it comes from the pole of $L(s,\pi\times\tilde\pi)$ at $s=1$ and
+  from non-negative convolution coefficients, *not* from reading the zeros) and **Euler-essential** (it
+  correctly does NOT fire for D-H, which has no Rankin-Selberg square), but it lives at the
+  $\mathrm{Re}=1$ edge and provably **saturates the Vinogradov-Korobov $2/3$ ceiling**: it cannot be
+  pushed to $\mathrm{Re}=1/2$. *Too shallow.* Walked to its wall over a number field the monodromy engine
+  SPLITS into exactly the two facets already on this map: the geometric core needs the purity/monodromy
+  group that only a variety supplies (the R1 facet, [`sourcing_gap_r1.md`](sourcing_gap_r1.md)), and the
+  variety-free shadow is Architecture 4 (the analytic ceiling). It is the 13th independent confirmation of
+  the convergence, now from the weights/monodromy direction (2026-06-28 first-principles audit). Unlike
+  Weil-I Hodge-index/Rosati positivity, it is genuinely a *different engine*, which is why it is worth a
+  distinct bracket; it is no more tractable.
 
-So the missing object is pinned by three sides: a polarization that is **global** (unlike
-Faltings-Hriljac), **carries the arithmetic trace $t$** (unlike AHK), and is **RH-equivalent, not
-strictly stronger** (unlike de Branges).
+So the missing object is pinned by four sides: a polarization that is **global** (unlike
+Faltings-Hriljac), **carries the arithmetic trace $t$** (unlike AHK), is **RH-equivalent, not
+strictly stronger** (unlike de Branges), and is **deep enough to reach $\mathrm{Re}=1/2$** (unlike
+Rankin-Selberg, which is a real, non-circular, Euler-essential positivity but is $2/3$-capped at the
+$\mathrm{Re}=1$ edge).
 
 ## 4. The universal gap, stated precisely
 
