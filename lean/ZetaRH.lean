@@ -12,6 +12,7 @@ import ZetaRH.FrobeniusAlgebra
 import ZetaRH.PrismaticCohomology
 import ZetaRH.PrismaticFoliation
 import ZetaRH.HodgeIndex
+import ZetaRH.CurveSquareIntersection
 import ZetaRH.IsogenyDegree
 import ZetaRH.ArakelovAssembly
 import ZetaRH.FunctionFieldRH
