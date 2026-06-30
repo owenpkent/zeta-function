@@ -62,6 +62,16 @@ Output lands in `media/videos/<script_name>/<quality>/`.
 | 9 | `09_zeta_3d_surface/` | `Zeta3DSurface` | \|ζ(s)\| as a 3D surface over the complex plane; zeros as dips to floor; rotating camera |
 | 10 | `10_five_gaps/` | `FiveGaps` | The five fundamental obstructions (positivity, geometry, exactness, analytic ceiling, bridge) and how they converge |
 
+### Explainer Series (Scenes 11-13)
+
+Multi-part explainer videos. Each is a sequence of `Scene` / `ThreeDScene` classes rendered separately and concatenated with FFmpeg. Scenes 12 and 13 carry their full narration on screen as subtitles, so they play as self-contained silent videos, and each ships a `NARRATION.md` voiceover script.
+
+| # | Folder | Scenes | What It Shows |
+|---|--------|--------|---------------|
+| 11 | `11_three_stage_rh/` | `StageA_WaterThenBeads`, `StageB_Watershed`, `StageC_EmptySocket`, `Close_MasterImage` | The dense three-stage arc: RH from scratch, the all-roads convergence, and the M4 polarization gap (the project's frontier). Full storyboard in `SPEC.md`. |
+| 12 | `12_what_is_rh/` | `Part1_Primes`, `Part2_Machine`, `Part3_MapAndZeros`, `Part4_Hypothesis` | Zero-background explainer "What is the Riemann Hypothesis?". Every term is defined with an everyday analogy first (primes as atoms, zeta as a number machine, zeros as where it goes silent). Script in `NARRATION.md`. |
+| 13 | `13_functional_equation/` | `Ep2_Part1_Destination` through `Ep2_Part5_Harvest` | Graduate course Episode 2, "The Functional Equation": a rigorous derivation of xi(s)=xi(1-s) via the theta function and Poisson summation, opening on a 3D \|zeta\| terrain. Theorem statements (T1-T12) and the 6-episode course outline live in `NARRATION.md`. |
+
 ## Render all scenes
 
 ```bash
@@ -78,10 +88,31 @@ manim -ql visualizations/09_zeta_3d_surface/zeta_3d_surface.py Zeta3DSurface
 manim -ql visualizations/10_five_gaps/five_gaps.py FiveGaps
 ```
 
+## Render the explainer series
+
+Each explainer is several scenes. Render the parts (you can list them in one call), then concatenate with FFmpeg.
+
+```bash
+# Scene 12 - "What is the Riemann Hypothesis?" (beginner)
+manim -qm visualizations/12_what_is_rh/what_is_rh.py Part1_Primes Part2_Machine Part3_MapAndZeros Part4_Hypothesis
+
+# Scene 13 - "The Functional Equation" (graduate, Episode 2)
+manim -qm visualizations/13_functional_equation/functional_equation.py Ep2_Part1_Destination Ep2_Part2_GammaFactor Ep2_Part3_Theta Ep2_Part4_Symmetric Ep2_Part5_Harvest
+```
+
+Then join the parts in order (example for scene 12):
+
+```bash
+# list.txt contains: file 'Part1_Primes.mp4' (one per line, in order)
+ffmpeg -f concat -safe 0 -i list.txt -c copy What_Is_RH_FULL.mp4
+```
+
 ## Notes
 
 - All scenes use manim Community Edition (v0.18+)
 - Scenes are self-contained — each file imports only `manim` and `numpy`
 - Math is rendered via LaTeX — requires a working LaTeX installation
 - Scene 9 (`Zeta3DSurface`) is a `ThreeDScene` and takes longer to render due to surface computation
+- Scenes 11 and 13 also open with a `ThreeDScene` \|zeta\| terrain, so their first part renders more slowly than the 2D parts
+- Scenes 12 and 13 are silent but self-explanatory: the narration appears on screen as subtitles, and the full spoken script is in each folder's `NARRATION.md`
 - Rendered videos are gitignored (`media/`)
