@@ -84,7 +84,7 @@ This document builds the RH-closing positivity from scratch, four independent ti
 
 2. *Bost-Connes refinement of the 2A_R1 D-H exclusion:* D-H is a statistical mixture c1 phi^(1) + c2 phi^(2) of two extremal KMS states, never a pure product state. This sharpens "linear combination is not a geometric operation" to "D-H has no equilibrium product state at all." One line for the D-H dossier; not load-bearing.
 
-**Smallest next step to test the only marginally-live thread.** The one place the analysis points forward is the seam itself: the archimedean/continuation factor is where the zeros enter and is shared with D-H, so any working polarization must make the Euler factorization act ON that factor, not beside it. The smallest test: compute whether the Rankin loglog-coefficient c can be promoted from a scalar discriminator into the NORMALIZATION of the archimedean coupling block (i.e. does the c = 1 vs c < 1 distinction control the sign of the arch-to-finite off-diagonal that #42/M2.6 showed is shared). If c rescales that coupling so that c = 1 forces negative-definiteness and c < 1 permits the eigenvalue crossing, that would be the first place multiplicativity touches the continuation rather than the entries. Prediction from the four collapses above: it will not, and the rescaling will land back on the M2.6 stealth window. But it is a one-script, one-day test (extend e2w_rosati_fourway_M2_6.py with the loglog-coefficient prefactor on A_arch) and it is the only step here that is not already foreclosed.
+**Smallest next step to test the only marginally-live thread.** The one place the analysis points forward is the seam itself: the archimedean/continuation factor is where the zeros enter and is shared with D-H, so any working polarization must make the Euler factorization act ON that factor, not beside it. The smallest test: compute whether the Rankin loglog-coefficient c can be promoted from a scalar discriminator into the NORMALIZATION of the archimedean coupling block (i.e. does the c = 1 vs c < 1 distinction control the sign of the arch-to-finite off-diagonal that #42/M2.6 showed is shared). If c rescales that coupling so that c = 1 forces negative-definiteness and c < 1 permits the eigenvalue crossing, that would be the first place multiplicativity touches the continuation rather than the entries. Prediction from the four collapses above: it will not, and the rescaling will land back on the M2.6 stealth window. But it is a one-script, one-day test (extend e2w_rosati_fourway_M2_6.py with the loglog-coefficient prefactor on A_arch) and it is the only step here that is not already foreclosed. **[EXECUTED 2026-06-30; the prediction held, and for a sharper reason than the stealth window. See Postscript 2.]**
 
 ## Bottom line
 
@@ -111,3 +111,30 @@ only thread the sweep left open, exactly as predicted: multiplicativity fixes th
 / block structure (a real, non-circular discriminator), but the off-line-zero content lives in the
 shared archimedean continuation, which the Euler product does not touch. The missing math IS the
 polarization, not a route to it.
+
+## Postscript 2: the loglog-on-the-archimedean-block probe, executed (e2w2)
+
+The "smallest next step" above (promote c_F into the normalization of the archimedean block, not
+just a scalar discriminator) was the one thread this sweep left genuinely open. It was executed
+2026-06-30 ([e2w2_loglog_arch_coupling.py](../../experiments/arithmetic_geometric/e2w2_loglog_arch_coupling.py)
++ .md, LEARNINGS #135): rescale the archimedean block of the non-circular Weil/Rosati form by c_F,
+M_c = c_F * A_arch + P_fin + B_pole, and ask whether c_F-on-the-continuation separates RH where the
+unscaled M2.6 form hit the stealth window.
+
+| target | Euler | RH | c_F | min eig M | min eig M_c |
+|---|---|---|---|---|---|
+| zeta | yes | true | 1.105 | +0.035 (POS) | -4.57 (NEG) |
+| Eps47-principal | no | true | 0.635 | +0.126 (POS) | -0.70 (NEG) |
+| Davenport-Heilbronn | no | false | 0.369 | +0.094 (POS) | -0.51 (NEG) |
+
+The prediction held (no separation), but for a SHARPER reason than "lands back on the stealth
+window." The probe sends ALL THREE negative, including RH-true Euler zeta whose c_F = 1.105 > 1
+scales the block UP. The block-magnitude diagnostic shows why: the unscaled RH-positivity is a
+razor-thin cancellation of LARGE blocks (zeta ||A_arch|| = 44.3 vs ||P+B|| = 44.4, cancelling to
++0.035), so rescaling A_arch by c_F perturbs the form by ~0.1*44 ~ 4.6, dwarfing the +0.035 margin
+and flipping the sign for everyone regardless of RH. So multiplicativity cannot "normalize the
+archimedean coupling" to inject Euler structure into the signature: the signature has ZERO slack -- it
+IS the exact A-vs-(P+B) cancellation. The c_F idea fails not via the non-Euler trap (Postscript 1)
+but via the MARGINAL-POSITIVITY RAZOR, a strictly sharper closure. This thread is now closed by
+experiment; the missing math IS the polarization, confirmed once more, with its most concrete face:
+the non-circular Rosati positivity of zeta is a +0.035 cancellation of two norm-44 blocks.

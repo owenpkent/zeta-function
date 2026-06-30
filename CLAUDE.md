@@ -85,6 +85,8 @@ zeta-function/
 │   ├── zero_free/               Arch 4 (non-negative trig polynomial LP/SDP family, MT translation)
 │   ├── arithmetic_geometric/    Arch 2 (worked Weil example over F_5; 2A R1-R5 follow-ups; dossiers)
 │   ├── multifractal/            log-correlated field experiments (E0-E3)
+│   ├── criticality/             Nyman-Beurling / de Bruijn-Newman D-H probes (both MIRROR)
+│   ├── gradient_descent/        D4 meta-level policy-gradient against the Lean floor (function-field rehearsal)
 │   ├── toy/                     RH toy sandbox: checkable training ground for the M4 move (Python + Lean ToyModel)
 │   └── orchestrator_sessions/   per-session ORCHESTRATOR plans
 ├── lean/                        Lean 4 / Mathlib formal verification (Phase 1 substrate as of 2026-05-25)
