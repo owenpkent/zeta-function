@@ -341,6 +341,17 @@ quantified the same wall from several independent directions:
   contrast is the sharpest statement of the gap: where the polarization is a theorem there is room to
   spare; where it is RH the buffer is doubly-exponentially marginal, and the surface carrying the
   Frobenius class is not even constructed.
+- The most concrete face of this (LEARNINGS #135, `e2w2_loglog_arch_coupling`): the non-circular
+  Rosati positivity of $\zeta$ on the project's test family is a min-eigenvalue of $+0.035$, which is
+  the difference of two blocks of norm $\approx 44$ ($\|A_{\mathrm{arch}}\| = 44.3$ vs $\|P+B\| =
+  44.4$). It is a razor with no slack, and this is provable, not rhetorical: the one named candidate
+  for making multiplicativity act on the continuation (rescale $A_{\mathrm{arch}}$ by the Rankin
+  loglog-coefficient $c_F$, the sharp Euler discriminator) was executed and destroys the positivity
+  for *every* control including RH-true Euler $\zeta$ ($c_F = 1.105 > 1$), because perturbing a
+  norm-44 block by $\sim 10\%$ swamps a $+0.035$ margin. Multiplicativity cannot be injected into the
+  signature: there is no margin to inject into. This closes the last marginally-live thread the
+  four-mechanism construction sweep left open, by the razor rather than by the (also-fatal) non-Euler
+  trap.
 
 The de Bruijn-Newman side is also a **mirror** rather than a lever: the de Bruijn / Polya kernel
 positivity $\Phi \ge 0$ is verified correct but pre-empted (Dobner 2020, Newman-Wu 2019) and is

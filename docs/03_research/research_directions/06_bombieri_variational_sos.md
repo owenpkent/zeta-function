@@ -133,7 +133,9 @@ The numerical work (5.3) is relatively quick (~3 months for a strong PhD student
 
 ## 10. Status
 
-This direction is **research-grade, beyond project scope**. No parent dossier exists; this document is the first detailed treatment.
+**Milestone 5.5 EXECUTED 2026-06-30 ([`e4f_variational_sos.py`](../../../experiments/zero_free/e4f_variational_sos.py) + `.md`): NO ESCAPE, prediction confirmed.** The decisive test (min $\|P_-\|^2$ s.t. the line-restriction $c_1/c_0 = r$, $c_0 = 1$) gives $\|P_-\|^2 = 0$ for every $r \le$ Fejer ($2\cos(\pi/8) = 1.8478$) and turns positive precisely as $r$ crosses it (2.7e-6 at 1.86, growing smoothly to 6.7e-4 at 1.96). So Fejer is exactly the non-negative-cone boundary, and super-Fejer ratios REQUIRE genuine L^2-negativity: the variational relaxation gives no free lunch, and the 4E.3 line-restriction lemma EXTENDS to the Bombieri variational setting (sharpening the LP/SDP saturation 4E.6-4E.8 one rung). This is the most-likely outcome below: the marginal-positivity thesis at the variational level. Milestone 5.6 (translation to a zero-free constant) is predicted negative by sec 6 and not run; the 5.5 wall is the decisive result.
+
+This direction was **research-grade, beyond project scope** (no code) until the milestone-5.5 probe above. No parent dossier exists; this document is the first detailed treatment.
 
 The direction is qualitatively distinct from the LP/SDP family attempted in 4E.6-4E.8. Its outcome would either:
 - Confirm the marginal-positivity thesis at the variational level (most likely), OR

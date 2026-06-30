@@ -109,7 +109,7 @@ the real standalone output.
 | [P2](#p2) | Digamma reflection / iterated recurrence / duplication | Formal (positive) | Lean, axiom-clean | 🟢 SUBMITTED | Mathlib PR | [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) |
 | [P3](#p3) | The Davenport-Heilbronn discipline, operationalized (Schur counting law + Epstein) | Methodology | Numerical (validated) + rigorous Li at n=336k | 🟡 DEVELOPING | Fold into P4 | lit-checked |
 | [P4](#p4) | All-roads convergence + marginal-positivity thesis + Spec(ℤ) scorecard | Survey | Synthesis | 🟡 DEVELOPING | Expository / arXiv | draft written ([`publications/obstruction_map/`](publications/obstruction_map/)) |
-| [P5](#p5) | No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant | Negative (closed branch) | Rigorous (line-restriction lemma) + SDP/LP certificates | 🟡 DEVELOPING | arXiv math.NT note / fold into P4 | lit-checked |
+| [P5](#p5) | No higher-dimensional / SDP / SOS / **variational** escape for the single-zero zero-free constant | Negative (closed branch) | Rigorous (line-restriction lemma) + SDP/LP certificates + variational QP (4F) | 🟡 DEVELOPING | arXiv math.NT note / fold into P4 | lit-checked |
 | [P6](#p6) | Lean formalization of function-field RH for elliptic curves (deg = det route) | Formalization (positive) | Lean, axiom-clean (conditional on existence of A) | 🟡 DEVELOPING | Formalization venue | lit-checked ✓ viable |
 | [P7](#p7) | RH is Π⁰₁ + the Lean kernel witness | Expository note | Lean anchors; logical fact classical | 🟡 DEVELOPING | Note / bundle into P4 | evaluated |
 | [P8](#p8) | The stealth window quantified (e^{-4πx} wall, 370× cancellation, D-H-aware defect) | Analytic note | Numerical + prolate analysis | 🟡 DEVELOPING | Fold into P4 (no standalone) | lit-checked: rate is prior (Fuchs+Connes) |
@@ -235,8 +235,14 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   fail: multivariate balanced-sum LPs (4E/4E.2/4E.4/4E.5, where a +25%/+51%/+62% Cauchy-Schwarz gap is
   real but does NOT transfer), constrained-domain LPs (4E.6), naive multi-zero couplings (4E.7),
   Heath-Brown multi-zero SDP (4E.9 / `e4e9_heath_brown_sdp`, best ratio ≤ 1, rank-2 certificate;
-  verified ratio = 1.0000 in the `.npz`), and Putinar/Schmüdgen SOS (4E.8 / `e4e8_sos_sdp`, LEARNINGS
-  #15). Cite escape routes by **experiment ID**, not LEARNINGS number: the adversary (HIGH-2) found
+  verified ratio = 1.0000 in the `.npz`), Putinar/Schmüdgen SOS (4E.8 / `e4e8_sos_sdp`, LEARNINGS
+  #15), and now the **Bombieri variational SOS** (4F / `e4f_variational_sos`, LEARNINGS #136), the one
+  escape route *outside* the LP/SDP non-negative-cone family: relaxing non-negativity with an L²
+  penalty `‖P₋‖²` on the negative part also fails to beat Fejér, and razor-sharply — `‖P₋‖² = 0` for
+  every target `c₁/c₀ ≤ 2cos(π/8) = 1.8478` and positive precisely above it (2.7e-6 at 1.86 → 6.7e-4
+  at 1.96). This is the strongest form of the closure: the wall survives the relaxation specifically
+  designed to escape it, so the line-restriction obstruction is not an artifact of the cone
+  relaxation. Cite escape routes by **experiment ID**, not LEARNINGS number: the adversary (HIGH-2) found
   4E.9 was mis-cited to "LEARNINGS #21", which under the doc's canonical numbering is the function-field
   Hodge index (`### 21.` / e2g). **Both repo-hygiene fixes are now DONE (2026-06-16):** the LEARNINGS.md
   Session-003 cluster carries a disambiguation banner (cite by experiment ID; the `**Finding #N**`
@@ -473,3 +479,17 @@ Kept so they are not re-proposed as novel.
   `experiments/zero_free/README.md`: added the 4E.8 (SOS) and 4E.9 (Heath-Brown multi-zero SDP) sections
   and corrected the stale "4E.8 is the remaining open direction" to "the LP/SDP/SOS family is fully
   closed." P5's cited source is now consistent.
+- 2026-06-30: **three session findings folded in.** (i) **P5 strengthened** with the Bombieri
+  variational SOS (4F / `e4f_variational_sos`, LEARNINGS #136): the one escape route *outside* the
+  LP/SDP cone family (L²-penalized negativity) also fails to beat Fejér, razor-sharply at the cone
+  boundary, so the negative closure now covers the variational relaxation built to escape it. Registry
+  row and dossier updated. (ii) **P4 / the obstruction-map survey strengthened** with the most concrete
+  face of the marginal-positivity discipline (LEARNINGS #135, `e2w2_loglog_arch_coupling`): ζ's
+  non-circular Rosati positivity is a +0.035 margin from two norm-44 blocks, and the one named probe to
+  inject multiplicativity into the signature (c_F on A_arch) destroys it for every control including
+  RH-true ζ — there is no margin to inject into. Added to the survey's marginal-positivity section. (iii)
+  **The D4 meta-level gradient-descent thread** (LEARNINGS #134, `experiments/gradient_descent/`) was
+  evaluated and deliberately NOT given a registry row: its publishable content (the kernel cliff =
+  marginal positivity restated) is already P4, and the rest is tooling (a verifier-grounded RL rehearsal
+  on the closed function-field case). Honest call per gate item 4b (it would be a reformulation/tooling
+  note, not new content). It stays a repo artifact, citable from P4 as a methodology demonstration.
