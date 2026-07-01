@@ -31,3 +31,5 @@ import ZetaRH.DigammaExtras
 import ZetaRH.CrystalCocycle
 import ZetaRH.VT_NP1
 import ZetaRH.ToyModel
+import ZetaRH.SchurCohn
+import ZetaRH.GaussLucas
