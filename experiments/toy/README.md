@@ -16,6 +16,7 @@ python -m experiments.toy.ihara_grader  # the spectral grader on the graph world
 python -m experiments.toy.interlacing   # the MSS non-variety sqrt(q) source and why it does not transfer
 python -m experiments.toy.alon_boppana  # marginal positivity as a theorem (Alon-Boppana = extremality)
 python -m experiments.toy.archimedean_place  # the archimedean place = atomic-flat vs continuous-never-flat
+python -m experiments.toy.circle_interlacing # the circle-rooted side: no engine without the operator (or the wrong positivity)
 python -m experiments.toy.test_toy      # the smoke test (12/12)
 ```
 
@@ -222,6 +223,44 @@ unifying #141 (the tree as the marginal continuous limit), #79/#80 (flat vs neve
 `../chaos/c4_prime_orbit_spectrum.py` (the $\Gamma$-factor as the continuous mean). Same honest
 caveat: a structural model of the obstruction shape on the self-adjoint spectrum, not $\zeta$'s
 arithmetic archimedean content.
+
+## The circle-rooted side (`circle_interlacing.py`)
+
+The follow-up question #140 leaves open: the MSS engine is fueled by real-rootedness; the
+arithmetic L-polynomial is **circle**-rooted ($|\alpha| = \sqrt q$). Can the engine run
+circle-rooted? The battery (11 tests, adversary-corrected) answers no, and pins where the
+fuel line breaks (LEARNINGS #143):
+
+- **The dictionary.** For $q$-self-inversive Weil polynomials, roots-on-circle $\iff$ the
+  real Weil polynomial $h(x)$, $x = T + q/T$ (DiPippo-Howe), is real-rooted **and** in
+  $[-2\sqrt q, 2\sqrt q]$. Verified on brute-force-counted genus-1 and genus-2 curves
+  (with an $N_3$ Newton-vs-count firewall). So the circle question *is* the real-rootedness
+  question in trace coordinates; the coordinate change relocates the missing fuel, it does
+  not source it.
+- **The possible-failure-modes dichotomy.** The graph D-H keeps a fully real spectrum and
+  can only *exit the window* (self-adjointness makes real-rootedness free); arithmetic
+  admits **both** modes: the #123 genus-2 fake has $h$-roots $2 \pm i$ (real-rootedness
+  itself lost), and an FE-true witness $T^4 - 15T^2 + 25$ over $q=5$ stays real-rooted but
+  exits the window.
+- **The averaging gate.** Exact $\pm 1$ edge-signing average = matching polynomial
+  (survives); independent-phase averaging collapses exactly to $z^n$; **Hermitian**
+  phase-signing survives again; Haar CUE first moment is trivially $z^N$ while the
+  sesquilinear $E[|\det(I-U)|^2] = N+1$ carries the Keating-Snaith content. Honest scope
+  (adversary + survey): the triviality is Haar/independence-exact, not circle-universal
+  (Kabluchko 2025; conjugate-paired phase subtori give nontrivial circle-rooted averages),
+  so the kill is *carrier presupposition* (pairing needed for content, unitarity for the
+  locus) plus the missing extremal-selection **order** on an exact locus, not averaging
+  triviality per se.
+- **The classical convergence.** Schur-Cohn (1922): circle-rootedness for a self-inversive
+  polynomial = the functional equation (identical vanishing) + Hermitian
+  positive-semidefiniteness of the derivative's Schur-Cohn form. The century-old
+  root-location certificate is itself signature-shaped: pairing free, positivity the whole
+  content, which is the M4 spec stated from an independent corpus.
+
+**Net.** No circle-rooted interlacing engine exists (survey: the convolution algebra and the
+POPUC interlacing order exist; the extremal-selection step does not, structurally). #140's
+gate refines to **self-adjointness-or-positivity-gated**, and the positivity branch is the
+all-positive Lee-Yang polarity already killed for M4 (#95, #119).
 
 ## The honest caveat
 

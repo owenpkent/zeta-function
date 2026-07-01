@@ -85,6 +85,23 @@ CORPUS = [
             "L-polynomial is not real-rooted). Sibling to the Lorentzian / real-stable kill; kept in "
             "corpus so R1-sourcing sweeps neither lose it nor re-propose it. Net: R1 is "
             "self-adjointness-gated, not merely variety-gated."),
+    Theorem("Circle-rooted interlacing engine (Suffridge / POPUC / Schur-Cohn)",
+            "self-inversive polynomials with zeros on the unit circle / unitary CMV structure",
+            _F("definite", "moment", "analytic", False, False),
+            "killed", "KILLED as an R1/M4 transfer (2026-07-01, LEARNINGS #143, "
+            "toy/circle_interlacing.py): the circle-rooted variant of the MSS engine does not "
+            "exist, and the miss is structural. Two thirds are present on the circle (the "
+            "convolution algebra: Grace-Szego composition, Suffridge 1976, Leake-Ryder 2020, "
+            "MSS Thm 1.5 legally applied to unitary inputs; the interlacing order: POPUC, "
+            "Jones-Njastad-Thron 1989 through Castillo-Petronilho 2017), but the "
+            "extremal-selection step is missing: circle-rootedness is an exact locus with no "
+            "native one-sided order, and manufacturing the order via x = T + q/T (DiPippo-Howe) "
+            "re-poses real-rootedness = self-adjointness. Circle-rootedness itself is "
+            "operator-or-positivity sourced (POPUC = unitary CMV truncations; Lee-Yang/Grace = "
+            "the all-positive polarity killed by #95/#119), and the classical certificate "
+            "(Schur-Cohn 1922: self-inversiveness + Hermitian PSD of the derivative's form) is "
+            "itself signature-shaped, an independent classical convergence on the M4 spec. "
+            "Kept in corpus so circle-side sweeps neither lose it nor re-propose it."),
     Theorem("Boucksom-Jonsson non-archimedean Monge-Ampere / K-stability",
             "energy positivity on the Berkovich analytification",
             _F("definite", "convex", "valuative", False, False),

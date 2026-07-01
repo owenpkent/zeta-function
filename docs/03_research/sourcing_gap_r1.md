@@ -65,6 +65,12 @@ The reason it does not transfer to $\mathrm{Spec}(\mathbb{Z})$ ([`../../experime
 
 So R1 sharpens from **variety-gated** to **self-adjointness-gated**: the missing ingredient is the self-adjoint operator behind Frobenius (Hilbert-Pólya), and R1 (facet A, sourcing) and M4 (facet B, polarization) are two faces of that one missing operator. The graph proven world confirms this from three sides: the sourcing gap (#140), marginal positivity as the universal-cover extremal bound (#141), and the archimedean place as the atomic-flat-to-continuous-never-flat passage (#142). See [`../../experiments/toy/README.md`](../../experiments/toy/README.md).
 
+## Update (2026-07-01, cont.): the circle-rooted engine does not exist; the gate refines to self-adjointness-OR-positivity
+
+The direct follow-up to #140 was executed (survey + [`../../experiments/toy/circle_interlacing.py`](../../experiments/toy/circle_interlacing.py) + adversary, LEARNINGS #143): a circle-rooted variant of the interlacing-families engine, which is what a transfer to the circle-rooted L-polynomial would need, **does not exist in the literature, and the miss is structural**. Two thirds of the engine are already present on the circle (the convolution algebra: Grace-Szegő, Suffridge 1976, Leake-Ryder 2020; the interlacing order: POPUC). The missing third is the extremal-selection step: circle-rootedness is an exact locus with no native one-sided order, and manufacturing the order via $x = T + q/T$ (DiPippo-Howe) re-poses real-rootedness, the thing self-adjointness was paying for.
+
+Two refinements to the gate statement. First, the circle does possess **non-operator** rootedness sources (Lee-Yang/Grace positivity; Suffridge-mesh convolutions), so the honest form is: R1 is **self-adjointness-or-positivity-gated**, and the positivity branch is exactly the all-positive polarity already killed for M4 (#95, #119). Second, an independent classical convergence: the Schur-Cohn certificate (1922) states that circle-rootedness for a self-inversive polynomial is the functional equation (an identical vanishing) plus a Hermitian positive-semidefiniteness, so the century-old root-location corpus already says the circle problem **is** a polarization problem.
+
 ## References
 
 - Peter Sarnak, *Notes on the Generalized Ramanujan Conjectures*, Clay Math. Proc. 4 (2005), pp. 659-666 (the decisive reference: proven purity = geometric; the holomorphic-vs-Maass split; "no algebro-geometric moduli interpretation" for the non-Hermitian case).

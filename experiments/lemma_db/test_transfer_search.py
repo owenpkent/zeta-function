@@ -119,6 +119,22 @@ def test_mss_r1_node():
     )
 
 
+def test_circle_engine_node():
+    print("Test 8: the circle-rooted interlacing node (the #143 circle-side kill) is present and demoted")
+    s = _scores()
+    ce = "Circle-rooted interlacing engine (Suffridge / POPUC / Schur-Cohn)"
+    node = next((t for t in CORPUS if t.name == ce), None)
+    indefinite_min = min(
+        s[t.name] for t in CORPUS if t.features.positivity_kind == "indefinite")
+    return (
+        check("circle-engine node is present in the corpus", node is not None)
+        and check("it is flagged role='killed' (the engine does not exist circle-rooted)",
+                  node is not None and node.role == "killed")
+        and check("it scores below every indefinite-family theorem (definite Schur-Cohn shape)",
+                  s[ce] < indefinite_min, f"circle-engine={s[ce]}, indefinite-min={indefinite_min}")
+    )
+
+
 def main():
     results = [
         test_templates_top(),
@@ -128,6 +144,7 @@ def main():
         test_brackets_low(),
         test_killed_node_demoted(),
         test_mss_r1_node(),
+        test_circle_engine_node(),
     ]
     print()
     n_pass = sum(results)

@@ -20,6 +20,7 @@ texts/
 
 # AI/LLM scratch space
 _scratch/
+scratchpad/
 _draft_*
 *.tmp
 .cascade/
