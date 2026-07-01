@@ -107,6 +107,36 @@ def test_acq1_input_output_screen():
     assert any("input/output" in r for r in battery(leeyang))
 
 
+def test_selection_order_screen_fires_on_mss():
+    """#143: an averaging-plus-selection engine (MSS-style interlacing families) certifies via
+    a one-sided bound on an ORDERED quantity; an exact locus (roots ON a circle or line) has no
+    native one-sided order, so the order is presupposed. The screen must fire."""
+    mss = _S(0, 0, 0, 0, 0, "na", 1, "realization", 1, "na", "na", order_source="selection")
+    fired = battery(mss)
+    assert any("selection-order" in r for r in fired)
+    assert screen(mss)["transfer_candidate"] is False
+
+
+def test_selection_order_screen_spares_operator_carrier():
+    """#143: a phenomenon that carries its own operator (the Selberg/Laplacian case: the order
+    IS the real spectrum, manufactured by self-adjointness) must NOT fire the selection-order
+    screen; it dies elsewhere (strip-width axis, K1), not by presupposing the order."""
+    selberg = _S(1, 0, 1, 1, 1, "contingent", 1, "realization", 1, "all-heights", "complex",
+                 "strip-width", "na", "na", order_source="operator")
+    assert not any("selection-order" in r for r in battery(selberg))
+
+
+def test_mss_corpus_row_disqualified():
+    """The #143 kill is on file: the MSS row is DISQUALIFIED by the selection-order screen and
+    stays below the M4 target in rank (the killed circle-engine node lives in transfer_search.py)."""
+    mss = next(e for e in CORPUS if "MSS interlacing" in e.phenomenon)
+    assert mss.verdict == "DISQUALIFIED"
+    assert "#143" in mss.rule
+    assert mss.skel.order_source == "selection"
+    assert any("selection-order" in r for r in battery(mss.skel))
+    assert match_score(mss.skel) < match_score(M4)
+
+
 def test_m4_has_full_fingerprint():
     """The M4 target must carry every fingerprint value (it is the ideal profile)."""
     assert M4.axis == "line"

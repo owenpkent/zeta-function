@@ -24,6 +24,15 @@ G = [c_{|j-k|}]; by Caratheodory-Toeplitz it is PSD at every order iff all |u| =
 for the curve. It scores all green. It is the known-correct M4 move in the toy; the open
 problem (over Z) is to PROVE its positivity from a polarization rather than from the zeros,
 and to survive the lift past the finite-spectrum / single-circle structure (LEARNINGS #128).
+
+The SECOND reference (`schur_cohn_candidate`, LEARNINGS #143) is the classical circle
+certificate from the geometry-of-polynomials corpus: Newton's identities recover the
+L-polynomial phi from the point-count moments, Cohn (1922) reduces "all zeros of the
+self-inversive phi on |z| = 1" to "all zeros of phi' in the closed unit disk", and the
+Schur-Cohn matrix of phi' certifies THAT by positive semidefiniteness. Independent theorem,
+same all-green scorecard: the 1922 certificate is itself signature-shaped (functional
+equation free, positivity the entire content), which is the M4 shape stated from a corpus
+that never heard of Weil.
 """
 
 from __future__ import annotations
@@ -71,6 +80,102 @@ def moment_matrix_candidate(data: ToyData) -> Optional[np.ndarray]:
     c = np.asarray(data.moments, dtype=float)
     m = len(c)
     return np.array([[c[abs(j - k)] for k in range(m)] for j in range(m)], dtype=float)
+
+
+# ---------------------------------------------------------------------------
+# The second reference candidate: the classical circle certificate
+# (Cohn 1922 + Schur-Cohn), wired in per LEARNINGS #143. Independent of the
+# Caratheodory-Toeplitz moment route: a different theorem, the same verdicts.
+# ---------------------------------------------------------------------------
+def _lower_toeplitz(col: np.ndarray) -> np.ndarray:
+    """The m x m lower-triangular Toeplitz matrix T with T[j, l] = col[j - l] for l <= j."""
+    m = len(col)
+    T = np.zeros((m, m), dtype=complex)
+    for j in range(m):
+        T[j, : j + 1] = col[j::-1]
+    return T
+
+
+def schur_cohn_matrix(coeffs) -> np.ndarray:
+    """The Schur-Cohn matrix of f: the Bezoutian of (f*, f) relative to the unit circle.
+
+    CONVENTION (the brute-force validation in test_toy.test_schur_cohn_formula is the
+    arbiter, not this comment): coeffs are DESCENDING (numpy convention). Writing
+    f(z) = sum_{k=0}^m a_k z^k and b_k = conj(a_{m-k}) for the coefficients of the
+    reversed conjugate f*(z) = z^m conj(f(1/conj z)), and T_a, T_b for the m x m
+    lower-triangular Toeplitz matrices with first columns (a_0..a_{m-1}), (b_0..b_{m-1}):
+
+        S = T_b T_b^H - T_a T_a^H,
+
+    equivalently S[j,k] = sum_{l<=min(j,k)} (b_{j-l} conj(b_{k-l}) - a_{j-l} conj(a_{k-l})),
+    the coefficient matrix of (f*(z) conj(f*(w)) - f(z) conj(f(w))) / (1 - z conj(w)).
+
+    Schur-Cohn theorem: all roots of f in the CLOSED unit disk => S is PSD; and when f
+    and f* are coprime (no on-circle root, no root pair z0, 1/conj(z0) symmetric across
+    the circle) the number of negative eigenvalues of S equals the number of roots
+    outside the disk, so NOT-PSD <=> some root outside. Common factors of f and f*
+    contribute ZERO eigenvalues; the extreme case is a self-inversive f, where S = 0
+    identically (the maximally singular branch, #143). That degeneracy is exactly WHY
+    Cohn's criterion certifies the self-inversive phi through its DERIVATIVE: phi' is
+    not self-inversive, and gcd(phi', phi'*) is supported on the multiple roots of phi
+    (from the identity phi'* = n phi - z phi'), so for squarefree phi the certificate
+    is exact and a multiple root ON the circle (the supersingular boundary) only adds
+    a zero eigenvalue, keeping the verdict PSD.
+    """
+    a = np.asarray(coeffs, dtype=complex)[::-1]      # ascending a_0..a_m
+    m = len(a) - 1
+    if m < 1:
+        raise ValueError("Schur-Cohn needs degree >= 1")
+    b = np.conj(a[::-1])                             # ascending coefficients of f*
+    T_a = _lower_toeplitz(a[:m])
+    T_b = _lower_toeplitz(b[:m])
+    S = T_b @ T_b.conj().T - T_a @ T_a.conj().T
+    return (S + S.conj().T) / 2.0
+
+
+def _phi_from_moments(c: np.ndarray, n: int) -> np.ndarray:
+    """Newton's identities: recover the monic phi(z) = prod_u (z - u) (degree n, real
+    DESCENDING coefficients) from the power sums c_1..c_n. K1-clean by construction:
+    the power sums ARE the exposed point-count moments, never the eigenvalues."""
+    e = np.zeros(n + 1)
+    e[0] = 1.0
+    for k in range(1, n + 1):
+        e[k] = sum((-1) ** (i - 1) * e[k - i] * c[i] for i in range(1, k + 1)) / k
+    return np.array([(-1.0) ** k * e[k] for k in range(n + 1)])
+
+
+def schur_cohn_candidate(data: ToyData) -> Optional[np.ndarray]:
+    """The #143 classical circle certificate as an executable M4 move.
+
+    Pipeline (K1-clean: only the point-count moments c_1..c_{2g} are used):
+      1. Newton's identities recover the monic phi(z) = prod (z - u), degree n = 2g,
+         real coefficients; phi is self-inversive because the functional equation
+         closes the root multiset under u -> 1/u. The FE is thus an IDENTITY here
+         (pairing free), mirroring #143: positivity is the entire content.
+      2. Cohn (1922): a self-inversive phi has ALL zeros on |z| = 1 iff phi' has all
+         zeros in the CLOSED unit disk.
+      3. Schur-Cohn: phi' has all zeros in the closed unit disk iff its Schur-Cohn
+         matrix is PSD (real symmetric here, since the coefficients are real).
+    So PSD(SchurCohn(phi')) <=> RH-for-the-instance, a theorem independent of the
+    Caratheodory-Toeplitz route used by `moment_matrix_candidate`.
+
+    Genus-1 anchor (hand-checkable): phi(z) = z^2 - (t/sqrt p) z + 1 gives
+    phi'(z) = 2z - t/sqrt p, whose 1x1 Schur-Cohn matrix is [4 - t^2/p]: PSD iff
+    t^2 <= 4p, exactly the Hasse window. The supersingular boundary t^2 = 4q makes
+    the matrix PSD-SINGULAR (min eigenvalue exactly 0), which the grader's -PSD_TOL
+    threshold already accepts as PSD; no global tolerance change is needed.
+
+    Returns None (uninstantiable) without an Euler product (no moments: the D-H
+    firewall) or with fewer than 2g exposed moments (Newton needs c_1..c_{2g})."""
+    if not data.has_euler or data.moments is None:
+        return None
+    n = 2 * data.genus
+    if n < 2 or len(data.moments) - 1 < n:
+        return None
+    c = np.asarray(data.moments, dtype=float)
+    phi = _phi_from_moments(c, n)
+    dphi = np.polyder(phi)
+    return np.real(schur_cohn_matrix(dphi))
 
 
 @dataclass

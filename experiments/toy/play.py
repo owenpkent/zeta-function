@@ -3,8 +3,9 @@
 Run:
     python -m experiments.toy.play
 
-It (1) prints the battery, (2) grades the reference candidate (the e2xx moment matrix:
-all green), (3) grades two deliberately-bad candidates to show the grader has teeth, and
+It (1) prints the battery, (2) grades the two reference candidates (the e2xx moment
+matrix and the #143 Schur-Cohn circle certificate: both all green, by independent
+theorems), (3) grades two deliberately-bad candidates to show the grader has teeth, and
 (4) runs the spectral (Selberg / Hilbert-Polya) toy. The point is the loop: write a
 candidate construction, run it here, and get told instantly whether it reproduces Weil,
 catches the off-line zeros, stayed K1-clean, and is immune to Davenport-Heilbronn.
@@ -16,6 +17,7 @@ from experiments.toy.instances import FULL_BATTERY
 from experiments.toy.grader import (
     grade,
     moment_matrix_candidate,
+    schur_cohn_candidate,
     identity_candidate,
     diag_moment_candidate,
 )
@@ -44,6 +46,9 @@ def main() -> None:
     print("-" * 78)
     print("GRADING CANDIDATES\n")
     print(grade(moment_matrix_candidate, "moment_matrix (reference, = e2xx G_m)").report())
+    print()
+    print(grade(schur_cohn_candidate,
+                "schur_cohn (2nd reference, Cohn 1922 + Schur-Cohn, #143)").report())
     print()
     print(grade(identity_candidate, "identity (soft positivity, no RH content)").report())
     print()

@@ -4,6 +4,8 @@ Verifies the toy's ground truth and that the grader has teeth:
   - every positive instance is on-circle, every negative is off-circle;
   - moments are real (the spectrum is conjugation- and inversion-closed);
   - the reference candidate (e2xx moment matrix) scores ALL GREEN;
+  - the second reference (Cohn 1922 + Schur-Cohn, LEARNINGS #143) scores ALL GREEN,
+    with the Schur-Cohn convention validated against brute-force root location;
   - a soft candidate (identity) FAILS rejects_fakes;
   - the D-H instance is correctly unbuildable (the firewall);
   - the spectral toy: self-adjoint => on-line, non-self-adjoint => off-line.
@@ -13,10 +15,13 @@ from __future__ import annotations
 
 import numpy as np
 
-from experiments.toy.instances import POSITIVE_BATTERY, NEGATIVE_BATTERY, FULL_BATTERY
+from experiments.toy.instances import POSITIVE_BATTERY, NEGATIVE_BATTERY, FULL_BATTERY, ToyData
 from experiments.toy.grader import (
     grade,
+    is_psd,
     moment_matrix_candidate,
+    schur_cohn_candidate,
+    schur_cohn_matrix,
     identity_candidate,
     diag_moment_candidate,
 )
@@ -73,6 +78,74 @@ def test_soft_candidates_fail():
 def test_dh_unbuildable():
     dh = [i for i in NEGATIVE_BATTERY if i.kind == "dh"][0]
     assert moment_matrix_candidate(dh.to_data(6)) is None
+    assert schur_cohn_candidate(dh.to_data(6)) is None
+
+
+def test_schur_cohn_formula():
+    """Brute-force validation of the Schur-Cohn convention (the formula is the risk;
+    the root locations are the arbiter): on random polynomials (mixed real/complex
+    coefficients, degrees 1..6, roots planted inside / outside / on the circle,
+    random non-monic scale), PSD must match "all roots in the closed unit disk" in
+    every case, and off the boundary the number of negative eigenvalues must equal
+    the number of roots outside the disk."""
+    rng = np.random.default_rng(20260701)
+    psd_checked = sig_checked = 0
+    for _ in range(400):
+        m = int(rng.integers(1, 7))
+        real_coeffs = bool(rng.integers(0, 2))
+        roots = []
+        while len(roots) < m:
+            kind = int(rng.integers(0, 3))  # 0 inside, 1 outside, 2 on the circle
+            r = (rng.uniform(0.05, 0.9), rng.uniform(1.1, 2.5), 1.0)[kind]
+            if real_coeffs and m - len(roots) >= 2 and rng.random() < 0.5:
+                z = r * np.exp(1j * rng.uniform(0.1, np.pi - 0.1))
+                roots += [z, np.conj(z)]  # conjugate pair keeps the coefficients real
+            elif real_coeffs:
+                roots.append(complex(r * (1.0 if rng.random() < 0.5 else -1.0)))
+            else:
+                roots.append(r * np.exp(1j * rng.uniform(0.0, 2.0 * np.pi)))
+        roots = np.array(roots, dtype=complex)
+        coeffs = np.poly(roots)
+        if real_coeffs:
+            coeffs = np.real(coeffs)
+        scale = rng.uniform(0.5, 2.0)
+        if not real_coeffs:
+            scale = scale * np.exp(1j * rng.uniform(0.0, 2.0 * np.pi))
+        S = schur_cohn_matrix(coeffs * scale)
+        w = np.linalg.eigvalsh(S)
+        tol = 1e-8 * (1.0 + float(np.abs(S).max()))
+        radii = np.abs(roots)
+        all_closed = bool(np.all(radii <= 1.0 + 1e-9))
+        assert (float(w.min()) >= -tol) == all_closed, (radii, w)
+        psd_checked += 1
+        if np.all(np.abs(radii - 1.0) > 1e-3):
+            assert int(np.sum(w < -tol)) == int(np.sum(radii > 1.0)), (radii, w)
+            sig_checked += 1
+    assert psd_checked == 400 and sig_checked >= 80
+    # the hand-checkable genus-1 anchor: phi' = 2z - t/sqrt(p) gives S = [4 - t^2/p]
+    t, p = 3.0, 7.0
+    S1 = np.real(schur_cohn_matrix(np.array([2.0, -t / np.sqrt(p)])))
+    assert abs(float(S1[0, 0]) - (4.0 - t * t / p)) < 1e-12
+
+
+def test_schur_cohn_all_green():
+    """The second reference (Cohn 1922 + Schur-Cohn, LEARNINGS #143) must score ALL
+    GREEN: an independent classical theorem lands the same verdicts as the
+    Caratheodory-Toeplitz moment route."""
+    sc = grade(schur_cohn_candidate, "schur-cohn")
+    assert sc.reproduces_weil, "Schur-Cohn must certify every RH-true instance"
+    assert sc.rejects_fakes, "Schur-Cohn must reject every off-circle fake"
+    assert sc.dh_immune, "no Euler product => no moments => unbuildable"
+    assert sc.k1_clean
+    assert sc.all_green
+    # the supersingular boundary t^2 = 4q (u = 1 double root): the matrix is
+    # PSD-SINGULAR (min eigenvalue exactly 0) and the grader tolerance accepts it,
+    # with no loosening of the global PSD_TOL
+    ss = ToyData(q=4, genus=1, moments=(2.0, 2.0, 2.0), has_euler=True)
+    M = schur_cohn_candidate(ss)
+    assert M is not None
+    assert abs(float(np.linalg.eigvalsh(M).min())) < 1e-12
+    assert is_psd(M)
 
 
 def test_spectral_toy():
@@ -173,6 +246,8 @@ def main() -> None:
         test_reference_all_green,
         test_soft_candidates_fail,
         test_dh_unbuildable,
+        test_schur_cohn_formula,
+        test_schur_cohn_all_green,
         test_spectral_toy,
         test_ihara_theorem,
         test_ihara_reference_all_green,

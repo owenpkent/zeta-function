@@ -17,7 +17,7 @@ python -m experiments.toy.interlacing   # the MSS non-variety sqrt(q) source and
 python -m experiments.toy.alon_boppana  # marginal positivity as a theorem (Alon-Boppana = extremality)
 python -m experiments.toy.archimedean_place  # the archimedean place = atomic-flat vs continuous-never-flat
 python -m experiments.toy.circle_interlacing # the circle-rooted side: no engine without the operator (or the wrong positivity)
-python -m experiments.toy.test_toy      # the smoke test (12/12)
+python -m experiments.toy.test_toy      # the smoke test (14/14)
 ```
 
 ## Why it helps
@@ -82,6 +82,18 @@ $G = [c_{|j-k|}]$; by Caratheodory-Toeplitz it is PSD at every order iff all $|u
 for the curve. It scores all green. Two demonstration "bad" candidates (`identity_candidate`,
 `diag_moment_candidate`) fail `rejects_fakes`, showing a soft / wrong-polarity form has no RH
 content.
+
+A **second, independent all-green reference** (`schur_cohn_candidate`, LEARNINGS #143) wires
+in the classical 1922 certificate: Newton's identities recover the self-inversive polynomial
+$\varphi$ from the point-count moments, Cohn's criterion converts "all roots on $|z|=1$" into
+"$\varphi'$ has all roots in the closed disk," and the Hermitian Schur-Cohn matrix of
+$\varphi'$ certifies that by positive-semidefiniteness (genus-1 anchor: the $1\times 1$ matrix
+$[4 - t^2/p]$, exactly the Hasse window). Same theorem, different mechanism: the moment matrix
+is *marginal* on RH-true instances (min eig $\approx 0$) while the Schur-Cohn form has strict
+margin there, because differentiation pulls the roots of squarefree on-circle $\varphi$
+strictly inside the disk (Gauss-Lucas). The $\mathbb{Z}$-side face of that derivative trick is
+the already-mapped Laguerre-Polya / de Bruijn-Newman face (#38/#39), so the margin is a
+toy-world feature, not a new route.
 
 ## The spectral toy (`selberg.py`)
 

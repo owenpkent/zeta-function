@@ -29,6 +29,16 @@ polarity (a polarization = Weil/Rosati form):
               AND  prohibitive flip on a FIXED locus (failure forbidden; not curative,
                                       where the locus relocates and the zeros track it).
 
+THE SELECTION-ORDER SCREEN (#143, from the circle-rooted interlacing kill) is the
+mechanism form of the #119 discriminant screen: an averaging-plus-selection engine
+(MSS-style interlacing families) certifies via a one-sided bound on an ORDERED
+quantity; an exact locus (all roots ON a circle or line) has no native one-sided
+order; so a candidate whose certifying step requires above-or-below-average selection
+on the target locus itself presupposes either an operator realization (self-adjoint
+or unitary, which manufactures the order as a real spectrum) or a positivity of the
+Lee-Yang class (already graded wrong-polarity by #95/#119). See toy/circle_interlacing.py
+and the killed circle-engine node in transfer_search.py.
+
 Run:
   python -m experiments.lemma_db.breadth_corpus
 """
@@ -61,6 +71,11 @@ class Skeleton:
     axis: str = "na"           # 'line' (RH) | 'spacing' | 'central-rank' | 'strip-width' | 'na'
     flip: str = "na"           # 'prohibitive' (fixed locus) | 'curative' (locus relocates) | 'na'
     side: str = "na"           # 'output-indefinite' (RH) | 'input-definite' (measure-class) | 'na'
+    # #143 mechanism dimension: where does the certifying step's ORDER come from?
+    order_source: str = "na"   # 'selection' (above/below-average selection on an ordered
+                               # quantity, MSS-style: the order is presupposed) |
+                               # 'operator' (a self-adjoint/unitary realization the
+                               # phenomenon carries natively manufactures the order) | 'na'
 
 
 @dataclass
@@ -83,8 +98,9 @@ M4 = Skeleton(
 
 
 def _S(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root,
-       axis="na", flip="na", side="na"):
-    return Skeleton(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root, axis, flip, side)
+       axis="na", flip="na", side="na", order_source="na"):
+    return Skeleton(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root,
+                    axis, flip, side, order_source)
 
 
 # ---------------------------------------------------------------------------
@@ -143,7 +159,8 @@ CORPUS = [
           "acq1: S-curves on the complex-root half, but the flip RELOCATES the band (curative), "
           "underlying energy convexity unconditional; K1 made concrete (locus solved-for)"),
     Entry("Transfer operator / Ruelle / Selberg dynamical zeta", "thermodynamic formalism",
-          _S(1,0,1,1,1,"contingent",1,"realization",1,"all-heights","complex","strip-width","na","na"),
+          _S(1,0,1,1,1,"contingent",1,"realization",1,"all-heights","complex","strip-width","na","na",
+             order_source="operator"),
           "DISQUALIFIED", "spectral-gap=zero-free-region screen (#120) + K1",
           "acq1: the gap is contingent but controls a STRIP WIDTH (Arch 4), not the line; Selberg-RH "
           "reaches the line by self-adjointness but has no zeta; zeta's zeros are SCATTERING RESONANCES "
@@ -180,6 +197,17 @@ CORPUS = [
           "acq2: F3 line-axis HIT (the one improvement over acq1 strip-width), but the positivity is a "
           "half-plane dissipativity bound (unconditional), not a line signature; resonances sit in the "
           "continuous spectrum where self-adjointness is inert; closes onto Connes/CCM/de Branges"),
+    # --- #143: the selection-order kill (averaging-plus-selection engines) ---
+    Entry("MSS interlacing families (averaging + extremal selection)",
+          "polynomial method / spectral graph theory",
+          _S(0,0,0,0,0,"na",1,"realization",0,"na","real","na","na","na",
+             order_source="selection"),
+          "DISQUALIFIED", "selection-order screen (#143) + discriminant (#119)",
+          "#140/#143: sources sqrt(q) with NO variety, but the certifying step selects "
+          "above/below average on an ORDERED real spectrum, so the order (= real-rootedness "
+          "= self-adjointness) is presupposed; the circle-rooted variant does not exist "
+          "(killed node in transfer_search.py, toy/circle_interlacing.py 11/11); the classical "
+          "circle certificate (Schur-Cohn 1922) is instead FE + Hermitian PSD = the M4 shape"),
     # --- realization / K1 / perfectness rows (earlier sweeps) ---
     Entry("Hirzebruch signature operator", "index theory",
           _S(1,1,1,0,1,"na",1,"realization",0,"all-heights","na"),
@@ -261,6 +289,9 @@ def match_score(s: Skeleton, target: Skeleton = M4) -> int:
         score += 2
     elif s.side in ("input-definite", "output-selection"):
         score -= 2
+    # #143: a certifying step that presupposes the order it selects on is a transfer debit
+    if s.order_source == "selection":
+        score -= 2
     return score
 
 
@@ -296,6 +327,12 @@ def battery(s: Skeleton) -> list:
     if s.regime == "special-value":
         fired.append("special-value/period regime #121 (zeta VALUES at k>=2 / periods, not zero-LOCATION; "
                      "one tier beyond the #113 central-value/BSD regime)")
+    # #143 mechanism screen (the circle-rooted interlacing kill)
+    if s.order_source == "selection":
+        fired.append("selection-order screen #143 (averaging-plus-selection certifies via a one-sided "
+                     "bound on an ORDERED quantity; an exact locus, all roots ON a circle or line, has "
+                     "no native one-sided order, so the order is presupposed: an operator realization "
+                     "(self-adjoint/unitary) or a Lee-Yang-class positivity, wrong polarity per #95/#119)")
     return fired
 
 
@@ -398,15 +435,27 @@ def demo() -> int:
         fired = battery(sk)
         print(f"     {nm:30} -> {fired[0] if fired else 'survives'}")
 
+    print("\n  #143 SELECTION-ORDER screen demo (MSS-style engines vs operator carriers):")
+    for nm, sk in [
+        ("MSS averaging+selection (no operator)",
+         _S(0,0,0,0,0,"na",1,"realization",1,"na","na", order_source="selection")),
+        ("Selberg/Laplacian (carries its operator)",
+         _S(1,0,1,1,1,"contingent",1,"realization",1,"all-heights","complex","strip-width",
+            "na","na", order_source="operator")),
+    ]:
+        sel = [r for r in battery(sk) if "selection-order" in r]
+        print(f"     {nm:42} -> {sel[0][:60] + '...' if sel else 'selection-order screen does not fire'}")
+
     print("\n  AIM (post-acq2: the breadth search has CONVERGED):")
     a = aim()
     print(f"     status: {a['status']}")
     print(f"     pivot:  {a['pivot']}")
 
     print("\n  HONEST NOTE: RETRIEVAL + SCREENING, a prior + a filter, not a transfer certificate.")
-    print("  The scored output is the growth of the disqualifier battery (now ~13 screens; 4 from")
-    print("  acq1, 2 from acq2), not the count of areas surveyed. Every new row passes a")
-    print("  builder->adversary + D-H/polarity control before entry. AIM: CONVERGED (see above).")
+    print("  The scored output is the growth of the disqualifier battery (now ~14 screens; 4 from")
+    print("  acq1, 2 from acq2, 1 from #143 selection-order), not the count of areas surveyed. Every")
+    print("  new row passes a builder->adversary + D-H/polarity control before entry.")
+    print("  AIM: CONVERGED (see above).")
     print("=" * 88)
     return 0
 
