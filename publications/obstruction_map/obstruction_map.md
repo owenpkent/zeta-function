@@ -265,6 +265,18 @@ global, AHK drops carries-trace, de Branges drops (and is refuted on) rh-equival
 trace-formula family drops noncircular. The no-go (the four-property conjunction) IS the target, and
 there is no soft shortcut: any proof must supply all four at once.
 
+The shape is not an artifact of the modern framing. The classical certificate for root location on a
+circle (Schur 1917, Cohn 1922) already decomposes the same way: a self-inversive polynomial has all
+roots on the unit circle if and only if it is self-inversive (the functional equation, an identical
+vanishing, which is free) *and* the Hermitian Schur-Cohn form of its derivative is positive
+semidefinite (Cohn's criterion; the self-inversive case is the degenerate branch of the Schur-Cohn
+signature test, which is why the criterion routes through the derivative). Pairing free, positivity
+the entire content: the realization-versus-signature dichotomy of Section 2, stated as a 1922 fact
+about polynomials, a corpus with no knowledge of Weil cohomology or trace formulas. For the
+function-field case this is executable: the Schur-Cohn certificate, fed only point counts, reproduces
+the Weil theorem and rejects the fake-zeta controls, mechanically (the project's toy grader carries it
+as a second reference construction alongside the Caratheodory-Toeplitz moment matrix).
+
 ## 5. The two variety-gated facets
 
 A 2026 sharpening ([`../../docs/03_research/sourcing_gap_r1.md`](../../docs/03_research/sourcing_gap_r1.md),
@@ -474,6 +486,9 @@ Cantat, S.; Gao, Z.; Habegger, P.; Xie, J. (2021). *The geometric Bogomolov conj
 Bost, J.-B. (2020). *Theta invariants of Euclidean lattices...* Prog. Math. 334 (arXiv:1512.08946).
 Adiprasito, K.; Huh, J.; Katz, E. (2018). *Hodge theory for combinatorial geometries.* Ann. Math.
 Conrey, J. B.; Li, X.-J. *A note on some positivity conditions...* (arXiv:math/9812166).
+Cohn, A. (1922). *Uber die Anzahl der Wurzeln einer algebraischen Gleichung in einem Kreise.* Math. Z.
+14, 110-148. (The classical circle root-location certificate: functional equation + Hermitian
+positive-semidefiniteness; see Section 4.5.)
 
 **The candidate cohomologies.**
 Deninger, C. (1998). *Some analogies between number theory and dynamical systems on foliated spaces.*
