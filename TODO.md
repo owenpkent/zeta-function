@@ -39,6 +39,7 @@
   - [x] String theory angle (#113, `string_theory_rh.md`): corpus closes onto existing kills; the L-value/L-derivative BSD-regime discriminator extracted
   - [x] Cryptography angle (#116, `cryptography_rh.md`): RH-as-tool (inverted dependency) + the function-field-RH shadow; corpus-completing closure
   - [x] CCM semilocal prolate deep dive (#114/#115/#117, `ccm_semilocal_prolate.md`): factored, conditionally escaping; three cheap operator builds `e1f`/`e1g`/`e1h` all signature-blind by distinct mechanisms; archimedean = Meixner-Pollaczek (exact). The deferred metaplectic operator is the un-eliminated route by elimination.
+  - [x] CCM **metaplectic front EXECUTED** (#138, `e1j`, adversary-verified after a first flawed build was broken + rebuilt): the metaplectic route decomposes into three local channels (geometry = a modulus-blind ultrametric powers-of-1/p ladder / measure = depth top eigenvalue 1/m reads magnitude not primality [=e1h] + band-in-s reweighting-invisible [=e1g] / sign = scalar Weil index cancels in g*g [=e1i]), each folded with its genuine arithmetic (N_p/L_p wired in) and each locally blind; no local channel carries the ζ-vs-D-H discrimination → global S→∞ assembly = M4. Local content now exhausted, all blind.
 - [x] Arch 4B: non-negative trig polynomial LP saturates Fejér bound
 - [x] Arch 4D, 4D.2: single-coefficient d-variate LPs decompose to tensor products
 - [x] Arch 4E: balanced-sum LP max c_{1,1} + c_{2,2} exceeds tensor bound by 12% at N=2

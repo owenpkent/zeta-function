@@ -9,6 +9,14 @@
 
 ## Bottom line
 
+> **Update (2026-06-30, e1j): the metaplectic front is now EXECUTED and closed as a local construction.**
+> The metaplectic route decomposes into three local channels (geometry / measure / sign); each was folded
+> with its genuine arithmetic and shown locally blind (geometry = a modulus-blind ultrametric ladder;
+> measure = reads magnitude $\sim 1/m$ and is reweighting-invisible; sign = cancels in $g^*g$). No local
+> channel carries the zeta-vs-D-H discrimination; it is pinned at the global $S\to\infty$ assembly = M4.
+> Adversary-verified (PASS). See "The metaplectic front, executed (e1j)" below. The rest of this dossier
+> is the map that led there.
+
 **The door is ajar and now precisely mapped.** The *terminal* object of the CCM strategy is M4
 verbatim (the authors call it "the sought for Weil cohomology" -- the polarization on the
 Frobenius side of $\mathrm{Spec}(\mathbb{Z})$). But the operator-algebra framing **factors** the road
@@ -255,6 +263,50 @@ self-corrected false positive -> ADVERSARY (five corrections applied; `scratchpa
   coupling). e1i does **not** eliminate the metaplectic route; it sharpens the map: the metaplectic
   arithmetic is genuine, but the place it survives positivity (if anywhere) is the global $S\to\infty$
   assembly, which **is** M4 (steps 1-2 below stay the open BUILDER target). Full writeup: LEARNINGS #118.
+
+## The metaplectic front, executed (e1j): the route decomposes into three local channels, all blind
+
+[`e1j_semilocal_metaplectic.py`](../../experiments/spectral/e1j_semilocal_metaplectic.py) executed the
+one door e1f-e1i left un-attacked -- CCM's actual metaplectic construction -- and, after an adversary
+round, delivered the honest closure: **the metaplectic route has no local channel that carries the
+zeta-vs-D-H discrimination.** BUILDER $\to$ ADVERSARY (`experiments/spectral/_e1j_adversary.md`, six axes)
+$\to$ faithful rebuild $\to$ ADVERSARY re-verification (**PASS**).
+
+**The adversary round mattered.** A first build claimed to construct $W_{\lambda,S}$ and close the front
+via a "cross-modulus blindness" test. The ADVERSARY broke it: the decider read only the rank-1 overlap of
+a self-dual subgroup with its Fourier dual (modulus-independent for **every** integer by elementary
+harmonic analysis, so the test could only return "blind"), and -- the sharpest finding -- the one object
+that could carry arithmetic, the Tate depth/valuation number operator $N_p$ with $L_p$ as generating
+function, was **dead code** (defined, printed as a passing gate, never connected to the verdict). The
+load-bearing test was never run. The rebuild runs it.
+
+**The three-channel decomposition (each folded with its genuine arithmetic; each locally blind).** CCM's
+$W_{\lambda,S}$ combines exactly three ingredients, which the four surrogates isolated:
+
+| Channel | What it is | Folded-in test (e1j) | Verdict |
+|---|---|---|---|
+| **Geometry** (Weyl/Fourier + ultrametric balls) | the adelic phase space $\prod_v L^2(\mathbb{Q}_v)$, $p$-adic balls = subgroups | the ball concentration $P_T(p^a)P_W(p^b)P_T$ is rank-1 with eigenvalue **exactly $p^{a+b}$** (or perfectly localized); the spectrum is **always** exact powers of $1/p$, **never** a continuous plunge (verified over all radii) | **BLIND** -- modulus-blind (powers of $1/m$ for any $m$) = geometry, not arithmetic. *e1j's genuine NEW content.* |
+| **Measure** ($dm_S = |\prod_v L_v|^2$) | the L-factor spectral weight (the Euler/arithmetic content) | B1: $N_p$ **wired in**, depth-weighted top eigenvalue $= 1/m$ exactly (same for prime $m$ and composite $m'$) $\Rightarrow$ reads magnitude, not primality (= e1h). B2: band-in-$s$ concentration with genuine $L_p$ $\equiv$ non-arith control $\equiv$ bare, to $\sim10^{-15}$ (the e1g diagonal-similarity fact, genuine $L_p$) | **BLIND** -- reproduces e1g/e1h with the genuine $L_p$ folded in |
+| **Sign** (Weil index, quadratic unipotent) | the metaplectic phase $\varepsilon_p$ | the scalar Weil index cancels in $g^*g$ ($|\varepsilon_p|^2=1$) | **BLIND** (= e1i) |
+
+**The new structural fact (geometry channel).** The $p$-adic ball concentration operator has spectrum
+**always in $\{$exact powers of $1/p\} \cup \{1\}$, never a continuous boundary layer** -- the sharp
+ultrametric uncertainty, the exact opposite of the archimedean continuous Slepian plunge (where the $-2$
+jump and the Sonin correction live). At a finite place there is no prolate boundary layer at all; the
+entire prolate-spreading sign-source is archimedean. This ladder is modulus-blind, so it carries geometry,
+not arithmetic.
+
+**The closure.** These three channels are the local content of the metaplectic route (the standard
+Weil-representation factorization); each is locally blind, and no fourth blind-breaking local channel was
+found. So the zeta-vs-D-H discrimination is carried by **no** local or finite-semilocal channel -- it is
+the global $S\to\infty$ uniform assembly = **M4** / the arithmetic Hodge standard conjecture. The
+construction is **K1-clean** (zero-free), and **D-H is unbuildable by type** for the measure channel (no
+Euler product $\Rightarrow$ no $L_p$). This is the honest closure of the front: *not* "e1j built
+$W_{\lambda,S}$ and it is blind," *but* "the metaplectic route has no local channel beyond
+$\{$geometry, measure, sign$\}$, and every one is locally blind, so the content is global = M4." Two honest
+footnotes: the "no fourth channel" completeness is empirical, not proven; the measure channel reproduces
+the prior e1g/e1h findings faithfully (with genuine $L_p$), it does not discover a new escape. Full
+writeups: `scratchpad/ccm_semilocal/01_builder.md`, `experiments/spectral/_e1j_adversary.md`, LEARNINGS #135.
 
 ## The precise open statement (and the BUILDER target)
 
