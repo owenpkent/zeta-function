@@ -32,6 +32,7 @@ zeta-function/
 │   ├── zero_free/               # Arch 4 (LP/SDP family through 4E.8)
 │   ├── arithmetic_geometric/    # Arch 2 (2A diff, R1-R5, R3.6, R3.6.3, 2C, 2D, 2E)
 │   ├── multifractal/            # Log-correlated field experiments (pre-existing)
+│   ├── chaos/                   # Strange attractors: Lyapunov spectra, fractal dimension, multifractal bridge
 │   └── toy/                     # ★ The RH toy sandbox: a checkable training ground for the M4 move
 ├── references/                  # ★ Reference library (26 sources, gitignored PDFs) + tracked index
 ├── lean/                        # ★ Lean 4 / Mathlib formal verification (skeleton)
@@ -88,7 +89,7 @@ Built with [manim](https://github.com/3b1b/manim) (3Blue1Brown's animation engin
 - [`13_functional_equation/`](visualizations/13_functional_equation/): a graduate course, Episode 2 "The Functional Equation", a rigorous derivation of $\xi(s)=\xi(1-s)$ via theta and Poisson summation, opening on the 3D $|\zeta|$ terrain.
 - [`11_three_stage_rh/`](visualizations/11_three_stage_rh/): the dense three-stage arc (RH from scratch, the all-roads convergence, the M4 polarization gap), with a full storyboard in `SPEC.md`.
 
-Scenes 12 and 13 carry their narration on screen as subtitles and ship a spoken-narration script (`NARRATION.md`). See [`visualizations/README.md`](visualizations/README.md) for setup, the full scene index, and how to render each scene.
+Scenes 12 and 13 carry their narration on screen as subtitles and ship a spoken-narration script (`NARRATION.md`). A standalone context scene, [`14_lorenz_attractor/`](visualizations/14_lorenz_attractor/), renders the Lorenz strange attractor in 3D plus a butterfly-effect divergence beat; it is the visual companion to the chaos thread. See [`visualizations/README.md`](visualizations/README.md) for setup, the full scene index, and how to render each scene.
 
 ## Source PDFs
 

@@ -72,6 +72,14 @@ Multi-part explainer videos. Each is a sequence of `Scene` / `ThreeDScene` class
 | 12 | `12_what_is_rh/` | `Part1_Primes`, `Part2_Machine`, `Part3_MapAndZeros`, `Part4_Hypothesis` | Zero-background explainer "What is the Riemann Hypothesis?". Every term is defined with an everyday analogy first (primes as atoms, zeta as a number machine, zeros as where it goes silent). Script in `NARRATION.md`. |
 | 13 | `13_functional_equation/` | `Ep2_Part1_Destination` through `Ep2_Part5_Harvest` | Graduate course Episode 2, "The Functional Equation": a rigorous derivation of xi(s)=xi(1-s) via the theta function and Poisson summation, opening on a 3D \|zeta\| terrain. Theorem statements (T1-T12) and the 6-episode course outline live in `NARRATION.md`. |
 
+### Applied Context (Scene 14)
+
+A standalone chaos-theory context scene, the visual companion to [`../experiments/chaos/`](../experiments/chaos/) and [`../docs/03_research/quantum_chaos_and_the_zeros.md`](../docs/03_research/quantum_chaos_and_the_zeros.md) (the zeros carry the spectral statistics of a quantized chaotic system).
+
+| # | Folder | Scene Classes | What It Shows |
+|---|--------|---------------|---------------|
+| 14 | `14_lorenz_attractor/` | `LorenzAttractor`, `ButterflyEffect` | The Lorenz strange attractor traced in 3D with an orbiting camera (`LorenzAttractor`), and two trajectories from starts one part in a million apart diverging (`ButterflyEffect`), sensitive dependence made literal. Both are `ThreeDScene`s; the trajectory is RK4-integrated in-scene. |
+
 ## Render all scenes
 
 ```bash
@@ -86,6 +94,8 @@ manim -ql visualizations/07_functional_equation_mirror/functional_equation_mirro
 manim -ql visualizations/08_robins_inequality/robins_inequality.py RobinsInequality
 manim -ql visualizations/09_zeta_3d_surface/zeta_3d_surface.py Zeta3DSurface
 manim -ql visualizations/10_five_gaps/five_gaps.py FiveGaps
+manim -ql visualizations/14_lorenz_attractor/lorenz_attractor.py LorenzAttractor
+manim -ql visualizations/14_lorenz_attractor/lorenz_attractor.py ButterflyEffect
 ```
 
 ## Render the explainer series
@@ -114,5 +124,6 @@ ffmpeg -f concat -safe 0 -i list.txt -c copy What_Is_RH_FULL.mp4
 - Math is rendered via LaTeX — requires a working LaTeX installation
 - Scene 9 (`Zeta3DSurface`) is a `ThreeDScene` and takes longer to render due to surface computation
 - Scenes 11 and 13 also open with a `ThreeDScene` \|zeta\| terrain, so their first part renders more slowly than the 2D parts
+- Scene 14 (`LorenzAttractor`, `ButterflyEffect`) is a `ThreeDScene` and needs no LaTeX beyond the title, since it draws integrated trajectories rather than typeset math
 - Scenes 12 and 13 are silent but self-explanatory: the narration appears on screen as subtitles, and the full spoken script is in each folder's `NARRATION.md`
 - Rendered videos are gitignored (`media/`)
