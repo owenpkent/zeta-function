@@ -82,9 +82,13 @@ The dominant finding (RH is true only at the margin, so the proof must engage th
 
 ## Visualizations (manim)
 
-Built with [manim](https://github.com/3b1b/manim) (3Blue1Brown's animation engine).
+Built with [manim](https://github.com/3b1b/manim) (3Blue1Brown's animation engine). Ten standalone scenes cover the foundations (series, complex plane, continuation, critical strip, zeros) and research concepts (zero-free region, functional-equation mirror, Robin's inequality, the 3D $|\zeta|$ surface, the five gaps). Three multi-part explainer series build on them:
 
-See `visualizations/README.md` for setup and how to render each scene.
+- [`12_what_is_rh/`](visualizations/12_what_is_rh/): a zero-background "What is the Riemann Hypothesis?" explainer, every term defined with an everyday analogy (primes as atoms, zeta as a number machine, zeros as where it goes silent).
+- [`13_functional_equation/`](visualizations/13_functional_equation/): a graduate course, Episode 2 "The Functional Equation", a rigorous derivation of $\xi(s)=\xi(1-s)$ via theta and Poisson summation, opening on the 3D $|\zeta|$ terrain.
+- [`11_three_stage_rh/`](visualizations/11_three_stage_rh/): the dense three-stage arc (RH from scratch, the all-roads convergence, the M4 polarization gap), with a full storyboard in `SPEC.md`.
+
+Scenes 12 and 13 carry their narration on screen as subtitles and ship a spoken-narration script (`NARRATION.md`). See [`visualizations/README.md`](visualizations/README.md) for setup, the full scene index, and how to render each scene.
 
 ## Source PDFs
 
