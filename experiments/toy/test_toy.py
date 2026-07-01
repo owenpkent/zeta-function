@@ -22,6 +22,9 @@ from experiments.toy.grader import (
 )
 from experiments.toy import selberg
 from experiments.toy import ihara
+from experiments.toy import interlacing
+from experiments.toy import alon_boppana
+from experiments.toy import archimedean_place
 from experiments.toy.ihara_grader import (
     grade as grade_graph,
     moment_localizing_candidate,
@@ -105,6 +108,64 @@ def test_ihara_hamburger_fails():
     assert not sc.all_green
 
 
+def test_interlacing_source_and_faultline():
+    """MSS interlacing sources the sqrt(q) bound with no variety (Godsil-Gutman, real-rooted
+    matching poly, a good signing exists), but the arithmetic L-polynomial is not real-rooted,
+    so the engine cannot transfer."""
+    edges, n = interlacing.k33_edges()
+    d = interlacing.degree(edges, n)
+    bound = 2.0 * np.sqrt(d - 1)
+    mu = interlacing.matching_polynomial(edges, n)
+    exp = interlacing.expected_char_poly(edges, n)
+    assert np.max(np.abs(mu - exp)) < 1e-9, "Godsil-Gutman: avg char poly = matching poly"
+    roots = np.roots(mu)
+    assert np.max(np.abs(roots.imag)) < 1e-9, "Heilmann-Lieb: matching poly is real-rooted"
+    assert np.max(np.abs(roots.real)) <= bound + 1e-9, "matching roots within the Ramanujan window"
+    assert interlacing.min_max_root_over_signings(edges, n) <= bound + 1e-9, "a good signing exists"
+    # the fault line: arithmetic L-polynomial roots are complex (not real-rooted)
+    from experiments.toy.instances import POSITIVE_BATTERY
+    max_imag = max(
+        float(np.max(np.abs(np.array(inst.eigenvalues_u, dtype=complex).imag)))
+        for inst in POSITIVE_BATTERY)
+    assert max_imag > 0.5, "arithmetic Frobenius eigenvalues are genuinely complex (not real-rooted)"
+
+
+def test_alon_boppana_marginal():
+    """Marginal positivity as a theorem: the cycle margin to 2 sqrt(q) shrinks toward zero
+    (no buffer), the bound is the Kesten-McKay tree edge, and non-Ramanujan graphs sit above
+    it while random regular graphs concentrate at it."""
+    margins = [2.0 - 2.0 * np.cos(2.0 * np.pi / n) for n in (16, 64, 256)]
+    assert margins[0] > margins[1] > margins[2], "cycle margin must shrink toward the bound"
+    assert margins[2] < 1e-3, "the margin has no fixed buffer (approaches zero)"
+    assert abs(alon_boppana.kesten_mckay_edge(3) - 2.0 * np.sqrt(2)) < 1e-12
+    # the native D-H sits ABOVE the bound; a random regular graph concentrates AT it
+    v = ihara.graph_rh_verdict(ihara.two_clique_bridge(5))
+    assert v.max_nontrivial_abs_lambda > v.ramanujan_bound
+    A = alon_boppana.random_regular(300, 3, seed=1)
+    assert abs(alon_boppana.spectral_radius_nontrivial(A) - 2.0 * np.sqrt(2)) < 0.25
+
+
+def test_archimedean_flat_vs_continuous():
+    """The archimedean place = atomic-flat (function-field) vs continuous-never-flat (the
+    universal cover). Petersen's atomic Hankel goes flat at its atom count; the Kesten-McKay
+    Hankel never does; growing finite graphs converge to the continuous measure."""
+    ap = archimedean_place
+    vals = ap.nontrivial_eigs(ihara.petersen_graph())     # 2 distinct atoms
+    m = ap.atom_moments(vals, 12)
+    assert ap.min_eig(ap.hankel(m, 1)) > 1e-6, "rank 2 measure: order-1 Hankel is full"
+    assert ap.min_eig(ap.hankel(m, 2)) < 1e-10, "atomic measure goes FLAT at its atom count"
+    # continuous Kesten-McKay: never flat, and m_2 = d
+    mkm = ap.kesten_mckay_moments(3, 12)
+    assert abs(mkm[2] - 3.0) < 1e-2, "Kesten-McKay second moment = d"
+    assert ap.min_eig(ap.hankel(mkm, 6)) > 1e-3, "continuous measure Hankel never flattens"
+    # the passage: finite empirical moments converge to Kesten-McKay
+    edge = ap.kesten_mckay_edge(3)
+    mkm_norm = np.array([mkm[k] / edge ** k for k in range(9)])
+    d30 = np.linalg.norm(ap.atom_moments(ap.nontrivial_eigs(ap.random_regular(30, 3, 1)) / edge, 8)[2:] - mkm_norm[2:])
+    d300 = np.linalg.norm(ap.atom_moments(ap.nontrivial_eigs(ap.random_regular(300, 3, 3)) / edge, 8)[2:] - mkm_norm[2:])
+    assert d300 < d30, "finite spectra converge to the continuous universal-cover measure"
+
+
 def main() -> None:
     tests = [
         test_ground_truth,
@@ -116,6 +177,9 @@ def main() -> None:
         test_ihara_theorem,
         test_ihara_reference_all_green,
         test_ihara_hamburger_fails,
+        test_interlacing_source_and_faultline,
+        test_alon_boppana_marginal,
+        test_archimedean_flat_vs_continuous,
     ]
     passed = 0
     for t in tests:

@@ -13,7 +13,10 @@ python -m experiments.toy.play          # the full demo (battery + grading + spe
 python -m experiments.toy.selberg       # just the abstract Selberg / Hilbert-Polya spectral toy
 python -m experiments.toy.ihara         # the Ihara / graph proven world (graph-RH <=> Ramanujan)
 python -m experiments.toy.ihara_grader  # the spectral grader on the graph world
-python -m experiments.toy.test_toy      # the smoke test (9/9)
+python -m experiments.toy.interlacing   # the MSS non-variety sqrt(q) source and why it does not transfer
+python -m experiments.toy.alon_boppana  # marginal positivity as a theorem (Alon-Boppana = extremality)
+python -m experiments.toy.archimedean_place  # the archimedean place = atomic-flat vs continuous-never-flat
+python -m experiments.toy.test_toy      # the smoke test (12/12)
 ```
 
 ## Why it helps
@@ -130,6 +133,95 @@ green. The instructive failure is `hamburger_only_candidate`: $H_0$ alone is PSD
 symmetric $A$, so certifying self-adjointness reproduces the curves but **fails to reject** the
 native D-H. That is the exact lesson for $\zeta$: the operator (real ordinates) is free; the
 polarization (the localizing block, the spectral gap) is the whole content, which is M4.
+
+## The R1 sourcing probe (`interlacing.py`)
+
+The Ihara world raises a sharp question. The graph-RH bound is the same $\sqrt q$ as the
+function-field Weil bound, and in arithmetic that bound (the purity $|\alpha| = \sqrt q$) is
+**variety-gated**: it is Deligne's theorem, sourced from a variety (the project's R1 sourcing
+gap, [LEARNINGS #130](../../docs/03_research/sourcing_gap_r1.md)). But in the graph world the
+same bound has a second source that uses **no variety at all**: Marcus-Spielman-Srivastava
+(Interlacing Families I, Annals 2015) prove bipartite Ramanujan graphs of every degree exist
+by the method of expected characteristic polynomials. So the graph world **crosses** R1 by a
+combinatorial route.
+
+`interlacing.py` exhibits the engine and then asks whether it transfers. Part 1 confirms the
+non-variety $\sqrt q$ source on small graphs, three checkable facts:
+
+- **Godsil-Gutman**: the average over edge-signings of $\det(xI - A_s)$ equals the matching polynomial $\mu(G)$ (verified to $10^{-15}$).
+- **Heilmann-Lieb**: $\mu(G)$ is real-rooted with all roots in $[-2\sqrt{d-1}, 2\sqrt{d-1}]$, the Ramanujan window.
+- **Interlacing**: a good signing exists (best top eigenvalue $2.00$ for $K_{3,3}$, $1.73$ for $Q_3$, both under the bound), so a Ramanujan 2-lift is sourced with no variety.
+
+Part 2 shows why it does not reach Spec($\mathbb{Z}$). The engine's fuel is **real-rootedness**
+(Heilmann-Lieb, and the interlacing family needs real-rooted polynomials), which holds because
+the signed adjacency $A_s$ is symmetric (self-adjoint). The arithmetic L-polynomial (the
+characteristic polynomial of Frobenius on $H^1$) is **not** real-rooted: its roots are the
+Frobenius eigenvalues on the circle $|\alpha| = \sqrt q$, genuinely complex (measured
+$\max|\mathrm{Im}\ \text{root}| \approx 0.8$ to $1.0$ across the curve battery). There is no
+self-adjoint operator behind Frobenius, which is Hilbert-Polya, the open problem.
+
+**Net.** The non-variety $\sqrt q$ source is paid for with self-adjointness, exactly the
+ingredient the Ihara grader showed is free in the graph world and absent over $\mathbb{Z}$. R1
+(the sourcing gap) and M4 (the polarization gap) are two faces of the one missing self-adjoint
+operator, and #130 sharpens from "variety-gated" to "self-adjointness-gated." MSS is added to
+the transfer-search corpus ([`../lemma_db/transfer_search.py`](../lemma_db/transfer_search.py))
+as a killed R1 source, sibling to the Lorentzian / real-stable kill.
+
+## Marginal positivity as a theorem (`alon_boppana.py`)
+
+The project's central empirical finding is **marginal positivity**: RH is true only at the
+margin, with no buffer for soft proofs, and the session-019 program read this as **extremality**
+(an extreme point cannot be marginally true by accident). Both are findings over $\mathbb{Z}$,
+not theorems. The graph world makes them theorems.
+
+The graph-RH bound $|\lambda_{\text{nontrivial}}| \le 2\sqrt q$ is bracketed by two theorems.
+**Alon-Boppana**: any growing family of $(q+1)$-regular graphs has $\liminf$ nontrivial spectral
+radius $\ge 2\sqrt q - o(1)$ (you cannot asymptotically beat Ramanujan). **Friedman**: a random
+regular graph meets it up to $o(1)$. So every family's nontrivial spectral radius **converges to
+$2\sqrt q$**: the bound is universal and saturated, beatable by none, and a Ramanujan graph
+(which meets it) is **extremal**. That is marginal positivity, proven, and the extremality
+reading, proven.
+
+`alon_boppana.py` exhibits this. Cycles give the deterministic version: the margin $2 - \lambda_2(C_n)$
+falls $0.59 \to 0.15 \to 0.038 \to \ldots \to 0.0006$, no fixed buffer. Random $d$-regular graphs
+have their nontrivial radius concentrate at $2\sqrt{d-1}$ (within $\pm 0.05$ by $n = 600$), while
+the native Davenport-Heilbronn graphs sit strictly above. The mechanism is the **universal cover**:
+$2\sqrt q$ is the spectral radius of the $(q+1)$-regular infinite tree (the edge of the Kesten-McKay
+measure, verified empirically at $2.819$ vs $2.828$ for $d=3$), which covers every finite regular
+graph. A finite graph cannot beat its own universal cover, so there is no buffer.
+
+**Honest caveat** (the same as the interlacing probe): this proof of "marginal = extremal" runs on
+the self-adjoint adjacency spectrum (the tree's real spectral radius), exactly the ingredient
+$\zeta$ lacks. So it validates the **frame** (extremality is the right reading of marginal
+positivity) without transferring the **proof**; the self-adjointness gap of #139 and #140 is
+unchanged.
+
+## The archimedean place, localized (`archimedean_place.py`)
+
+The function-field world has no archimedean place, a finite atomic Frobenius spectrum, and RH
+as a theorem. Over $\mathbb{Q}$ there is exactly one extra place, the archimedean one, carried
+by the $\Gamma$-factor in $\xi(s) = \pi^{-s/2}\Gamma(s/2)\zeta(s)$. The whole difficulty of RH
+localizes at that one place, so the question is what adding it changes.
+
+The answer uses the flat-extension mechanism (LEARNINGS #79, #80): a measure is finitely atomic
+iff its moment (Hankel) matrix goes **flat** (a machine-zero eigenvalue at a fixed order), and
+Curto-Fialkow then pins it, which is why the function-field RH is decidable; a **continuous**
+measure never flattens. The new content is the identification of the archimedean continuous
+spectrum with the **universal cover**: by #141 the $(q+1)$-regular tree has a continuous
+Kesten-McKay spectrum. So:
+
+$$\text{adding the archimedean place} = \text{passing to the continuous spectrum of the universal cover} = \text{flat becomes never-flat}.$$
+
+`archimedean_place.py` verifies three parts. Part 1: finite graphs are atomic and go flat at
+their atom count ($K_6$ at order 1, Petersen at order 2). Part 2: the Kesten-McKay measure is
+continuous, its Hankel never flat (min eigenvalue stays positive, $m_2 = d$). Part 3: growing
+finite graphs' normalized moments converge to the Kesten-McKay moments (distance $0.078 \to
+0.0018$), so the atomic measures approach the continuous limit. The one archimedean place is
+that infinite-volume passage from atomic-flat (RH-provable) to continuous-never-flat (RH-hard),
+unifying #141 (the tree as the marginal continuous limit), #79/#80 (flat vs never-flat), and
+`../chaos/c4_prime_orbit_spectrum.py` (the $\Gamma$-factor as the continuous mean). Same honest
+caveat: a structural model of the obstruction shape on the self-adjoint spectrum, not $\zeta$'s
+arithmetic archimedean content.
 
 ## The honest caveat
 

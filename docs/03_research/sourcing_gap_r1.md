@@ -57,6 +57,14 @@ There is no impossibility theorem. "Variety-free $\Rightarrow$ no $\sqrt q$-puri
 
 This is why every construction route in the project walls identically: each supplies **realization** (the shape) and none supplies **purity without a variety** (facet A) or **the polarization** (facet B). The Deninger program is precisely the attempt to be such a variety-free source; so R1 is the Deninger / arithmetic-cohomology-of-$\mathrm{Spec}(\mathbb{Z})$ question, stated at the sharpest level.
 
+## Update (2026-07-01): R1 is self-adjointness-gated, not merely variety-gated
+
+The graph world sharpens the "variety-gated" reading. Graph-RH (Ramanujan, $|\lambda| \le 2\sqrt q$) carries the *same* $\sqrt q$ purity, and Marcus-Spielman-Srivastava (Interlacing Families I, Annals 2015) source it with **no variety**: bipartite Ramanujan graphs of every degree exist by the method of expected characteristic polynomials. So a non-geometric source of the $\sqrt q$ bound provably exists in the graph world, and R1 is *crossed* there.
+
+The reason it does not transfer to $\mathrm{Spec}(\mathbb{Z})$ ([`../../experiments/toy/interlacing.py`](../../experiments/toy/interlacing.py), LEARNINGS #140) is that the MSS engine runs on **real-rootedness** (Heilmann-Lieb; the interlacing family needs real-rooted polynomials), which holds because the signed adjacency is self-adjoint. The arithmetic L-polynomial (the characteristic polynomial of Frobenius on $H^1$) is **not** real-rooted: its roots are the Frobenius eigenvalues on the circle $|\alpha|=\sqrt q$, genuinely complex. The non-variety source is paid for with self-adjointness, exactly the ingredient $\mathrm{Spec}(\mathbb{Z})$ lacks.
+
+So R1 sharpens from **variety-gated** to **self-adjointness-gated**: the missing ingredient is the self-adjoint operator behind Frobenius (Hilbert-Pólya), and R1 (facet A, sourcing) and M4 (facet B, polarization) are two faces of that one missing operator. The graph proven world confirms this from three sides: the sourcing gap (#140), marginal positivity as the universal-cover extremal bound (#141), and the archimedean place as the atomic-flat-to-continuous-never-flat passage (#142). See [`../../experiments/toy/README.md`](../../experiments/toy/README.md).
+
 ## References
 
 - Peter Sarnak, *Notes on the Generalized Ramanujan Conjectures*, Clay Math. Proc. 4 (2005), pp. 659-666 (the decisive reference: proven purity = geometric; the holomorphic-vs-Maass split; "no algebro-geometric moduli interpretation" for the non-Hermitian case).
@@ -70,4 +78,4 @@ This is why every construction route in the project walls identically: each supp
 
 - [09A Section 6D](research_directions/09A_ahk_arithmetic_lattice.md) (where R1 was named), [`../../experiments/arithmetic_geometric/e2zb_super_ahk_recursion.md`](../../experiments/arithmetic_geometric/e2zb_super_ahk_recursion.md) (R2 closes into R1), [`../../experiments/arithmetic_geometric/e2za_ahk_p3_super_graft.md`](../../experiments/arithmetic_geometric/e2za_ahk_p3_super_graft.md).
 - [`spec_z_cohomology_landscape.md`](spec_z_cohomology_landscape.md) (the universal gap; R1 is its sourcing facet), [`all_roads_to_the_signature.md`](all_roads_to_the_signature.md) (the thesis R1 refines), [`research_directions/08A_rosati_standard_conjecture.md`](research_directions/08A_rosati_standard_conjecture.md) (M4, facet B).
-- LEARNINGS #129 (AHK route closed into R1), #130 (this verification).
+- LEARNINGS #129 (AHK route closed into R1), #130 (this verification), #140-#142 (R1 is self-adjointness-gated: the graph proven-world probe arc).

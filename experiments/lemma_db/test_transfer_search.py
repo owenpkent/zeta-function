@@ -103,6 +103,22 @@ def test_killed_node_demoted():
     )
 
 
+def test_mss_r1_node():
+    print("Test 7: the MSS interlacing node (a non-variety R1 source) is present and demoted")
+    s = _scores()
+    mss = "Marcus-Spielman-Srivastava interlacing families"
+    node = next((t for t in CORPUS if t.name == mss), None)
+    indefinite_min = min(
+        s[t.name] for t in CORPUS if t.features.positivity_kind == "indefinite")
+    return (
+        check("MSS is present in the corpus", node is not None)
+        and check("MSS is flagged role='killed' (an R1 source, not an M4 transfer)",
+                  node is not None and node.role == "killed")
+        and check("MSS scores below every indefinite-family theorem (wrong signature for M4)",
+                  s[mss] < indefinite_min, f"MSS={s[mss]}, indefinite-min={indefinite_min}")
+    )
+
+
 def main():
     results = [
         test_templates_top(),
@@ -111,6 +127,7 @@ def main():
         test_novelty_surface(),
         test_brackets_low(),
         test_killed_node_demoted(),
+        test_mss_r1_node(),
     ]
     print()
     n_pass = sum(results)

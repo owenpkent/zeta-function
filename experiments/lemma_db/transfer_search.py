@@ -73,6 +73,18 @@ CORPUS = [
     Theorem("Adiprasito-Huh-Katz (matroid Hodge theory)", "Chow ring of a matroid",
             _F("indefinite", "combinatorial", "lorentzian", False, False),
             "candidate", "Hodge-Riemann for matroids; in the candidate set, bracketed on carries-trace"),
+    Theorem("Marcus-Spielman-Srivastava interlacing families", "signed adjacency / 2-lifts of graphs",
+            _F("definite", "combinatorial", "lorentzian", False, False),
+            "killed", "KILLED as an M4 transfer (2026-07-01, LEARNINGS #140, toy/interlacing.py): a "
+            "genuine NON-variety source of the sqrt(q) bound (bipartite Ramanujan graphs of all "
+            "degrees via interlacing families / expected characteristic polynomials, MSS 2015). It "
+            "addresses R1 (the sourcing gap, #130), not M4 (the signature): its output is a real-rooted "
+            "one-sided spectral bound, not an indefinite (1,n-1) polarization, so it scores 0 on the "
+            "hard gate. The engine is real-rootedness (Heilmann-Lieb) = self-adjointness of the signed "
+            "adjacency, exactly the ingredient Spec(Z)'s non-self-adjoint Frobenius lacks (its "
+            "L-polynomial is not real-rooted). Sibling to the Lorentzian / real-stable kill; kept in "
+            "corpus so R1-sourcing sweeps neither lose it nor re-propose it. Net: R1 is "
+            "self-adjointness-gated, not merely variety-gated."),
     Theorem("Boucksom-Jonsson non-archimedean Monge-Ampere / K-stability",
             "energy positivity on the Berkovich analytification",
             _F("definite", "convex", "valuative", False, False),
