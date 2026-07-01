@@ -14,7 +14,8 @@ experiments/chaos/
 ├── dimension.py                 Grassberger-Procaccia D_2 + box-counting Renyi ladder D_q
 ├── c1_lyapunov_spectra.py       C1: Lyapunov spectra and Kaplan-Yorke dimension (calibration)
 ├── c2_correlation_dimension.py  C2: correlation dimension D_2 from a time series
-└── c3_multifractal_bridge.py    C3: the Renyi ladder + MFDFA handshake to the zeta thread
+├── c3_multifractal_bridge.py    C3: the Renyi ladder + MFDFA handshake to the zeta thread
+└── c4_prime_orbit_spectrum.py   C4: is {log p} a genuine flow length spectrum? (deepens 2R)
 ```
 
 ## Quick start
@@ -24,6 +25,7 @@ experiments/chaos/
 python -m experiments.chaos.c1_lyapunov_spectra
 python -m experiments.chaos.c2_correlation_dimension
 python -m experiments.chaos.c3_multifractal_bridge
+python -m experiments.chaos.c4_prime_orbit_spectrum
 ```
 
 Each script prints its results and checks them against literature values stored in `systems.py`. C2 also tries to save a log-log diagnostic PNG next to the script; if `matplotlib` fails to import (see the caveat below) the numbers still print.
@@ -83,6 +85,17 @@ Two connected measurements that show "dimension" is really a spectrum, and that 
 $D_q$ is non-increasing with a real spread ($D_0 - D_5 \approx 0.21$), so the Henon measure is multifractal. Note the consistency: $D_0 \approx 1.28$ tracks the Kaplan-Yorke dimension from C1 ($1.259$), and $D_2 \approx 1.23$ tracks the correlation-dimension estimate from C2 ($1.18$). The three experiments measure three rungs of one ladder.
 
 **Part B: the project's own MFDFA on a Lorenz coordinate $x(t)$.** The estimator from [`../multifractal/mfdfa.py`](../multifractal/mfdfa.py), the same one that measures the multifractality of $\log|\zeta(\tfrac12+it)|$, runs here on a chaotic trajectory. Read with the caveat printed by the script: MFDFA on one coordinate measures temporal scaling of that signal, a different object from the spatial multifractality of the invariant measure in Part A. Both are facets of the same $D(\alpha)$ formalism. It is the handshake, not an identity.
+
+### C4: is {log p} a genuine flow length spectrum? (the thermodynamic-formalism probe)
+
+This one points the chaos lens at the project's own [2R finding](../arithmetic_geometric/e2r_dynamical_zeta.md) and asks the Berry-Keating question directly: can the primes be the primitive periodic orbits of a genuine chaotic (Anosov) flow? Four computed parts, each honestly labelled.
+
+1. **Entropy (consistency, seductive, not a kill).** A genuine Anosov flow has orbit count $N(L) \sim e^{hL}/(hL)$. For the prime "flow" the orbit length is $\log p$, so $N(L) = \pi(e^L)$ and the empirical topological entropy $h = \log\pi(e^L)/L \to 1$ (verified: $h$ climbs $0.70 \to 0.83$ across $x = 10^2 \ldots 10^7$, toward the PNT limit). The primes have the counting law of an entropy-1 flow, which is why the analogy is seductive.
+2. **The passive half.** The Ruelle zeta with orbit lengths $\{\log p\}$ is the Euler product $\prod_p (1-p^{-s})^{-1} = \zeta_{\text{finite}}(s)$ (convergence verified at $s=2$). The prime orbits give exactly the passive / Euler-product half (compare the acoustic passive-lossless split).
+3. **The obstruction (the honest heart).** The smooth zero-counting term $N(T) = \theta(T)/\pi + 1$ (Riemann-Siegel theta from the archimedean $\Gamma$-factor) matches Riemann-von Mangoldt to $O(1/T)$ (difference $6.6\times10^{-5} \to 6.6\times10^{-8}$ at $T = 10^2 \ldots 10^5$). This mean density is **100% archimedean** (pure $\Gamma$-factor, zero prime input), and no periodic orbit produces it. The flow is the fluctuation $S(T)$; the mean is the archimedean place.
+4. **The discriminator beyond GUE.** Prime powers $p^k$ are the repetitions of the primitive orbit $\gamma_p$, so $-\zeta'/\zeta = \sum_n \Lambda(n)n^{-s}$ is supported exactly on prime powers (localization ratio $1.0000$), while $\Lambda_{\text{DH}}$ delocalizes ($0.5002$). GUE pair correlation is blind to this; the orbit-repetition (Euler-product) structure is not. A genuine step past Level 3.
+
+**Verdict.** The prime orbits are a real entropy-1 dynamical skeleton (the passive half), and the thermodynamic lens separates $\zeta$ from Davenport-Heilbronn where statistics cannot, but the archimedean $\Gamma$-factor (the mean density, the lossless / polarization half) has no orbit source. So the dynamical route supplies the stage and relocates to the archimedean place, which is M4. This deepens 2R; it is not a new route to RH. The negative result is a coordinate: the flow is the fluctuation, the polarization is the mean.
 
 ## The through-line to the rest of the project
 

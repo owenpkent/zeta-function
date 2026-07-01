@@ -21,6 +21,14 @@ from experiments.toy.grader import (
     diag_moment_candidate,
 )
 from experiments.toy import selberg
+from experiments.toy import ihara
+from experiments.toy.ihara_grader import (
+    grade as grade_graph,
+    moment_localizing_candidate,
+    hamburger_only_candidate,
+    POSITIVE_GRAPHS,
+    NEGATIVE_GRAPHS,
+)
 
 
 def test_ground_truth():
@@ -71,6 +79,32 @@ def test_spectral_toy():
     assert not selberg.critical_line_verdict(np.linalg.eigvals(B)).on_line
 
 
+def test_ihara_theorem():
+    """The graph-RH theorem: Ramanujan <=> all nontrivial Ihara poles on |u| = 1/sqrt(q)."""
+    for inst in POSITIVE_GRAPHS:
+        v = ihara.graph_rh_verdict(inst.adjacency)
+        assert v.is_ramanujan and v.on_line, f"{inst.name} should be Ramanujan and on-line"
+    for inst in NEGATIVE_GRAPHS:
+        v = ihara.graph_rh_verdict(inst.adjacency)
+        assert (not v.is_ramanujan) and (not v.on_line), \
+            f"{inst.name} should be the native D-H (non-Ramanujan, off-line)"
+        assert v.max_offline_defect > 1e-3
+
+
+def test_ihara_reference_all_green():
+    sc = grade_graph(moment_localizing_candidate, "reference")
+    assert sc.reproduces_ramanujan and sc.rejects_nonramanujan and sc.all_green
+
+
+def test_ihara_hamburger_fails():
+    """Self-adjointness alone (the Hamburger block) reproduces but cannot reject the native
+    D-H: real spectrum is free, the spectral gap is the content."""
+    sc = grade_graph(hamburger_only_candidate, "hamburger only")
+    assert sc.reproduces_ramanujan
+    assert not sc.rejects_nonramanujan
+    assert not sc.all_green
+
+
 def main() -> None:
     tests = [
         test_ground_truth,
@@ -79,6 +113,9 @@ def main() -> None:
         test_soft_candidates_fail,
         test_dh_unbuildable,
         test_spectral_toy,
+        test_ihara_theorem,
+        test_ihara_reference_all_green,
+        test_ihara_hamburger_fails,
     ]
     passed = 0
     for t in tests:

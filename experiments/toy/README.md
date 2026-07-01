@@ -10,8 +10,10 @@ Davenport-Heilbronn-blind argument on contact.
 
 ```powershell
 python -m experiments.toy.play          # the full demo (battery + grading + spectral toy)
-python -m experiments.toy.selberg       # just the Selberg / Hilbert-Polya spectral toy
-python -m experiments.toy.test_toy      # the smoke test
+python -m experiments.toy.selberg       # just the abstract Selberg / Hilbert-Polya spectral toy
+python -m experiments.toy.ihara         # the Ihara / graph proven world (graph-RH <=> Ramanujan)
+python -m experiments.toy.ihara_grader  # the spectral grader on the graph world
+python -m experiments.toy.test_toy      # the smoke test (9/9)
 ```
 
 ## Why it helps
@@ -86,6 +88,48 @@ zeros lie on $\mathrm{Re}(s) = \tfrac12$: the RH-analogue is a theorem *because*
 is self-adjoint and bounded below. The toy shows that removing self-adjointness pushes the
 zeros off the line, and that for $\zeta$ the zeros are **resonances, not eigenvalues**, which
 is exactly why the move does not transfer (LEARNINGS #128 Front 3).
+
+## The second proven world (`ihara.py`, `ihara_grader.py`)
+
+The abstract `selberg.py` models the Laplacian by a random symmetric matrix. `ihara.py`
+replaces that stand-in with a **genuine, finite, fully computable dynamical zeta** whose
+RH-analogue is a theorem, giving a second checkable world alongside the function-field one.
+
+For a connected $(q+1)$-regular graph $G$ the Ihara zeta is a product over the **primitive
+closed cycles** of $G$ (literally the periodic orbits, cycle length playing the role of
+$\log p$), and the Ihara-Bass determinant formula collapses it onto the adjacency spectrum:
+
+$$Z_G(u)^{-1} = (1-u^2)^{r-1}\det(I - Au + qu^2).$$
+
+The substitution $u = q^{-s}$ sends $|u| = 1/\sqrt q$ to $\mathrm{Re}(s) = \tfrac12$, and
+
+$$\text{graph RH} \iff \text{Ramanujan} \iff |\lambda_{\text{nontrivial}}| \le 2\sqrt q,$$
+
+a theorem (Ihara, Bass; the Ramanujan equivalence is standard, Terras 2011). This is the
+spectral cousin of the function-field Weil bound $|\alpha| = \sqrt q$, same $\sqrt q$.
+
+**A native Davenport-Heilbronn.** A non-Ramanujan regular graph has the *same* Ihara
+functional equation yet poles off $|u| = 1/\sqrt q$: a genuine off-line "zero." So the graph
+world carries its own wrong-approach detector, native rather than imported. `two_clique_bridge`
+(two barely-coupled cliques, $d \ge 5$) and `cycle_power` ($C_n^k$, $k \ge 3$) are guaranteed
+non-Ramanujan and serve as the negative battery.
+
+The grader (`ihara_grader.py`) mirrors the four axes, with the D-H axis specialized:
+
+| check | meaning |
+|---|---|
+| `reproduces_ramanujan` | $M$ PSD on every Ramanujan (RH-true) graph |
+| `rejects_nonramanujan` | $M$ indefinite on every non-Ramanujan graph (the native D-H) |
+| `k1_clean` | the candidate saw only closed-walk counts $N_k = \mathrm{tr}(A^k)$ and public structure, never the spectrum |
+| `gap_is_the_content` | structural: self-adjointness (real spectrum) is free, so the discriminating part is the $2\sqrt q$ gap |
+
+The reference candidate is the $[-1,1]$ moment form: with $\nu = \lambda/(2\sqrt q)$, Ramanujan
+means every $\nu \in [-1,1]$, which by the Hausdorff moment theorem holds iff both the Hamburger
+Hankel $H_0 = [m_{i+j}]$ and the localizing $H_1 = [m_{i+j} - m_{i+j+2}]$ are PSD. It scores all
+green. The instructive failure is `hamburger_only_candidate`: $H_0$ alone is PSD for **every**
+symmetric $A$, so certifying self-adjointness reproduces the curves but **fails to reject** the
+native D-H. That is the exact lesson for $\zeta$: the operator (real ordinates) is free; the
+polarization (the localizing block, the spectral gap) is the whole content, which is M4.
 
 ## The honest caveat
 
