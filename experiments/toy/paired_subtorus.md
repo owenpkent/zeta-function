@@ -104,3 +104,29 @@ Route scorecard from the work plan: (A) one-pair induction: the invariant class 
 | 10 | Controls: same-sign collapse / equal-det fails / self-inversive fails | $3.1\times10^{-16}$ / root $2.0$ / defect $1.0$ |
 | 11 | Contraction corollary: roots at $0.8^2$, inside | $0.6400$ |
 | 12 | mpmath 50-digit exact-unitary (Cayley) check, $m = 3$ | defect $1.3\times10^{-51}$ |
+
+## Novelty status (SURVEYOR pass, 2026-07-01)
+
+Ten-search web pass across the stable-polynomials school, finite free probability / interlacing
+families, RMT, OPUC, and minor-generating-polynomial literature (LEARNINGS #144 addendum).
+
+- **Lemma E: SUBSUMED.** It is a special case of **Hinkkanen's Schur-Hadamard composition theorem**
+  (Contemp. Math. 211, AMS 1997: the Hadamard product of two multiaffine polydisk-nonvanishing
+  polynomials is nonvanishing or zero); Hadamard-multiplying $Q$ by $\prod_j (1 + u_j v_j)$ yields the
+  master claim in ONE move, collapsing the pair iteration. Even without Hinkkanen there is a one-line
+  derivation: restrict to the diagonal $u = v = t$ and apply Vieta ($|A/C| = |t_1||t_2| \ge 1$). The
+  proof above is correct but non-minimal; an external write-up should lead with Hinkkanen and keep
+  Lemma E as a self-contained remark. Step S0 is folklore (the trivial direction of the GKVVW
+  determinantal-representation theory, which also shows $K$ unitary iff $p$ is a unimodular multiple
+  of its reverse: the det-representation face of the pinning step).
+- **The THEOREM: APPARENTLY NOVEL as a statement.** No statement of "the expected characteristic
+  polynomial over a conjugate-paired diagonal torus orbit of a unitary is circle-rooted" (nor the
+  $2^m$ sign-average form) was found in MSS/finite-free (Haar-conjugation averages, real-rooted),
+  Hall-Puder-Sawin (Hermitian carriers), RMT torus reductions, OPUC/POPUC, or minor-generating
+  polynomials. The proof is an assembly of known steps; the value is the statement and the clean
+  interpolation (trivial subgroup: char poly / paired subtorus: nontrivial and circle-rooted / full
+  torus: trivial $z^n$).
+- **Recommendation:** a 4-6 page arXiv note (math.CV, cross-list math.CO/math.PR), registered as
+  PUBLICATIONS.md **P9**. Before submission, one bounded check remains: read arXiv:2606.15003
+  (q-convolution circle preservation) in full, sweep Ruelle's Grace-like/Lee-Yang graph-counting
+  papers, and run a MathSciNet session (the pass had web search only).

@@ -113,6 +113,7 @@ the real standalone output.
 | [P6](#p6) | Lean formalization of function-field RH for elliptic curves (deg = det route) | Formalization (positive) | Lean, axiom-clean (conditional on existence of A) | 🟡 DEVELOPING | Formalization venue | lit-checked ✓ viable |
 | [P7](#p7) | RH is Π⁰₁ + the Lean kernel witness | Expository note | Lean anchors; logical fact classical | 🟡 DEVELOPING | Note / bundle into P4 | evaluated |
 | [P8](#p8) | The stealth window quantified (e^{-4πx} wall, 370× cancellation, D-H-aware defect) | Analytic note | Numerical + prolate analysis | 🟡 DEVELOPING | Fold into P4 (no standalone) | lit-checked: rate is prior (Fuchs+Connes) |
+| [P9](#p9) | Paired-subtorus circle-rootedness: E over conjugate-paired phases of det(zI−DU), U unitary, is circle-rooted (all m) | Theorem (positive) | Elementary proof, every step numerically verified (50-digit) | 🟡 DEVELOPING | arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR | novelty-passed: statement apparently novel; Lemma E subsumed (Hinkkanen 1997); one bounded check open |
 
 ---
 
@@ -377,6 +378,17 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **Venue / next.** **Fold into P4 Pillar 3 (decided; the Connes lit-check is done).** No standalone
   note. **Next:** carry the Fuchs-1964 + Connes-Figure-1 citation into the P4 §5 prose (done), and have
   a human pin Connes' exact figure/equation number before submission.
+
+---
+
+### P9 — Paired-subtorus circle-rootedness theorem
+
+- **Statement.** For $U \in U(2m)$ and conjugate-paired phases $D(\theta) = \mathrm{diag}(e^{i\theta_1}, e^{-i\theta_1}, \ldots, e^{i\theta_m}, e^{-i\theta_m})$, the expected characteristic polynomial $\mathbb{E}_\theta[\det(zI - D(\theta)U)]$ has all roots on $|z| = 1$. Equivalent finite form: the torus average equals the $2^m$ block-sign average. Corollaries: contraction version (Schur-stable roots), and the interpolation trivial-subgroup (char poly) / paired subtorus (nontrivial, circle-rooted) / full torus (trivial $z^n$).
+- **Provenance.** Emerged from the #143 adversary round (the A2 correlated-phase vector), proven in full generality in the H3 probe (LEARNINGS #144; [`experiments/toy/paired_subtorus.md`](experiments/toy/paired_subtorus.md), proof + 12/12 numerical verification incl. 50-digit).
+- **Novelty pass (2026-07-01, done).** Statement APPARENTLY NOVEL (not found in MSS/finite-free, Hall-Puder-Sawin, RMT torus reductions, OPUC, or minor-generating-polynomial literature). Proof machinery SUBSUMED: Lemma E is a special case of Hinkkanen's Schur-Hadamard composition theorem (Contemp. Math. 211, 1997), which also collapses the pair iteration in one move; step S0 is GKVVW folklore. The note must lead with Hinkkanen and NOT present the machinery as new; the contribution is the statement.
+- **D-H soundness.** Not applicable: a standalone geometry-of-polynomials theorem, no RH claim. Its project role (why averaging over the paired subtorus retains circle content = conjugate pairing, per the #143 gate) is context, not a claim of the note.
+- **RH-independence.** Fully standalone.
+- **Venue / next.** arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR. **Gate before submission:** read arXiv:2606.15003 in full; sweep Ruelle's Grace-like / Lee-Yang graph-counting papers; a MathSciNet session (the pass was web-only). Then draft.
 
 ---
 
