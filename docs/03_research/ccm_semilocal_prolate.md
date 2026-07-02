@@ -338,3 +338,12 @@ hold uniformly as $S \to \infty$, a concrete place a stealth window could hide).
 `R3_5.lean` (the no-shortcut wall + the geometric-positivity escape clause),
 `research_directions/08A_rosati_standard_conjecture.md` (M4), `spec_z_cohomology_landscape.md` (the
 universal gap).
+
+## Addendum 2026-07-02: the open statement above is superseded (survey, LEARNINGS #153)
+
+A SURVEYOR pass against the Nov 2025 papers ([`reading_notes/ccm_zeta_cycle_density_gate.md`](reading_notes/ccm_zeta_cycle_density_gate.md); arXiv 2511.22755 + 2511.23257, with 2106.01715 / 2310.18423 / the Connes-Moscovici PNAS paper) found this dossier's "precise open statement" stale in two places:
+
+- **The deferred metaplectic Jacobi-matrix operator $W_{\lambda,S}$ is bypassed.** The new family $D^{(\lambda,N)}_{\log}$ (rank-one perturbation, Caratheodory-Fejer self-adjointness) carries an exact, unconditional determinant formula $\det_{reg}(D^{(\lambda,N)}_{\log} - z) = -i\lambda^{-iz}\hat\xi(z)$ with real zeros. The open front has moved to the Section-7 uniform convergence $\hat\xi_\lambda \to \Xi$, which the authors call "the main remaining obstacle to our approach to RH".
+- **The deciding bit ("built without inputting the zeros?") is YES at the assembly level** (inputs: $\theta'$, the pole term, $\Lambda(n \le x)$), but the R3.5/K1 question RELOCATES rather than closes: the perturbation vector is the ground state of the truncated Weil form, whose global positivity is RH-equivalent. ADVERSARY should re-run R3.5 on the 2511 shape.
+
+Density-gate context from the same session (#151-#153): the door satisfies the eigenvalue budget with ONE spectral circle of circumference $\log x = \log(T/2\pi)$ while consuming Euler data to $n \le x = T/2\pi$ (the two-meter law); the lattice map $\mathcal{E}$ absorbs the surplus, which is where the Beurling discipline's fourth clause (lattice-consuming, #152) is paid.
