@@ -110,15 +110,18 @@ Route scorecard from the work plan: (A) one-pair induction: the invariant class 
 Ten-search web pass across the stable-polynomials school, finite free probability / interlacing
 families, RMT, OPUC, and minor-generating-polynomial literature (LEARNINGS #144 addendum).
 
-- **Lemma E: SUBSUMED.** It is a special case of **Hinkkanen's Schur-Hadamard composition theorem**
-  (Contemp. Math. 211, AMS 1997: the Hadamard product of two multiaffine polydisk-nonvanishing
-  polynomials is nonvanishing or zero); Hadamard-multiplying $Q$ by $\prod_j (1 + u_j v_j)$ yields the
-  master claim in ONE move, collapsing the pair iteration. Even without Hinkkanen there is a one-line
+- **Lemma E: CLASSICAL, and it has a name: the ASANO CONTRACTION** (Asano 1970, J. Phys. Soc. Japan
+  29; Ruelle, PRL 26 (1971); the exact unit-bidisk form is stated verbatim in COSW math/0202034,
+  Remark after Prop. 4.19, citing Asano, Ruelle, and Hinkkanen). The gate-check pass (direct read of
+  Ruelle's Grace-like paper and COSW) upgraded the first pass's "subsumed by Hinkkanen" to the sharper
+  attribution. It is also a special case of **Hinkkanen's Schur-Hadamard composition theorem**
+  (Contemp. Math. 211, 1997; statement confirmed verbatim via COSW p.35, open polydisk, multiaffine,
+  nonvanishing-or-zero; COSW Prop. 4.20 gives an independent published proof): Hadamard-multiplying
+  $Q$ by $\prod_j (1 + u_j v_j)$ yields the master claim in ONE move. There is also a one-line
   derivation: restrict to the diagonal $u = v = t$ and apply Vieta ($|A/C| = |t_1||t_2| \ge 1$). The
-  proof above is correct but non-minimal; an external write-up should lead with Hinkkanen and keep
-  Lemma E as a self-contained remark. Step S0 is folklore (the trivial direction of the GKVVW
-  determinantal-representation theory, which also shows $K$ unitary iff $p$ is a unimodular multiple
-  of its reverse: the det-representation face of the pinning step).
+  proof pattern of the whole theorem (Asano contraction + unimodular pinning) is the STANDARD
+  Lee-Yang pattern; the novelty claim rests entirely on the assembled orbit-average statement. Step
+  S0 is folklore (the trivial direction of the GKW determinantal-representation theory).
 - **The THEOREM: APPARENTLY NOVEL as a statement.** No statement of "the expected characteristic
   polynomial over a conjugate-paired diagonal torus orbit of a unitary is circle-rooted" (nor the
   $2^m$ sign-average form) was found in MSS/finite-free (Haar-conjugation averages, real-rooted),
@@ -127,6 +130,10 @@ families, RMT, OPUC, and minor-generating-polynomial literature (LEARNINGS #144 
   interpolation (trivial subgroup: char poly / paired subtorus: nontrivial and circle-rooted / full
   torus: trivial $z^n$).
 - **Recommendation:** a 4-6 page arXiv note (math.CV, cross-list math.CO/math.PR), registered as
-  PUBLICATIONS.md **P9**. Before submission, one bounded check remains: read arXiv:2606.15003
-  (q-convolution circle preservation) in full, sweep Ruelle's Grace-like/Lee-Yang graph-counting
-  papers, and run a MathSciNet session (the pass had web search only).
+  PUBLICATIONS.md **P9**; DRAFTED at [`../../publications/paired_subtorus/`](../../publications/paired_subtorus/).
+  Gate checks EXECUTED (2026-07-01, second pass, direct reads): arXiv:2606.15003 CLEAN (a
+  coefficientwise q-convolution preserving REAL-rootedness, not an orbit average; the first pass's
+  "unit-circle preservation" description was wrong and is corrected here); Ruelle's Grace-like
+  polynomials CLEAN (no theorem covers determinantal orbit averages; but it surfaced the Asano
+  attribution above); Hinkkanen's statement CONFIRMED verbatim. Remaining before submission: a
+  MathSciNet session (human; the passes were web-only) and the citation pins in the draft README.

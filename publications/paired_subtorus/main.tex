@@ -1,0 +1,228 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\T}{\mathbb{T}}
+\DeclareMathOperator{\diag}{diag}
+
+\title{Expected characteristic polynomials of unitary matrices\\ over a conjugate-paired torus are circle-rooted}
+\author{Owen Kent}
+\date{July 2026}
+
+\begin{document}
+
+\begin{abstract}
+Let $U \in U(2m)$ and let $D(\theta) = \diag(e^{i\theta_1}, e^{-i\theta_1}, \ldots, e^{i\theta_m}, e^{-i\theta_m})$ carry independent uniform phases in conjugate pairs. We prove that the expected characteristic polynomial $\E_\theta \det(zI - D(\theta)U)$ has all $2m$ roots on the unit circle. This sits strictly between two known extremes: with no averaging the characteristic polynomial is circle-rooted trivially, while averaging over the full diagonal torus collapses the polynomial to $z^{2m}$. The conjugate-paired torus, the maximal torus of the symplectic group inside $U(2m)$, is the intermediate case: the average is nontrivial and still circle-rooted. The proof is elementary and short: the average is a generating polynomial of pair-indexed principal minors, a multiaffine determinantal polynomial is nonvanishing on the open polydisk for any contraction, the pair-even part inherits this nonvanishing (the classical Asano contraction from Lee-Yang theory, equivalently a special case of Hinkkanen's Schur-product theorem), and unimodularity of $\det U$ pins every root to the circle. The continuous average equals a finite average over $2^m$ sign matrices, and for a strict contraction $rU$ the roots contract to modulus exactly $r^2$.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Expected characteristic polynomials of structured random matrices are the engine of the interlacing-families method: averaging $\det(xI - A_s)$ over sign patterns produces the matching polynomial, whose real-rootedness and root bounds drive the construction of bipartite Ramanujan graphs of all degrees \cite{MSS15, HPS18}. That calculus lives on the real line: the carriers are Hermitian, the averaged polynomials are real-rooted, and real-rootedness is what the method's selection step consumes.
+
+On the unit circle the first moment is, at first sight, degenerate. If $U$ is Haar-distributed on $U(n)$ then $\E \det(zI - U) = z^n$, and the same collapse occurs for a fixed unitary conjugated by independent uniform phases: with $D = \diag(e^{i\theta_1}, \ldots, e^{i\theta_n})$ and $\theta_j$ independent uniform,
+\begin{equation}\label{eq:collapse}
+\E_\theta \det\bigl(zI - D(\theta)U\bigr) = z^n ,
+\end{equation}
+because every principal minor of $D(\theta)U$ of positive order carries a nonempty product of independent phases with mean zero. Rich first moments over unitary ensembles do exist away from Haar (for unitary Brownian motion at finite time the expected characteristic polynomial is a unitary Hermite polynomial \cite{Kab25}), but its roots lie on a strictly smaller circle, not on the root locus of the realizations.
+
+This note isolates an averaging that sits exactly between ``no averaging'' and the collapse \eqref{eq:collapse}, and stays on the locus. Pair the coordinates of $\C^{2m}$ as $(2j-1, 2j)$ for $j = 1, \ldots, m$ and give each pair one phase and its conjugate:
+\[
+D(\theta) = \diag\bigl(e^{i\theta_1}, e^{-i\theta_1},\; e^{i\theta_2}, e^{-i\theta_2},\; \ldots,\; e^{i\theta_m}, e^{-i\theta_m}\bigr),
+\qquad \theta_j \ \text{i.i.d. uniform on } [0, 2\pi).
+\]
+The matrices $D(\theta)$ form the maximal torus of the symplectic group $Sp(m) \subset U(2m)$, so the average below is the weight-zero projection of the characteristic polynomial along the symplectic torus.
+
+\begin{theorem}\label{thm:main}
+Let $U \in U(2m)$ and let $f(z) = \E_\theta \det\bigl(zI - D(\theta)U\bigr)$. Then all $2m$ roots of $f$ lie on the unit circle. Explicitly, $f(z) = g(z^2)$ where
+\begin{equation}\label{eq:g}
+g(w) \;=\; \sum_{T \subseteq \{1, \ldots, m\}} w^{\,m - |T|}\, \det U[S_T],
+\end{equation}
+$S_T \subseteq \{1, \ldots, 2m\}$ is the union of the coordinate pairs indexed by $T$, and $U[S]$ denotes the principal submatrix of $U$ on the rows and columns in $S$; and all $m$ roots of $g$ lie on the unit circle.
+\end{theorem}
+
+Three companion statements come from the same proof.
+
+\begin{corollary}[Contractions]\label{cor:contraction}
+If $V$ is any contraction ($\|V\| \le 1$), the polynomial $g$ built from $V$ by \eqref{eq:g} has all roots in the closed unit disk. For $V = rU$ with $U$ unitary and $0 < r \le 1$ the roots of $g$ have modulus exactly $r^2$. Unitarity is thus the boundary case, and it is exactly the case where the roots reach the circle.
+\end{corollary}
+
+\begin{corollary}[A finite identity]\label{cor:finite}
+The continuous average is a finite one:
+\[
+\E_\theta \det\bigl(zI - D(\theta)U\bigr) \;=\; \frac{1}{2^m} \sum_{\varepsilon \in \{\pm 1\}^m} \det\bigl(zI - E(\varepsilon)U\bigr),
+\qquad E(\varepsilon) = \diag(\varepsilon_1, \varepsilon_1, \ldots, \varepsilon_m, \varepsilon_m).
+\]
+\end{corollary}
+
+\begin{corollary}[Functional equation]\label{cor:selfinv}
+Writing $g(w) = \sum_{k=0}^m c_k w^{m-k}$, Jacobi's complementary-minor identity for unitary $U$ gives $c_{m-k} = \det(U)\, \overline{c_k}$; that is, $g$ is self-inversive up to the unimodular factor $\det U$. The proof of Theorem~\ref{thm:main} does not use this; it falls out.
+\end{corollary}
+
+The value of Theorem~\ref{thm:main} is the statement rather than the machinery, which is classical and is credited in Section~\ref{sec:proof}: the multiaffine stability of determinantal polynomials is folklore (it is the easy direction of the determinantal-representation theory of polydisk-stable polynomials \cite{GKW13}); the extraction step is the Asano contraction of Lee-Yang theory \cite{Asa70, Rue71}, in its unit-bidisk form as recorded by Choe, Oxley, Sokal, and Wagner \cite[Remark after Prop.~4.19]{COSW04}, equivalently a special case of Hinkkanen's Schur-product theorem \cite{Hin97} in the school of Borcea and Br\"and\'en \cite{BB09, Wag11}; and the closing pattern (a stability region plus a unimodular constant term pinning zeros to the boundary) is the standard pattern of Lee-Yang circle theorems. Assembled, they give a one-page proof. Section~\ref{sec:sharp} shows each hypothesis is load-bearing; Section~\ref{sec:remarks} poses the classification question the theorem suggests.
+
+\section{Proof}\label{sec:proof}
+
+Throughout, $V$ denotes a $2m \times 2m$ contraction; the theorem takes $V = U$ unitary.
+
+\subsection*{Step 1: the average is a pair-minor generating polynomial}
+Expanding the characteristic polynomial in principal minors,
+\[
+\det\bigl(zI - D(\theta)V\bigr) \;=\; \sum_{S \subseteq \{1,\ldots,2m\}} (-1)^{|S|}\, z^{\,2m-|S|} \det\bigl[(D(\theta)V)[S]\bigr],
+\qquad \det\bigl[(D(\theta)V)[S]\bigr] = \Bigl(\prod_{i \in S} d_i\Bigr) \det V[S],
+\]
+where $d_i$ is the $i$-th diagonal phase. For the conjugate-paired torus, $\E\bigl[\prod_{i \in S} d_i\bigr] = \prod_j \E\bigl[e^{i\theta_j(\mathbf{1}_{2j-1 \in S} - \mathbf{1}_{2j \in S})}\bigr]$ equals $1$ if $S$ is a union of pairs and $0$ otherwise. Pair-closed sets have even size $|S_T| = 2|T|$, so the signs disappear and
+\begin{equation}\label{eq:f-is-g}
+f(z) \;=\; \sum_{T} z^{\,2(m-|T|)} \det V[S_T] \;=\; g(z^2)
+\end{equation}
+with $g$ as in \eqref{eq:g}. The same survival rule with $\varepsilon_j \in \{\pm 1\}$ in place of $e^{i\theta_j}$ (each surviving pair contributes $\varepsilon_j^2 = 1$) proves Corollary~\ref{cor:finite}. Note that $g$ is monic of degree $m$ (the term $T = \varnothing$) and $g(0) = \det V$.
+
+\subsection*{Step 2: multiaffine stability of the generating determinant}
+Let
+\[
+Q(y_1, \ldots, y_{2m}) \;=\; \det\bigl(I + \diag(y)\,V\bigr).
+\]
+Each variable $y_i$ enters only through row $i$, so $Q$ is multiaffine (degree at most one in each variable), with principal-minor expansion $Q(y) = \sum_S \bigl(\prod_{i \in S} y_i\bigr) \det V[S]$. If $|y_i| < 1$ for all $i$, then $\|\diag(y) V\| \le \max_i |y_i| < 1$, so $-1$ is not an eigenvalue of $\diag(y)V$ and $Q(y) \ne 0$. Thus $Q$ is nonvanishing on the open unit polydisk.
+
+\subsection*{Step 3: the pair-even part inherits the nonvanishing}
+Group the variables of $Q$ into the $m$ pairs $(u_j, v_j) = (y_{2j-1}, y_{2j})$. The \emph{pair-even part} of $Q$ keeps exactly the monomials in which each pair appears with joint degree $0$ or $2$, and writes $x_j$ for the product $u_j v_j$; by the minor expansion this is precisely
+\begin{equation}\label{eq:P}
+P(x_1, \ldots, x_m) \;=\; \sum_{T} \Bigl(\prod_{j \in T} x_j\Bigr) \det V[S_T].
+\end{equation}
+
+\begin{lemma}[Asano contraction \cite{Asa70, Rue71}; unit-bidisk form as in {\cite[Remark after Prop.~4.19]{COSW04}}]\label{lem:extract}
+Let $F(u, v) = a + bu + cv + duv$ be nonvanishing on the open bidisk. Then $|a| \ge |d|$, and consequently $a + dx \ne 0$ for all $|x| < 1$.
+\end{lemma}
+
+\begin{proof}[Proof (included for completeness)]
+$a = F(0,0) \ne 0$. If $d = 0$ there is nothing to prove. If $d \ne 0$, restrict to the diagonal: $q(t) = F(t, t) = a + (b + c)t + dt^2$ is nonvanishing on $|t| < 1$ and has leading coefficient $d$, so its two roots satisfy $|t_1|, |t_2| \ge 1$ and Vieta gives $|a/d| = |t_1 t_2| \ge 1$.
+\end{proof}
+
+\begin{proposition}\label{prop:extract}
+$P$ is nonvanishing on the open unit polydisk in $(x_1, \ldots, x_m)$.
+\end{proposition}
+
+\begin{proof}
+Extract one pair at a time. Fix $j$ and freeze the variables of all other pairs at an arbitrary point of the open polydisk; the frozen $Q$ is a multiaffine function $a + bu_j + cv_j + du_jv_j$ of the $j$-th pair, nonvanishing on the open bidisk, and its pair-even part in the variable $x_j$ is $a + dx_j$, nonvanishing for $|x_j| < 1$ by Lemma~\ref{lem:extract}. Since taking the pair-even part is linear on coefficients, it commutes with freezing the other variables; the result of the extraction is again multiaffine, in $x_j$ and the untouched variables, and nonvanishing on the open polydisk. Iterating over $j = 1, \ldots, m$ yields \eqref{eq:P}.
+\end{proof}
+
+\begin{remark}\label{rem:hinkkanen}
+Proposition~\ref{prop:extract} is also a special case of Hinkkanen's theorem on Schur (coefficientwise) products of multiaffine polynomials without zeros in the open unit polydisk \cite{Hin97} (an accessible statement and an independent proof appear in \cite[Prop.~4.20 and the remark following it]{COSW04}): the pair-even part of $Q$ is the Schur product of $Q$ with $R(y) = \prod_{j=1}^m (1 + u_j v_j)$, and $R$ is multiaffine and nonvanishing on the open polydisk since $|u_j v_j| < 1$. Hinkkanen's theorem gives the conclusion in a single step, with the constant term $Q(0) = 1$ ruling out the identically-zero alternative. We make no claim of novelty for any form of the extraction: it is Asano's contraction, a workhorse of Lee-Yang theory since 1970.
+\end{remark}
+
+\subsection*{Step 4: pinning the roots to the circle}
+Let $G(x) = P(x, \ldots, x)$. By Proposition~\ref{prop:extract}, $G(x) \ne 0$ for $|x| < 1$ (the diagonal lies in the polydisk). Comparing \eqref{eq:g} and \eqref{eq:P},
+\[
+g(w) = w^m\, G(1/w),
+\]
+so a root of $g$ of modulus greater than $1$ would produce a zero of $G$ inside the open disk. Hence all roots of $g$ lie in the closed unit disk, which is Corollary~\ref{cor:contraction} for a general contraction; the scaling statement follows from $\det (rU)[S_T] = r^{2|T|} \det U[S_T]$, which replaces $g(w)$ by $r^{2m} g(w/r^2)$.
+
+Now let $V = U$ be unitary. Then $g$ is monic with $|g(0)| = |\det U| = 1$, and $|g(0)|$ is the product of the moduli of the roots. A product of numbers, each at most $1$, equalling $1$ forces every factor to equal $1$: all roots of $g$ lie on the unit circle, and by \eqref{eq:f-is-g} so do all roots of $f$. \qed
+
+\section{Sharpness}\label{sec:sharp}
+
+Each structural hypothesis is necessary, in the following precise senses.
+
+\begin{example}[Unpaired phases collapse]\label{ex:collapse}
+With $2m$ independent phases (the full diagonal torus), or with same-sign pairs $D = \diag(e^{i\theta_j}, e^{+i\theta_j})$, the only surviving subset in Step 1 is $S = \varnothing$ and the average collapses to $z^{2m}$, as in \eqref{eq:collapse}. Conjugate pairing is exactly what lets a nontrivial family of minors survive with unimodular weight.
+\end{example}
+
+\begin{example}[Equal determinant is not enough]\label{ex:equaldet}
+The theorem is a statement about a specific orbit average, not about arbitrary mixtures of unitary characteristic polynomials with a common determinant. Let $\omega = e^{i\pi/3}$, and let $p(z) = (z - \omega)^3$ and $q(z) = (z - \bar\omega)^3$: characteristic polynomials of unitary matrices with the same determinant $\omega^3 = \bar\omega^{\,3} = -1$. Their mean is
+\[
+\tfrac12\bigl(p + q\bigr)(z) \;=\; z^3 - \tfrac32 z^2 - \tfrac32 z + 1 \;=\; (z + 1)\bigl(z - 2\bigr)\bigl(z - \tfrac12\bigr),
+\]
+with a root at $2$. (This mean is also self-inversive, so the functional equation of Corollary~\ref{cor:selfinv} does not by itself constrain the roots to the circle; the transport of polydisk nonvanishing does.)
+\end{example}
+
+\begin{example}[Unitarity is the exact boundary]\label{ex:boundary}
+By Corollary~\ref{cor:contraction}, $V = rU$ places all roots of $g$ at modulus exactly $r^2 < 1$; and block-diagonal unitary $U$ with $2 \times 2$ blocks of determinants $1, -1, -1$ gives $g(w) = (w+1)(w-1)^2$, an on-circle double root, so the closed reachable set touches its boundary.
+\end{example}
+
+\section{Remarks and a question}\label{sec:remarks}
+
+\begin{remark}[A derandomized form]
+Corollary~\ref{cor:finite} makes Theorem~\ref{thm:main} a statement about $2^m$ signed reflections of a single unitary matrix: the average of the $2^m$ characteristic polynomials $\det(zI - E(\varepsilon)U)$ is circle-rooted. In this form the statement is a direct circle-side analogue of sign-averaging in the interlacing-families method \cite{MSS15, HPS18}, with real-rootedness replaced by circle-rootedness and the Hermitian carrier replaced by a unitary one.
+\end{remark}
+
+\begin{remark}[What the proof does not use]
+The proof uses no interlacing and no selection or ordering of the family members; the mechanism is the transport of polydisk nonvanishing through the Asano contraction, followed by the unimodular pinning $|g(0)| = 1$, which is the standard proof pattern of Lee-Yang circle theorems transported to a matrix-orbit average. In particular the result does not extend the interlacing-families selection step to the circle; it shows the expectation step alone already preserves the circle locus for this orbit.
+\end{remark}
+
+\begin{question}\label{q:classify}
+For which closed subgroups $H$ of the diagonal torus $\T^{n}$ is $\E_{D \in H} \det(zI - DU)$ circle-rooted for every $U \in U(n)$? The trivial subgroup gives the characteristic polynomial itself; the conjugate-paired subtorus of Theorem~\ref{thm:main} (and its images under coordinate permutations) succeeds nontrivially; the full torus fails, its average $z^n$ having all roots at the origin. The survival rule of Step 1 translates the question into one about the weight lattice of $H$: which sublattices force every surviving minor pattern to assemble into a polydisk-stable, unimodularly-pinned generating polynomial? Triples such as $(e^{i\theta}, e^{i\theta}, e^{-2i\theta})$, where the surviving patterns lose the multiaffine pair structure, are the first open cases.
+\end{question}
+
+\begin{remark}[Numerical verification]
+All statements were verified numerically before and independently of the proof: exhaustive small cases, random sampling and derivative-free maximization of the circle defect over $U(2m)$ for $m \le 7$ (defect at machine precision), and an exact-arithmetic check at $50$ digits for $m = 3$; the boundary and counterexample computations of Section~\ref{sec:sharp} are reproduced there as well.
+\end{remark}
+
+\begin{thebibliography}{9}
+
+\bibitem{Asa70}
+T.~Asano,
+\emph{Theorems on the partition functions of the Heisenberg ferromagnets},
+J. Phys. Soc. Japan \textbf{29} (1970), 350--359.
+
+\bibitem{BB09}
+J.~Borcea and P.~Br\"and\'en,
+\emph{The Lee-Yang and P\'olya-Schur programs. I. Linear operators preserving stability},
+Invent. Math. \textbf{177} (2009), no. 3, 541--569.
+
+\bibitem{COSW04}
+Y.-B. Choe, J.~G. Oxley, A.~D. Sokal, and D.~G. Wagner,
+\emph{Homogeneous multivariate polynomials with the half-plane property},
+Adv. in Appl. Math. \textbf{32} (2004), no. 1--2, 88--187.
+
+\bibitem{GKW13}
+A.~Grinshpan, D.~S. Kaliuzhnyi-Verbovetskyi, and H.~J. Woerdeman,
+\emph{Norm-constrained determinantal representations of multivariable polynomials},
+Complex Anal. Oper. Theory \textbf{7} (2013), no. 3, 635--654.
+
+\bibitem{HPS18}
+C.~Hall, D.~Puder, and W.~F. Sawin,
+\emph{Ramanujan coverings of graphs},
+Adv. Math. \textbf{323} (2018), 367--410.
+
+\bibitem{Hin97}
+A.~Hinkkanen,
+\emph{Schur products of certain polynomials},
+in: Lipa's legacy (New York, 1995), Contemp. Math. \textbf{211}, Amer. Math. Soc., Providence, RI, 1997, pp. 285--295.
+
+\bibitem{Kab25}
+Z.~Kabluchko,
+\emph{Lee-Yang zeroes of the Curie-Weiss ferromagnet, unitary Hermite polynomials, and the backward heat flow},
+Ann. Henri Lebesgue \textbf{8} (2025).
+
+\bibitem{MSS15}
+A.~W. Marcus, D.~A. Spielman, and N.~Srivastava,
+\emph{Interlacing families I: Bipartite Ramanujan graphs of all degrees},
+Ann. of Math. (2) \textbf{182} (2015), no. 1, 307--325.
+
+\bibitem{Rue71}
+D.~Ruelle,
+\emph{Extension of the Lee-Yang circle theorem},
+Phys. Rev. Lett. \textbf{26} (1971), 303--304.
+
+\bibitem{Wag11}
+D.~G. Wagner,
+\emph{Multivariate stable polynomials: theory and applications},
+Bull. Amer. Math. Soc. (N.S.) \textbf{48} (2011), no. 1, 53--84.
+
+\end{thebibliography}
+
+\end{document}

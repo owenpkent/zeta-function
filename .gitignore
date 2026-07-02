@@ -59,3 +59,11 @@ build/
 *.crdownload
 *.part
 *.tmp
+
+# LaTeX build artifacts (publications/)
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
