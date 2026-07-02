@@ -25,7 +25,9 @@ by a **factor of at least 2**.
 
 **Bombieri 1976.** Bombieri (*The asymptotic sieve*, Mem. Accad. Naz. dei XL, 1976) made the phenomenon a
 theorem-shaped statement. Even granting the **Elliott-Halberstam conjecture** (level of distribution $\theta = 1$,
-the strongest density input conceivable), the asymptotic sieve delivers the expected asymptotics for the
+read as every $\theta < 1$: the literal endpoint, moduli up to $x/(\log x)^A$, is **false** by
+Friedlander-Granville 1989, so "level 1" always means $\theta = 1 - \epsilon$; still the strongest density
+input conceivable. ADVERSARY caution added 2026-07-02), the asymptotic sieve delivers the expected asymptotics for the
 generalized von Mangoldt functions $\Lambda_k$ for **every $k \ge 2$** (almost-primes), and fails exactly at
 $k = 1$ (primes). Tao's exposition (*Notes on the Bombieri asymptotic sieve*, 2016) isolates the failure as a
 single unknown scalar $\delta_x \in [0,2]$: primes require $\delta_x = 1 + o(1)$, and no density hypothesis
@@ -64,11 +66,26 @@ Weil's own route) that M4 is trying to transfer to $\mathrm{Spec}(\mathbb{Z})$. 
 successes are **downstream consumers of the proven polarization**, applied fiberwise over the finite-field
 fibers living inside an integer problem.
 
-**How it is consumed (load-bearing detail).** The import always enters as a **modulus bound**: only
-$|S| \le 2\sqrt p$ (or $|{\rm eigenvalues}| \le q^{i/2}$) is used. The signature content of the underlying
-polarization (which eigenvalue is positive, the $(1, n-1)$ structure, the sign of the intersection form) is
-discarded at the border. Sieve theory consumes **purity** (the modulus corollary, facet A of the universal gap
-in [`sourcing_gap_r1.md`](sourcing_gap_r1.md)), never **polarization** (the sign structure, facet B).
+**How it is consumed (load-bearing detail; corrected by the 2026-07-02 ADVERSARY pass).** The import enters
+only through **sign-free corollaries**, in two tiers. Tier 1 (moduli): $|S| \le 2\sqrt p$,
+$|\alpha| \le q^{i/2}$, used termwise (Deshouillers-Iwaniec, Zhang's Type I/II completions, Birch-Bombieri
+in Type III). Tier 2 (angle/monodromy statistics): weights in all cohomological degrees, monodromy-group
+classifications, and their equidistribution corollaries (vertical Sato-Tate for Kloosterman angles, the
+Fouvry-Kowalski-Michel trace-function machinery, Sawin-Shusterman's vanishing-cycles input). The original
+phrasing here ("the import always enters as a modulus bound") was too narrow: tier-2 consumers exist inside
+this ledger itself. What no tier ever consumes is the **signature** (S5) content of the underlying
+polarization: which class pairs positively, the $(1, n-1)$ structure, the direction of the
+Castelnuovo-Severi / Hodge-index inequality. Both tiers are invariant under replacing the polarizing form
+$Q$ by $-Q$ (no imported statement mentions the sign of any self-pairing), and the border crossing
+transports **numbers** (moduli, angles, dimensions), never the geometric **carrier** (the cycle lattice plus
+ample cone) on which a signature could even be stated. Sieve theory consumes **purity and its sign-free
+refinements** (facet A of the universal gap in [`sourcing_gap_r1.md`](sourcing_gap_r1.md)), never
+**polarization** (the sign structure, facet B). Two disambiguations that make this falsifiable:
+Kloostermania's celebrated exploitation of **sign changes** of Kloosterman sums sources those signs
+**spectrally** (Kuznetsov / Petersson orthogonality, i.e. self-adjointness, the #143 operator branch), not
+from the geometric import; and eigenvalue **phases** (Gauss's sign of the quadratic Gauss sum, root numbers
+of functional equations) are S3/realization data, computable from traces alone and present for D-H too, not
+S5 signature data.
 
 ## 3. Directional data, both ways
 
@@ -116,10 +133,16 @@ is purity **plus** an algebraic identity with no integer analogue. Direction (a)
   $2/3$ ceiling ("too shallow" bracket).
 - **No theorem runs parity-breaking $\Rightarrow$ zero-free region or $\Rightarrow$ positivity.** The absence
   of any reverse-direction theorem, across 80 years of a heavily-worked field, is itself a coordinate.
-- Sharper still: **RH does not break parity.** Bombieri's asymptotic sieve fails at $k=1$ *even under
-  Elliott-Halberstam*, which is stronger in the level aspect than GRH supplies; and Chowla-type correlations
-  are not consequences of RH. So the parity wall stands on both sides of RH: RH does not imply its resolution,
-  and its instance-wise resolutions do not imply RH-type statements. The two walls are **logically incomparable**.
+- Sharper still: **RH's sieve-visible content does not break parity.** Bombieri's asymptotic sieve fails at
+  $k=1$ *even under Elliott-Halberstam* (every $\theta < 1$), which is stronger in the level aspect than GRH
+  supplies (GRH gives $\theta = 1/2$, no more in the level aspect than Bombieri-Vinogradov already provides
+  unconditionally). Scope kept honest (2026-07-02 ADVERSARY correction): this is a theorem about density
+  inputs, not a non-implication theorem about RH itself. Chowla-type correlations are **not known** to be
+  consequences of RH (no derivation exists; no independence proof exists either, and none is available by
+  current methods). So the parity wall stands on both sides of RH in the known-implication sense: no route
+  from RH to parity's resolution is known, and its instance-wise resolutions imply no RH-type statement. The
+  two walls are **incomparable at the level of known implications**, with the density-input direction
+  provably dead (Bombieri), not separated by a proven formal independence.
 
 ## 4. The identification test: the M4 fingerprint mapped onto the parity frame
 
@@ -150,12 +173,25 @@ barrier is **not** the M4 polarization wearing sieve clothing.
   FAIL.
 - **Curative-flip (#120).** Type II ranges are solved-for. FAIL.
 
-One candidate **new screen** for the battery falls out of the audit: the **modulus-only-consumer screen**. If
-a technology consumes a polarization theorem only through its absolute-value corollary ($|S| \le 2\sqrt p$,
-$|\alpha| \le q^{i/2}$), it discards the sign structure at the border and cannot re-emit a signature; it can
-never be an M4 source no matter how deep its imports. This retires generically the family "analytic imports
-of Weil/Deligne bounds" (Kloostermania, exponential-sum technology, trace-function machinery) as polarization
-sources, while leaving them fully alive as purity consumers.
+One candidate **new screen** for the battery falls out of the audit: the **modulus-only-consumer screen**
+(name kept for continuity; the precise antecedent, corrected by the 2026-07-02 ADVERSARY pass, is
+**sign-free consumption**). If a technology consumes a polarization theorem only through **sign-free
+corollaries**, the absolute-value tier ($|S| \le 2\sqrt p$, $|\alpha| \le q^{i/2}$) or the angle/monodromy
+tier (weights in all degrees, monodromy classifications, equidistribution laws), then every imported
+statement is invariant under flipping the polarizing form $Q \mapsto -Q$ and no geometric carrier crosses
+the border: the signature never enters, so the technology cannot re-emit one, and it can never be an M4
+**source** no matter how deep its imports. Scope rider: it stays available as an ingredient in an assembly
+whose sign is sourced elsewhere (an operator per #143, or a genuine arithmetic polarization = M4 itself).
+Operational test, per proof: list every statement imported from the algebro-geometric black box and check
+whether any asserts the sign of a self-pairing or the signature of a form on cycles. Falsifier: an analytic
+argument that imports the Hodge-index / Castelnuovo-Severi inequality itself (e.g. a sieve weight justified
+by the positivity of a self-intersection on a specific correspondence) would break the screen; none is known
+(2026-07-02). This retires generically the family "analytic imports of Weil/Deligne bounds" (Kloostermania,
+exponential-sum technology, trace-function machinery) as polarization sources, while leaving them fully
+alive as purity consumers. The #148 audit closes the loop from the producer side: purity is *produced*
+(Weil I/II) without any polarization ever being produced (the Hodge standard conjecture stays open over
+$\mathbb{F}_q$), so the consumed corollary is not even downstream of a polarization theorem in the modern
+proof graph; a fortiori no sign is transported.
 
 ## 5. The Davenport-Heilbronn note
 
@@ -228,11 +264,17 @@ trigger is specifically the **exponent** (power saving), not the cancellation.
   [`../../experiments/toy/`](../../experiments/toy/) as a grader note, not a construction.
 
 **Remains open.**
-- Whether the modulus-only-consumer screen survives an ADVERSARY pass (is there any historical case of a
-  modulus import re-emitting a sign?). SURVEYOR reports; ADVERSARY decides.
-- Whether the parity barrier admits its own "polarity" formalization (a theorem "no positive-cone functional
-  of one-variable density data determines $\delta_x$" in Bombieri's frame is folklore-shaped; its sharpest
-  citable form should be pinned before the screen is banked).
+- ~~Whether the modulus-only-consumer screen survives an ADVERSARY pass.~~ **Resolved 2026-07-02: UPHELD
+  WITH CORRECTIONS** (see the ADVERSARY-pass section at the end of this dossier). No historical case of a
+  modulus import re-emitting a sign was found; two tier-2 (angle/monodromy) consumption families forced the
+  antecedent correction; the screen is machine-enforced in
+  [`../../experiments/lemma_db/breadth_corpus.py`](../../experiments/lemma_db/breadth_corpus.py) (23/23).
+- The parity barrier's own "polarity" formalization: sharpest citable form now pinned (2026-07-02) as
+  Bombieri 1976 as formalized in Tao 2016 ($\delta_x \in [0,2]$ free under all density axioms), with
+  Selberg 1949's two-measure witness $(1 \pm \lambda(n))\,dn$; textbook form in Friedlander-Iwaniec,
+  *Opera de Cribro* (AMS Colloq. 57, 2010), the parity-phenomenon discussion (exact section number needs
+  literature verification). Sufficient to bank the screen; a Lean-shaped formalization remains open and is
+  not claimed.
 - Angle A of this two-dossier probe (the companion frame-audit) and the cross-check between the two.
 
 ## Discrepancy log
@@ -275,3 +317,46 @@ trigger is specifically the **exponent** (power saving), not the cancellation.
 > geometry = the FI bilinear hypothesis gone variety-free). Dossier:
 > docs/03_research/parity_vs_polarization.md. No reverse theorem (parity-breaking $\Rightarrow$ zeros) exists;
 > that absence is the coordinate.
+
+## ADVERSARY pass (2026-07-02): resolution
+
+**Verdict: UPHELD WITH CORRECTIONS (correct-in-place).** Full attack notes:
+`scratchpad/counting_roads_followup/02_adversary_modulus_only.md` (gitignored).
+
+**Strongest attack and how it resolved.** The screen's original antecedent ("consumes ... only through its
+absolute-value corollary") was falsified by the dossier's own ledger: Fouvry-Kowalski-Michel trace-function
+machinery and Sawin-Shusterman consume a second, deeper tier (weights in all degrees, monodromy
+classifications, angle-equidistribution laws such as vertical Sato-Tate), not just moduli. And without a pin
+on "sign structure", Kloostermania's sign-change engine looks like a counterexample. Resolution: the
+antecedent is corrected to **sign-free consumption** (tier 1 moduli OR tier 2 angle/monodromy; both invariant
+under $Q \mapsto -Q$; no geometric carrier crosses the border), and "sign" is pinned to the **S5 signature**
+(excluding eigenvalue phases like Gauss-sum signs, S3 root numbers, and proof-internal oscillation, which is
+Kuznetsov/operator-sourced per #143). Under the corrected wording every candidate counterexample examined
+(DFI/Kloostermania bilinear forms, FKM trace functions, Sato-Tate inside sieves, Gauss's sign determination,
+root-number arguments, large-sieve/Petersson positivity) **strengthens** the screen: each consumes more than
+moduli yet never the signature, and the tier-2 consumers remain parity-limited themselves (Fouvry-Michel sign
+changes land on almost-primes). The #148 producer-side finding braces it from the other side: purity is
+produced (Weil I/II) with no polarization ever produced, so the consumed corollary is not even downstream of
+a polarization theorem.
+
+**Corrections applied to this dossier** (each marked in place): (1) Section 2 "How it is consumed" rewritten
+with the two-tier taxonomy and the falsifiability disambiguations; (2) Section 1 EH endpoint gains the
+Friedlander-Granville 1989 caution ($\theta = 1$ means every $\theta < 1$); (3) Section 3b headline scoped to
+"RH's **sieve-visible** content does not break parity" and "not consequences of RH" corrected to "not
+**known** to be consequences" ("logically incomparable" softened to "incomparable at the level of known
+implications"); (4) Section 4 screen definition corrected (sign-free antecedent + operational $Q \mapsto -Q$
+test + explicit falsifier + M4-source scope rider); (5) Section 7 open items resolved/pinned.
+
+**Falsification condition left standing (the screen is falsifiable):** any analytic/sieve argument importing
+the Hodge-index / Castelnuovo-Severi inequality itself. None found; literature watch.
+
+**Wiring status.** Both #146 yields are now machine-enforced in
+[`../../experiments/lemma_db/breadth_corpus.py`](../../experiments/lemma_db/breadth_corpus.py): a new
+`weil_consumption` skeleton dimension ('sign-free' fires the #146 screen; 'signature' and 'producer' do not)
+and `axis="level"` as the fourth wrong-axis flavor, plus the sieve-parity corpus row (fires #146 + level-axis
++ #120 input/output + #120 curative + #119 discriminant + Level-3, matching Section 4) and a 'sign-free' tag
+on the Katz-Sarnak row. Self-consistency: the Weil/Rosati master column (tagged 'signature') keeps its
+transfer candidacy (test-enforced); the Ihara/Ramanujan row stays 'na' by the documented tagging discipline
+(tag the claimed route to a signature, not the historical constructions; graph-RH's sign is operator-sourced).
+Test suite: 19/19 before this pass, **23/23 after** (the "16/16" previously recorded here and in
+`breadth_program.md` / `breadth_corpus.md` was stale; the suite was already 19/19 after #143).

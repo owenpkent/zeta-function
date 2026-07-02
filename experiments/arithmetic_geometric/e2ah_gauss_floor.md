@@ -52,6 +52,10 @@ The negative is a coordinate: the model's open slot is provably the only slot.
 
 ## Status
 
-PUBLICATIONS-gate candidate (small, self-contained, machine-checked: an exact min-height theorem
-for prime-forced integer vanishers with the Chebyshev equality case; Lean proof sorry-free and
-axiom-clean). Not yet registered in `PUBLICATIONS.md`; flagged here for the gate.
+Registered as [P10](../../PUBLICATIONS.md#p10) (gate run 2026-07-02, tier DEVELOPING). Novelty
+split: the assembled statement is apparently novel (vF 2008 Section 4 gives the setting with no
+bound); the mechanism is folklore (the rational root theorem with multiplicity; the m = 1 case is
+Mathlib's `den_dvd_of_is_root`), so the row is carried by the formal axis (Mathlib PR: generalized
+multiplicity rational-root floor, absent from Mathlib). Scope note: the uniqueness-at-minimal-degree
+clause is Python-certified only, not in `GaussFloor.lean` (#GF-6 candidate); machine-checked claims
+are floor + equality until it lands.

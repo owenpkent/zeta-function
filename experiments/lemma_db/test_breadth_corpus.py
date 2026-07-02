@@ -137,6 +137,57 @@ def test_mss_corpus_row_disqualified():
     assert match_score(mss.skel) < match_score(M4)
 
 
+def test_modulus_only_consumer_screen_fires():
+    """#146: a technology whose Weil/Deligne contact is sign-free (moduli, angles, monodromy)
+    imports nothing that varies under Q -> -Q, so it cannot re-emit a signature; the screen
+    must fire and kill transfer candidacy (the Kloostermania / trace-function family)."""
+    kloostermania = _S(0, 0, 0, 0, 0, "na", 1, "realization", 1, "na", "na",
+                       weil_consumption="sign-free")
+    fired = battery(kloostermania)
+    assert any("modulus-only" in r for r in fired)
+    assert screen(kloostermania)["transfer_candidate"] is False
+
+
+def test_modulus_only_screen_spares_signature_consumers_and_producers():
+    """#146: consuming the S5 sign itself (Weil's Hodge-index route) or producing purity
+    without a polarization (#148, the Weil I engine) must NOT fire the consumer screen; the
+    master column keeps its transfer candidacy."""
+    weil_route = _S(1, 1, 1, 1, 1, "contingent", 1, "signature", 1, "all-heights", "complex",
+                    "line", "prohibitive", "output-indefinite", weil_consumption="signature")
+    producer = _S(0, 0, 1, 1, 0, "na", 1, "realization", 1, "na", "na",
+                  weil_consumption="producer")
+    assert not any("modulus-only" in r for r in battery(weil_route))
+    assert not any("modulus-only" in r for r in battery(producer))
+    assert screen(weil_route)["transfer_candidate"] is True
+    names = [e.phenomenon for e in query_transfer_candidates()]
+    assert any("Weil/Rosati" in n for n in names)
+
+
+def test_level_of_distribution_is_a_wrong_axis():
+    """#146: the sieve frame's native theta axis (level of distribution) is the fourth
+    shadow-axis flavor; axis='level' must fire the wrong-axis screen and carry a score debit."""
+    eh_frame = _S(0, 0, 0, 0, 0, "contingent", 1, "realization", 1, "na", "na",
+                  "level", "na", "na")
+    line_frame = _S(0, 0, 0, 0, 0, "contingent", 1, "realization", 1, "na", "na",
+                    "line", "na", "na")
+    assert any("wrong-axis" in r for r in battery(eh_frame))
+    assert match_score(eh_frame) < match_score(line_frame)
+
+
+def test_sieve_parity_corpus_row_disqualified():
+    """#146 is on file: the sieve-parity row is DISQUALIFIED, fires the modulus-only-consumer
+    screen AND the level-axis flavor, and sits far below the M4 target (parity = the
+    consumer-side shadow of R1, not M4)."""
+    row = next(e for e in CORPUS if "parity barrier" in e.phenomenon)
+    assert row.verdict == "DISQUALIFIED"
+    assert "#146" in row.rule
+    assert row.skel.weil_consumption == "sign-free"
+    fired = battery(row.skel)
+    assert any("modulus-only" in r for r in fired)
+    assert any("wrong-axis" in r for r in fired)
+    assert match_score(row.skel) < match_score(M4)
+
+
 def test_m4_has_full_fingerprint():
     """The M4 target must carry every fingerprint value (it is the ideal profile)."""
     assert M4.axis == "line"

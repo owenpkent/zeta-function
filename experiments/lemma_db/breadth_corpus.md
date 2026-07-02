@@ -61,15 +61,24 @@ kills it) | TARGET (an actual standing M4 construction target).
 | **Kudla arithmetic theta lift** | automorphic | contingent | central L-deriv | yes | central L-value | DISQUALIFIED (#113 BSD regime) | the L-value/derivative rule |
 | **Epstein zeta (non-Euler)** | analytic NT | n/a | realization | no | n/a | DISQUALIFIED (the K2 control: off-line zeros) | a D-H-class wrong-approach detector |
 | **Ihara zeta / Ramanujan graphs** | spectral graph theory | contingent | signature (graph-RH) | yes (Frobenius=adjacency) | all-heights | COMPONENT (= function-field shadow) | the proven-case signature in graph clothing |
-| **Sieve parity barrier / bilinear parity-breakers** (Vinogradov Type I/II, Bombieri-Vinogradov, Friedlander-Iwaniec $x^2{+}y^4$, Zhang Type III, Sawin-Shusterman /$\mathbb{F}_q[T]$) | analytic number theory (sieve) | n/a (the $\mu$-sign is input-side, #120 split) | realization | no | Levels 2-3 (survives EH/GRH) | DISQUALIFIED (**modulus-only-consumer #146**, documentation-level; wrong-axis: **level of distribution**, the fourth shadow axis) | parity = the consumer-side shadow of R1, not M4: every power-saving break consumes Weil/Deligne purity as a modulus bound and discards the sign; yields the sharpened R1 WATCH trigger (variety-free power-saving bilinear $\mu$ cancellation near $\sqrt x$) |
+| **Sieve parity barrier / bilinear parity-breakers** (Vinogradov Type I/II, Bombieri-Vinogradov, Friedlander-Iwaniec $x^2{+}y^4$, Zhang Type III, Sawin-Shusterman /$\mathbb{F}_q[T]$) | analytic number theory (sieve) | n/a (the $\mu$-sign is input-side, #120 split) | realization | no | Levels 2-3 (survives EH/GRH) | DISQUALIFIED (**modulus-only-consumer #146**, machine-enforced 2026-07-02; wrong-axis: **level of distribution**, the fourth shadow axis) | parity = the consumer-side shadow of R1, not M4: every power-saving break consumes Weil/Deligne purity through sign-free corollaries (moduli, or the FKM/Sawin-Shusterman angle/monodromy tier) and discards the S5 sign at the border; yields the sharpened R1 WATCH trigger (variety-free power-saving bilinear $\mu$ cancellation near $\sqrt x$) |
 
-**Documentation-level battery additions (2026-07-01, #146; not yet in `breadth_corpus.py`, which stays at
-16/16):** the **modulus-only-consumer screen** (a polarization consumed only as $|S| \le 2\sqrt p$ cannot be
-re-emitted as a signature; retires the exponential-sum-import family as M4 sources while leaving it alive as
-a purity consumer) and the **level-of-distribution** wrong-axis flavor (the sieve frame's native $\theta$
-axis, joining spacing / central-rank / strip-width). Both pending the ADVERSARY pass
-[`parity_vs_polarization.md`](../../docs/03_research/parity_vs_polarization.md) requests before
-machine-enforcement.
+**Battery additions (2026-07-01, #146; ADVERSARY-passed and machine-enforced in `breadth_corpus.py`
+2026-07-02, suite 23/23; the "stays at 16/16" note previously here was stale, the suite was already 19/19
+after #143):** the **modulus-only-consumer screen**, upheld with a corrected antecedent: a polarization
+consumed only through **sign-free corollaries** (the modulus tier $|S| \le 2\sqrt p$ OR the angle/monodromy
+tier: weights in all degrees, monodromy classifications, equidistribution laws) cannot be re-emitted as a
+signature, because every imported statement is invariant under $Q \mapsto -Q$ and no geometric carrier
+crosses the border; retires the exponential-sum-import family (Kloostermania, trace-function machinery) as
+M4 **sources** while leaving it alive as a purity consumer and as an ingredient in operator-signed
+assemblies (#143 branch). "Sign" is pinned to the S5 signature, not eigenvalue phases (Gauss-sum signs, root
+numbers = S3 data) and not proof-internal oscillation (Kloostermania's sign changes are Kuznetsov-sourced).
+And the **level-of-distribution** wrong-axis flavor (the sieve frame's native $\theta$ axis,
+`axis="level"`), joining spacing / central-rank / strip-width. Encoding: the `weil_consumption` skeleton
+dimension ('sign-free' fires; 'signature'/'producer' do not; Katz-Sarnak tagged 'sign-free', the
+Ihara/Ramanujan row stays 'na' by the tagging discipline: tag the claimed route to a signature, not the
+historical constructions). Resolution: the ADVERSARY-pass section of
+[`parity_vs_polarization.md`](../../docs/03_research/parity_vs_polarization.md).
 
 ## Open acquisition queue (Pillar 5 of the program: where to look next)
 

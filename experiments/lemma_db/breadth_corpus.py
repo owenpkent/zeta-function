@@ -39,6 +39,24 @@ or unitary, which manufactures the order as a real spectrum) or a positivity of 
 Lee-Yang class (already graded wrong-polarity by #95/#119). See toy/circle_interlacing.py
 and the killed circle-engine node in transfer_search.py.
 
+THE MODULUS-ONLY-CONSUMER SCREEN (#146, ADVERSARY-passed 2026-07-02) is the
+consumer-side dual of the #148 producer finding: a technology whose Weil/Deligne
+contact is only through SIGN-FREE corollaries -- the modulus tier (|S| <= 2 sqrt p,
+|alpha| <= q^{i/2}) or the angle/monodromy tier (weights in all degrees, monodromy
+classifications, equidistribution laws such as vertical Sato-Tate) -- imports nothing
+that varies under flipping the polarizing form Q -> -Q, and no geometric carrier
+(cycle lattice + ample cone) crosses the border; so no signature can be re-emitted
+downstream and the family (Kloostermania, exponential-sum technology, trace-function
+machinery, the sieve parity-breakers) is generically retired as an M4 SOURCE while
+staying fully alive as a purity (R1) consumer. 'Sign' means the S5 signature (which
+class pairs positively), NOT eigenvalue phases (Gauss-sum signs, root numbers = S3
+data) and NOT proof-internal oscillation (Kloosterman sign changes are Kuznetsov /
+operator-sourced, the #143 branch). Tagging discipline (the Ihara boundary call): tag
+the candidate's CLAIMED ROUTE to a signature, not the historical construction of its
+examples (graph-RH's sign is operator-sourced even though LPS graphs consume Deligne).
+Falsifier: an analytic argument importing the Hodge-index inequality itself. See
+docs/03_research/parity_vs_polarization.md (the #146 dossier + ADVERSARY resolution).
+
 Run:
   python -m experiments.lemma_db.breadth_corpus
 """
@@ -68,7 +86,8 @@ class Skeleton:
     regime: str            # 'all-heights' | 'L-value' | 'Level-3' | 'na'
     root_half: str         # 'complex' | 'real' | 'na'  (#119 discriminant: t^2-4q vs 0)
     # acq1 fingerprint dimensions (why a CONTINGENT positivity can still be wrong)
-    axis: str = "na"           # 'line' (RH) | 'spacing' | 'central-rank' | 'strip-width' | 'na'
+    axis: str = "na"           # 'line' (RH) | 'spacing' | 'central-rank' | 'strip-width' |
+                               # 'level' (of distribution, the sieve theta axis, #146) | 'na'
     flip: str = "na"           # 'prohibitive' (fixed locus) | 'curative' (locus relocates) | 'na'
     side: str = "na"           # 'output-indefinite' (RH) | 'input-definite' (measure-class) | 'na'
     # #143 mechanism dimension: where does the certifying step's ORDER come from?
@@ -76,6 +95,15 @@ class Skeleton:
                                # quantity, MSS-style: the order is presupposed) |
                                # 'operator' (a self-adjoint/unitary realization the
                                # phenomenon carries natively manufactures the order) | 'na'
+    # #146 dimension: how the candidate touches the Weil/Deligne (polarization) input.
+    weil_consumption: str = "na"   # 'sign-free' (only sign-blind corollaries: eigenvalue
+                                   # moduli/purity, dimensions, monodromy + angle-
+                                   # equidistribution laws; invariant under Q -> -Q,
+                                   # no carrier crosses the border) |
+                                   # 'signature' (consumes the (1,n-1) sign itself,
+                                   # Weil's Hodge-index route) |
+                                   # 'producer' (produces purity with no polarization,
+                                   # the Weil I engine, #148) | 'na'
 
 
 @dataclass
@@ -98,9 +126,9 @@ M4 = Skeleton(
 
 
 def _S(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root,
-       axis="na", flip="na", side="na", order_source="na"):
+       axis="na", flip="na", side="na", order_source="na", weil_consumption="na"):
     return Skeleton(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root,
-                    axis, flip, side, order_source)
+                    axis, flip, side, order_source, weil_consumption)
 
 
 # ---------------------------------------------------------------------------
@@ -111,8 +139,9 @@ CORPUS = [
     # --- transfer candidates / targets (the contingent, fully-fingerprinted rows) ---
     Entry("Weil/Rosati form on a surface /F_q", "algebraic geometry",
           _S(1,1,1,1,1,"contingent",1,"signature",1,"all-heights","complex",
-             "line","prohibitive","output-indefinite"),
-          "TRANSFER-CANDIDATE", "", "the master column = function-field RH = lever B; the template"),
+             "line","prohibitive","output-indefinite", weil_consumption="signature"),
+          "TRANSFER-CANDIDATE", "", "the master column = function-field RH = lever B; the template; "
+          "consumes the S5 sign itself (Hodge index), the direction #146 never fires on"),
     Entry("Faltings-Hriljac arithmetic Hodge index", "Arakelov geometry",
           _S(1,1,1,0,1,"contingent",1,"signature",1,"all-heights","complex",
              "line","prohibitive","output-indefinite"),
@@ -171,9 +200,11 @@ CORPUS = [
           "acq1: level repulsion flips on the VERTICAL spacing law, orthogonal to the line; "
           "compatible with beta=0.51"),
     Entry("Katz-Sarnak symmetry type (low-lying zeros)", "automorphic / RMT",
-          _S(1,1,1,1,1,"contingent",1,"realization",1,"L-value","complex","central-rank","na","na"),
-          "DISQUALIFIED", "wrong-axis (#120) + L-value (#113) + circular (S7)",
-          "acq1: arithmetic, but governs the CENTRAL POINT (rank); a corollary of RH where proven"),
+          _S(1,1,1,1,1,"contingent",1,"realization",1,"L-value","complex","central-rank","na","na",
+             weil_consumption="sign-free"),
+          "DISQUALIFIED", "wrong-axis (#120) + L-value (#113) + circular (S7) + modulus-only (#146)",
+          "acq1: arithmetic, but governs the CENTRAL POINT (rank); a corollary of RH where proven; "
+          "its engine (Deligne-Katz equidistribution) is a tier-2 sign-free Weil consumption"),
     # --- acq2 batch (#121): the full-fingerprint test; the closest non-AG near-misses ---
     Entry("Bridgeland stability + support-property form", "derived categories / stability",
           _S(1,1,1,0,1,"unconditional",1,"realization",0,"na","na","na","curative","output-selection"),
@@ -208,6 +239,22 @@ CORPUS = [
           "= self-adjointness) is presupposed; the circle-rooted variant does not exist "
           "(killed node in transfer_search.py, toy/circle_interlacing.py 11/11); the classical "
           "circle certificate (Schur-Cohn 1922) is instead FE + Hermitian PSD = the M4 shape"),
+    # --- #146: the modulus-only-consumer kill (the sieve parity corpus; ADVERSARY-passed 2026-07-02) ---
+    Entry("Sieve parity barrier / bilinear parity-breakers (Vinogradov Type I/II, "
+          "Bombieri-Vinogradov, Deshouillers-Iwaniec, Friedlander-Iwaniec x^2+y^4, "
+          "Zhang Type III, Sawin-Shusterman /F_q[T])", "analytic number theory (sieve)",
+          _S(0,0,0,0,0,"na",1,"realization",1,"Level-3","real",
+             "level","curative","input-definite", weil_consumption="sign-free"),
+          "DISQUALIFIED", "modulus-only-consumer (#146) + wrong-axis: level (#146 flavor of #120) + "
+          "input/output (#120) + curative (#120) + discriminant (#119)",
+          "#146: every power-saving parity-break consumes Weil/Deligne purity through sign-free "
+          "corollaries (moduli, or the FKM / Sawin-Shusterman angle/monodromy tier) and discards "
+          "the S5 sign at the border: parity = the consumer-side shadow of R1, not M4; the mu-sign "
+          "is an INPUT-side ambiguity (#120); Type II ranges are solved-for per problem (curative); "
+          "Kloostermania's sign changes are Kuznetsov/operator-sourced (#143 branch); D-H is exempt "
+          "by type (no Euler product = nothing to sieve), so dh_engages=1 records the structural "
+          "precondition, not discrimination leverage; yields the sharpened R1 WATCH trigger "
+          "(variety-free power-saving bilinear mu cancellation near sqrt x)"),
     # --- realization / K1 / perfectness rows (earlier sweeps) ---
     Entry("Hirzebruch signature operator", "index theory",
           _S(1,1,1,0,1,"na",1,"realization",0,"all-heights","na"),
@@ -279,7 +326,7 @@ def match_score(s: Skeleton, target: Skeleton = M4) -> int:
     # acq1 fingerprint dimensions
     if s.axis == "line":
         score += 2
-    elif s.axis in ("spacing", "central-rank", "strip-width"):
+    elif s.axis in ("spacing", "central-rank", "strip-width", "level"):
         score -= 2
     if s.flip == "prohibitive":
         score += 2
@@ -291,6 +338,9 @@ def match_score(s: Skeleton, target: Skeleton = M4) -> int:
         score -= 2
     # #143: a certifying step that presupposes the order it selects on is a transfer debit
     if s.order_source == "selection":
+        score -= 2
+    # #146: a sign-free Weil/Deligne import can never source the signature
+    if s.weil_consumption == "sign-free":
         score -= 2
     return score
 
@@ -313,9 +363,10 @@ def battery(s: Skeleton) -> list:
         fired.append("L-value/order-of-vanishing rule #113 (BSD/Gross-Zagier regime, not all-heights)")
     if s.regime == "Level-3":
         fired.append("Level-3 (statistical; compatible with a beta=0.51 zero)")
-    # acq1 fingerprint screens (the #120 batch)
-    if s.axis in ("spacing", "central-rank", "strip-width"):
-        fired.append(f"wrong-axis screen #120 (flips on the {s.axis} axis, not the line)")
+    # acq1 fingerprint screens (the #120 batch; 'level' = the fourth shadow flavor, #146)
+    if s.axis in ("spacing", "central-rank", "strip-width", "level"):
+        fired.append(f"wrong-axis screen #120 (flips on the {s.axis} axis, not the line"
+                     + ("; level-of-distribution flavor #146" if s.axis == "level" else "") + ")")
     if s.flip == "curative":
         fired.append("curative-flip screen #120 (locus relocates and zeros track it; K1 made concrete)")
     if s.side == "input-definite":
@@ -333,6 +384,13 @@ def battery(s: Skeleton) -> list:
                      "bound on an ORDERED quantity; an exact locus, all roots ON a circle or line, has "
                      "no native one-sided order, so the order is presupposed: an operator realization "
                      "(self-adjoint/unitary) or a Lee-Yang-class positivity, wrong polarity per #95/#119)")
+    # #146 provenance screen (the modulus-only-consumer kill; ADVERSARY-passed 2026-07-02)
+    if s.weil_consumption == "sign-free":
+        fired.append("modulus-only-consumer screen #146 (the Weil/Deligne import is sign-free: moduli, "
+                     "dimensions, monodromy/angle-equidistribution only, invariant under Q -> -Q; the S5 "
+                     "signature never crosses the border and cannot be re-emitted, so the technology is "
+                     "not an M4 SOURCE; it stays alive as a purity/R1 consumer, and as an ingredient in "
+                     "assemblies whose sign is sourced elsewhere, per the #143 operator branch)")
     return fired
 
 
@@ -446,15 +504,27 @@ def demo() -> int:
         sel = [r for r in battery(sk) if "selection-order" in r]
         print(f"     {nm:42} -> {sel[0][:60] + '...' if sel else 'selection-order screen does not fire'}")
 
+    print("\n  #146 MODULUS-ONLY-CONSUMER screen demo (sign-free import vs the signed route):")
+    for nm, sk in [
+        ("Kloostermania / trace-function import (sign-free)",
+         _S(0,0,0,0,0,"na",1,"realization",1,"na","na", weil_consumption="sign-free")),
+        ("Weil/Rosati route (consumes the S5 sign itself)",
+         _S(1,1,1,1,1,"contingent",1,"signature",1,"all-heights","complex",
+            "line","prohibitive","output-indefinite", weil_consumption="signature")),
+    ]:
+        moc = [r for r in battery(sk) if "modulus-only" in r]
+        print(f"     {nm:50} -> {moc[0][:56] + '...' if moc else 'modulus-only screen does not fire'}")
+
     print("\n  AIM (post-acq2: the breadth search has CONVERGED):")
     a = aim()
     print(f"     status: {a['status']}")
     print(f"     pivot:  {a['pivot']}")
 
     print("\n  HONEST NOTE: RETRIEVAL + SCREENING, a prior + a filter, not a transfer certificate.")
-    print("  The scored output is the growth of the disqualifier battery (now ~14 screens; 4 from")
-    print("  acq1, 2 from acq2, 1 from #143 selection-order), not the count of areas surveyed. Every")
-    print("  new row passes a builder->adversary + D-H/polarity control before entry.")
+    print("  The scored output is the growth of the disqualifier battery (now ~15 screens; 4 from")
+    print("  acq1, 2 from acq2, 1 from #143 selection-order, 1 from #146 modulus-only-consumer,")
+    print("  ADVERSARY-passed 2026-07-02), not the count of areas surveyed. Every new row passes")
+    print("  a builder->adversary + D-H/polarity control before entry.")
     print("  AIM: CONVERGED (see above).")
     print("=" * 88)
     return 0

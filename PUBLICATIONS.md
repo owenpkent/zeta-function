@@ -114,6 +114,7 @@ the real standalone output.
 | [P7](#p7) | RH is Π⁰₁ + the Lean kernel witness | Expository note | Lean anchors; logical fact classical | 🟡 DEVELOPING | Note / bundle into P4 | evaluated |
 | [P8](#p8) | The stealth window quantified (e^{-4πx} wall, 370× cancellation, D-H-aware defect) | Analytic note | Numerical + prolate analysis | 🟡 DEVELOPING | Fold into P4 (no standalone) | lit-checked: rate is prior (Fuchs+Connes) |
 | [P9](#p9) | Paired-subtorus circle-rootedness: E over conjugate-paired phases of det(zI−DU), U unitary, is circle-rooted (all m) | Theorem (positive) | Elementary proof, every step numerically verified (50-digit) | 🟡 DEVELOPING | arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR | novelty-passed; **draft written** ([`publications/paired_subtorus/`](publications/paired_subtorus/), 5 pp, compiles); gate: checker verdicts + MathSciNet (human) + citation pins |
+| [P10](#p10) | The Gauss-lemma height floor: minimal log-height of a prime-forced integer vanisher = ψ(x) exactly (the vF disc model has no Siegel-lemma slot); multiplicity rational-root floor absent from Mathlib | Negative (closed branch) + Formal | Lean, axiom-clean (#GF-1..#GF-5) + integer-exact Python; uniqueness clause numerics-only (#GF-6 candidate) | 🟡 DEVELOPING | Mathlib PR (generalized multiplicity rational-root floor); exposition folds into P4 counting-roads; no standalone note | novelty-passed 2026-07-02 |
 
 ---
 
@@ -390,6 +391,46 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **RH-independence.** Fully standalone.
 - **Venue / next.** arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR. **Gate before submission:** read arXiv:2606.15003 in full; sweep Ruelle's Grace-like / Lee-Yang graph-counting papers; a MathSciNet session (the pass was web-only). Then draft.
 
+### P10 {#p10}
+
+**The Gauss-lemma height floor (the vF disc model's empty Siegel slot).**
+
+- **Statement.** Any nonzero $f \in \mathbb{Z}[z]$ vanishing at $1/p$ with multiplicity $\ge m_p$ for
+  each prime $p \in P$ has $(pz-1)^{m_p} \mid f$ in $\mathbb{Z}[z]$, hence
+  $\log|\mathrm{lead}(f)| \ge \sum_P m_p \log p$. With van Frankenhuijsen's multiplicities
+  $m_p = \lfloor \log_p x \rfloor$ the floor is exactly Chebyshev $\psi(x)$
+  ($\prod p^{m_p} = \mathrm{lcm}(1..x) = e^{\psi(x)}$, integer-exact), attained by
+  $\prod_{p \le x}(pz-1)^{m_p}$; at the minimal degree the extremal vanisher is unique up to sign.
+  No-go meaning: the S3 (Siegel-lemma) slot of vF's 2008 disc model is provably empty; the model's
+  only open slot is the S4/R1 cheap-multiplicity operator.
+- **Provenance.** The "smallest checkable sub-question" of the vF deep read (reading note Section 8),
+  executed as e2ah (LEARNINGS #149; [`experiments/arithmetic_geometric/e2ah_gauss_floor.md`](experiments/arithmetic_geometric/e2ah_gauss_floor.md),
+  [`lean/ZetaRH/GaussFloor.lean`](lean/ZetaRH/GaussFloor.lean), sorry-free, axiom-clean; Python probe
+  integer-exact, all PASS incl. a complete no-cheaper-vanisher certificate at minimal degree).
+- **Novelty pass (2026-07-02, done).** Assembled statement APPARENTLY NOVEL (not found in the vF paper
+  itself: Section 4 re-read from the PDF this session, no lower bound / Gauss lemma / lcm appears; not
+  found in the G-S / integer-Chebyshev / lcm literatures; no direct-statement hit). Mechanism FOLKLORE
+  AND NAMED: the rational root theorem with multiplicity via Gauss descent (single-point case textbook
+  and already in Mathlib as `den_dvd_of_is_root`); nearest published relatives are the same
+  lcm-vs-polynomial trade in reverse (Gelfond-Schnirelman 1936; Nair, Amer. Math. Monthly 1982;
+  Pritsker, Canad. J. Math. 2005) and the integer-Chebyshev critical-factor divisibility
+  (Aparicio; Borwein-Erdelyi 1996; Pritsker 2005). MATH AXIS: parked as new mathematics (below the
+  standalone bar; expository home = P4 counting-roads). FORMAL AXIS: viable; Mathlib has the identity
+  side (`Chebyshev.lcmUpto`, `psi_eq_log_lcmUpto`, `factorization_lcmUpto`) but NOT the multiplicity
+  or multi-point rational-root floor (pinned-copy grep; master unchecked). Full report:
+  `scratchpad/counting_roads_followup/01_surveyor_gauss_floor_novelty.md` (untracked).
+- **Verification.** #GF-1..#GF-5 kernel-verified ([propext, Classical.choice, Quot.sound]); Python
+  integer-exact with an adversarial interpolation half. Named gap: the uniqueness-at-minimal-degree
+  clause is numerics + trivial-on-paper, not yet Lean (#GF-6 candidate).
+- **D-H soundness.** Exempt (Arch 2 + pure formal/elementary; no zeta content at all).
+- **RH-independence / K1.** Fully unconditional and RH-independent; no zeros of zeta appear; neither
+  implies nor is implied by RH. A no-go coordinate about a model's proof-slot, not a reformulation.
+- **Venue / next.** Mathlib PR for the generalized floor (extend `RingTheory/Polynomial/RationalRoot.lean`
+  with `den^rootMultiplicity ∣ leadingCoeff` + the coprime-product version; optional `lcmUpto`
+  corollary). **Next:** generalize #GF-2/#GF-5 to the Mathlib idiom and check master + open PRs/Zulip
+  for a multiplicity rational root theorem; optionally land #GF-6 first so the full statement is
+  machine-checked.
+
 ---
 
 ## Parked / pre-empted
@@ -505,3 +546,13 @@ Kept so they are not re-proposed as novel.
   marginal positivity restated) is already P4, and the rest is tooling (a verifier-grounded RL rehearsal
   on the closed function-field case). Honest call per gate item 4b (it would be a reformulation/tooling
   note, not new content). It stays a repo artifact, citable from P4 as a methodology demonstration.
+- 2026-07-02: **P10 registered (the Gauss-lemma height floor, LEARNINGS #149).** Gate run on a fresh
+  SURVEYOR novelty pass: the assembled statement is apparently novel (vF 2008 Section 4 re-read from
+  the PDF: the setting and the psi(x) value are there, no lower bound anywhere; no direct-statement hit
+  in the Gelfond-Schnirelman / Nair / Pritsker / integer-Chebyshev literatures, which run the same
+  lcm-vs-polynomial trade in reverse), while the mechanism is folklore (the rational root theorem with
+  multiplicity; the m = 1 case is already Mathlib's `den_dvd_of_is_root`). Split verdict: math axis
+  parked-as-new-math (expository home = P4 counting-roads), formal axis carries the row (Mathlib has
+  `Chebyshev.lcmUpto` + `psi_eq_log_lcmUpto` but no multiplicity or multi-point rational-root floor).
+  Tier 🟡 DEVELOPING; next = generalize #GF-2/#GF-5 to the `RationalRoot.lean` idiom + a Mathlib
+  master/open-PR/Zulip check; optional #GF-6 (the uniqueness clause, currently Python-only) first.
