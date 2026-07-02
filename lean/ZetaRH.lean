@@ -33,3 +33,4 @@ import ZetaRH.VT_NP1
 import ZetaRH.ToyModel
 import ZetaRH.SchurCohn
 import ZetaRH.GaussLucas
+import ZetaRH.GaussFloor
