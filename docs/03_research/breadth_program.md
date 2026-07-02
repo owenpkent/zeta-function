@@ -182,6 +182,22 @@ more screens:
     $\zeta$ has no zeros, disqualified by regime *even when structurally deep* (the $\hat\Gamma$-integral
     lattice is a real integral structure, not numerology).
 
+The counting-side frame audit (2026-07-01, #145/#146) added one more screen and a new flavor of an old one,
+both registered at **documentation level only** (not wired into `breadth_corpus.py`, which stays at 16/16;
+the parity dossier itself requests an ADVERSARY pass before the screen is banked as machine-enforced):
+
+13. **The modulus-only-consumer screen (#146, documentation-level).** If a technology consumes a
+    polarization theorem only through its absolute-value corollary ($|S| \le 2\sqrt p$,
+    $|\alpha| \le q^{i/2}$), it discards the sign structure at the border and cannot re-emit a signature;
+    it can never be an M4 source no matter how deep its imports. Retires generically the "analytic imports
+    of Weil/Deligne bounds" family (Kloostermania, exponential-sum technology, trace-function machinery) as
+    polarization sources, while leaving it fully alive as a purity (R1) consumer. Source:
+    [`parity_vs_polarization.md`](parity_vs_polarization.md).
+
+Screen 8 (wrong-axis) also gains a **fourth shadow-axis flavor**: the **level of distribution**
+($\theta \in [1/2, 1]$, the sieve frame's native averaged modulus-range axis), joining spacing /
+central-rank / strip-width (#146).
+
 **The M4 polarity fingerprint (the acq1 yield, sharpened by acq2).** Screens 2 + 8 + 9 + 10 + 11 compose
 into a near necessary-and-sufficient profile: a contingent positivity is a transfer candidate iff it is
 **contingent + complex-root + line-axis + output-indefinite-with-the-sign-flipping + prohibitive-on-a-fixed-
@@ -199,7 +215,9 @@ more breadth draws until a genuinely new orbit point appears. Encoded in `breadt
 **The battery is the real output.** A sweep is scored not by "areas covered" but by **disqualifiers
 produced**. Each new disqualifier is a permanent compression of the search space for every future sweep.
 The program's success metric is the *growth and sharpening of this battery*, plus any P1 transfer source or
-P3 component. (Tally so far: ~13 screens, 4 from acq1, 2 from acq2; the search has CONVERGED, #121.)
+P3 component. (Tally so far: ~14 screens: 4 from acq1, 2 from acq2, the machine-enforced selection-order
+screen from #143, and the documentation-level modulus-only-consumer screen from #146; the search has
+CONVERGED, #121.)
 
 ## 5. Breadth acquisition: how to reach the UNEXPECTED locations
 

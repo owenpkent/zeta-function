@@ -61,6 +61,15 @@ kills it) | TARGET (an actual standing M4 construction target).
 | **Kudla arithmetic theta lift** | automorphic | contingent | central L-deriv | yes | central L-value | DISQUALIFIED (#113 BSD regime) | the L-value/derivative rule |
 | **Epstein zeta (non-Euler)** | analytic NT | n/a | realization | no | n/a | DISQUALIFIED (the K2 control: off-line zeros) | a D-H-class wrong-approach detector |
 | **Ihara zeta / Ramanujan graphs** | spectral graph theory | contingent | signature (graph-RH) | yes (Frobenius=adjacency) | all-heights | COMPONENT (= function-field shadow) | the proven-case signature in graph clothing |
+| **Sieve parity barrier / bilinear parity-breakers** (Vinogradov Type I/II, Bombieri-Vinogradov, Friedlander-Iwaniec $x^2{+}y^4$, Zhang Type III, Sawin-Shusterman /$\mathbb{F}_q[T]$) | analytic number theory (sieve) | n/a (the $\mu$-sign is input-side, #120 split) | realization | no | Levels 2-3 (survives EH/GRH) | DISQUALIFIED (**modulus-only-consumer #146**, documentation-level; wrong-axis: **level of distribution**, the fourth shadow axis) | parity = the consumer-side shadow of R1, not M4: every power-saving break consumes Weil/Deligne purity as a modulus bound and discards the sign; yields the sharpened R1 WATCH trigger (variety-free power-saving bilinear $\mu$ cancellation near $\sqrt x$) |
+
+**Documentation-level battery additions (2026-07-01, #146; not yet in `breadth_corpus.py`, which stays at
+16/16):** the **modulus-only-consumer screen** (a polarization consumed only as $|S| \le 2\sqrt p$ cannot be
+re-emitted as a signature; retires the exponential-sum-import family as M4 sources while leaving it alive as
+a purity consumer) and the **level-of-distribution** wrong-axis flavor (the sieve frame's native $\theta$
+axis, joining spacing / central-rank / strip-width). Both pending the ADVERSARY pass
+[`parity_vs_polarization.md`](../../docs/03_research/parity_vs_polarization.md) requests before
+machine-enforcement.
 
 ## Open acquisition queue (Pillar 5 of the program: where to look next)
 
