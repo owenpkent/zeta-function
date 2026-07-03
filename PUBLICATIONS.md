@@ -420,16 +420,26 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   or multi-point rational-root floor (pinned-copy grep; master unchecked). Full report:
   `scratchpad/counting_roads_followup/01_surveyor_gauss_floor_novelty.md` (untracked).
 - **Verification.** #GF-1..#GF-5 kernel-verified ([propext, Classical.choice, Quot.sound]); Python
-  integer-exact with an adversarial interpolation half. Named gap: the uniqueness-at-minimal-degree
-  clause is numerics + trivial-on-paper, not yet Lean (#GF-6 candidate).
+  integer-exact with an adversarial interpolation half. The uniqueness-at-minimal-degree gap is now
+  CLOSED: #GF-6 machine-checked 2026-07-02 (`gauss_floor_rank_one` + `canonical_dvd_of_vanishing` +
+  `canonical_natDegree` in [`GaussFloor.lean`](lean/ZetaRH/GaussFloor.lean)), so the full P10 statement
+  (floor + equality + uniqueness) is kernel-verified.
 - **D-H soundness.** Exempt (Arch 2 + pure formal/elementary; no zeta content at all).
 - **RH-independence / K1.** Fully unconditional and RH-independent; no zeros of zeta appear; neither
   implies nor is implied by RH. A no-go coordinate about a model's proof-slot, not a reformulation.
 - **Venue / next.** Mathlib PR for the generalized floor (extend `RingTheory/Polynomial/RationalRoot.lean`
   with `den^rootMultiplicity ∣ leadingCoeff` + the coprime-product version; optional `lcmUpto`
-  corollary). **Next:** generalize #GF-2/#GF-5 to the Mathlib idiom and check master + open PRs/Zulip
-  for a multiplicity rational root theorem; optionally land #GF-6 first so the full statement is
-  machine-checked.
+  corollary). **Progress (2026-07-02, both preconditions DONE):** (a) prior-art check against master +
+  open PRs + Zulip: CLEAR-TO-PR (master has only the m = 1 case `den_dvd_of_is_root`/`num_dvd_of_is_root`;
+  Loogle certifies no declaration joins `den` with `rootMultiplicity`; nearest PR #24172 closed unmerged,
+  multiplicity-free; note: `scratchpad/counting_roads_followup/02_surveyor_mathlib_prior_art.md`, untracked);
+  (b) the generalization is machine-checked in FULL Mathlib generality (UFD $A$, fraction field $K$, the
+  exact typeclass context of `RationalRoot.lean`): #RR-1 `den_pow_rootMultiplicity_dvd_leadingCoeff` +
+  #RR-2 `prod_den_pow_rootMultiplicity_dvd_leadingCoeff` + PR-worthy supporting lemmas (`isPrimitive_pow`,
+  `isPrimitive_prod`, one-sided `dvd_of_fraction_map_dvd`) in
+  [`lean/ZetaRH/RationalRootFloor.lean`](lean/ZetaRH/RationalRootFloor.lean), sorry-free, axiom-clean,
+  build green. **Next:** open the mathlib4 PR (port to master, naming review expected) after P1/P2 review
+  bandwidth clears; optional `lcmUpto` corollary.
 
 ---
 

@@ -31,6 +31,13 @@ Targets (all sorry-free, axiom-clean):
          is root multiplicity of f at 1/p over Q (where 1/p lives); the descent to
          Z[X]-divisibility is Gauss's lemma (linearFactor_pow_isPrimitive +
          dvd_of_map_dvd through the primitive part), then #GF-4.
+  #GF-6  gauss_floor_rank_one : minimal-degree rigidity (the e2ah rank-one clause).
+         canonical_dvd_of_vanishing shows the canonical product divides EVERY
+         prime-forced vanisher (the root factors at the distinct points 1/p are
+         pairwise coprime over Q; the linear factors pX - 1 are NOT coprime in
+         Z[X], so the recombination is on the polynomial side), and any vanisher of
+         degree at most D = sum m_p is an integer multiple of the canonical
+         product: the vanisher lattice at the minimal degree has rank 1.
 
 The floor is RH-independent, K1-clean (no zeros of zeta appear), and elementary; its
 role in the program is a NO-GO coordinate, not a positivity statement. Numerical
@@ -40,6 +47,7 @@ canonical-product equality, cofactor stress, naive-interpolation stress all PASS
 
 import Mathlib.Algebra.Polynomial.BigOperators
 import Mathlib.Algebra.Polynomial.Div
+import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.Algebra.Order.Ring.Abs
 import Mathlib.RingTheory.Polynomial.GaussLemma
 import Mathlib.RingTheory.Coprime.Lemmas
@@ -219,10 +227,109 @@ theorem gauss_floor_of_vanishing (f : ℤ[X]) (hf : f ≠ 0) (P : Finset ℕ) (m
   gauss_floor f hf P m hP fun p hp =>
     linearFactor_pow_dvd_of_rootMultiplicity (hP p hp).ne_zero (hvan p hp)
 
+/-! ## #GF-6: minimal-degree rigidity (the rank-one clause)
+
+    At the minimal degree `D = ∑ m p` the integer vanisher lattice is rank 1: the
+    canonical product divides every prime-forced vanisher (the root factors at the
+    distinct points `1/p` are pairwise coprime over `ℚ`, and the product descends
+    by primitivity), so any vanisher of degree at most `D` is an integer multiple
+    of the canonical product. Numerical companion: the minimal-degree rigidity
+    probe in `experiments/arithmetic_geometric/e2ah_gauss_floor.py`. -/
+
+/-- The `ℚ`-factorization of the mapped prime factor: `(p·X - 1)^m` maps to the
+unit `C (p^m)` times the root factor `(X - C (1/p))^m`. (The `hfac` step of #GF-5,
+extracted as a standalone lemma.) -/
+lemma map_linearFactor_pow {p : ℕ} (hp : p ≠ 0) (m : ℕ) :
+    ((C (p : ℤ) * X - 1 : ℤ[X]) ^ m).map (Int.castRingHom ℚ)
+      = C ((p : ℚ) ^ m) * (X - C ((p : ℚ)⁻¹)) ^ m := by
+  have hpQ : (p : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr hp
+  rw [Polynomial.map_pow, Polynomial.map_sub, Polynomial.map_mul, map_C,
+    Polynomial.map_X, Polynomial.map_one, C_pow, ← mul_pow]
+  congr 1
+  rw [mul_sub, ← C_mul, mul_inv_cancel₀ hpQ, C_1]
+  norm_num
+
+/-- **The canonical product divides every prime-forced vanisher.** If `f ∈ ℤ[X]`
+vanishes at `1/p` over `ℚ` with multiplicity at least `m p` for every prime
+`p ∈ P`, then `∏_{p ∈ P} (p·X - 1)^{m p} ∣ f` in `ℤ[X]`. The root factors at the
+distinct points `1/p` are pairwise coprime over `ℚ` (the recombination is on the
+POLYNOMIAL side; the linear factors `p·X - 1` themselves are NOT pairwise coprime
+in `ℤ[X]`, e.g. `2X - 1 ≡ 5X - 1 mod 3`), and the product descends to `ℤ[X]` by
+primitivity. -/
+theorem canonical_dvd_of_vanishing (f : ℤ[X]) (P : Finset ℕ) (m : ℕ → ℕ)
+    (hP : ∀ p ∈ P, Nat.Prime p)
+    (hvan : ∀ p ∈ P,
+      m p ≤ rootMultiplicity ((p : ℚ)⁻¹) (f.map (Int.castRingHom ℚ))) :
+    (∏ p ∈ P, (C (p : ℤ) * X - 1) ^ m p) ∣ f := by
+  refine dvd_of_map_dvd
+    (Finset.prod_induction _ IsPrimitive (fun a b ha hb => ha.mul hb)
+      isPrimitive_one fun p _ => linearFactor_pow_isPrimitive _ (m p)) ?_
+  have hmap : (∏ p ∈ P, (C (p : ℤ) * X - 1) ^ m p).map (Int.castRingHom ℚ)
+      = (∏ p ∈ P, C ((p : ℚ) ^ m p))
+        * ∏ p ∈ P, (X - C ((p : ℚ)⁻¹)) ^ m p := by
+    rw [Polynomial.map_prod, ← Finset.prod_mul_distrib]
+    exact Finset.prod_congr rfl fun p hp =>
+      map_linearFactor_pow (hP p hp).ne_zero (m p)
+  have hunit : IsUnit (∏ p ∈ P, C ((p : ℚ) ^ m p)) :=
+    Finset.prod_induction _ IsUnit (fun a b ha hb => ha.mul hb) isUnit_one
+      fun p hp => isUnit_C.mpr (isUnit_iff_ne_zero.mpr
+        (pow_ne_zero _ (Nat.cast_ne_zero.mpr (hP p hp).ne_zero)))
+  rw [hmap, hunit.mul_left_dvd]
+  refine Finset.prod_dvd_of_coprime ?_ fun p hp =>
+    (pow_dvd_pow _ (hvan p hp)).trans (pow_rootMultiplicity_dvd _ _)
+  intro p hp q hq hne
+  have hinv : ((p : ℚ))⁻¹ ≠ ((q : ℚ))⁻¹ := fun h =>
+    hne (Nat.cast_injective (inv_injective h))
+  exact (isCoprime_X_sub_C_of_isUnit_sub (sub_ne_zero_of_ne hinv).isUnit).pow
+
+/-- The canonical product has degree exactly `∑ m p`. -/
+theorem canonical_natDegree (P : Finset ℕ) (m : ℕ → ℕ) (hP : ∀ p ∈ P, p ≠ 0) :
+    (∏ p ∈ P, (C (p : ℤ) * X - 1) ^ m p).natDegree = ∑ p ∈ P, m p := by
+  have hne : ∀ p ∈ P, ((C (p : ℤ) * X - 1 : ℤ[X]) ^ m p) ≠ 0 := fun p hp =>
+    pow_ne_zero _ (leadingCoeff_ne_zero.mp (by
+      rw [leadingCoeff_linearFactor (Int.natCast_ne_zero.mpr (hP p hp))]
+      exact Int.natCast_ne_zero.mpr (hP p hp)))
+  rw [natDegree_prod (h := hne)]
+  refine Finset.sum_congr rfl fun p hp => ?_
+  have h1 : (C (p : ℤ) * X - 1 : ℤ[X]).natDegree = 1 := by
+    have h : (C (p : ℤ) * X - 1 : ℤ[X]) = C (p : ℤ) * X + C (-1) := by
+      rw [map_neg, map_one, sub_eq_add_neg]
+    rw [h, natDegree_linear (Int.natCast_ne_zero.mpr (hP p hp))]
+  rw [natDegree_pow, h1, mul_one]
+
+/-- **#GF-6 (minimal-degree rigidity: the vanisher lattice at degree `D` has rank
+one).** If a prime-forced vanisher `f` has degree at most `D = ∑_{p ∈ P} m p` (the
+degree of the canonical product), then `f` IS an integer multiple of the canonical
+product. Together with #GF-4 (the height floor, attained exactly by the canonical
+product) this pins the minimal-degree stratum completely: one lattice generator,
+height exactly `ψ(x)` in the vF reading. -/
+theorem gauss_floor_rank_one (f : ℤ[X]) (P : Finset ℕ) (m : ℕ → ℕ)
+    (hP : ∀ p ∈ P, Nat.Prime p)
+    (hvan : ∀ p ∈ P,
+      m p ≤ rootMultiplicity ((p : ℚ)⁻¹) (f.map (Int.castRingHom ℚ)))
+    (hdeg : f.natDegree ≤ ∑ p ∈ P, m p) :
+    ∃ n : ℤ, f = C n * ∏ p ∈ P, (C (p : ℤ) * X - 1) ^ m p := by
+  obtain ⟨h, hh⟩ := canonical_dvd_of_vanishing f P m hP hvan
+  rcases eq_or_ne f 0 with rfl | hf
+  · exact ⟨0, by simp⟩
+  · have hP0 : ∀ p ∈ P, p ≠ 0 := fun p hp => (hP p hp).ne_zero
+    have hcan0 : (∏ p ∈ P, (C (p : ℤ) * X - 1) ^ m p) ≠ 0 :=
+      canonical_ne_zero P m hP0
+    have hh0 : h ≠ 0 := fun h0 => hf (by rw [hh, h0, mul_zero])
+    have hdeg' : f.natDegree = (∑ p ∈ P, m p) + h.natDegree := by
+      rw [hh, natDegree_mul hcan0 hh0, canonical_natDegree P m hP0]
+    have hd0 : h.natDegree = 0 := by omega
+    refine ⟨h.coeff 0, ?_⟩
+    have hC : h = C (h.coeff 0) := eq_C_of_natDegree_eq_zero hd0
+    conv_lhs => rw [hh, hC]
+    exact mul_comm _ _
+
 -- Axiom audits (expected: [propext, Classical.choice, Quot.sound], no sorryAx):
 #print axioms prod_primePow_dvd_leadingCoeff
 #print axioms gauss_floor
 #print axioms canonical_attains_floor
 #print axioms gauss_floor_of_vanishing
+#print axioms canonical_dvd_of_vanishing
+#print axioms gauss_floor_rank_one
 
 end ZetaRH.GaussFloor
