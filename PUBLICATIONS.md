@@ -135,7 +135,7 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **Novelty.** Absent from current Mathlib (lit-checked against the RiemannZeta API).
 - **D-H soundness.** N/A (a true theorem about ζ, not an RH-method).
 - **RH-independence.** Fully independent of the open content.
-- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133)**: ported to current master (v4.32.0-rc1, new module system), builds green, `#print axioms` clean, CI green (Build + Lint style), AI-use disclosed per Mathlib policy. Body archived at [`lean/upstream/riemann_zeta_conj_pr_body.md`](lean/upstream/riemann_zeta_conj_pr_body.md). **Next:** Owen engages the review in his own words (Mathlib AI policy forbids LLM-written review comments).
+- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133)**: ported to current master (v4.32.0-rc1, new module system), builds green, `#print axioms` clean, CI green (Build + Lint style), AI-use disclosed per Mathlib policy. Body archived at [`lean/upstream/riemann_zeta_conj_pr_body.md`](lean/upstream/riemann_zeta_conj_pr_body.md). **Review round 1 addressed (2026-07-03):** the theorem moved to `Harmonic/ZetaAsymp.lean` (loefflerd) so the `s ≠ 1` hypothesis could be dropped via `riemannZeta_one` (wwylele; the zero-iff corollary is hypothesis-free too); all three inline style suggestions applied; PR retitled `feat(NumberTheory/Harmonic/ZetaAsymp)`; master merged to clear a conflict with #41205 (same file), branch MERGEABLE, ZetaAsymp builds green (3163 jobs). Context: the predecessor #39743 was closed over AI-disclosure/reviewer-time concerns, so prompt first-person replies matter. **Next:** Owen posts the round-1 reply (draft in `scratchpad/pr_replies.txt`, untracked) and engages further review in his own words (Mathlib AI policy forbids LLM-written review comments).
 
 ### P2 {#p2}
 **Digamma reflection, iterated recurrence, duplication.** 🟢 SUBMITTED
@@ -150,7 +150,7 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   candidates. The reflection RHS-form question is resolved (`Complex.cot` exists in v4.30.0).
 - **D-H soundness.** N/A.
 - **RH-independence.** Fully independent.
-- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132)**: ported to current master (the reflection uses the `Complex.cot` RHS), builds green, `#print axioms` clean, CI fully green, AI-use disclosed. Body archived at [`lean/upstream/digamma_pr_body.md`](lean/upstream/digamma_pr_body.md). **Next:** Owen engages the review in his own words.
+- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132)**: ported to current master (the reflection uses the `Complex.cot` RHS), builds green, `#print axioms` clean, CI fully green, AI-use disclosed. Body archived at [`lean/upstream/digamma_pr_body.md`](lean/upstream/digamma_pr_body.md). **Review round 1 addressed (2026-07-03):** SnirBroshi's proof-length objection answered by golfing `digamma_reflection` 82 -> 23 lines and `digamma_two_mul` 63 -> 31 (shared `logDeriv_Gamma_comp` helper + existing `logDeriv_sin`/`const_cpow` API; net -88 lines), builds green, pushed. **Next:** Owen posts the round-1 reply (draft in `scratchpad/pr_replies.txt`, untracked) and engages further review in his own words.
 
 ### P3 {#p3}
 **The Davenport-Heilbronn discipline, operationalized.** 🟡 DEVELOPING
