@@ -10,10 +10,38 @@ Z, integer counting is only approximately linear, there is no Poisson
 summation and no theta functional equation. Zeta is the intersection: the
 SAME set N is multiplicatively free on the primes (Euler) and additively a
 perfect lattice (N(x) = x + O(1), Poisson, theta FE). The Beurling
-literature (e.g. Diamond-Montgomery-Vorhauer 2006, Beurling primes with
-large oscillation) shows coarse prime densities are compatible with badly
-placed zeros, so any "gluing" or trace-formula construction whose inputs
-the matched Beurling fake also possesses cannot be RH-closing.
+literature shows coarse prime densities are compatible with badly placed
+zeros, so any "gluing" or trace-formula construction whose inputs the
+matched Beurling fake also possesses cannot be RH-closing.
+
+WHY THE SCREEN IS SOUND (verified references, replacing the older
+cited-not-verified Diamond-Montgomery-Vorhauer 2006 "Beurling primes with
+large oscillation" anchor). The point the screen needs is that
+zero-location information is NOT recoverable from counting/density data
+alone in a Beurling system, so a construction that consumes only such data
+cannot separate zeta from a density-matched fake:
+  - Revesz, "The Carlson-type zero-density theorem for the Beurling zeta
+    function" (arXiv:2209.01689): the Carlson-type density estimate holds
+    with NO extra assumption, "neither on the functional equation ... nor
+    on growth estimates of coefficients," from Axiom A analytic
+    continuation alone. This is the screen's premise in print: the density
+    estimate is blind to the FE and to Ramanujan-type bounds.
+  - Broucke, "On zero-density estimates for Beurling zeta functions"
+    (arXiv:2409.10051): explicit zero-density bound
+    N(zeta_P; a, T) << T^{4(1-a)/(3-2a-theta)} (log T)^9 for systems with
+    N_P(x) = A x + O(x^theta); a counting-side quantity determined by the
+    density exponent theta, not by zero location.
+  - Revesz, Pintz/Ingham method in the Beurling context
+    (arXiv:2207.00665): the zeros<->PNT-error correspondence is TWO-SIDED
+    (a zero-free region bounds Delta_G(x); infinitely many zeros in a
+    domain force Delta_G(x) large i.o.), so counting error and zero
+    placement co-vary without the FE/lattice pinning either.
+  - Revesz, "A Riemann-von Mangoldt-type formula for the distribution of
+    Beurling primes" (arXiv:2110.11463): zero-counting in the critical
+    strip under Axiom A, again with no lattice/FE input.
+The common thread: everything provable from Beurling density/counting data
+is FE- and lattice-agnostic, so the additive lattice (Poisson/theta FE) is
+the only separator. That is exactly what the discipline below enforces.
 
 THE DISCIPLINE. Any counting-side construction (a W6 glue, a trace
 formula, a fixed-point calculus) must FAIL for a density-matched Beurling
