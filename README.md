@@ -50,8 +50,13 @@ zeta-function/
 ├── visualizations/              # manim animation scripts
 ├── OPERATIONS.md                # ★ How to operate this repo as the proof-program substrate
 ├── PHASE_STATE.md               # ★ Current operational state (read by ORCHESTRATOR)
+├── SETUP.md                     # ★ Fresh-machine install guide (Python + Lean/Mathlib), verified commands
 └── CLAUDE.md                    # Project + owner context for AI assistants (merged successor of LLM_ONBOARDING.md)
 ```
+
+## Setup
+
+New machine? See [`SETUP.md`](SETUP.md) for the verified install procedure. In short: `winget install Python.Python.3.12` then `pip install -r requirements.txt` for the Python thread, and `winget install Lean.Elan` then `cd lean; lake exe cache get; lake build` for the Lean thread. Verify with `python -m experiments._shared.smoke_test` (expect `9/9 passed`).
 
 ## The Question
 

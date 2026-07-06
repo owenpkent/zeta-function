@@ -154,6 +154,8 @@ zeta-function/
 
 ## Running things
 
+First-time setup on a fresh machine (install Python + all deps, elan + Lean/Mathlib): see [`SETUP.md`](SETUP.md). It carries the verified winget/pip/lake commands, the required `lake exe cache get` step, and the Windows Store python-stub gotcha.
+
 ```powershell
 # Smoke test the shared infrastructure
 python -m experiments._shared.smoke_test
