@@ -130,6 +130,49 @@ Lang-Weil consumes Weil 1948, so the model-theoretic Frobenius is strictly downs
 $\mathbb{F}_q$: consistent with, and a fourth witness for, this document's central regularity (no
 variety-free source of $\sqrt q$-strength purity).
 
+## Update (2026-07-10): the wild ingredient is the archimedean ORDER, not tameness; the R1 filler must inject $S(f)$ archimedeanly
+
+The #156 Section-10 heuristic ("a structure too tame to interpret arithmetic cannot state the summed explicit
+formula") was sharpened and partly corrected (LEARNINGS #157, [`tameness_trade.md`](tameness_trade.md)). The net
+is a definability-side RE-CONFIRMATION of the #62/#153 archimedean-lattice reading, not a new theorem, and it
+tightens the WATCH clause above.
+
+- **The R1 / $S(f)$ obstruction is the archimedean order, not tameness.** The first-draft claim "a tame (simple/
+  NIP) structure cannot definably carry the primes" is **REFUTED** by Kaplan-Shelah (arXiv:1601.07099, Thm 1.2,
+  read at source): under Dickson, $\mathrm{Th}(\mathbb{Z},+,\mathrm{Pr})$ WITHOUT order is decidable and
+  **supersimple** of U-rank 1, so a maximally-tame structure DOES carry the prime predicate as a definable set.
+  What flips supersimple to full arithmetic (SOP + IP, wild) is the **archimedean ORDER** coupled to $+$ and the
+  primes: Bateman-Jockusch-Woods use $\mathrm{Th}(\mathbb{N},+,\mathrm{Pr})$ WITH order (mod Dickson it defines
+  $\times$), and Poizat / Point-Schmidt show $\mathrm{Th}(\mathbb{Z},+,P_q)$ (a sparse multiplicative set, no
+  order) is superstable. So the ring/difference-field worlds (ACFA, the ultraproduct $K$) fail to carry
+  $S(f)=\sum_n\Lambda(n)f(\log n)$ for **lack of the archimedean order** (the incommensurable $\{\log p\}$
+  scaling, #62/#153), reinforced by but not caused by supersimplicity. This is exactly the "$\log p$ is not in
+  the language of rings" point (#62/#153) met from the definability side, and it identifies the missing
+  ingredient of the R1 filler with precision: the ORDER-BEARING archimedean data, not the bare prime set and not
+  tameness per se. The unconditional keystone ("ordered prime structure forces $\times$ without Dickson") is
+  OPEN, so this is a conditional-plus-open sharpening, not a floor under R1.
+- **The saturation face is orthogonal to the RH engine.** Lemma P3 (in any $\aleph_1$-saturated structure no
+  countably-infinite set is definable over countable parameters) generalizes #156's NG2(iii) off the
+  ultraproduct and kills the standard-prime diagonal for tame AND wild saturated models alike, but the structure
+  that CARRIES the formula is the standard $(\mathbb{N},+,\times)$, which is not saturated. So the saturation leg
+  forecloses the "twist a saturated tame world to get the prime diagonal" move (the #156 concern) and nothing
+  more; the R1-relevant content is the order leg above.
+- **C3: the filler must inject $S(f)$ archimedeanly (the survivor-class split).** The #156 survivor class splits
+  by the coordinate "does it carry $S(f)$": Connes (scaling flow $\mathbb{R}^\ast_+\subset C_k$ on
+  $L^2(\mathbb{A}/k^\ast)$), CCM (prolate/Sonin + the periodization map $E$ on the log-line), and Deninger
+  (foliated $\mathbb{R}$-flow, closed-orbit lengths $\log p$) all reach $S(f)$ and each does so by coupling the
+  discrete prime index to an EXTERNAL archimedean object (MECHANISM, forced by ingredient 3: any object
+  outputting the real number $S(f)$ must contain $\mathbb{R}$ with $\log$, convergence, and the external $f$).
+  Borger is the odd one out: it carries the multiplicative Euler PRODUCT, all primes non-invertible, no $\log$,
+  no summation, so it does NOT carry $S(f)$ at all; pushing it to a trace formula requires the multiplicative
+  completion $\Phi_t=\prod_p\psi_p^{t/\log p}$ = the archimedean injection (the R4 hybrid), landing it back in
+  the analytic family with Connes' K1 wall. So the WATCH clause above gains a corollary: **any R1 filler that
+  reaches $S(f)$ injects it through an order-bearing archimedean object; the alternative inside first-order
+  tameness is not internal definition (that requires going wild) but carrying only the Euler product.** As a
+  reading (HEURISTIC), this is why the CCM Section-7 = M4 wall is archimedean not geometric: the Section-7 objects
+  live verbatim on the archimedean injection line, so a better geometric substrate (Borger / CC-2026) does not
+  move the wall.
+
 ## References
 
 - Peter Sarnak, *Notes on the Generalized Ramanujan Conjectures*, Clay Math. Proc. 4 (2005), pp. 659-666 (the decisive reference: proven purity = geometric; the holomorphic-vs-Maass split; "no algebro-geometric moduli interpretation" for the non-Hermitian case).
@@ -143,4 +186,4 @@ variety-free source of $\sqrt q$-strength purity).
 
 - [09A Section 6D](research_directions/09A_ahk_arithmetic_lattice.md) (where R1 was named), [`../../experiments/arithmetic_geometric/e2zb_super_ahk_recursion.md`](../../experiments/arithmetic_geometric/e2zb_super_ahk_recursion.md) (R2 closes into R1), [`../../experiments/arithmetic_geometric/e2za_ahk_p3_super_graft.md`](../../experiments/arithmetic_geometric/e2za_ahk_p3_super_graft.md).
 - [`spec_z_cohomology_landscape.md`](spec_z_cohomology_landscape.md) (the universal gap; R1 is its sourcing facet), [`all_roads_to_the_signature.md`](all_roads_to_the_signature.md) (the thesis R1 refines), [`research_directions/08A_rosati_standard_conjecture.md`](research_directions/08A_rosati_standard_conjecture.md) (M4, facet B).
-- LEARNINGS #129 (AHK route closed into R1), #130 (this verification), #140-#142 (R1 is self-adjointness-gated: the graph proven-world probe arc), #145-#147 (the counting road walls here: the Stepanov engine audit, parity-vs-polarization, the van Frankenhuijsen deep read), #148 (the amplification road walls here too: the Deligne Weil I audit, the four consequence-faces, the W6 determinant-class spec), #149 (the Gauss-lemma floor machine-checked: the vF model's S3 slot is provably empty, so the S4/R1 operator is its only open slot), #156 (the model-theoretic Frobenius: NG1 limit-independent rigidity, NG2 generic-prime-vs-prime-sum, the two-conjunct WATCH clause; [`model_theoretic_frobenius.md`](model_theoretic_frobenius.md)).
+- LEARNINGS #129 (AHK route closed into R1), #130 (this verification), #140-#142 (R1 is self-adjointness-gated: the graph proven-world probe arc), #145-#147 (the counting road walls here: the Stepanov engine audit, parity-vs-polarization, the van Frankenhuijsen deep read), #148 (the amplification road walls here too: the Deligne Weil I audit, the four consequence-faces, the W6 determinant-class spec), #149 (the Gauss-lemma floor machine-checked: the vF model's S3 slot is provably empty, so the S4/R1 operator is its only open slot), #156 (the model-theoretic Frobenius: NG1 limit-independent rigidity, NG2 generic-prime-vs-prime-sum, the two-conjunct WATCH clause; [`model_theoretic_frobenius.md`](model_theoretic_frobenius.md)), #157 (the tameness trade: the wild ingredient is the archimedean order not tameness, the C3 archimedean-injection survivor-class split; [`tameness_trade.md`](tameness_trade.md)).

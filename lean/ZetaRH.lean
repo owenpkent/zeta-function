@@ -36,3 +36,5 @@ import ZetaRH.GaussLucas
 import ZetaRH.GaussFloor
 import ZetaRH.RationalRootFloor
 import ZetaRH.ModelTheoreticFrobenius
+import ZetaRH.TamenessTrade
+import ZetaRH.BorgerVacuity

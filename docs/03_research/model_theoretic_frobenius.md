@@ -292,6 +292,28 @@ world is supersimple, and supersimple worlds cannot interpret the arithmetic the
 the ACFA instance is proven, and a general theorem "definable quantitative fixed-point theory $\Rightarrow$
 too tame to state the summed explicit formula" would put a model-theoretic floor under R1.
 
+> **[Correction 2026-07-10, per LEARNINGS #157 / [`tameness_trade.md`](tameness_trade.md)].** The sharpening
+> pass ran, and this heuristic sentence needs two scoped corrections (NG2(iii)'s own statement in Section 4 is
+> untouched: it is already a ZFC/cardinality fact, and its saturation face is Lemma P3 of the tameness-trade
+> dossier). (i) **The primary ACFA prime-diagonal kill is NG2(iii) = saturation, not NG2(ii) =
+> supersimple-cannot-interpret-arithmetic.** In any $\aleph_1$-saturated structure no countably-infinite set is
+> definable over countable parameters (Lemma P3), so the standard-prime diagonal is undefinable for TAME and
+> WILD saturated models alike; a wild $\aleph_1$-saturated monster of $\mathrm{Th}(\mathbb{N},+,\times)$ also
+> fails to define the standard prime sum (overspill on the standard cut + external $f$). Interpretability
+> (NG2(ii)) is a separate, weaker kill that does not by itself exclude the bare prime set. (ii) **The invariant
+> "supersimple worlds cannot carry the primes" is REFUTED.** Kaplan-Shelah (arXiv:1601.07099, Thm 1.2): under
+> Dickson, $\mathrm{Th}(\mathbb{Z},+,\mathrm{Pr})$ WITHOUT order is decidable and SUPERSIMPLE of U-rank 1, so a
+> supersimple structure DOES carry the prime predicate. The fault line is the archimedean ORDER coupled to $+$
+> and the primes (Bateman-Jockusch-Woods use $\mathrm{Th}(\mathbb{N},+,\mathrm{Pr})$ WITH order; primes-with-order
+> mod Dickson force $\times$), and the order-free additive prime set is tame. So the correct reading is:
+> supersimple worlds have no archimedean order, so they cannot carry the ORDERED, log-weighted prime sum; the
+> kill is the MISSING ORDER (the incommensurable $\{\log p\}$ scaling, #62/#153), reinforced by supersimplicity,
+> not the missing prime set. This aligns #153 (the glue must be archimedean) and re-confirms it from the
+> definability side. The unconditional keystone ("ordered prime structure forces $\times$ without Dickson") is
+> OPEN; the "model-theoretic floor under R1" the sentence hoped for is therefore NOT a general theorem, and the
+> publishable-shaped claim is withdrawn to a possible-future-expository note (details in
+> [`tameness_trade.md`](tameness_trade.md)).
+
 ## 11. Handed forward
 
 - **VERIFIER (Lean 4 / Mathlib), targets T1-T4 as corrected:**
@@ -306,18 +328,42 @@ too tame to state the summed explicit formula" would put a model-theoretic floor
     composite (`ng1_rigidity`: $\sigma \circ \mathrm{algebraMap}\,\mathbb{Q}\,R = \mathrm{algebraMap}\,
     \mathbb{Q}\,R$ for every ring endomorphism $\sigma$ of every $\mathbb{Q}$-algebra $R$, covering the
     2.3a receptacles: adeles, $\prod \mathbb{Z}/p^2/\mathcal{U}$, Witt ultraproducts; no ultrafilter in
-    statement or proof, machine-checking the limit-independence).
+    statement or proof, machine-checking the limit-independence). **NG1 is now CANONICAL at 3 independent
+    consensus witnesses** (`ModelTheoreticFrobenius.ng1_rigidity` via `RingHom.ext_rat`;
+    `TamenessTrade.ng1_rigidity_indep` via `num`/`den` unit cancellation; `BorgerVacuity.ng1_rigidity_w3`
+    via `IsLocalization.ringHom_ext` + `Int.subsingleton_ringHom`), satisfying the four-layer consensus rule.
   - T2 (the object; days): $K$ as an ultraproduct of `AlgebraicClosure (ZMod p)` via
     `Mathlib.ModelTheory.Ultraproducts` or a `Filter.Germ` quotient; $\sigma$ coordinatewise; prove
     automorphism, char 0, $\sigma \circ d = d$ (via T1), $\mathrm{Fix}(\sigma) = $ the ultraproduct of
-    `ZMod p`.
+    `ZMod p`. **PARTIAL 2026-07-10** (`lean/ZetaRH/BorgerVacuity.lean`, #MTF-2): the coordinatewise
+    Frobenius `productFrobenius` is built on Mathlib's genuine DEPENDENT ultraproduct
+    `Filter.Product (fun p => ZMod (P p)) l` (as a bare function) and `productFrobenius_fixes_diag` proves
+    $\sigma \circ d = d$ (the Fermat witness via `ZMod.pow_card`, using no filter property = NG1
+    limit-independence machine-checked); plus `germRingHom` (a coordinatewise ring endomorphism descends to
+    a ring hom on the NON-dependent germ ring `Filter.Germ l R`). WALL: `Filter.Product` carries only a
+    model-theoretic `FirstOrder.Language.Ultraproduct.Structure` (+ Łoś), NOT `CommRing`/`Field`/`IsAlgClosed`,
+    so `productFrobenius` is not a `RingHom` and "automorphism / char 0 / $\mathrm{Fix}(\sigma)$ pseudofinite"
+    need the `FirstOrder.Language.ring` + `CompatibleRing` + Łoś transport Mathlib does not provide
+    automatically (feasible, multi-day).
   - T3 (the trivialization statement; hours given T2): every standard prime $q$ is invertible in $K$, hence
     $qK = K$ and for EVERY `f : K →+* K` the lift condition $f(x) - x^q \in qK$ holds trivially: the
     Frobenius-lift congruence is the full endomorphism set, i.e. carries no information. Plus the finite-set
     witness $\{p : x \mapsto x^q \text{ additive on } \overline{\mathbb{F}}_p\} \subseteq \{p : p \mid 2^q - 2\}$.
+    **DONE 2026-07-10** (`lean/ZetaRH/BorgerVacuity.lean`, #MTF-3): `borger_lift_congruence_vacuous`
+    ($\psi x \equiv x^q \ [\mathrm{SMOD}\ (q)]$ for EVERY $\psi$ and $x$, via
+    `natCast_isUnit_of_ne_zero` $\to$ `span_natCast_eq_top` ($\mathrm{span}\{(q{:}R)\} = \top$) $\to$
+    `quotient_span_natCast_subsingleton` ($R/qR$ subsingleton) $\to$ `SModEq.top`), the two-endomorphism
+    face `borger_lift_any_two_congruent`, and the $\mathbb{Q}$-algebra/prime packaging
+    `borger_lift_congruence_vacuous_prime`; sorry-free, `#print axioms` $\subseteq$ `[propext,
+    Classical.choice, Quot.sound]`. (The finite-set additivity witness $p \mid 2^q - 2$ is a separate,
+    lower-value target not needed for the vacuity core; left unformalized.)
   - T4 (NG2(iii); stretch, self-contained): an ultraproduct of finite sets with sizes $\to_\mathcal{U} \infty$
     has cardinality $\ge 2^{\aleph_0}$; corollary, no internal set is countably infinite. Not proposed:
-    ACFA supersimplicity, twisted Lang-Weil (research-scale; cite, do not formalize).
+    ACFA supersimplicity, twisted Lang-Weil (research-scale; cite, do not formalize). **BLOCKED-ON-MATHLIB
+    2026-07-10** (#MTF-4): the dichotomy needs a `Saturated` / $\kappa$-saturation predicate on
+    `FirstOrder.Language.Structure`, the type-realization (`CompleteType`) machinery, and the internal-subset
+    (ultraproduct-of-subsets) API on `Filter.Product`; Mathlib has none of these. Precise failure mode
+    recorded in `BorgerVacuity.lean`; building saturation theory is out of scope for this pass.
 - **ADVERSARY residual surfaces:** A3 (check that $\mathrm{Fix}(\sigma \circ \phi)$ is a coordinatewise
   ultraproduct for $\phi$ definable with arbitrary parameters, so no leak evades the tier-(iii) dichotomy);
   A1/A2/A4 executed 2026-07-09 (external decorations: rider installed; numerics confirmed; the

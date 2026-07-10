@@ -82,6 +82,7 @@ gap identically** to the in-house work, and it surfaces concrete candidate objec
 | Note | Headline |
 |---|---|
 | [Adiprasito-Huh-Katz-2018-Hodge-Combinatorial](Adiprasito-Huh-Katz-2018-Hodge-Combinatorial.md) | Attack angle 4.A: a Hodge-Riemann signature on a matroid Chow ring with NO underlying variety. Precedent against the no-variety obstruction; the signature (not Lefschetz) is the content. |
+| [Chen-Moriwaki-2022-Hilbert-Samuel-Positivity-Adelic-Curves](Chen-Moriwaki-2022-Hilbert-Samuel-Positivity-Adelic-Curves.md) | arXiv:2207.02033. Arithmetic Hilbert-Samuel + bigness/nef/Hodge-index positivity over a fixed adelic curve. Generalizes the BASE (not a self-product); unconditional per-variety positivity = wrong polarity (S6 fails). Verdict ADJACENT-WATCH on the KNOWN-TO-REPO boundary (the NODE-fh-too-local bracket of 2L #131). Does NOT supply Spec(Z) x Spec(Z) + Gamma_S. |
 | [Hartshorne-Algebraic-Geometry](Hartshorne-Algebraic-Geometry.md) | Role-note: Ch V.1 (the symmetric intersection pairing + Hodge index, signature (1, rho-1)); Ex V.1.4.3 (P1xP1) = the baby C x C / 2G template; App C = the function-field RH being lifted. |
 | [Voisin-Hodge-Theory-I](Voisin-Hodge-Theory-I.md) | Role-note (FRONT MATTER ONLY in the repo PDF): the relevant sections are 6.3 (Hodge index), 6.1-6.2 (Lefschetz decomposition), 7.1-7.2 (polarisation / Hodge-Riemann), 11.3/12.2 (correspondences = where Gamma_S lives classically). |
 
