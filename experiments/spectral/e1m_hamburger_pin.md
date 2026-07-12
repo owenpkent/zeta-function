@@ -157,6 +157,7 @@ Face by face:
     artifact, and the pole term actually pulls the count toward RvM.
   - Consequence for the pin: H3 for the limit cannot be certified by finite
     truncations; the budget is exactly what the (M4) limit must PRODUCE.
+  - 2026-07-11: the fill counts 0/3/0/5 are shown DPS-BRANCH-SPECIFIC and the t_dir escape law is DERIVED in e1n; see [`e1n_prime_comb.md`](e1n_prime_comb.md).
 - **Dirichlet face (H4): NOT inherited; windowed with a measured escape
   rate.** Unpacking `f_lam(s) = xihat(z)/[(s(s-1)/2) pi^{-s/2} Gamma(s/2)]`
   on `Re s = 2`: it tracks `zeta(2+it)` only for `t <= t_dir ~ 6..7` at ALL
