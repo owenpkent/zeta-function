@@ -29,6 +29,17 @@ The owner is Owen, a wheelchair user with muscular dystrophy.
 - **PowerShell on Windows.** Use PowerShell syntax. Prefer single-line commands.
 - **Accessibility matters.** Many of Owen's projects are tools he actually uses.
 
+## Non-obvious rules (read before editing code)
+
+Quick-reference for the gotchas that are easy to get wrong. The disciplines and interface each have a fuller section below.
+
+- **Lean `sorry`s are intentional research skeletons** (HodgeIndex, PrismaticCohomology, LambdaBlueprints, and others), not build failures. Do not "fix" them by deleting the statement; a clean `lake build` still prints many `sorry`/deprecation warnings.
+- **Imports resolve from the repo root only** (`from experiments._shared import ...`). Run everything as a module from root; never `cd` into a subdir to run a script.
+- **Uniform LFunction interface.** Every L-function subclasses the ABC in `experiments/_shared/lfunction.py` and implements `evaluate(s)` and `zeros(T_max, prec=30)`, so the same experiment runs on zeta and on D-H with identical code. Keep this contract when adding L-functions.
+- **Tests are standalone modules, not pytest.** Each `test_*.py` / `smoke_test.py` has a `main()` under `if __name__ == "__main__"` and prints `N/N passed` (e.g. `python -m experiments.lemma_db.test_oracle`, `python -m experiments.toy.test_toy`). When you add an experiment, add its checks in this pattern.
+- **The D-H and Beurling disciplines below are hard structural gates**, not optional. A method that cannot separate zeta from those controls is wrong.
+- **Never commit or push without per-action authorization** (memory: `feedback_ask_before_push.md`).
+
 ## START HERE
 
 - **Mindset and philosophy**: [`docs/researcher_mindset.md`](docs/researcher_mindset.md). How this project works: the problem is a target not a monument, we advance a front, negative results are coordinates, honesty is the engine. Read this first; it defines what counts as progress.
@@ -61,7 +72,7 @@ The four-level framing (`docs/02_graduate/log_correlated_fields_intro.md` §6) p
 
 The **Davenport-Heilbronn L-function** (functional equation but no Euler product; known off-line zeros at $\rho \approx 0.808 + 85.7i$) is the project's **wrong-approach detector**. Any method in Architectures 1, 3, or 4 that does not distinguish zeta from D-H is structurally wrong: D-H is a known counterexample to its own analogue of RH, so any RH-style proof that "works" for D-H is incorrect.
 
-Implementation: `experiments/_shared/davenport_heilbronn.py`. Run `python -m experiments._shared.smoke_test` to verify the control is working (5/5 tests including a regression check on the first off-line zero location).
+Implementation: `experiments/_shared/davenport_heilbronn.py`. Run `python -m experiments._shared.smoke_test` to verify the whole shared infrastructure including this control is working (currently 9/9 tests, including a regression check on the first off-line zero location).
 
 Architecture 2 sits outside this discipline because Deninger-style constructions intentionally require the Euler product that D-H lacks.
 
@@ -90,13 +101,14 @@ zeta-function/
 │   ├── multifractal/            log-correlated field experiments (E0-E3)
 │   ├── criticality/             Nyman-Beurling / de Bruijn-Newman D-H probes (both MIRROR)
 │   ├── gradient_descent/        D4 meta-level policy-gradient against the Lean floor (function-field rehearsal)
+│   ├── lemma_db/                reduction/generative engines, breadth corpus, oracle, transfer search
 │   ├── toy/                     RH toy sandbox: checkable training ground for the M4 move (Python + Lean ToyModel)
 │   └── orchestrator_sessions/   per-session ORCHESTRATOR plans
 ├── lean/                        Lean 4 / Mathlib formal verification (Phase 1 substrate as of 2026-05-25)
 │   ├── ZetaRH.lean
 │   └── ZetaRH/{Basic,MathlibBridge,DavenportHeilbronn,KillCriteria,R3_5,
 │                LineRestriction,LambdaBlueprints,PrismaticCohomology,
-│                PrismaticFoliation,HodgeIndex}.lean
+│                PrismaticFoliation,HodgeIndex, ...}.lean   (many more modules; see lean/README.md)
 ├── .claude/agents/              Six agent role specs (surveyor/builder/verifier/adversary/synthesizer/orchestrator)
 ├── sources/                     source PDFs (Riemann, Wilkins translation, etc.)
 ├── visualizations/              manim scenes
@@ -116,6 +128,7 @@ zeta-function/
 | `TODO.md` | Task tracking (`- [ ]` checkbox format) |
 | `OPERATIONS.md` | How to operate this repo as the AI-only proof program substrate |
 | `PHASE_STATE.md` | Current phase, sub-task, falsifiability triggers, next-session plan |
+| `SETUP.md` | First-time setup on a fresh machine: verified winget/pip/lake commands, `lake exe cache get`, Windows Store python-stub gotcha |
 | `PUBLICATIONS.md` | Publishable-discovery registry + evaluation gate (formal Mathlib + arXiv); what is shippable and how we score a new finding. Usage guide: `publications/README.md`; drafts + adversary review live in `publications/` |
 | `docs/research_atlas/` | Master research map; all approaches, failures, ML directions |
 | `docs/03_research/proof_program.md` | The AI-augmented operational proof program |
@@ -133,17 +146,18 @@ zeta-function/
 ## Tech stack
 
 - **Language**: Python (primary). Lean 4 (formal verification).
-- **Python libraries**: `mpmath` (high-precision arithmetic), `numpy`, `scipy`, `cvxpy` (LP/SDP optimization with CLARABEL/SCS solvers), `sympy`, `matplotlib`.
+- **Python libraries**: `mpmath` (high-precision arithmetic), `numpy`, `scipy`, `cvxpy` (LP/SDP optimization with CLARABEL/SCS solvers), `sympy`, `matplotlib`, `duckdb` (lemma DB).
 - **Visualization**: manim (3Blue1Brown style). `pip install manim`.
-- **Formal verification**: Lean 4 + Mathlib (`lean/` directory, requires `elan` to build).
+- **Formal verification**: Lean 4 + Mathlib, pinned `leanprover/lean4:v4.30.0` (`lean/` directory, requires `elan` to build).
 - **Docs**: Markdown with LaTeX math (`$...$` inline, `$$...$$` block in files; plain Unicode in chat).
 
 ## Conventions
 
-- **High-precision arithmetic**: `mpmath` at ≥30 digits for zeros and L-function evaluation. `numpy` for downstream array work after conversion.
+- **High-precision arithmetic**: `mpmath` at >=30 digits for zeros and L-function evaluation. `numpy` for downstream array work after conversion.
 - **Data format**: experiments save `.npz` (numpy compressed) alongside the script. Plots save as `.png`. Both are gitignored under `experiments/**/_cache/` and `experiments/**/*.png`, but tracked .npz files live next to scripts.
 - **Caching**: zero computations are slow (`mp.zetazero` for high index, D-H 2D scan). Each L-function caches per (T_max, prec) tuple under `experiments/_shared/_cache/`.
-- **LFunction interface**: all L-functions implement `evaluate(s)` and `zeros(T_max, prec)`. Used uniformly across architectures so the same experiment can run on zeta and D-H with identical code.
+- **LFunction interface**: all L-functions subclass the ABC in `experiments/_shared/lfunction.py` and implement `evaluate(s)` and `zeros(T_max, prec=30)`. Used uniformly across architectures so the same experiment can run on zeta and D-H with identical code.
+- **No linter / formatter / CI is configured.** Match the surrounding style.
 
 ## Style
 
@@ -157,7 +171,10 @@ zeta-function/
 First-time setup on a fresh machine (install Python + all deps, elan + Lean/Mathlib): see [`SETUP.md`](SETUP.md). It carries the verified winget/pip/lake commands, the required `lake exe cache get` step, and the Windows Store python-stub gotcha.
 
 ```powershell
-# Smoke test the shared infrastructure
+# Python deps (see SETUP.md for the Windows Store python-stub gotcha)
+python -m pip install -r requirements.txt
+
+# Smoke test the shared infrastructure (expect "9/9 passed")
 python -m experiments._shared.smoke_test
 
 # Run an experiment (each is a python module)
@@ -167,12 +184,14 @@ python -m experiments.zero_free.e4b_nonneg_trig
 python -m experiments.arithmetic_geometric.e2b_elliptic_curve_fp
 
 # Build the Lean substrate (requires elan + lake)
-cd lean; lake build
+cd lean; lake exe cache get; lake build   # cache get is REQUIRED first (else ~1h compiling Mathlib from source)
 
-# Dependencies: see requirements.txt (numpy, scipy, mpmath, matplotlib, manim, sympy, cvxpy)
+# Dependencies: see requirements.txt (numpy, scipy, mpmath, matplotlib, manim, sympy, cvxpy, duckdb)
 ```
 
 Working dir is the repo root. Scripts use `from experiments._shared import ...` style imports, which only resolve from the root.
+
+**Tests are standalone modules, not pytest**: each `test_*.py` / `smoke_test.py` has a `main()` under `if __name__ == "__main__"` and prints `N/N passed` (e.g. `python -m experiments.lemma_db.test_oracle`, `python -m experiments.toy.test_toy`). When you add an experiment, add its checks in this pattern.
 
 ## Git commits
 
@@ -212,6 +231,12 @@ See [`OPERATIONS.md`](OPERATIONS.md) for the full operational guide.
 - The plan (`experiments/PROOF_ARCHITECTURES_PLAN.md`) is the master reference for the experimental thread.
 - The Davenport-Heilbronn discipline is the project's structural sanity check.
 - If a proposed method does not engage with the four-level framing, it is probably Level 3 and not RH-closing.
+
+## When to ask
+
+- The change would alter the LFunction interface, the D-H / Beurling controls, or the smoke-test contract.
+- A proposed method does not engage the four-level framing (likely Level 3, not RH-closing) or cannot separate zeta from D-H.
+- Before any commit or push (per-action authorization required), or before restructuring the docs/experiments layout the atlas and PROOF_ARCHITECTURES_PLAN depend on.
 
 ## Constellation
 
