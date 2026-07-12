@@ -40,6 +40,16 @@ weights, which are literally sums of squares). The invisible degree of freedom i
 $\lambda(n)$: a rank-one indefinite direction orthogonal to the entire positive cone. The parity barrier is
 the statement that no amount of one-variable density information determines that sign.
 
+**Measured coordinate (2026-07-11, e1o, LEARNINGS #162).** The S4-carrier probe
+([`../../experiments/spectral/e1o_s4_carrier.md`](../../experiments/spectral/e1o_s4_carrier.md)) measured the
+sieve constant rising to this ceiling on the CCM carrier along the analytic law $2/(1 + 2E/\log x)$ with
+$E = \gamma + \sum_p \log p/(p(p-1)) = 1.3326$ (1.558 / 1.626 / 1.677 at $x = 10^4/10^5/10^6$, matching to 4
+digits at $10^6$): monotone toward 2, never through it, with this dossier's mechanism (the sign-flip
+invariance; the $\Lambda^2$ level-halving $\log D \to \frac{1}{2}\log D$) as the explanation. Care point kept
+on record there: the majorant cell constant $c \to m_+/2 \approx 0.096$ measured in the same probe is a
+DISTINCT 2-shaped constant (a Beurling-extremality uncertainty price, the majorant+minorant bracket costing
+one Nyquist cell per side), uncertainty-explained not parity-explained; the two must not be conflated.
+
 ## 2. The known parity-breakers and where their cancellation comes from
 
 Every historical crossing of the barrier injects a **bilinear (two-variable) estimate** or automorphic input.

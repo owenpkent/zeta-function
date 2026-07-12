@@ -13,9 +13,11 @@
 > review). The route is a TRANSLATOR, not a discriminator (Section 2). BRIDGE-H is CONJECTURE /
 > spec tier with the transfer clause settled per layer (input: exact and vacuous; built object:
 > false without an error term); the one surviving open sub-lemma is the lambda-uniform MECHANISM
-> question (S4/R1 on the CCM carrier, Section 3.4/3.6). Two citations carry RE-RUN-NEEDED flags
-> for a SURVEYOR pass (von Koch converse, Section 1.4; Beurling off-line-zero existence,
-> Section 2.2). No em dashes anywhere.
+> question (S4/R1 on the CCM carrier, Section 3.4/3.6). RE-RUN-NEEDED flags: von Koch
+> converse (Section 1.4) remains open; Beurling off-line-zero existence (Section 2.2) was
+> DISCHARGED 2026-07-11 (S4/R1 surveyor round, Revesz 2207.00665 fetched). Section 2.2's
+> dictionary carries a dated ADVERSARY correction (real-zero caveat + reverse-arrow scope),
+> 2026-07-11. No em dashes anywhere.
 
 > Original working header: BUILDER+SURVEYOR dossier, 2026-07-11. Develops the "useful residue" of LEARNINGS
 > #145 (the Stepanov engine audit): a ONE-SIDED bound `psi(x) <= x + O(x^{1/2+eps})`
@@ -281,16 +283,41 @@ for a Beurling system: no functional equation and no additive lattice pin the ab
 relationship (this is exactly the repo's Beurling control: an Euler product with no
 `x + O(1)` integer-counting law, no Poisson, no theta FE). Beurling systems whose `zeta_B`
 has zeros off the critical line and whose `psi_B(x) - x` is genuinely large are reported in
-the literature [UNVERIFIED-MEMORY, RE-RUN-NEEDED: Diamond-lineage / Revesz arXiv:2207.00665
-context; not pinned at source this session. The translator claim below does NOT depend on
-this existence statement, only on the absence of any forcing mechanism in the hypotheses].
+the literature [DISCHARGED 2026-07-11, S4/R1 surveyor round: Revesz arXiv:2207.00665
+pp. 1-5 fetched at source (the DMV summary, its Eqs. 9-10); construction details pinned to
+Diamond-Montgomery-Vorhauer, Math. Ann. 334 (2006) 1-36 at SECONDARY tier. See
+`scratchpad/s4_carrier/01_surveyor_majorants.md` Section 6.3, adversary-verified. The
+translator claim below does NOT depend on this existence statement, only on the absence of
+any forcing mechanism in the hypotheses].
 For such a system Lemma L still yields the TRANSLATION
 ```
   psi_B(x) <= x + O(x^{alpha})  for all alpha > alpha_0   <=>   Theta_B <= alpha_0,
 ```
-a lossless dictionary between a one-sided counting bound and a zero-free region, valid for
-ANY nonnegative-coefficient Dirichlet series with finite abscissa. It USES nothing
+a dictionary between a one-sided counting bound and a zero-free region. It USES nothing
 zeta-specific.
+
+[ADVERSARY correction, 2026-07-11 (surveyor D1 adjudicated: surveyor right; wording
+fixed in place). The dictionary is lossless only with two scope clauses the original
+sentence ("valid for ANY nonnegative-coefficient Dirichlet series with finite
+abscissa") omitted. (1) REAL-ZERO CAVEAT, forward direction: Landau pins the abscissa
+to the rightmost REAL singularity of the transform, and for a general Beurling zeta
+that set includes possible real zeros of `zeta_B` in `(0, 1)`. The forward arrow
+therefore yields only `Theta_B <= max(alpha_0, beta*)` with `beta*` the supremum of
+real zeros of `zeta_B` in `(0, 1)`: either `Theta_B <= alpha_0`, or the strip supremum
+is attained by a REAL zero. This is not a technicality: a real zero contributes a
+definite-sign term `~ -c x^{beta*}` to `psi_B - x` (the Siegel-zero phenomenon), which
+DAMPS the upper side and lets the one-sided bound coexist with off-line complex zeros
+below `beta*`. For zeta the caveat is discharged by Step 3 of Theorem A (`zeta < 0` on
+`(0,1)` via eta positivity, a lattice fact); for a general Beurling system it is not
+dischargeable. The forward direction also consumes the pole normalization
+`zeta_B ~ kappa/(s-1)` (an Axiom-A-type density input), not bare coefficient
+nonnegativity. (2) The REVERSE arrow (`Theta_B <= alpha_0 =>` the bound) is not
+Lemma-L content at all: it is explicit-formula/Perron bookkeeping (for zeta: von Koch,
+still flagged in Section 1.4). Net corrected statement: the dictionary is lossless for
+Axiom-A systems with no real zeros in `(alpha_0, 1)`, with the reverse arrow carried
+by its own classical machinery. The 6.3 DMV kill in the S4/R1 survey is unaffected: it
+routes around the caveat (its contradiction point is `s = 1`, where the Euler product
+forbids a real zero).]
 
 NAMED CLAUSE (translator status): *Landau's theorem is a TRANSLATOR (one-sided counting
 bound `<->` zero-free region), not a zeta-special mechanism.* State this plainly so nobody
