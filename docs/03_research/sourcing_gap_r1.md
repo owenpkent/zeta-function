@@ -173,6 +173,10 @@ tightens the WATCH clause above.
   live verbatim on the archimedean injection line, so a better geometric substrate (Borger / CC-2026) does not
   move the wall.
 
+## Update (2026-07-11): the W6 pole-budget clause cannot be discharged by counting alone on the form side
+
+A form-side check of the W6 spec's counting face (the Hamburger-pin probe, [`experiments/spectral/e1m_hamburger_pin.md`](../../experiments/spectral/e1m_hamburger_pin.md), LEARNINGS #160): no budget-substitution converse theorem exists in the literature (surveyor-verified absence), and the bare pin "FE + order-1 growth + RvM budget $\Rightarrow F = c\,\Xi$" is PROVEN FALSE by an explicit K1-clean relocation family with identical counting to O(1). So the W6 spec's "independently computable pole budget" is necessary fuel but can never by itself force the identification of a candidate determinant with $\xi$ on the form side; the identifying clause is the additive lattice (Hamburger's Dirichlet abscissa, i.e. the #152 fourth clause), and at the CCM family that clause is conditionally equivalent to the Section-7 identification itself (reformulated, not reduced).
+
 ## References
 
 - Peter Sarnak, *Notes on the Generalized Ramanujan Conjectures*, Clay Math. Proc. 4 (2005), pp. 659-666 (the decisive reference: proven purity = geometric; the holomorphic-vs-Maass split; "no algebro-geometric moduli interpretation" for the non-Hermitian case).
