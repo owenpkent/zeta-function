@@ -160,3 +160,7 @@ confirming a completed Bors merge. The REST API's own `merged` / `merged_at` fie
 `null` for it, which is a known Mathlib/Bors quirk (Bors performs the merge out of band rather than
 through GitHub's native merge button); the rewritten title and the `closed_at` timestamp are the
 reliable signals. #41133 is safe to cite as merged precedent if useful in the round-2 reply.
+
+## Outcome (2026-07-18, overnight)
+
+All three requested changes applied and pushed to the PR branch as `1128e854f9` (rename to `HasDerivAt.logDeriv_Gamma` with the namespace-closure fix the rename forced, verified against Mathlib's own `HasDerivAt.cexp`/`const_cpow` precedent; both proofs converted to 3-step calc blocks keeping the golfed lemma set, net +42/-28). Build green before push (2772 jobs, only the edited file recompiled). Owen chose code-only response, no comment text (own-words policy). Review re-request and label flip both permission-blocked for a new contributor (404 / GraphQL denial), so the signals are the push notification + CI re-run; if the `awaiting-author` label sits stale after CI greens, a one-line comment from Owen flips it. Worktree and fork remote cleaned up; pinned checkout pristine.
