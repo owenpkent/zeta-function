@@ -105,7 +105,7 @@ the real standalone output.
 
 | ID | Discovery | Type | Verification | Tier | Venue / bundle | Status |
 |----|-----------|------|--------------|------|----------------|--------|
-| [P1](#p1) | `riemannZeta_conj`: conjugation symmetry of ζ | Formal (positive) | Lean, axiom-clean | 🟢 SUBMITTED | Mathlib PR | [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133) |
+| [P1](#p1) | `riemannZeta_conj`: conjugation symmetry of ζ | Formal (positive) | Lean, axiom-clean | 🟢 MERGED (Bors, 2026-07-07) | Mathlib PR | [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133) |
 | [P2](#p2) | Digamma reflection / iterated recurrence / duplication | Formal (positive) | Lean, axiom-clean | 🟢 SUBMITTED | Mathlib PR | [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) |
 | [P3](#p3) | The Davenport-Heilbronn discipline, operationalized (Schur counting law + Epstein) | Methodology | Numerical (validated) + rigorous Li at n=336k | 🟡 DEVELOPING | Fold into P4 | lit-checked |
 | [P4](#p4) | All-roads convergence + marginal-positivity thesis + Spec(ℤ) scorecard | Survey | Synthesis | 🟡 DEVELOPING | Expository / arXiv | draft written ([`publications/obstruction_map/`](publications/obstruction_map/)); 2026-07-10 consolidation folded in (#156/#157, C3, archimedean-order firewall) |
@@ -125,7 +125,7 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 [`experiments/LEARNINGS.md`](experiments/LEARNINGS.md).
 
 ### P1 {#p1}
-**`riemannZeta_conj`: conjugation symmetry of the Riemann zeta function.** 🟢 SUBMITTED
+**`riemannZeta_conj`: conjugation symmetry of the Riemann zeta function.** 🟢 MERGED (Bors, 2026-07-07)
 
 - **Claim.** `ζ(conj s) = conj (ζ s)` for `s ≠ 1`, and the corollary that the zeros are
   conjugation-symmetric. The natural companion to Mathlib's `riemannZeta_one_sub`; together they
@@ -136,7 +136,7 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **Novelty.** Absent from current Mathlib (lit-checked against the RiemannZeta API).
 - **D-H soundness.** N/A (a true theorem about ζ, not an RH-method).
 - **RH-independence.** Fully independent of the open content.
-- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133)**: ported to current master (v4.32.0-rc1, new module system), builds green, `#print axioms` clean, CI green (Build + Lint style), AI-use disclosed per Mathlib policy. Body archived at [`lean/upstream/riemann_zeta_conj_pr_body.md`](lean/upstream/riemann_zeta_conj_pr_body.md). **Review round 1 addressed (2026-07-03):** the theorem moved to `Harmonic/ZetaAsymp.lean` (loefflerd) so the `s ≠ 1` hypothesis could be dropped via `riemannZeta_one` (wwylele; the zero-iff corollary is hypothesis-free too); all three inline style suggestions applied; PR retitled `feat(NumberTheory/Harmonic/ZetaAsymp)`; master merged to clear a conflict with #41205 (same file), branch MERGEABLE, ZetaAsymp builds green (3163 jobs). Context: the predecessor #39743 was closed over AI-disclosure/reviewer-time concerns, so prompt first-person replies matter. **Next:** Owen posts the round-1 reply (draft in `scratchpad/pr_replies.txt`, untracked) and engages further review in his own words (Mathlib AI policy forbids LLM-written review comments). **Flag (2026-07-10, unconfirmed):** a spot check suggested the PR may be **CLOSED**; GitHub was not polled. Owen to confirm **merged vs closed** and move the tier accordingly (SUBMITTED → published if merged, else withdrawn/reopen). See [Human residual (Mathlib)](#human-residual-mathlib).
+- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133)**: ported to current master (v4.32.0-rc1, new module system), builds green, `#print axioms` clean, CI green (Build + Lint style), AI-use disclosed per Mathlib policy. Body archived at [`lean/upstream/riemann_zeta_conj_pr_body.md`](lean/upstream/riemann_zeta_conj_pr_body.md). **Review round 1 addressed (2026-07-03):** the theorem moved to `Harmonic/ZetaAsymp.lean` (loefflerd) so the `s ≠ 1` hypothesis could be dropped via `riemannZeta_one` (wwylele; the zero-iff corollary is hypothesis-free too); all three inline style suggestions applied; PR retitled `feat(NumberTheory/Harmonic/ZetaAsymp)`; master merged to clear a conflict with #41205 (same file), branch MERGEABLE, ZetaAsymp builds green (3163 jobs). Context: the predecessor #39743 was closed over AI-disclosure/reviewer-time concerns, so prompt first-person replies matter. **RESOLVED (2026-07-17, GitHub API poll): MERGED BY BORS 2026-07-07.** GitHub shows state=closed + merged=false with the "[Merged by Bors]" title prefix, which is mathlib's merge signature and is what the 2026-07-10 spot check misread as a closure. Tier moved SUBMITTED → MERGED: the project's first Mathlib-merged contribution; the theorem lives in Mathlib's `NumberTheory/Harmonic/ZetaAsymp`. No further reply owed on P1 (the round-1 reply draft in `scratchpad/pr_replies.txt` is moot for P1, and that file is absent from this machine anyway); review engagement continues on P2 only. See [Human residual (Mathlib)](#human-residual-mathlib).
 
 ### P2 {#p2}
 **Digamma reflection, iterated recurrence, duplication.** 🟢 SUBMITTED
@@ -151,7 +151,7 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   candidates. The reflection RHS-form question is resolved (`Complex.cot` exists in v4.30.0).
 - **D-H soundness.** N/A.
 - **RH-independence.** Fully independent.
-- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132)**: ported to current master (the reflection uses the `Complex.cot` RHS), builds green, `#print axioms` clean, CI fully green, AI-use disclosed. Body archived at [`lean/upstream/digamma_pr_body.md`](lean/upstream/digamma_pr_body.md). **Review round 1 addressed (2026-07-03):** SnirBroshi's proof-length objection answered by golfing `digamma_reflection` 82 -> 23 lines and `digamma_two_mul` 63 -> 31 (shared `logDeriv_Gamma_comp` helper + existing `logDeriv_sin`/`const_cpow` API; net -88 lines), builds green, pushed. **Next:** Owen posts the round-1 reply (draft in `scratchpad/pr_replies.txt`, untracked) and engages further review in his own words.
+- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132)**: ported to current master (the reflection uses the `Complex.cot` RHS), builds green, `#print axioms` clean, CI fully green, AI-use disclosed. Body archived at [`lean/upstream/digamma_pr_body.md`](lean/upstream/digamma_pr_body.md). **Review round 1 addressed (2026-07-03):** SnirBroshi's proof-length objection answered by golfing `digamma_reflection` 82 -> 23 lines and `digamma_two_mul` 63 -> 31 (shared `logDeriv_Gamma_comp` helper + existing `logDeriv_sin`/`const_cpow` API; net -88 lines), builds green, pushed. **Next:** Owen posts the round-1 reply and engages further review in his own words. **Update 2026-07-17:** the PR shows fresh activity (updated 2026-07-17 22:58Z); check the new reviewer comments first. The reply draft `scratchpad/pr_replies.txt` is absent from this machine (see the Human-residual note), so the reply needs redrafting.
 
 ### P3 {#p3}
 **The Davenport-Heilbronn discipline, operationalized.** 🟡 DEVELOPING
@@ -434,7 +434,10 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   standalone bar; expository home = P4 counting-roads). FORMAL AXIS: viable; Mathlib has the identity
   side (`Chebyshev.lcmUpto`, `psi_eq_log_lcmUpto`, `factorization_lcmUpto`) but NOT the multiplicity
   or multi-point rational-root floor (pinned-copy grep; master unchecked). Full report:
-  `scratchpad/counting_roads_followup/01_surveyor_gauss_floor_novelty.md` (untracked).
+  `scratchpad/counting_roads_followup/01_surveyor_gauss_floor_novelty.md` (untracked; confirmed ABSENT
+  from this machine 2026-07-17: scratchpad/ is machine-local and never synced, so the full report survives
+  only on the machine that ran the 2026-07-02 session; its conclusions are preserved in this entry and the
+  PHASE_STATE 2026-07-02 update. The CLAUDE.md evidence rule added 2026-07-17 prevents a recurrence).
 - **Verification.** #GF-1..#GF-5 kernel-verified ([propext, Classical.choice, Quot.sound]); Python
   integer-exact with an adversarial interpolation half. The uniqueness-at-minimal-degree gap is now
   CLOSED: #GF-6 machine-checked 2026-07-02 (`gauss_floor_rank_one` + `canonical_dvd_of_vanishing` +
@@ -448,7 +451,8 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   corollary). **Progress (2026-07-02, both preconditions DONE):** (a) prior-art check against master +
   open PRs + Zulip: CLEAR-TO-PR (master has only the m = 1 case `den_dvd_of_is_root`/`num_dvd_of_is_root`;
   Loogle certifies no declaration joins `den` with `rootMultiplicity`; nearest PR #24172 closed unmerged,
-  multiplicity-free; note: `scratchpad/counting_roads_followup/02_surveyor_mathlib_prior_art.md`, untracked);
+  multiplicity-free; note: `scratchpad/counting_roads_followup/02_surveyor_mathlib_prior_art.md`, untracked,
+  likewise absent from this machine 2026-07-17, conclusions preserved here);
   (b) the generalization is machine-checked in FULL Mathlib generality (UFD $A$, fraction field $K$, the
   exact typeclass context of `RationalRoot.lean`): #RR-1 `den_pow_rootMultiplicity_dvd_leadingCoeff` +
   #RR-2 `prod_den_pow_rootMultiplicity_dvd_leadingCoeff` + PR-worthy supporting lemmas (`isPrimitive_pow`,
@@ -677,6 +681,9 @@ Kept so they are not re-proposed as novel.
   issues (the inverted KS Theorem 3.7 / Proposition 3.6 citation, and the abstract's order-free-prime
   tameness misattribution) are already fixed in the note file. (iii) **Human residual (Mathlib) note
   added:** #41132 (P2) OPEN awaiting Owen's own-words round-1 reply; #41133 (P1) appeared CLOSED on a spot
-  check, Owen to confirm merged-vs-closed. P1/P2 tiers left unchanged pending confirmation. (iv)
+  check, Owen to confirm merged-vs-closed. P1/P2 tiers left unchanged pending confirmation. RESOLVED
+  2026-07-17 by direct API poll: P1 was merged by Bors 2026-07-07 (tier moved to MERGED, the project's
+  first Mathlib-merged contribution); P2 remains OPEN with fresh reviewer activity dated 2026-07-17,
+  replies still owed. (iv)
   Consistency fix: corrected the [PS14] attribution "Point-Schmidt" → "Palacin-Sklinos" in obstruction_map
   §6.2/§7 to match the verified-at-source attribution in the P11 note.

@@ -125,9 +125,9 @@ zeta-function/
 |------|---------|
 | `CLAUDE.md` | This file: technical + human-side context combined |
 | `README.md` | Project overview, status, structure map |
-| `TODO.md` | Task tracking (`- [ ]` checkbox format) |
+| `TODO.md` | Task tracking (`- [ ]` checkbox format); open items only, history in `TODO_ARCHIVE.md` |
 | `OPERATIONS.md` | How to operate this repo as the AI-only proof program substrate |
-| `PHASE_STATE.md` | Current phase, sub-task, falsifiability triggers, next-session plan |
+| `PHASE_STATE.md` | Current phase, live triggers, next steps; kept to one screen, history in `PHASE_STATE_ARCHIVE.md` |
 | `SETUP.md` | First-time setup on a fresh machine: verified winget/pip/lake commands, `lake exe cache get`, Windows Store python-stub gotcha |
 | `PUBLICATIONS.md` | Publishable-discovery registry + evaluation gate (formal Mathlib + arXiv); what is shippable and how we score a new finding. Usage guide: `publications/README.md`; drafts + adversary review live in `publications/` |
 | `docs/research_atlas/` | Master research map; all approaches, failures, ML directions |
@@ -157,7 +157,8 @@ zeta-function/
 - **Data format**: experiments save `.npz` (numpy compressed) alongside the script. Plots save as `.png`. Both are gitignored under `experiments/**/_cache/` and `experiments/**/*.png`, but tracked .npz files live next to scripts.
 - **Caching**: zero computations are slow (`mp.zetazero` for high index, D-H 2D scan). Each L-function caches per (T_max, prec) tuple under `experiments/_shared/_cache/`.
 - **LFunction interface**: all L-functions subclass the ABC in `experiments/_shared/lfunction.py` and implement `evaluate(s)` and `zeros(T_max, prec=30)`. Used uniformly across architectures so the same experiment can run on zeta and D-H with identical code.
-- **No linter / formatter / CI is configured.** Match the surrounding style.
+- **No linter / formatter / CI is configured.** Match the surrounding style. The regression net is manual: `python -m experiments.run_all_tests` (run it after every merge).
+- **Evidence rule (2026-07-17):** any artifact a tracked file cites as load-bearing evidence (a novelty pass, an adversary report, a gate verdict) must itself be tracked at write time: put it in an `_evidence/` dir next to the citing dossier or under `publications/<item>/`. `scratchpad/` is machine-local and gitignored; a tracked citation into it is a broken link on every other machine (this cost the repo the P10 novelty-pass dossiers and `pr_replies.txt`, confirmed absent 2026-07-17).
 
 ## Style
 
@@ -177,6 +178,9 @@ python -m pip install -r requirements.txt
 # Smoke test the shared infrastructure (expect "9/9 passed")
 python -m experiments._shared.smoke_test
 
+# Full regression battery: every test_*/smoke_test module, one summary table (expect "9/9 modules fully passed")
+python -m experiments.run_all_tests
+
 # Run an experiment (each is a python module)
 python -m experiments.positivity.e3c2_weil_gram
 python -m experiments.spectral.e1a_berry_keating
@@ -191,7 +195,7 @@ cd lean; lake exe cache get; lake build   # cache get is REQUIRED first (else ~1
 
 Working dir is the repo root. Scripts use `from experiments._shared import ...` style imports, which only resolve from the root.
 
-**Tests are standalone modules, not pytest**: each `test_*.py` / `smoke_test.py` has a `main()` under `if __name__ == "__main__"` and prints `N/N passed` (e.g. `python -m experiments.lemma_db.test_oracle`, `python -m experiments.toy.test_toy`). When you add an experiment, add its checks in this pattern.
+**Tests are standalone modules, not pytest**: each `test_*.py` / `smoke_test.py` has a `main()` under `if __name__ == "__main__"` and prints `N/N passed` (e.g. `python -m experiments.lemma_db.test_oracle`, `python -m experiments.toy.test_toy`). When you add an experiment, add its checks in this pattern. `python -m experiments.run_all_tests` discovers and runs the whole battery (there is no CI; run it after every merge).
 
 ## Git commits
 
