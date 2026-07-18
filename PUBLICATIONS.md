@@ -448,7 +448,20 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   implies nor is implied by RH. A no-go coordinate about a model's proof-slot, not a reformulation.
 - **Venue / next.** Mathlib PR for the generalized floor (extend `RingTheory/Polynomial/RationalRoot.lean`
   with `den^rootMultiplicity ∣ leadingCoeff` + the coprime-product version; optional `lcmUpto`
-  corollary). **Progress (2026-07-02, both preconditions DONE):** (a) prior-art check against master +
+  corollary). **Progress (2026-07-17): PORT BUILD-VERIFIED against the pinned Mathlib checkout.**
+  Applied to real Mathlib source (`Content.lean`/`GaussLemma.lean`/`RationalRoot.lean`) on a disposable
+  branch: `lake build` green, zero warnings, `#print axioms` = `[propext, Classical.choice, Quot.sound]`
+  for all five new public declarations; one genuine fix made in the process (the two `Content.lean`
+  helper lemmas relocated into each file's existing `NormalizedGCDMonoid` section to avoid an
+  instance-import cycle, a strict generalization, with a narrowly-scoped
+  `Nonempty (NormalizedGCDMonoid A)` hypothesis on just the two `RationalRoot.lean` theorems that need
+  it); master drift re-checked (none that touches the port; the depended-on declarations byte-identical;
+  zero competing PRs by fresh search). Staged:
+  [`rational_root_floor_pr_body.md`](lean/upstream/rational_root_floor_pr_body.md) +
+  [`rational_root_floor_port.md`](lean/upstream/rational_root_floor_port.md) (exact verified code +
+  remaining-steps checklist). Remaining = mechanical (fork branch off live master, paste the verified
+  diff, `cache get` + rebuild, lint, open with the staged body) + Owen's own-words review engagement;
+  sequencing preference: after P2's round 2 clears. **Progress (2026-07-02, both preconditions DONE):** (a) prior-art check against master +
   open PRs + Zulip: CLEAR-TO-PR (master has only the m = 1 case `den_dvd_of_is_root`/`num_dvd_of_is_root`;
   Loogle certifies no declaration joins `den` with `rootMultiplicity`; nearest PR #24172 closed unmerged,
   multiplicity-free; note: `scratchpad/counting_roads_followup/02_surveyor_mathlib_prior_art.md`, untracked,

@@ -1,6 +1,6 @@
 # Phase State (operational)
 
-> Read at the start of every session. Maintained by SYNTHESIZER. KEEP THIS FILE TO ROUGHLY ONE SCREEN: the current frontier, live next steps, and the verified state. The full dated-update history 2026-05-30 through 2026-07-11 is frozen verbatim in [PHASE_STATE_ARCHIVE.md](PHASE_STATE_ARCHIVE.md); the finding-level record is [experiments/LEARNINGS.md](experiments/LEARNINGS.md) (through #163).
+> Read at the start of every session. Maintained by SYNTHESIZER. KEEP THIS FILE TO ROUGHLY ONE SCREEN: the current frontier, live next steps, and the verified state. The full dated-update history 2026-05-30 through 2026-07-11 is frozen verbatim in [PHASE_STATE_ARCHIVE.md](PHASE_STATE_ARCHIVE.md); the finding-level record is [experiments/LEARNINGS.md](experiments/LEARNINGS.md) (through #164).
 
 ## Current state (2026-07-17)
 
@@ -8,10 +8,12 @@
 
 **Frame audit (2026-07-17, LEARNINGS #163, dossier [`ccm_corridor_frame_audit.md`](docs/03_research/ccm_corridor_frame_audit.md)).** The e1k-e1o corridor (five consecutive "frontier UNMOVED" verdicts) was audited at the frame level per the #133 precedent. Net: the Hurwitz direction is a half-theorem (uniform Section-7 convergence forces RH; the converse is unproven), "Section-7 = M4" and the carrier-home claim grade as CHOICES stated as law, the verification loop verified one harness against itself (input twins, never carrier twins), and the corridor's absence claims were searched in corridor vocabulary only: the Cohn-Elkies / Viazovska / Radchenko-Viazovska corpus (one-sided band-limited extremal problems closed by lattice-consuming modular identities, exactly the banked S4 spec's mechanism class) has ZERO repo mentions. **Verdict: TIME-BOX, exit pre-registered.** One more corridor round = the Sonin-projector probe WITH a Beurling twin and pre-registered criteria, plus the Carneiro-Littmann well-posedness check (cheap riders: generic-carrier replication of e1o's battery; the interpolation-identity check at Q-linearly-independent nodes). If the projector lands blind OR the extremal problem is ill-posed in the Sonin space, the corridor closes as a proof home (reclassified as the program's best measurement instrument and discipline-sharpener) and the pivot is the theta/modular-interpolation side of the S4 identity clause plus the C1 = SP2-and-SP3 counting joint.
 
-**Next steps (portfolio split ~40/25/35 per #163):**
-1. Corridor completion: the Sonin-projector probe (with the Beurling twin + exit criteria) and rank-one interlacing (the last untouched #154 ingredient).
-2. Non-corridor: the SURVEYOR WATCH sweep (two weeks stale; a missed R1 event is the one unbounded cost), the SP3c/W6 derived-base rung (the counting joint's non-CCM half), and the new sweep target from the audit: the Cohn-Elkies/Viazovska/Fourier-interpolation corpus vs the S4 spec.
-3. Shipping (the only decaying assets): P2 [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) replies (fresh reviewer activity 2026-07-17); open the P10 Mathlib PR (CLEAR-TO-PR since 2026-07-02); package P9 for the MathSciNet pass.
+**Exit-rule status (2026-07-17, same day; LEARNINGS #164, survey [`s4_cheap_falsifiers_survey.md`](docs/03_research/s4_cheap_falsifiers_survey.md)).** The two cheap falsifiers ran first and falsifier 2 TRIPPED, adversary-verified at source: Carneiro-Littmann's machinery requires an entire Hermite-Biehler structure function (1406.5456 Thm 1; no meromorphic extension), while the zeta-loaded Sonine branch $L_a$ is meromorphic with poles at exactly $s = 0, 1$ (Burnol math/0203120 Prop 2.2; $\dim(L_a/K_a) = 2$, Prop 4.5), and the entire branch is the one e1o already measured content-free. Per the pre-registered rule the corridor CLOSES AS A PROOF HOME, conditional on two named residuals (Baranov-Borichev-Havin meromorphic model-space majorant theory vs $L_a$; the Kulikov-Nazarov-Sodin space definition pinned against the log-growth of $\{k \log p\}$), RATIFIED by Owen 2026-07-17; it stays open as the program's measurement instrument. The Sonin-projector build as originally scoped is moot; optional only as bounded confirmation.
+
+**Next steps (revised by #164):**
+1. The pivot (the sharpest live coordinate): the theta/modular-interpolation side of the S4 identity clause (where the lattice clause is paid by construction, #160) and the C1 = SP2-and-SP3 counting joint (the SP3c/W6 derived-base rung). First rungs, SURVEYOR-cheap: the two #164 residuals (BBH meromorphic majorant theory vs $L_a$; the KNS log-growth pin).
+2. Corridor completion, shrunk: rank-one interlacing (the last untouched #154 ingredient); optionally a bounded projector confirmation run (falsifiers 1/3). Plus the standing SURVEYOR WATCH sweep (two weeks stale; a missed R1 event is the one unbounded cost).
+3. Shipping (the decaying assets): P2 [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) replies (round-2 brief staged at [`lean/upstream/p2_review_round2_brief.md`](lean/upstream/p2_review_round2_brief.md): three cosmetic items from j-loreaux, CI green, non-blocking); open the P10 Mathlib PR (port build-verified + body staged 2026-07-17; mechanical steps remain, sequenced after P2 round 2); package P9 for the MathSciNet pass.
 
 ## Last verified state (2026-07-17)
 
@@ -23,7 +25,7 @@
 
 ## Falsifiability triggers (live)
 
-- The corridor exit rule above (#163) is the active trigger. The 2026-05 program triggers are archived (each resolved or superseded; see the archive).
+- The corridor exit rule (#163) FIRED same day via falsifier 2 (#164), conditional on the two named residuals; the reopen conditions are exactly those residuals resolving in the machinery's favor (a meromorphic majorant theory that poses on $L_a$, or a KNS-class identity at log-growth nodes).
 - Standing meta-rule: three consecutive UNMOVED verdicts inside one frame trigger a frame audit of that frame, not another probe inside it.
 
 ## How to update this file
