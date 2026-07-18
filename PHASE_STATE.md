@@ -1,6 +1,6 @@
 # Phase State (operational)
 
-> Read at the start of every session. Maintained by SYNTHESIZER. KEEP THIS FILE TO ROUGHLY ONE SCREEN: the current frontier, live next steps, and the verified state. The full dated-update history 2026-05-30 through 2026-07-11 is frozen verbatim in [PHASE_STATE_ARCHIVE.md](PHASE_STATE_ARCHIVE.md); the finding-level record is [experiments/LEARNINGS.md](experiments/LEARNINGS.md) (through #164).
+> Read at the start of every session. Maintained by SYNTHESIZER. KEEP THIS FILE TO ROUGHLY ONE SCREEN: the current frontier, live next steps, and the verified state. The full dated-update history 2026-05-30 through 2026-07-11 is frozen verbatim in [PHASE_STATE_ARCHIVE.md](PHASE_STATE_ARCHIVE.md); the finding-level record is [experiments/LEARNINGS.md](experiments/LEARNINGS.md) (through #165).
 
 ## Current state (2026-07-17)
 
@@ -12,12 +12,12 @@
 
 **Next steps (revised by #164):**
 1. The pivot (the sharpest live coordinate): the theta/modular-interpolation side of the S4 identity clause (where the lattice clause is paid by construction, #160) and the C1 = SP2-and-SP3 counting joint (the SP3c/W6 derived-base rung). First rungs, SURVEYOR-cheap: the two #164 residuals (BBH meromorphic majorant theory vs $L_a$; the KNS log-growth pin).
-2. Corridor completion, shrunk: rank-one interlacing (the last untouched #154 ingredient); optionally a bounded projector confirmation run (falsifiers 1/3). Plus the standing SURVEYOR WATCH sweep (two weeks stale; a missed R1 event is the one unbounded cost).
+2. Corridor completion: DONE 2026-07-17 (rank-one interlacing = e1p, LEARNINGS #165, adversary PASS_WITH_FIXES; the #154 ledger is fully retired). Remaining optional: a bounded projector confirmation run (falsifiers 1/3). Plus the standing SURVEYOR WATCH sweep (two weeks stale; a missed R1 event is the one unbounded cost).
 3. Shipping (the decaying assets): P2 [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) replies (round-2 brief staged at [`lean/upstream/p2_review_round2_brief.md`](lean/upstream/p2_review_round2_brief.md): three cosmetic items from j-loreaux, CI green, non-blocking); open the P10 Mathlib PR (port build-verified + body staged 2026-07-17; mechanical steps remain, sequenced after P2 round 2); package P9 for the MathSciNet pass.
 
 ## Last verified state (2026-07-17)
 
-- **Tests:** `python -m experiments.run_all_tests` GREEN, 9/9 modules (new aggregate runner; there is no CI, this is the regression net). Smoke test 9/9 post-merge.
+- **Tests:** `python -m experiments.run_all_tests` GREEN, 9/9 modules (new aggregate runner; there is no CI, this is the regression net). Smoke test 9/9 post-merge. e1p 19/19 full / 16/16 quick, post-adversary-fix, npz byte-identical across quick runs.
 - **Lean:** not rebuilt this session; last green build state per [lean/README.md](lean/README.md).
 - **Publications:** P1 [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133) MERGED by Bors 2026-07-07, the project's first Mathlib-merged contribution (the "possibly closed" flag was the Bors closed-plus-unmerged signature misread). P2 #41132 open and active. Registry: [PUBLICATIONS.md](PUBLICATIONS.md).
 - **Git:** main pushed through the 2026-07-17 merge (`d1c445b`); this session's audit + housekeeping work is uncommitted pending per-action authorization.
