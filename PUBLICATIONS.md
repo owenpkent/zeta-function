@@ -108,13 +108,14 @@ the real standalone output.
 | [P1](#p1) | `riemannZeta_conj`: conjugation symmetry of ζ | Formal (positive) | Lean, axiom-clean | 🟢 SUBMITTED | Mathlib PR | [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133) |
 | [P2](#p2) | Digamma reflection / iterated recurrence / duplication | Formal (positive) | Lean, axiom-clean | 🟢 SUBMITTED | Mathlib PR | [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) |
 | [P3](#p3) | The Davenport-Heilbronn discipline, operationalized (Schur counting law + Epstein) | Methodology | Numerical (validated) + rigorous Li at n=336k | 🟡 DEVELOPING | Fold into P4 | lit-checked |
-| [P4](#p4) | All-roads convergence + marginal-positivity thesis + Spec(ℤ) scorecard | Survey | Synthesis | 🟡 DEVELOPING | Expository / arXiv | draft written ([`publications/obstruction_map/`](publications/obstruction_map/)) |
+| [P4](#p4) | All-roads convergence + marginal-positivity thesis + Spec(ℤ) scorecard | Survey | Synthesis | 🟡 DEVELOPING | Expository / arXiv | draft written ([`publications/obstruction_map/`](publications/obstruction_map/)); 2026-07-10 consolidation folded in (#156/#157, C3, archimedean-order firewall) |
 | [P5](#p5) | No higher-dimensional / SDP / SOS / **variational** escape for the single-zero zero-free constant | Negative (closed branch) | Rigorous (line-restriction lemma) + SDP/LP certificates + variational QP (4F) | 🟡 DEVELOPING | arXiv math.NT note / fold into P4 | lit-checked |
 | [P6](#p6) | Lean formalization of function-field RH for elliptic curves (deg = det route) | Formalization (positive) | Lean, axiom-clean (conditional on existence of A) | 🟡 DEVELOPING | Formalization venue | lit-checked ✓ viable |
 | [P7](#p7) | RH is Π⁰₁ + the Lean kernel witness | Expository note | Lean anchors; logical fact classical | 🟡 DEVELOPING | Note / bundle into P4 | evaluated |
 | [P8](#p8) | The stealth window quantified (e^{-4πx} wall, 370× cancellation, D-H-aware defect) | Analytic note | Numerical + prolate analysis | 🟡 DEVELOPING | Fold into P4 (no standalone) | lit-checked: rate is prior (Fuchs+Connes) |
 | [P9](#p9) | Paired-subtorus circle-rootedness: E over conjugate-paired phases of det(zI−DU), U unitary, is circle-rooted (all m) | Theorem (positive) | Elementary proof, every step numerically verified (50-digit) | 🟡 DEVELOPING | arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR | novelty-passed; **draft written** ([`publications/paired_subtorus/`](publications/paired_subtorus/), 5 pp, compiles); gate: checker verdicts + MathSciNet (human) + citation pins |
 | [P10](#p10) | The Gauss-lemma height floor: minimal log-height of a prime-forced integer vanisher = ψ(x) exactly (the vF disc model has no Siegel-lemma slot); multiplicity rational-root floor absent from Mathlib | Negative (closed branch) + Formal | Lean, axiom-clean (#GF-1..#GF-5) + integer-exact Python; uniqueness clause numerics-only (#GF-6 candidate) | 🟡 DEVELOPING | Mathlib PR (generalized multiplicity rational-root floor); exposition folds into P4 counting-roads; no standalone note | novelty-passed 2026-07-02 |
+| [P11](#p11) | The tameness trade: assembling the explicit formula's prime side is a tame/wild fault-line phenomenon (Leg A saturation PROVEN-but-orthogonal; Leg B "tame cannot carry primes" REFUTED via Kaplan-Shelah; archimedean-order invariant; C3 archimedean-injection RH-engine reading) | Expository (structural obstruction) | Synthesis of published corpus + PROVEN Lemma P3; keystone OPEN | 🟡 DEVELOPING | arXiv math.LO / math.NT note; companion to P4 §6.2 | draft written ([`publications/tameness_trade/`](publications/tameness_trade/)); gated on keystone staying OPEN |
 
 ---
 
@@ -135,7 +136,7 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 - **Novelty.** Absent from current Mathlib (lit-checked against the RiemannZeta API).
 - **D-H soundness.** N/A (a true theorem about ζ, not an RH-method).
 - **RH-independence.** Fully independent of the open content.
-- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133)**: ported to current master (v4.32.0-rc1, new module system), builds green, `#print axioms` clean, CI green (Build + Lint style), AI-use disclosed per Mathlib policy. Body archived at [`lean/upstream/riemann_zeta_conj_pr_body.md`](lean/upstream/riemann_zeta_conj_pr_body.md). **Review round 1 addressed (2026-07-03):** the theorem moved to `Harmonic/ZetaAsymp.lean` (loefflerd) so the `s ≠ 1` hypothesis could be dropped via `riemannZeta_one` (wwylele; the zero-iff corollary is hypothesis-free too); all three inline style suggestions applied; PR retitled `feat(NumberTheory/Harmonic/ZetaAsymp)`; master merged to clear a conflict with #41205 (same file), branch MERGEABLE, ZetaAsymp builds green (3163 jobs). Context: the predecessor #39743 was closed over AI-disclosure/reviewer-time concerns, so prompt first-person replies matter. **Next:** Owen posts the round-1 reply (draft in `scratchpad/pr_replies.txt`, untracked) and engages further review in his own words (Mathlib AI policy forbids LLM-written review comments).
+- **Venue / next.** **SUBMITTED 2026-06-28 as [mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133)**: ported to current master (v4.32.0-rc1, new module system), builds green, `#print axioms` clean, CI green (Build + Lint style), AI-use disclosed per Mathlib policy. Body archived at [`lean/upstream/riemann_zeta_conj_pr_body.md`](lean/upstream/riemann_zeta_conj_pr_body.md). **Review round 1 addressed (2026-07-03):** the theorem moved to `Harmonic/ZetaAsymp.lean` (loefflerd) so the `s ≠ 1` hypothesis could be dropped via `riemannZeta_one` (wwylele; the zero-iff corollary is hypothesis-free too); all three inline style suggestions applied; PR retitled `feat(NumberTheory/Harmonic/ZetaAsymp)`; master merged to clear a conflict with #41205 (same file), branch MERGEABLE, ZetaAsymp builds green (3163 jobs). Context: the predecessor #39743 was closed over AI-disclosure/reviewer-time concerns, so prompt first-person replies matter. **Next:** Owen posts the round-1 reply (draft in `scratchpad/pr_replies.txt`, untracked) and engages further review in his own words (Mathlib AI policy forbids LLM-written review comments). **Flag (2026-07-10, unconfirmed):** a spot check suggested the PR may be **CLOSED**; GitHub was not polled. Owen to confirm **merged vs closed** and move the tier accordingly (SUBMITTED → published if merged, else withdrawn/reopen). See [Human residual (Mathlib)](#human-residual-mathlib).
 
 ### P2 {#p2}
 **Digamma reflection, iterated recurrence, duplication.** 🟢 SUBMITTED
@@ -221,6 +222,21 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   **Prerequisites before any 'confirmed' / prose-finalization:** (1) read Deninger's program + at least
   one prismatic/THH survey (the obvious unchecked sources for the convergence framing); (2) an expert
   reader for the scorecard's polarization column.
+- **2026-07-10 consolidation (still 🟡 DEVELOPING).** The obstruction-map draft
+  ([`publications/obstruction_map/obstruction_map.md`](publications/obstruction_map/obstruction_map.md))
+  folded in four new coordinates without changing the tier. (i) The **#156 machine-checked R1 no-go**:
+  every ring endomorphism of a ℚ-algebra fixes the arithmetic, so the ACFA ultraproduct cannot source
+  R1 (NG1, Lean `#MTF-1`); its scope is **endomorphism-shaped fillers only**, correspondences and flows
+  explicitly escape. (ii) The **#157 archimedean-order finding**: the definability-side re-confirmation
+  of the archimedean-lattice firewall (the wild ingredient is the archimedean *order* coupled to + and
+  the primes, not tameness and not the bare prime set). The model-theoretic "tameness floor under R1" is
+  **REFUTED-and-corrected** to a re-confirmation of the standing #62/#153 obstruction, not a new one;
+  keystone OPEN. (iii) **C3** (archimedean-injection): every survivor construction reaching S(f) injects
+  an external archimedean object, reading the CCM Section-7 = M4 wall as archimedean by necessity
+  (MECHANISM for the object-coincidence, HEURISTIC for the causation). (iv) The **four reading-note
+  confirmations** (He 2512.01811 / Abboud 2503.14099 / Chen-Moriwaki 2207.02033 Arakelov bracket, plus
+  Connes-Consani 2606.06604 CCM carrier-vs-wall split). The definability-side detail is spun out as the
+  standalone **P11**, cross-referenced from §6.2.
 
 ### P5 {#p5}
 **No higher-dimensional / SDP / SOS escape for the single-zero zero-free constant.** 🟡 DEVELOPING
@@ -441,6 +457,85 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   build green. **Next:** open the mathlib4 PR (port to master, naming review expected) after P1/P2 review
   bandwidth clears; optional `lcmUpto` corollary.
 
+### P11 {#p11}
+
+**The tameness trade: assembling the explicit formula's prime side is a tame/wild fault-line phenomenon.** 🟡 DEVELOPING
+
+- **Claim.** A structural-obstruction note that locates, from the model theory of arithmetic
+  definability, where the prime side S(f) = Σ Λ(n) f(log n) of the Weil explicit formula can and cannot
+  be assembled inside a first-order structure. Two logically independent legs. **Leg A (saturation):
+  PROVEN but orthogonal.** In any ℵ₁-saturated model no countably-infinite set is definable over
+  countable parameters (Lemma P3), so the standard-prime diagonal is external for tame and wild saturated
+  models alike; but the carrier (ℕ, +, ×) is not saturated, so Leg A is orthogonal to the RH engine (it
+  forecloses only the "twist a saturated tame world for the prime diagonal" move #156 already screened).
+  **Leg B (tameness): "tame cannot carry the primes" is REFUTED.** Kaplan-Shelah proved the order-free
+  Th(ℤ, +, Pr) is supersimple of U-rank 1, a maximally-tame structure carrying the primes as a definable
+  predicate. The correct invariant is the archimedean **order** coupled to + and the primes: the ordered
+  Th(ℕ, +, Pr) recovers × (Bateman-Jockusch-Woods), while order-free additive prime sets stay tame
+  (Kaplan-Shelah), as do order-free q-power sets (Poizat, Palacin-Sklinos). **C3 (RH-engine reading,
+  hedged):** every survivor construction (Connes, CCM, Deninger) reaching S(f) injects it against an
+  external archimedean object, reading the CCM Section-7 = M4 wall as archimedean by necessity.
+- **Verification.** Lemma P3 **PROVEN** (proof in the note); the tame/wild map is **KNOWN** published
+  corpus (Kaplan-Shelah arXiv:1601.07099, BJW93, Boffa 1998, Poizat Thm 25, Palacin-Sklinos, Bes, Korec,
+  Green-Tao); C3 is **MECHANISM** for the object-coincidence, **HEURISTIC** for the causation (a reading
+  of known constructions, not a theorem). Every force-multiplication statement is **CONDITIONAL** on
+  Dickson's conjecture; the keystone is **OPEN**.
+- **Citation discipline (load-bearing this session).** The note's whole value is scrupulousness. The
+  unconditional independence property is Kaplan-Shelah **Theorem 3.7** (via Proposition 3.6, from
+  Green-Tao); decidability + supersimplicity is **Theorem 1.2**, conditional on Dickson. A first-draft
+  that inverted this KS citation (read 1601.07099 as proving ×-definability, the opposite of its result)
+  and an over-correction that branded Theorem 3.7 as the error were both caught on re-fetch and are
+  **withdrawn/corrected**; the [PS14] attribution is **Palacin-Sklinos** (corrected from the repo
+  dossier's "Point-Schmidt", verified at the KS bibliography). Process learning: FETCH-tagged citations
+  need independent source verification before being treated as load-bearing.
+- **Novelty (honest).** **No new theorem.** The model-theoretic core is published and more refined than
+  any first-draft treatment. The candidate-novel residue is the **synthesis packaging**: one target
+  functional S(f), the two-legged split (saturation vs order-interpretation), the tame/wild map keyed to
+  the archimedean order, the honest tier separation with the keystone OPEN, and the C3 reading connecting
+  the definability invariant to the CCM Section-7 wall. RH-engine packaging appears un-treated in the
+  adjacent published corpus (the Π⁰₁ / reverse-math-of-PNT literature is about the complexity of the RH
+  *statement*, not the tameness of proof-engine *structures*). "No prior art" would overstate: only the
+  packaging is new, and it ships only with the keystone open.
+- **D-H soundness.** Re-confirms the discipline from the definability side: the archimedean-order firewall
+  is exactly the Euler-product / Frobenius half that discriminates ζ from D-H (D-H shares the archimedean
+  Γ-factor half). It adds no new obstruction, it re-confirms #62/#153.
+- **RH-independence / K1.** Fully RH-independent; the note states explicitly that nothing here is a step
+  toward RH. Not a reformulation (K1-clean): it is a structural-obstruction map, not an RH-equivalent.
+- **Venue / next.** arXiv **math.LO / math.NT** structural-obstruction note (self-contained), companion to
+  **P4 §6.2** (the definability-side detail behind the archimedean-order firewall).
+  **Portfolio call: standalone P11, not fold-into-P4.** The corpus (model theory of additive prime
+  structures) and venue (math.LO) are distinct from P4's arithmetic-geometry / positivity survey, so it
+  earns its own row the way P9 (math.CV) and P10 (Mathlib) did as self-contained assembled statements; it
+  cross-references and feeds P4 §6.2 rather than dissolving into it. **Gate before drafting-to-submission:**
+  (1) the **keystone must stay OPEN** (if the Dickson-free force-× keystone is resolved, the framing
+  shifts and the note must be rewritten around it); (2) an expert reader (model theorist) for the
+  neostability claims; (3) verify the remaining FETCH-tagged attributions at source. Source dossier:
+  [`docs/03_research/tameness_trade.md`](docs/03_research/tameness_trade.md); LEARNINGS #157 (this arc),
+  #156 (the parent no-go), #153/#62 (the archimedean-lattice wall re-confirmed).
+
+---
+
+## Human residual (Mathlib)
+
+Two Mathlib PRs are past the AI-authored stage and need Owen personally. Mathlib's AI policy forbids
+LLM-written review replies, and the predecessor #39743 was closed over AI-disclosure / reviewer-time
+concerns, so the round-1 replies must be posted in Owen's own words. GitHub was **not polled** this
+session; these statuses are recorded from prior sessions + one spot check and need Owen to confirm.
+
+- **[mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) (P2, digamma).** OPEN,
+  awaiting Owen's **round-1 reply in his own words**. The round-1 fix is already pushed and green
+  (SnirBroshi's proof-length objection: `digamma_reflection` golfed 82 → 23 lines, `digamma_two_mul`
+  63 → 31). Reply text staged in `scratchpad/pr_replies.txt` (untracked) for Owen to rewrite and post.
+- **[mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133) (P1,
+  riemannZeta_conj).** **APPEARED CLOSED on a spot check** (not re-polled here). Owen needs to confirm
+  **merged vs closed** and update P1's status: SUBMITTED → published if merged, or withdrawn/reopen if
+  closed like #39743. If closed, the round-1 reply (also in `scratchpad/pr_replies.txt`) may need Owen to
+  re-engage or reopen.
+
+Registry tiers for P1/P2 are **left unchanged** pending Owen's confirmation: SYNTHESIZER records the last
+verified state, not a spot check. Note: `scratchpad/pr_replies.txt` was **not present on disk** this
+session (untracked, likely cleaned); Owen may need it regenerated before replying.
+
 ---
 
 ## Parked / pre-empted
@@ -566,3 +661,22 @@ Kept so they are not re-proposed as novel.
   `Chebyshev.lcmUpto` + `psi_eq_log_lcmUpto` but no multiplicity or multi-point rational-root floor).
   Tier 🟡 DEVELOPING; next = generalize #GF-2/#GF-5 to the `RationalRoot.lean` idiom + a Mathlib
   master/open-PR/Zulip check; optional #GF-6 (the uniqueness clause, currently Python-only) first.
+- 2026-07-10: **P4 consolidation + P11 registered + Human-residual note.** (i) **P4** folds in the
+  2026-07-10 obstruction-map consolidation without a tier change (still 🟡 DEVELOPING): the #156
+  machine-checked R1 endomorphism-rigidity no-go (NG1, scope = endomorphism-shaped fillers;
+  correspondences/flows escape), the #157 archimedean-order finding, the C3 archimedean-injection reading,
+  and the four reading-note confirmations (He 2512.01811 / Abboud 2503.14099 / Chen-Moriwaki 2207.02033
+  Arakelov bracket + Connes-Consani 2606.06604 CCM carrier-vs-wall split). The model-theoretic "tameness
+  floor under R1" is REFUTED-and-corrected to a re-confirmation of the archimedean-order obstruction (not a
+  new obstruction), keystone OPEN. (ii) **P11 registered** (the tameness-trade note,
+  [`publications/tameness_trade/`](publications/tameness_trade/)): standalone arXiv math.LO / math.NT
+  structural-obstruction note, 🟡 DEVELOPING, gated on the keystone staying OPEN; publishable residue = the
+  synthesis packaging only, no new theorem (Lemma P3 PROVEN; the tame/wild map is KNOWN published corpus).
+  **Recommendation: standalone, not fold-into-P4** (distinct corpus/venue, mirroring how P9/P10 earned
+  their own rows), companion to P4 §6.2. Adversary verdict on the note was PASS_WITH_FIXES; both flagged
+  issues (the inverted KS Theorem 3.7 / Proposition 3.6 citation, and the abstract's order-free-prime
+  tameness misattribution) are already fixed in the note file. (iii) **Human residual (Mathlib) note
+  added:** #41132 (P2) OPEN awaiting Owen's own-words round-1 reply; #41133 (P1) appeared CLOSED on a spot
+  check, Owen to confirm merged-vs-closed. P1/P2 tiers left unchanged pending confirmation. (iv)
+  Consistency fix: corrected the [PS14] attribution "Point-Schmidt" → "Palacin-Sklinos" in obstruction_map
+  §6.2/§7 to match the verified-at-source attribution in the P11 note.

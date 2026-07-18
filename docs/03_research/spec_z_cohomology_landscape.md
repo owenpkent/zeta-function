@@ -264,6 +264,52 @@ unmoved: no generalized arithmetic Hodge index theorem reaches zeta's zeros with
 and the e2ae artifact computes the one specified-but-uncomputed Arakelov entry
 ($\overline\omega^2 = 12\,h_{\mathrm{Fal}}$).
 
+**The four #155 reading-note items, CLEARED (2026-07-10, LEARNINGS #157).** The Arch-2 supplement's four closest
+live-M4 papers now have reading notes in [`reading_notes/`](reading_notes/); the combined verdict is ZERO
+survivors, the `NODE-fh-too-local` bracket and the carrier-vs-wall split both unmoved. Three of the four are new
+2022-2025 rows on the `NODE-fh-too-local` bracket (same five-column verdict as the Faltings-Hriljac row: ✗ no
+$\zeta$ / ◑ wrong dim / ◑ proven-but-per-surface, wrong-polarity / vacuous / missing the product surface):
+
+- **He, *Numerical cohomology for arithmetic surfaces* (arXiv:2512.01811, Dec 2025)**, reading note
+  [`He-2025-Numerical-Cohomology-Arithmetic-Surfaces.md`](reading_notes/He-2025-Numerical-Cohomology-Arithmetic-Surfaces.md).
+  KNOWN-TO-REPO: an absolute arithmetic Riemann-Roch + sharper $\omega^2$ upper bounds (successive minima / HN
+  slopes) on a single arithmetic surface; no $\zeta$-as-trace, no Frobenius, no product base; the inherited
+  Hodge index (Faltings-Hriljac) is unconditional = wrong polarity. The 2025 effective-$\omega^2$ refinement of
+  this node; moves no column.
+- **Abboud, *A Local Version of the Arithmetic Hodge Index Theorem over Quasiprojective Varieties*
+  (arXiv:2503.14099, Apr 2025)**, reading note
+  [`Abboud-2025-Local-Arithmetic-Hodge-Index.md`](reading_notes/Abboud-2025-Local-Arithmetic-Hodge-Index.md).
+  KNOWN-TO-REPO, pushed strictly MORE local (one complete field $K_v$, quasiprojective/non-proper base): a
+  proven negative-semidefinite local intersection form, unconditional (never flips) = wrong polarity; no
+  Frobenius, no self-product, no $\zeta$. One thin ADJACENT-WATCH sub-flag: the compactly-supported / non-proper
+  extension is the right SHAPE for a future affine-base substrate component ($\mathrm{Spec}\,\mathbb{Z}$ is
+  affine), a component candidate for the substrate, never a mechanism for the sign.
+- **Chen-Moriwaki, *Hilbert-Samuel formula and positivity over adelic curves* (arXiv:2207.02033, Jul 2022)**,
+  reading note
+  [`Chen-Moriwaki-2022-Hilbert-Samuel-Positivity-Adelic-Curves.md`](reading_notes/Chen-Moriwaki-2022-Hilbert-Samuel-Positivity-Adelic-Curves.md).
+  ADJACENT-WATCH on the KNOWN boundary: generalizes the BASE ($\mathrm{Spec}\,\mathcal{O}_K \to$ arbitrary
+  adelic curve) with an arithmetic Hilbert-Samuel + bigness/nef positivity theory, but a more general base is
+  not a self-product of the base plus a diagonal; unconditional per-variety = wrong polarity; no
+  $\mathrm{Spec}(\mathbb{Z})\times\mathrm{Spec}(\mathbb{Z})$, no $\Gamma_S$, no $\zeta$. The natural LANGUAGE in
+  which 2L section 3's weaker-sufficient-object would be written; a supplier of the framework, not the object.
+
+The fourth is the CCM carrier-thread datum:
+
+- **Connes-Consani, *On the Absolute Geometry of Spec Z and the Fargues-Fontaine curve* (arXiv:2606.06604, Jun
+  2026)**, reading note
+  [`Connes-Consani-2026-Absolute-Geometry-SpecZ.md`](reading_notes/Connes-Consani-2026-Absolute-Geometry-SpecZ.md).
+  ADJACENT-WATCH, the CCM GEOMETRIC-CARRIER thread (the orthogonal axis to the analytic prolate/positivity
+  thread where the Section-7 = M4 wall lives): builds the $\mathbb{F}_1$-curve $(\mathrm{Spec}\,\mathbb{Z})_{\mathbb{F}_1}$
+  as a pullback sheaf, realizes Scholze's heuristic and the Fargues-Fontaine curve as symmetry quotients, and
+  DERIVES the scaling-site periodic orbits of length $\log p$ geometrically ($E_p \cong C_p \times \widetilde{X}_\infty$,
+  the Tate curve) rather than positing them. Strong on S4 (a new Frobenius-side substrate datum) and R1's
+  carrier facet, EMPTY on S5-S6 (no polarization, no positivity, no $\Xi$, no prolate operator, no Section 7);
+  passes the #156 two-conjunct WATCH clause (index-set-preserving AND non-endomorphism-shaped = survivor class).
+  It does NOT move the Section-7 = M4 wall in either direction (it is on the other thread and has no Section 7),
+  confirming the standing "a better geometric substrate does not move the positivity wall" split (LEARNINGS
+  #148/#154; the C3 archimedean-injection reading of #157). Its new value is a cleaner archimedean-inclusive
+  geometric substrate (the P3 "better component" role), not a supplier of the sign.
+
 ## 8. Honest caveats (proven vs conjectural)
 
 - **PROVEN:** the function-field template (Weil, 2G/2T); the single-surface arithmetic Hodge index

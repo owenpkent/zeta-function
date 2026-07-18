@@ -155,7 +155,14 @@ eigenspace-based Hodge-Riemann polarization on the prismatic substrate, so the p
 intrinsic. Both 2026 Connes papers (the Jacobian, arXiv:2602.15941; the "Letter to Riemann",
 arXiv:2602.04022) sharpen the realization half and explicitly defer the positivity, the latter via a
 construction the project verified to be zeta-blind (it manufactures on-line zeros for any admissible
-even-kernel form, and reproduces Davenport-Heilbronn's on-line zeros identically, LEARNINGS #50).
+even-kernel form, and reproduces Davenport-Heilbronn's on-line zeros identically, LEARNINGS #50). A
+third 2026 paper, Connes-Consani's *Absolute geometry of $\mathrm{Spec}\,\mathbb{Z}$ and the
+Fargues-Fontaine curve* (arXiv:2606.06604), supplies a genuinely new variety-free carrier on the
+Frobenius side: an $\mathbb{F}_1$-curve with an intrinsic Weil-group action whose scaling-site periodic
+orbits of length $\log p$ are now geometrically *derived* rather than posited. It carries no
+polarization (no Section 7, no $\Xi$, no prolate/Weil form), confirming the carrier-vs-wall split the
+whole scorecard records: a better geometric substrate does not move the positivity wall
+(LEARNINGS #157). This is the fourth 2026 CCM datum and the read is unchanged.
 
 ## 4. The four-sided bracket
 
@@ -179,7 +186,19 @@ negative-definiteness on a *fixed* arithmetic variety, and Cantat-Gao-Habegger-X
 product. Bost's theta-invariant / pro-Hermitian infinite-dimensional Arakelov geometry (Prog. Math.
 334, 2020; arXiv:1512.08946) is genuinely over the arithmetic curve but is a different miss: it
 produces a Diophantine $h^0_\theta$ (a non-negative scalar), the wrong signature class, not an
-indefinite $(1, n-1)$ form.
+indefinite $(1, n-1)$ form. A 2026 reading of three fresh Arakelov papers confirms the bracket from
+outside the project: He (*Numerical cohomology for arithmetic surfaces*, arXiv:2512.01811, effective
+$\omega^2$ bounds), Abboud (*A local arithmetic Hodge index over quasiprojective varieties*,
+arXiv:2503.14099), and Chen-Moriwaki (*Hilbert-Samuel formula and positivity over adelic curves*,
+arXiv:2207.02033). Each proves a per-surface or per-place polarization of **unconditional** (hence
+wrong-polarity) sign on a **fixed** base, and none builds the product
+$\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$ or the Frobenius correspondence
+$\Gamma_S$; Abboud pushes the face strictly *more* local (one place, a non-proper base), the opposite
+of the global assembly M4 needs. Zero of the three moves the frontier (LEARNINGS #157). The one
+published global characteristic-0 Frobenius that might instead supply the missing $\Gamma_S$ is itself
+ruled out as an endomorphism-shaped source by a machine-checked endomorphism-rigidity no-go (NG1's
+scope is endomorphism-shaped fillers; correspondences and flows escape, per LEARNINGS #156)
+(Section 5).
 
 A 2026 probe of this face (the Arakelov-face probe,
 [`../../experiments/arithmetic_geometric/2L_arakelov_face_probe.md`](../../experiments/arithmetic_geometric/2L_arakelov_face_probe.md),
@@ -291,6 +310,20 @@ LEARNINGS #130) splits the universal gap into two distinct-but-linked facets, bo
   *because* the modular curve is a variety; for **Maass** forms the symmetric space is non-Hermitian,
   there is "no apparent algebro-geometric moduli interpretation", and Ramanujan is **open** (best bound
   Kim-Sarnak $7/64$, never $\theta = 0$). The instant the variety is removed, purity becomes open.
+  A 2026 model-theoretic probe screened the one global characteristic-0 Frobenius mathematics actually
+  has, the ultraproduct $K = \prod_p \overline{\mathbb{F}}_p / \mathcal{U}$ with coordinatewise
+  $x \mapsto x^p$ (a model of Chatzidakis-Hrushovski's ACFA), against this facet and returned a
+  **machine-checked no-go (NG1)**: every unital ring endomorphism of every $\mathbb{Q}$-algebra fixes
+  the imported arithmetic pointwise (Fermat's little theorem is the coordinatewise witness,
+  $\sigma \circ d = d$ on the diagonal), so no endomorphism-shaped Frobenius can source the weight-1
+  carrier. It is Lean-verified sorry-free and axiom-clean
+  (`lean/ZetaRH/ModelTheoreticFrobenius.lean`, target #MTF-1, canonical at three independent consensus
+  witnesses), and the corpus's quantitative engine (Hrushovski's twisted Lang-Weil estimate) is itself
+  downstream of Deligne purity, so it redistributes RH-over-$\mathbb{F}_q$ rather than re-sourcing it
+  (K1). The net sharpens R1's standing negative into a **necessary-conditions clause**: an R1 filler
+  must be index-set-preserving *and* move arithmetic by non-endomorphism means (the adele witness kills
+  sufficiency of the first conjunct alone; Tate's restricted product shows the second is where the
+  survivors live). This is the first machine-checked coordinate on the R1 facet (LEARNINGS #156).
 
 - **(B) Polarization / signature (M4).** The arithmetic Hodge standard conjecture: the primitive cup
   form is definite with the indefinite $(1, n-1)$ signature. Over $\mathbb{F}_q$ this is **Weil's /
@@ -323,6 +356,20 @@ functional equation provides the perfect pairing $\rho \leftrightarrow 1 - \rho$
 to that pairing being conjugation, sorry-free and axiom-clean
 ([`../../lean/ZetaRH/ArithmeticPolarization.lean`](../../lean/ZetaRH/ArithmeticPolarization.lean)); the
 deep step, that a *polarization* forces $1 - \rho = \overline\rho$, is M4 itself and is not formalized.
+
+A 2026 definability-side probe sharpens *why* this remaining step is archimedean. The explicit
+formula's prime side $S(f) = \sum_n \Lambda(n)\, f(\log n)$ is integration of $f \circ \log$ against
+the von Mangoldt measure on $\mathbb{R}$, so any engine that reaches it must couple its discrete prime
+index to an external archimedean object (a flow, a scaling action, an operator on an $L^2$ of the log
+variable), because the archimedean *order*, the $\{\log p\}$ orbit lengths of Section 6.2, is the
+ingredient the ring / difference-field worlds structurally lack. The three constructions that carry
+$S(f)$ all inject it archimedeanly (Connes' scaling flow, the CCM prolate/Sonin functional, Deninger's
+foliated flow), so the decisive M4 step, uniform positivity as the prime cutoff runs to all primes, is
+by necessity an archimedean-limit step, not a geometric-descent one. This is a reading of known
+constructions, not a theorem (**MECHANISM** for the object-coincidence, **HEURISTIC** for the
+causation): it says only *where* the last step lives, and it predicts a better geometric substrate
+(the CCM 2606.06604 carrier of Section 3) will not move the wall, matching the observed outcome
+(LEARNINGS #157, the C3 survivor screen).
 
 ## 6. The two disciplines
 
@@ -403,7 +450,21 @@ section 6). The **archimedean / continuation half** (the $\Gamma$-factor, the So
 $\Theta$ divisor, the de Branges kernel positivity) is **shared by D-H** and is therefore RH-agnostic:
 D-H has the same functional equation and $\Gamma$-factor by construction. **All discrimination lives on
 the Euler-product / Frobenius half** (the orbit lengths $\{\log p\}$, the $(1, p)$ bidegree, the
-prismatic Frobenius, THH). The polarization that proves RH must therefore be carried by the **Frobenius
+prismatic Frobenius, THH). A 2026 model-theoretic probe re-confirms this firewall from the
+definability side, with one correction on record. The wild ingredient is precisely the archimedean
+*order* coupled to $+$ and the primes (the $\{\log p\}$ lattice), not "tameness" and not the bare
+prime set: the natural conjecture "a tame structure cannot carry the primes" is **REFUTED** by
+Kaplan-Shelah (arXiv:1601.07099), whose order-free additive prime structure
+$\mathrm{Th}(\mathbb{Z}, +, \mathrm{Pr})$ is decidable and supersimple (KS Thm 1.2, both conditional
+on Dickson's conjecture; only its independence property, Thm 3.7, is unconditional), while the
+order-bearing $\mathrm{Th}(\mathbb{N}, +, \mathrm{Pr})$ forces multiplication (Bateman-Jockusch-Woods,
+conditional on Dickson; the unconditional keystone is **OPEN**). The refutation does not hinge on
+Dickson: Poizat [Poi14 Thm 25] / Palacin-Sklinos show $\mathrm{Th}(\mathbb{Z}, +, P_q)$ (powers of $q$)
+is superstable of U-rank $\omega$ **unconditionally**, a tame structure already carrying a sparse
+multiplicatively-defined set. Ring and difference-field worlds have no
+archimedean order at all, so they cannot express the ordered, log-weighted prime sum. This re-confirms
+the standing archimedean-lattice obstruction rather than adding a new one (LEARNINGS #157). The
+polarization that proves RH must therefore be carried by the **Frobenius
 direction**, the one object that is structurally unbuildable for D-H: no Euler product $\Rightarrow$ no
 Frobenius correspondence $\Rightarrow$ no surface $\Rightarrow$ no intersection form to take the
 signature of. The single object whose positivity is RH is exactly the single object that cannot be
@@ -439,12 +500,23 @@ not claimed:
   Rodgers-Tao theorem $\Lambda \ge 0$ (2020); the de Branges positivity *fails* for $\zeta$ at the
   34th zero (Conrey-Li); the Rankin-Selberg / de la Vallee-Poussin positivity and its $2/3$ saturation;
   the non-semisimplicity of the prismatic Sen operator (Petrov, Annals); Deninger's foliated-space
-  construction (2018).
+  construction (2018); the model-theoretic-Frobenius no-go NG1 (every ring endomorphism of a
+  $\mathbb{Q}$-algebra fixes the arithmetic; the ACFA ultraproduct cannot source R1), machine-checked
+  in Lean (#MTF-1); and the reading-note confirmations of the Arakelov `fh-too-local` bracket
+  (He 2512.01811, Abboud 2503.14099, Chen-Moriwaki 2207.02033) and the CCM carrier-vs-wall split
+  (Connes-Consani 2606.06604).
 - **CONJECTURAL, and labeled as such:** the global determinant over $\mathbb{Z}$; the spectral
   identification $\mathrm{spec}(H) = \{\gamma_n\}$; the product surface
   $\mathrm{Spec}(\mathbb{Z}) \times \mathrm{Spec}(\mathbb{Z})$ and its Frobenius cycle class $\Gamma_S$;
   **every** product/global polarization. The arithmetic standard conjectures, the would-be source of
-  RH-positivity, are themselves open.
+  RH-positivity, are themselves open. The model-theoretic "tameness floor under R1" is **not** a
+  theorem: the tameness-forbids-the-primes reading was refuted (Kaplan-Shelah, KS Thm 1.2 itself
+  conditional on Dickson; the unconditional backstop is Poizat / Palacin-Sklinos, superstable
+  $\mathrm{Th}(\mathbb{Z}, +, P_q)$) and corrected to a re-confirmation of the archimedean-order
+  obstruction, whose unconditional keystone (does the ordered prime structure force multiplication
+  without Dickson) is open; and the archimedean-injection reading
+  of the M4 wall (Section 5) is a reading of known constructions, not a proof of where positivity
+  lives.
 - **The central caveat:** do **not** read any candidate's realization (i) or duality (ii) as progress
   toward RH. RH is (iii), and (iii) is open in every framework. Supplying the missing object is not a
   shortcut to RH: it **is** RH (the arithmetic Hodge standard conjecture / Rosati positivity).
@@ -484,6 +556,10 @@ arithmetic Hodge index theorem for adelic line bundles.* Math. Ann. 367.
 Cantat, S.; Gao, Z.; Habegger, P.; Xie, J. (2021). *The geometric Bogomolov conjecture.* Duke Math. J.
 170(2).
 Bost, J.-B. (2020). *Theta invariants of Euclidean lattices...* Prog. Math. 334 (arXiv:1512.08946).
+He, W. (2025). *Numerical cohomology for arithmetic surfaces and applications* (arXiv:2512.01811).
+Abboud, M. (2025). *A local version of the arithmetic Hodge index theorem over quasiprojective
+varieties* (arXiv:2503.14099). Chen, H.; Moriwaki, A. (2022). *Hilbert-Samuel formula and positivity
+over adelic curves* (arXiv:2207.02033).
 Adiprasito, K.; Huh, J.; Katz, E. (2018). *Hodge theory for combinatorial geometries.* Ann. Math.
 Conrey, J. B.; Li, X.-J. *A note on some positivity conditions...* (arXiv:math/9812166).
 Cohn, A. (1922). *Uber die Anzahl der Wurzeln einer algebraischen Gleichung in einem Kreise.* Math. Z.
@@ -496,14 +572,24 @@ ICM 1998. Deninger, C. *Dynamical systems for arithmetic schemes* (arXiv:1807.06
 Connes, A. (1999). *Trace formula in noncommutative geometry and the zeros of the Riemann zeta
 function.* Selecta Math. Connes, A.; Consani, C. (2014). *The hyperring of adele classes...*; (2021).
 *Weil positivity and the archimedean place* (arXiv:2006.13771, Selecta Math.); (2026). *On the Jacobian
-of $\overline{\mathrm{Spec}\,\mathbb{Z}}$* (arXiv:2602.15941). Connes, A. (2026). *Letter to Riemann*
-(arXiv:2602.04022). Connes, A.; Consani, C.; Moscovici, H. (2024). *semilocal prolate operator*
-(arXiv:2310.18423).
+of $\overline{\mathrm{Spec}\,\mathbb{Z}}$* (arXiv:2602.15941); (2026). *On the absolute geometry of
+$\mathrm{Spec}\,\mathbb{Z}$ and the Fargues-Fontaine curve* (arXiv:2606.06604). Connes, A. (2026).
+*Letter to Riemann* (arXiv:2602.04022). Connes, A.; Consani, C.; Moscovici, H. (2024). *semilocal
+prolate operator* (arXiv:2310.18423).
 Bhatt, B.; Lurie, J. *Absolute prismatic cohomology* (arXiv:2201.06120). Bhatt, B.; Scholze, P. (2022).
 *Prisms and prismatic cohomology.* Ann. Math. Petrov, A. *Non-decomposability of the de Rham complex
 and non-semisimplicity of the Sen operator* (arXiv:2302.11389, Annals). Gurney, L. *Prismatization over
 $\mathbf{Z}$* (arXiv:2301.12392).
 Hesselholt, L. (2018). *Topological Hochschild homology and the Hasse-Weil zeta function.*
+
+**The R1 no-go (model-theoretic Frobenius).**
+Ax, J. (1968). *The elementary theory of finite fields.* Ann. Math. 88.
+Chatzidakis, Z.; Hrushovski, E. (1999). *Model theory of difference fields.* Trans. AMS 351.
+Hrushovski, E. *The elementary theory of the Frobenius automorphisms* (arXiv:math/0406514).
+Kaplan, I.; Shelah, S. (2016). *Decidability and classification of the theory of integers with primes*
+(arXiv:1601.07099). Bateman, P.; Jockusch, C.; Woods, A. (1993). *Decidability and undecidability of
+theories with a predicate for the primes.* JSL 58. Lean: `lean/ZetaRH/ModelTheoreticFrobenius.lean`
+(#MTF-1, NG1, sorry-free).
 
 **The two disciplines.**
 Rodgers, B.; Tao, T. (2020). *The de Bruijn-Newman constant is non-negative.* Duke Math. J.
@@ -525,5 +611,9 @@ realization-vs-signature dichotomy);
 [`sourcing_gap_r1.md`](../../docs/03_research/sourcing_gap_r1.md) (the R1 facet);
 [`2A_weil_proof_diff.md`](../../experiments/arithmetic_geometric/2A_weil_proof_diff.md) (the diff table,
 the 17 constraints);
+[`model_theoretic_frobenius.md`](../../docs/03_research/model_theoretic_frobenius.md) and
+[`tameness_trade.md`](../../docs/03_research/tameness_trade.md) (the R1 model-theoretic no-go, NG1/NG2,
+the C3 survivor screen); the four 2026 reading notes (`reading_notes/He-2025-*`, `Abboud-2025-*`,
+`Chen-Moriwaki-2022-*`, `Connes-Consani-2026-*`);
 [`LEARNINGS.md`](../../experiments/LEARNINGS.md) #30, #40, #43, #48, #50, #52, #54, #56, #71, #97,
-#111-#118, #128-#133.
+#111-#118, #128-#133, #156, #157.

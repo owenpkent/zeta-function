@@ -40,7 +40,11 @@ cross-cutting disciplines.
    (arXiv:2302.11389, Annals); Dobner $S^\#$ (2020) and Newman-Wu (2019); Fuchs 1964 / Slepian 1965;
    Yuan-Zhang (Math. Ann. 367, 2017); Bost (Prog. Math. 334, 2020, arXiv:1512.08946). Pin Connes'
    Figure 1 / equation number in arXiv:2602.04022 by human eyeball (the HTML fetch renders figures
-   poorly; this caveat is carried from PUBLICATIONS.md P8).
+   poorly; this caveat is carried from PUBLICATIONS.md P8). Now source-read (VERIFIED-BY-FETCH per the
+   four 2026 reading notes): the Arakelov triple (He 2512.01811, Abboud 2503.14099, Chen-Moriwaki
+   2207.02033) and Connes-Consani 2606.06604; the model-theoretic corpus (Kaplan-Shelah 1601.07099,
+   Hrushovski math/0406514, Ax 1968) is source-anchored via the two dossiers
+   (`model_theoretic_frobenius.md`, `tameness_trade.md`).
 2. **Expert reader for the polarization column** (the same prerequisite P4 carries): the scorecard makes
    precise arithmetic-geometry claims (prismatic duality without sign, Sen non-semisimplicity blocking
    eigenspace polarizations, the Arakelov base relocation) that want a referee-grade reader before
@@ -49,7 +53,8 @@ cross-cutting disciplines.
    pinning-from-four-sides device is the note's claimed organizational novelty; lit-check that no
    existing survey already organizes the obstruction this way (the P4 lit-check found Connes 2602.04022
    and the MDPI Symmetry 2025 survey do not; extend to Deninger's program notes and a prismatic/THH
-   survey).
+   survey). The `fh-too-local` side now carries fresh 2022-2025 multi-paper confirmation (He, Abboud,
+   Chen-Moriwaki), which strengthens (does not weaken) the frame's robustness.
 4. **Decide standalone vs fold-into-P4** once items 1-3 clear.
 
 ## Files
