@@ -715,6 +715,14 @@ rather than M4. (2) K-W Parts II/III/V/VI remain unread; the HB$_1$ one-sided ex
 has no literature; if the canonical-system rung stalls, the parameter-simplex frame is the
 fallback carrier for the same two clauses. (4) DONE (ADVERSARY 2026-07-22): the GORZ published-version check (discrepancy 1
 resolved, cofinite form) and the source-level Killip-Simon read (Theorem 1 + semicontinuity
-method) are banked; the remaining hardening item is a source read of Remling's book Section 5.2
-itself (the pillar currently rests on 2409.04862 quoting it, independently corroborated by Hur
-arXiv:1501.01268).
+method) are banked; the remaining hardening item was a source read of Remling's book Section 5.2
+itself (the pillar previously rested on 2409.04862 quoting it, independently corroborated by Hur
+arXiv:1501.01268). RESOLVED 2026-07-22 (by substitution, SURVEYOR): the printed book pages remain
+paywalled-unread, but the full statement set is now pinned at source in
+[`remling_suzuki_canonical_pin.md`](remling_suzuki_canonical_pin.md): Hur 1501.01268 FULL TEXT
+(definitions, metric, compactness argument, Prop. 5.1 homeomorphism with degenerate elements
+in-space, and the integrated-Hamiltonian equivalent coordinate), Remling's own arXiv:1811.07067
+restating the book numbering (Thm 5.1 bijection; Sec. 5.2 metric; Thm 5.7(b) + Cor. 5.8
+convergence equivalence) plus the in-print indivisible-tail embedding, and Remling
+arXiv:0710.4128 Section 2 (the compactness mechanism, = Hur's [30], now identified). Only the
+book's internal labeling rests on the author's citations; no mathematical statement does.

@@ -149,3 +149,56 @@ adequate in substance but overstated the identity risk, and is now fixed.**
 - Remaining honest gap, recorded in Section 8: a source read of Remling's book Sec. 5.2 itself is
   the one hardening step left on the pillar (currently: F-R quoting it + Hur proving the same
   statement by the 2007 argument).
+
+## 7. Spot-check round on `remling_suzuki_canonical_pin.md` (ADVERSARY, 2026-07-22, light pass)
+
+Target: the SURVEYOR pin note itself plus the e1u build note's use of it. Method: fresh PDF
+downloads and local pdftotext extraction (1606.05726v3, 1811.07067, 1204.1827v2, 2206.03682,
+2012.11121), not trust of the note's extractions. Verdict: **PASS_WITH_FIXES**.
+
+**The load-bearing cousin claim survived re-fetch.** Suzuki 1606.05726 v3 Theorem 2.4 verbatim
+from the extracted full text: "The validity of GRH(L) for L in S_R is equivalent to the condition
+that there exists a sequence (omega_n, nu_n) ... (1) omega_m < omega_n if m > n and omega_n -> 0
+... (2) nu_n omega_n d_L > 1, (3) det(1 +- K[t]) != 0 for every t >= 0, and (4) lim_{t->inf}
+J(t;z,z) = 0 for every z in C+." Theorem 2.3 verbatim: assumes HB only if 0 < omega <= 1/2,
+concludes J(t;z,z) not identically 0 at any t >= 0 and J(t;z,w) -> 0 for every fixed z, w in C;
+the [0,inf) extension via non-vanishing Fredholm determinants sits in the run-up paragraph citing
+Proposition 5.1 there, exactly as the note attributes it. The gloss ((3) = no finite-time
+degeneration, (4) = no mass at the singular end, 2.3 = (4) necessary given HB) is faithful, and
+the equivalence direction is a true iff at the family level. JFA 281 (2021) 109116 confirmed
+(ScienceDirect); the v3 comment about the [45] split confirmed on the abstract page.
+
+Other re-fetches, all VERBATIM CONFIRMED: Hur Prop. 5.1 (homeomorphism, degenerate elements
+genuinely in the target), the compactness sentence with the "section 2 of [30]" credit, the
+test-function metric, automatic limit point, and the four-face M(x)/weak-*/m equivalence;
+Remling-Scarbrough tail embedding (H_n = H on x < L_n, P_{beta_n + pi/2} beyond, convergence in
+the [11, Section 5.2] metric) and all four book-numbering pins (Thm 5.1, Sec. 5.2, Thm 5.7(b) +
+Cor. 5.8), plus the "not yet trace normed ... pass to the new variable X" passage; 1204.1827
+Prop. 1.1, Prop. 1.2, Thm 2.3 (stated for omega > 1; m(a) = det ratio; 1 +- H invertible for all
+a > 0; (A_1,B_1) = (A^omega,B^omega)), the abstract's positive-semidefiniteness criterion
+sentence, the far-end c_omega(n) open-problem sentence, and the Lagarias [15] credit for
+omega >= 1/2. "Trace norm" has ZERO hits in 1204.1827, so the [SURVEYOR-INFERENCE] flag on
+trace-normalizability is genuinely inference; grep of e1u_canonical_chain.md and
+trojan_horse_m4.md found NO silent upgrade anywhere downstream (e1u's "trace-normalization
+exact" is about its own chains). Novelty rider: keyword scans of 2206.03682 and 2012.11121
+(full text) found zero normal-family/Montel/Vitali/Helly/Banach-Alaoglu/tightness/precompact/
+equicontinuity vocabulary; the only "subsequen" hits are "subsequent sections/paper". Em dashes:
+zero in both target files, before and after fixes. Inverted attributions: none found.
+
+Catches banked this round (fixes applied in place):
+1. Cross-reference slip in the pin note's verdict 2: the trace-normalizability inference lives
+   in Section 2.4, not 2.5. Fixed.
+2. Scope creep in verdict 3: "no subsequential-limit argument anywhere in the series" overstated
+   the evidence (several companions unread, per the note's own Sections 2.3/5). Rescoped to the
+   texts read/scanned, now including the 2206.03682 and 2012.11121 full-text keyword scans from
+   this round (both promoted in the Section 5 reference list; the clause-(4) RATE question is
+   explicitly NOT settled by a keyword scan and stays open).
+3. Theorem 6.1 gloss omitted its hypothesis 0 < omega_0 < 1/2. Added.
+4. e1u handed-forward item 2 silently widened the SURVEYOR's "none was found in the texts read"
+   to "anywhere in his series" (and the price table echoed it); both rescoped in e1u.
+
+Non-fix observation: the pin note's Theorem 2.3 bullet folds the pre-theorem extension paragraph
+into the theorem gloss; since it cites "Prop. 5.1 there" for exactly that part, attribution is
+preserved and no edit was needed. trojan_horse_m4.md's one-line Suzuki gloss ("RH equivalent to
+positive semidefiniteness of the Hamiltonian family") is the reading the pin note's discrepancy 4
+already prices as fair-but-read-as-existence-plus-no-blowup; left as is.
