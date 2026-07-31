@@ -376,3 +376,49 @@ decomposition, secular residual, N-step and lambda-step tables, twin table).
 cache is written; the e1k harness is imported read-only (comb streams and the
 `build_float`/`operator_spectrum` functions; no zero lists).
 
+## ADVERSARY reconciliation (2026-07-30): e1s vs #165/e1p, resolved -- NO CONFLICT
+
+**VERDICT: NO CONFLICT.** The twisted-inner-product caveat in #165/e1p bites
+only the non-normal operator-level object (e1p's `D = D_0+P_1`, this
+dossier's `M`); it does not touch, and neither dossier ever claimed it
+touches, the Hermitian form-level `Q`. Read past their one-line headlines,
+#165/e1p and this dossier make the *identical* two-object split internally
+(e1p: Q1 operator-level "measurement, not theorem" vs Q3 form-level
+"provable, verified... hypotheses actually met"; here: `M` "non-normal
+shadow, NO interlacing bound" vs `Q` "RIGOROUS, Weyl, robust"), and they
+agree on every disputed number: the shift-3 anomaly both flag at
+`lam=sqrt(13)` is, in BOTH dossiers, an operator-level (`D`/`M`) reading
+(e1p Q3: `D_noPole->D_full` shift = 3 at `N=24`, graded "no theorem backing
+a bound there"; this dossier's ADVERSARY entry: unfiltered `M` move = +3 at
+`N=34`, graded "ghost-fragile... NOT a bound"), while the Hermitian-`Q`
+Weyl bound stays `<=2` at every cell tested by either dossier, including
+sqrt(13) (e1p Q3 form-level max shift 1/2; this dossier's own ADVERSARY
+push case 1: "Weyl-on-`Q` stayed `<=2` at every cell"). Verified directly
+against the shared source (`e1k_dh_dlog_testbed.py`): `Q` is forced
+Hermitian by an explicit `0.5*(Q+Q.conj().T)` symmetrization w.r.t. the
+STANDARD inner product and diagonalized by `np.linalg.eigh` (lines
+244-246); the pole term, named `P` in the shared source (line 220,
+`P = 2.0*np.real(np.outer(np.conj(av), av))` with `av_n = Vhat(n,i/2)`)
+and relabelled `P_pole` in e1p, equals
+`2(pp^T+qq^T)` and is manifestly PSD, rank `<=2`,
+machine-exact -- the classical Weyl/Cauchy hypotheses are met by
+construction, not by luck. `M`/`D`, by contrast, is a rank-1 update
+`-w u^T` for two DIFFERENT vectors (not `w w^T`), self-adjoint only w.r.t.
+the twisted form `G = Q - eps*I` per `operator_spectrum`'s own docstring,
+so the ambient-inner-product hypothesis the counting theorem needs is not
+manifestly met there -- exactly, and only, the twisted-inner-product
+caveat's scope.
+
+**Downstream: nothing moves.** #165's retirement of the #154 ledger and its
+"the rank<=2 pole block is the ONE genuine Weyl/Cauchy instance,
+input-faithful, RH-blind" claim is CONFIRMED (doubly-independently
+verified: two separate implementations of the counting/shift harness, same
+conclusion), not contradicted. This dossier's own Weyl-on-`Q` rigor claim
+also stands unchanged. The frontier stays UNMOVED: the count-half of the W6
+budget was already graded structure-cheap by both dossiers; the
+location-half (= M4) was never touched by either. This is a cross-reference
+resolution of a wording collision, not a new result or a correction to any
+prior verdict. Full reasoning, matching-number tables, and adversarial
+stress tests attempting to break this reading:
+[`_e1s_interlacing_reconciliation.md`](_e1s_interlacing_reconciliation.md).
+

@@ -253,10 +253,29 @@ Per candidate, tested vs not-buildable stated precisely:
   nodes give a nonsingular trig Vandermonde; non-decimation families
   are the forcing question, adversary-attacked below with five
   families, none collapsing). The absence is not a failure to find a
-  trick; it is the incommensurability of {log p}, and the only KNOWN
-  structure that ties incommensurable circles together is the additive
-  lattice (integer counting x + O(1) / Poisson), which nothing in this
-  probe consumes.
+  trick; it is the incommensurability of {log p}, and the glue that
+  would tie incommensurable circles together is the additive lattice
+  (integer counting x + O(1) / Poisson), which nothing in this probe
+  consumes.
+
+  [AMENDED 2026-07-31, LEARNINGS #172, modular_hecke_sweep_2026-07-30.md
+  D1.] This paragraph previously read "the only KNOWN structure that ties
+  incommensurable circles together is the additive lattice". That is
+  FALSE AS WRITTEN. There are exactly TWO known glues: the additive
+  lattice, and Lee-Yang stability of a multivariate polynomial
+  (Kurasov-Sarnak, J. Math. Phys. 61 (2020) 083501, arXiv:2004.05678,
+  Thm 1: for ARBITRARY reals b_1..b_n > 1, a positive Fourier
+  quasicrystal with spectrum {sum m_j log b_j} supported on the real
+  zeros of P(b_1^-s, ..., b_n^-s); classification by Alon-Cohen-Vinzant
+  arXiv:2303.03201 Cor. 1.4). The VERDICT SURVIVES WITH A BETTER REASON:
+  the second glue needs no lattice and no integrality, and takes an
+  arbitrary multiplicative generator set as input, so it is
+  Beurling-generic BY ITS OWN HYPOTHESES and the DMV screen
+  (s4_carrier_audit.md Section 3) kills it BY NAME. S4 clause 4
+  (lattice-consuming, MANDATORY) is CONFIRMED, not weakened. One open
+  tension is logged as D3 (Kurasov-Sarnak's mechanism IS Lee-Yang
+  stability, which the breadth program demoted as wrong polarity;
+  LEARNINGS #172), unresolved here.
 
 ## Q4: the diff, stated (s4_spec, the handed-forward artifact)
 
