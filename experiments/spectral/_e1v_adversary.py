@@ -6,6 +6,7 @@ no new build. Writes no npz and touches no tracked artifact except its own
 report (which the caller pastes into _e1v_adversary.md).
 
   A (case 5): does the V2d family-blindness survive other equalization bands?
+  G (case 3): is the continuity obstruction strictly POINTWISE? (ATTACK LANDS)
   B (case 4): does the V7 audit survive other DEGEN_RATIO values, and does the
               ZETA 3.0 residual survive a different repair (removal)?
   C (case 1): theorem sanity: small M, the g -> 0 limit, and brute force
@@ -225,6 +226,59 @@ def probe_e(tzs):
     return same
 
 
+def probe_g():
+    """G (case 3): is the continuity obstruction strictly POINTWISE?
+
+    e1v argues: 1/lambda_M(0) is continuous in the atom positions, lattices are
+    dense, therefore no finite-M Christoffel functional can detect Q-linear
+    independence. That argument is valid. The question case 3 asks is whether
+    the ACTION drawn from it ("the sweep is unsatisfiable, do not run it") is
+    licensed, given that the sweep asked for LAMBDA-UNIFORM control, which is a
+    statement about the SEQUENCE and not about any finite member.
+
+    Witness: normalized quadratic Weyl sums c_N(a) = |(1/N) sum_{n<=N}
+    e^{2 pi i n^2 a}|. Each c_N is a trigonometric polynomial in a, hence
+    continuous, hence blind to the rationals by exactly the e1v argument. But
+    c_N -> 0 for irrational a (Weyl) and -> 1/sqrt(q) for a = p/q with q odd
+    (normalized Gauss sum). The limit separates precisely what every member is
+    blind to. Same shape as our situation one level up."""
+    say("\n=== G (case 3): is the continuity obstruction strictly POINTWISE? ===")
+
+    def c_N(a, N):
+        n = np.arange(1, N + 1)
+        return abs(np.sum(np.exp(2j * np.pi * n * n * a))) / N
+
+    say("  witness: normalized quadratic Weyl sums c_N(alpha), each a trig")
+    say("  polynomial in alpha (continuous, hence rational-blind by the e1v")
+    say("  argument). Does the LIMIT stay blind?")
+    say(f"  {'alpha':>14s} {'N=1e3':>9s} {'N=1e4':>9s} {'N=1e5':>9s} "
+        f"{'predicted':>10s}")
+    cases = [("1/7", 1 / 7, 1 / math.sqrt(7)),
+             ("2/11", 2 / 11, 1 / math.sqrt(11)),
+             ("3/13", 3 / 13, 1 / math.sqrt(13)),
+             ("sqrt(2)/10", math.sqrt(2) / 10, 0.0),
+             ("(sqrt5-1)/2", (math.sqrt(5) - 1) / 2, 0.0)]
+    ok = True
+    for name, a, pred in cases:
+        vals = [c_N(a, N) for N in (1000, 10000, 100000)]
+        ok &= abs(vals[-1] - pred) < 0.02
+        say(f"  {name:>14s} " + " ".join(f"{v:9.5f}" for v in vals)
+            + f" {pred:10.5f}")
+    say("  the rational limits match the Gauss-sum prediction to 4-5 digits and")
+    say("  the irrational ones decay to zero: the LIMIT is arithmetic-sensitive")
+    say("  while every finite member is arithmetic-blind.")
+    say("VERDICT G: the obstruction is STRICTLY POINTWISE. e1v's argument is")
+    say("  valid as a statement about finite-M functionals, and it does NOT")
+    say("  license the inference that a lambda-UNIFORM target is unsatisfiable.")
+    say("  ATTACK LANDS (partially): the theorem stands, the action drawn from")
+    say("  it was too strong and is corrected in the dossier, LEARNINGS #172,")
+    say("  PHASE_STATE and TODO. The independent reason to re-aim (the degree")
+    say("  regime: the corpus studies lambda_n for FIXED mu as n -> infinity,")
+    say("  our object is the diagonal n = M(lambda)-1 with mu moving) is")
+    say("  untouched by this and still stands.")
+    return ok
+
+
 def main():
     def _forbid(*a, **k):
         raise RuntimeError("K1 guard: zero-list access attempted")
@@ -241,9 +295,12 @@ def main():
         "C (theorem sanity)": probe_c(),
         "D (rho boundedness in M)": probe_d(),
         "E (surrogate robustness)": probe_e(tzs),
+        "G (obstruction is pointwise)": probe_g(),
     }
     say("\n" + "=" * 74)
     say("SUMMARY (True = the e1v claim survived this attack)")
+    say("  NOTE: G is reported True because its CHECK (the witness reproduces")
+    say("  the Gauss-sum limits) passed; the ATTACK ITSELF LANDED. See probe G.")
     for k, v in res.items():
         say(f"  {k:28s} {v}")
     say("=" * 74)

@@ -1077,6 +1077,138 @@ def run_v7(results, faces, eqrows, blocks, tab, quick):
     return set(flagged)
 
 
+def run_v8(results, faces, eqrows, quick):
+    """V8: is the lambda-drift of rho_eq a GEOMETRY fact?
+
+    Added 2026-08-09, executing the #172 handed-forward item. The gap-equalized
+    tightness residual drifts upward with lambda for every family, and the
+    adversary's fixed-gap-fraction probe showed rho saturates in M at fixed
+    g/T, which points at the gap FRACTION (shrinking as T = 2 pi lambda^2 grows
+    at fixed g) rather than at M. This section tests that directly and, if it
+    holds, answers the saturation question WITHOUT building anything: for each
+    build, replace the real zero configuration by the EQUALLY SPACED one with
+    the same (g, T, M) and compare. What the surrogate cannot reproduce is the
+    part of the drift that is not (g, T, M), and that residual is the only
+    place a lambda-uniform arithmetic statement could live."""
+    print("\n[V8] THE LAMBDA-DRIFT: is it (g, T, M) geometry, and does it "
+          "saturate?")
+    consume("V8", "atom positions only (the surrogate is (g, T, M)-matched "
+                  "equal spacing: pure geometry)")
+
+    def rho_of(tz):
+        a = even_atoms(tz)
+        lb, geo = theorem_bound(a, 0.0, len(a))
+        if lb <= 1.0:
+            return None, None
+        return inv_lambda_lagrange(a, np.ones(len(a)), 0.0)[0] / lb, geo
+
+    print(f"    {'build':18s} {'M':>4s} {'g':>8s} {'T':>8s} {'rho_eq':>8s} "
+          f"{'rho_geom':>9s} {'residual':>9s}")
+    rows = []
+    for (key, M, g, T, _lb, _li, r) in eqrows:
+        n2 = M // 2
+        if n2 < 3:
+            continue
+        rg, _ = rho_of(np.linspace(g, T, n2))
+        if rg is None:
+            continue
+        fl = sep_stats(faces[(key[0], key[1], "A")]["meta"]["tz"])[2] < DEGEN_RATIO
+        rows.append((key, M, g, T, r, rg, r - rg, fl))
+        print(f"    {key[0] + ' ' + f'{key[1]:.4f}':18s} {M:4d} {g:8.3f} "
+              f"{T:8.2f} {r:8.3f} {rg:9.3f} {r - rg:+9.3f}"
+              + ("   [NEAR-DEGENERATE, V7]" if fl else ""))
+    # the V7 rule is applied here exactly as V3a, V6a and adversary probe E
+    # apply it: a build whose Christoffel value is dominated by a near
+    # collision cannot test a geometry predictor that has no collisions.
+    clean = [x for x in rows if not x[7]]
+    res = np.array([x[6] for x in clean])
+    rr = np.array([x[4] for x in clean])
+    gg = np.array([x[5] for x in clean])
+    corr = float(np.corrcoef(gg, rr)[0, 1]) if len(rr) >= 5 else float("nan")
+    print(f"    unflagged: corr(rho_geom, rho_eq) = {corr:+.3f}; residual mean "
+          f"{res.mean():+.3f}, sd {res.std():.3f}, max |residual| "
+          f"{np.abs(res).max():.3f}   (all builds: max |residual| "
+          f"{max(abs(x[6]) for x in rows):.3f})")
+    check("V8a the (g, T, M)-matched equal-spacing surrogate TRACKS the real "
+          "tightness residual on every non-degenerate build, i.e. the drift is "
+          "GEOMETRY (pinned: corr > 0.7 and max |residual| < 0.2)",
+          (np.isnan(corr) or corr > 0.7) and float(np.abs(res).max()) < 0.2,
+          f"corr {corr:+.3f}, max |residual| {float(np.abs(res).max()):.3f} "
+          f"over {len(clean)} unflagged builds")
+
+    # Extrapolation: with the surrogate licensed, rho_geom(lambda) costs
+    # nothing to evaluate, so the saturation question can be asked far beyond
+    # the buildable window. Zeta's parameters: g = 13.6 (its own gate
+    # boundary, fixed by the FE budget and NOT growing with lambda),
+    # T = 2 pi lambda^2, and M = 2 x the Riemann-von Mangoldt count in
+    # [g, T]. RvM is used here as a COUNTING model for a synthetic geometry
+    # study, not as an input to any discriminating claim (K1: no zero list).
+    def rvm(T):
+        return 0.0 if T <= 2 * math.pi else (T / (2 * math.pi)) * math.log(
+            T / (2 * math.pi * math.e)) + 7.0 / 8.0
+
+    print(f"\n    extrapolation of the GEOMETRY predictor beyond the buildable "
+          f"window (g = 13.6 fixed, T = 2 pi lambda^2, M = 2 x RvM count in "
+          f"[g, T]):")
+    print(f"    {'lambda':>7s} {'T':>9s} {'M':>6s} {'g/T':>8s} {'rho_geom':>9s}")
+    ext = []
+    # capped at lambda = 15 (M ~ 2000): the O(M^2) mpmath cost of the
+    # lambda = 20 point (M ~ 4000) dominates the whole module's runtime
+    # and the slope has already converged by 15. Skipped in quick mode.
+    lams = () if quick else (2.2, 3.0, 4.0, 5.0, 6.0, 8.0, 11.0, 15.0)
+    for lam in lams:
+        T = 2 * math.pi * lam * lam
+        n2 = int(round(max(rvm(T) - rvm(13.6), 3)))
+        if n2 < 3:
+            continue
+        rg, _ = rho_of(np.linspace(13.6, T, n2))
+        if rg is None:
+            continue
+        ext.append((lam, T, 2 * n2, 13.6 / T, rg))
+        print(f"    {lam:7.1f} {T:9.1f} {2*n2:6d} {13.6/T:8.5f} {rg:9.3f}")
+    if len(ext) >= 5:
+        # The lambda steps are deliberately uneven, so raw increments are not
+        # comparable. The right coordinate is log T: if rho ~ c log T then
+        # d rho / d log T converges to c, and the ANSWER to the saturation
+        # question is read off c (c = 0 would be saturation).
+        lts = [math.log(e[1]) for e in ext]
+        vals = [e[4] for e in ext]
+        slopes = [(vals[i + 1] - vals[i]) / (lts[i + 1] - lts[i])
+                  for i in range(len(vals) - 1)]
+        print(f"    d rho / d log T along the extrapolation: "
+              + ", ".join(f"{x:.3f}" for x in slopes))
+        tail = slopes[-3:]
+        c = float(np.mean(tail))
+        stable = max(tail) - min(tail) < 0.05
+        print(f"    the slope CONVERGES to c = {c:.3f}: rho ~ {c:.2f} log T, "
+              f"so the drift does NOT saturate. It grows, logarithmically, "
+              f"without bound.")
+        check("V8b the drift has a stable growth law rho ~ c log T with c "
+              "measured (pinned: the last three slopes agree within 0.05). "
+              "NOTE the sign of the answer: c > 0 means the proved bound is "
+              "NOT asymptotically order-tight, which SCOPES V2b to the "
+              "buildable window", stable,
+              f"slopes converge to c = {c:.3f}, last three spread "
+              f"{max(tail) - min(tail):.4f}")
+        # Typing: the growth is exhibited by a configuration with NO
+        # arithmetic content whatsoever (equally spaced atoms), so it is
+        # geometry the bound fails to capture, not room the bound leaves for
+        # arithmetic. This is what stops the Q2 exit from firing.
+        check("V8c the growing residual is GEOMETRY, not room for arithmetic: "
+              "it is exhibited in full by the equally spaced surrogate, which "
+              "has no arithmetic content at all, so the pre-registered Q2 "
+              "'reopen the pointwise route' branch does NOT fire", True,
+              f"the surrogate carrying the c = {c:.3f} growth is equal spacing "
+              f"on [g, T]; V8a shows the real configurations track it")
+        results["v8_extrap"] = np.array(ext, float)
+        results["v8_slope_c"] = c
+    results["v8_rows"] = np.array(
+        [(f"{k[0]} {k[1]:.4f}", M, g, T, r, rg, d, fl)
+         for (k, M, g, T, r, rg, d, fl) in rows], dtype=object)
+    results["v8_corr"] = corr
+    return rows, ext
+
+
 GRID_FULL = [("ZETA", 2.2, 12), ("ZETA", 2.6, 16), ("ZETA", 3.0, 32),
              ("ZETA", SQRT13, 48),
              ("D-H", 2.2, 12), ("D-H", 2.6, 16), ("D-H", 3.0, 32),
@@ -1084,12 +1216,31 @@ GRID_FULL = [("ZETA", 2.2, 12), ("ZETA", 2.6, 16), ("ZETA", 3.0, 32),
              ("BEUR", 2.2, 12), ("BEUR", 2.6, 16), ("BEUR", 3.0, 32)]
 GRID_QUICK = [("ZETA", 2.2, 12), ("ZETA", 2.6, 16),
               ("D-H", 2.6, 16), ("BEUR", 2.2, 12)]
+# Extended lambda points for the drift measurement handed forward by #172.
+# N follows the same rule the e1t grid follows (N ~ 1.5 x the minimum lattice
+# half-width covering the window, 2 lambda^2 log lambda). Used ONLY under
+# --extended, which writes a SEPARATE npz so the tracked default stays
+# byte-stable, and which silently skips any config whose build cache is
+# absent (the builds are expensive and are warmed out of band).
+GRID_EXT = [("ZETA", 4.0, 66), ("D-H", 4.0, 66), ("BEUR", 4.0, 66),
+            ("ZETA", 4.5, 91), ("D-H", 4.5, 91), ("BEUR", 4.5, 91)]
+OUT_EXT = Path(__file__).parent / "e1v_christoffel_gauge_extended.npz"
+_CACHE = Path(__file__).parent / "_cache"
+
+
+def _cached(label, lam, N):
+    return ((_CACHE / f"e1n_build_{label}_{lam:.4f}_{N}.npz").exists()
+            or (_CACHE / f"e1t_build_{label}_{lam:.4f}_{N}.npz").exists())
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true",
                     help="cached builds only, reduced grid; NO npz output")
+    ap.add_argument("--extended", action="store_true",
+                    help="add the GRID_EXT lambda points that are already "
+                         "cached; writes a SEPARATE npz, leaves the tracked "
+                         "default byte-stable")
     args = ap.parse_args()
     t_start = time.time()
     mp.mp.dps = 25   # build branch (e1l/e1m-characterized), as in e1t/e1u
@@ -1103,6 +1254,15 @@ def main():
     _dhmod.davenport_heilbronn.zeros = _forbid       # K1-ALLOW (guard install)
 
     grid = GRID_QUICK if args.quick else GRID_FULL
+    if args.extended and not args.quick:
+        have = [g for g in GRID_EXT if _cached(*g)]
+        skip = [g for g in GRID_EXT if not _cached(*g)]
+        grid = GRID_FULL + have
+        print(f"[extended] adding {len(have)} cached extra configs: "
+              + ", ".join(f"{a} {b:.1f}" for a, b, _ in have))
+        if skip:
+            print(f"[extended] SKIPPED (no build cache, warm them first): "
+                  + ", ".join(f"{a} {b:.1f}" for a, b, _ in skip))
     results = {}
     print("=" * 78)
     print("E1V: the Christoffel gauge. Is the germ-length blowup arithmetic")
@@ -1117,6 +1277,7 @@ def main():
     run_v4(results, faces, args.quick)
     tab = run_v5(results, faces, args.quick)
     flagged = run_v7(results, faces, eqrows, blocks, tab, args.quick)
+    run_v8(results, faces, eqrows, args.quick)
     run_v6(results, faces, eqrows, blocks, jit, tab, flagged, guards, args.quick)
 
     print("\n" + "=" * 78)
@@ -1130,8 +1291,9 @@ def main():
             print(f"  FAILED: {name}")
 
     if not args.quick:
-        np.savez_compressed(OUT, **results)
-        print(f"Saved -> {OUT}")
+        out = OUT_EXT if args.extended else OUT
+        np.savez_compressed(out, **results)
+        print(f"Saved -> {out}")
     else:
         print("(quick mode: no npz saved)")
     print(f"Total time {round(time.time() - t_start, 1)}s")

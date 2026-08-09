@@ -1,8 +1,30 @@
 # ADVERSARY report: e1v (the Christoffel gauge)
 
-**Date**: 2026-08-08. **Scope**: self-run, in the absence of an external ADVERSARY round. Executable probe: [`_e1v_adversary.py`](_e1v_adversary.py) (`python -m experiments.spectral._e1v_adversary`), which consumes e1v / e1u / e1t by import and adds no new build. **Verdict: PASS on all five attacks run (A-E); the two attacks NOT run are named at the end and remain open.**
+**Date**: 2026-08-08, extended 2026-08-09 with probe G. **Scope**: self-run, in the absence of an external ADVERSARY round. Executable probe: [`_e1v_adversary.py`](_e1v_adversary.py) (`python -m experiments.spectral._e1v_adversary`), which consumes e1v / e1u / e1t by import and adds no new build. **Verdict: five of six posed attacks did not land; CASE 3 LANDED and forced a correction to the rung's action recommendation (not to its theorem). Case 7 remains open.**
 
-This report covers adversarial test cases 1, 2, 4, 5, 6 of [`e1v_christoffel_gauge.md`](e1v_christoffel_gauge.md). Cases 3 (scope of the continuity obstruction) and 7 (independent re-verification of K1/determinism) are prose/replication tasks and were not run here.
+This report covers adversarial test cases 1, 2, 3, 4, 5, 6 of [`e1v_christoffel_gauge.md`](e1v_christoffel_gauge.md). Case 7 (independent re-verification of K1/determinism) is a replication task and was not run here.
+
+## G (case 3): is the continuity obstruction strictly pointwise? THE ATTACK LANDS
+
+The rung argues: $1/\lambda_M(0)$ is continuous in the atom positions, lattices are dense, therefore no finite-$M$ Christoffel functional can detect $\mathbb{Q}$-linear independence. **That argument is valid and is not in question here.** What case 3 attacks is the *action* drawn from it, which in the first version of the dossier, LEARNINGS #172, PHASE_STATE and TODO read as "the sweep is unsatisfiable, do not run it".
+
+The inference does not go through, because **the sweep asked for $\lambda$-UNIFORM control, which is a statement about the sequence, not about any finite member.** Continuity at every finite index is perfectly compatible with an arithmetic-sensitive limit. Witness (classical, and structurally identical to our situation one level up): the normalized quadratic Weyl sums
+
+$$c_N(\alpha) \;=\; \Big|\tfrac1N \sum_{n\le N} e^{2\pi i n^2 \alpha}\Big|.$$
+
+Each $c_N$ is a trigonometric polynomial in $\alpha$, hence continuous, hence blind to the (dense, totally disconnected) rationals **by exactly the e1v argument**. But the limit is not blind at all: $c_N \to 0$ for irrational $\alpha$ (Weyl) and $c_N \to 1/\sqrt q$ for $\alpha = p/q$ with $q$ odd (normalized Gauss sum).
+
+| $\alpha$ | $N = 10^3$ | $N = 10^4$ | $N = 10^5$ | predicted |
+|---|---|---|---|---|
+| 1/7 | 0.37834 | 0.37804 | 0.37796 | 0.37796 |
+| 2/11 | 0.30181 | 0.30139 | 0.30151 | 0.30151 |
+| 3/13 | 0.27663 | 0.27746 | 0.27735 | 0.27735 |
+| $\sqrt2/10$ | 0.03294 | 0.00602 | 0.00118 | 0 |
+| $(\sqrt5-1)/2$ | 0.03283 | 0.00460 | 0.00062 | 0 |
+
+**Outcome.** The obstruction stands as a theorem about finite-$M$ functionals, and the rung's three durable products (the theorem, the family-blindness, the pointwise obstruction) are untouched. What was too strong was the action: the correct move is to **split** the sweep, not cancel it. The pointwise growth-bound sub-corpus is dead; the sequence-level sub-corpus (Killip-Simon sum rules) is exactly where the surviving question lives. Corrected in the verdict line, Handed forward 1, LEARNINGS #172, PHASE_STATE next-step 2 and TODO.
+
+**What is NOT affected**: the second, independent reason to re-scope, namely the degree-regime mismatch (the corpus studies $\lambda_n$ for a fixed measure as $n \to \infty$; this object is the diagonal $n = M(\lambda)-1$ with the measure moving). That reason never depended on the continuity argument and still stands.
 
 ## A (case 5): does V2d's family-blindness survive other equalization bands?
 
@@ -74,13 +96,14 @@ All builds: worst block $0.363$, worst shuffled $0.224$. V7-unflagged only: wors
 
 ## Net
 
-Five attacks run, five failed to land, and one of them (B) closed an item the dossier had left open. Nothing in the e1v verdict was weakened. Specifically:
+Six posed attacks run. Five failed to land, one of them (B) closed an item the dossier had left open, and **case 3 landed**: it left the rung's theorem and measurements intact but showed the action recommendation drawn from the obstruction was too strong, which is corrected throughout. Specifically:
 
 - the theorem is correct, including at the edges and for non-uniform weights (C);
 - its order-tightness is structural, not grid luck (D);
 - the family-blindness of the tightness residual is not an artefact of the equalization band (A);
 - the near-degeneracy audit is not an artefact of its own threshold, and its one residual is an artefact of the surgery (B);
-- the density-versus-microstructure answer does not depend on which surrogate destroys the microstructure (E).
+- the density-versus-microstructure answer does not depend on which surrogate destroys the microstructure (E);
+- but the obstruction is **strictly pointwise**, so "do not run the sweep" was unlicensed and became "split the sweep" (G).
 
 ## F (added, not posed in the dossier): are the atom sets the ones e1u actually used?
 
@@ -95,5 +118,4 @@ Every number in e1v is a functional of the Face-A/Face-B atom sets, which are re
 
 ## Attacks NOT run (open)
 
-1. **Case 3**: verify that the continuity obstruction is scoped correctly, i.e. that it kills pointwise detection **without** quietly claiming to kill sequence-level (sum-rule) statements. This is a prose-level check on the verdict line and the strongest place for an independent reader to catch overclaiming.
-2. **Case 7**: independent re-verification of K1 guards, the planted-call scan, npz byte-reproducibility and quick/full parity. All were verified in-session (including a planted `mp.zetazero(1)` call being caught, and only it), but not by a second party.
+1. **Case 7**: independent re-verification of K1 guards, the planted-call scan, npz byte-reproducibility and quick/full parity. All were verified in-session (including a planted `mp.zetazero(1)` call being caught, and only it), but not by a second party.
