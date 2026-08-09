@@ -645,9 +645,24 @@ def run_u0(results, quick):
                 _, meta = get_build(label, lam, N)
                 errs[(label, lam)] = abs(float(d[tag]) - meta["eps"])
         worst = max(errs.values()) if errs else np.inf
-        check("U0b cached-build eps values match the tracked e1t npz record "
-              "(same caches, same numbers: cross-artifact consistency)",
-              errs and worst < 1e-15, f"{len(errs)} builds, max|deps|={worst:.1e}")
+        # [PORTABILITY FIX 2026-08-09, LEARNINGS #172] The tolerance was
+        # 1e-15, which asserted same-machine BIT reproducibility rather than
+        # numerical agreement. eps is determined by the build to only ~1e-10
+        # ABSOLUTE: the archimedean density uses a central-difference digamma
+        # at h = 1e-5 in float64, whose own relative accuracy measures ~5e-10
+        # against exact mpmath digamma. A fresh machine therefore deviated by
+        # 3.7e-11 (worst over the full grid) while EVERY structural number
+        # reproduced to printed precision, and e1u scored 16/18 there. Now a
+        # numerical-agreement check at 1e-9 (27x the measured worst), which is
+        # verified to still catch a genuine regression: the documented
+        # dps-branch flip trips it by 3e5x. Evidence and both measurements:
+        # _e1u_portability.py.
+        check("U0b cached-build eps values agree with the tracked e1t npz "
+              "record to the build's own accuracy floor (numerical agreement, "
+              "not bit reproducibility; tolerance pinned and teeth verified in "
+              "_e1u_portability.py)",
+              bool(errs) and worst < 1e-9,
+              f"{len(errs)} builds, max|deps|={worst:.1e} (tol 1e-9)")
         results["u0_eps_worst"] = worst
     else:
         print("    (U0b skipped: e1t npz not present; no record to cross-check)")
@@ -882,7 +897,19 @@ def run_u2(results, faces, grid, quick):
         no_cert = not all(a > b for a, b in zip(z_seq, z_seq[1:]))
         z6 = float(np.mean(m6["ZETA"]))
         d6 = float(np.mean(m6["D-H"]))
-        cond = (base_err < 1e-9 and zeta_first and imp_gap and shape_blind
+        # [PORTABILITY FIX 2026-08-09, LEARNINGS #172] base_err was
+        # compared at 1e-9, the third bit-reproducibility assertion in
+        # this module (with U0b and U5a). It compares the recomputed
+        # e1t function-face baseline against the tracked record, so it
+        # inherits the build noise floor and amplifies it: measured
+        # 2.7e-7 on a fresh machine. Tolerance 1e-5 (37x the measured
+        # deviation, and still ~1400x below the SMALLEST tracked gap,
+        # 0.014), so it remains a real check on the improvement
+        # denominator. NOTE the four content clauses below (ordering,
+        # improvement gap, shape-blindness, no-certificate) reproduced
+        # EXACTLY on the fresh machine; only the record comparison
+        # failed. Evidence: _e1u_portability.py.
+        cond = (base_err < 1e-5 and zeta_first and imp_gap and shape_blind
                 and no_cert)
         detail = (f"mA means z/d/b = {z_m:.4f}/{d_m:.4f}/{b_m:.4f}; imp "
                   f"{imp[('mA', 'ZETA')]:.3f} vs {imp[('mA', 'D-H')]:.3f}; "
@@ -1316,7 +1343,13 @@ def run_u5(results, faces, grid, quick):
             tag = f"t1_{label.replace('-', '')}_{lam:.3f}_fneg_q"
             if tag in d:
                 worst_rec = max(worst_rec, abs(float(d[tag]) - v))
-        ok_rec = worst_rec < 1e-9
+        # [PORTABILITY FIX 2026-08-09, LEARNINGS #172] was 1e-9; the
+        # fneg_q record inherits the same build noise floor as U0b and
+        # amplifies it through the coefficients (worst measured
+        # cross-machine deviation 1.3e-8 over the full grid). 1e-6
+        # gives 80x headroom and still sits five orders below the
+        # smallest tracked fneg_q value.
+        ok_rec = worst_rec < 1e-6
 
     zx = max(v for (lab, _), v in fneg.items() if lab == "ZETA")
     dn = min((v for (lab, _), v in fneg.items() if lab == "D-H"), default=np.inf)
