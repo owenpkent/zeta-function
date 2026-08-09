@@ -25,7 +25,7 @@ zeta-function/
 │   └── research_atlas/          # Master research map: all attempts, failures, ML directions
 ├── experiments/                 # ★ Computational thread; proof-architecture tests
 │   ├── PROOF_ARCHITECTURES_PLAN.md    # Test plan + AI-centric methodology
-│   ├── LEARNINGS.md             # 171 cross-architecture findings
+│   ├── LEARNINGS.md             # 172 cross-architecture findings
 │   ├── _shared/                 # LFunction interface, zeta, Davenport-Heilbronn control
 │   ├── positivity/              # Arch 3 (Li coefficients, Weil quadratic form, 3B.3 rigorous)
 │   ├── spectral/                # Arch 1 (Berry-Keating discretization)
