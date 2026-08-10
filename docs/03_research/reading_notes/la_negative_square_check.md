@@ -257,7 +257,15 @@ coincidence dependent on the unknown coupling.**
 
 Script: `la_negative_square_numerics.py`, session scratchpad
 (`C:\Users\owenp\AppData\Local\Temp\claude\c--Users-owenp-dev-zeta-function\5708f836-0dc9-46e9-96bd-2a1caa68d9b0\scratchpad\la_negative_square_numerics.py`;
-not a tracked repo experiment, a one-off check for this note). `mpmath` at 30 digits seeds the two
+not a tracked repo experiment, a one-off check for this note). [SUPERSEDED 2026-08-09: the
+scratchpad path above is machine-local and the script is unrecoverable (evidence-rule
+violation, flagged by [`_modular_rung_adversary.md`](_modular_rung_adversary.md) B5). The
+computation is superseded at source tier by the tracked
+[`e1w_burnol_bilinear.py`](../../../experiments/spectral/e1w_burnol_bilinear.py), which
+computes Burnol's LITERAL bilinear extension and finds signature $(2,0)$, $\kappa(L_a) = 0$:
+this note's $\kappa = 1$ was the negative-square count of the $\mathcal{F}_+$-twisted pairing,
+not of the space. See [`e1w_burnol_bilinear.md`](../../../experiments/spectral/e1w_burnol_bilinear.md)
+Sections 5-6 and LEARNINGS #173.] `mpmath` at 30 digits seeds the two
 elementary residues; `numpy` computes eigenvalues of the resulting small Hermitian matrices. Full output
 transcribed below in summary form.
 

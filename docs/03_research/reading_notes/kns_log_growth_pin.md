@@ -136,6 +136,12 @@ to reach. **No paper in this search treats primes or prime powers specifically**
 all $n\in\mathbb N$ is a different, denser set than $\log p$ over primes only or $\{k\log p\}$
 over prime powers; see Section 3 below for how close these actually are asymptotically).
 
+> Adjudicated 2026-08-09 (ADVERSARY, [`_modular_rung_adversary.md`](_modular_rung_adversary.md)
+> B1): BRS 2005.02996 Theorem 1.1 is unconditional with multiplicities $m(\rho)$ handled by
+> derivative terms, per direct source fetch; the "assuming RH and simplicity" wording is KNS's
+> citing description and does not match the printed theorem. This pin's quote of KNS is
+> accurate; KNS's characterization of BRS is not.
+
 ## 2. The corridor's node sets, defined precisely, with the counting-function arithmetic
 
 Three distinct objects are in play; conflating them is the main risk in this whole question, so
