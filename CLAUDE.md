@@ -103,6 +103,7 @@ zeta-function/
 │   ├── criticality/             Nyman-Beurling / de Bruijn-Newman D-H probes (both MIRROR)
 │   ├── gradient_descent/        D4 meta-level policy-gradient against the Lean floor (function-field rehearsal)
 │   ├── lemma_db/                reduction/generative engines, breadth corpus, oracle, transfer search
+│   ├── primes/                  prime-patterns thread: last digits across bases, consecutive-digit bias, twins vs HL, explicit formula (dossier PRIME_PATTERNS.md)
 │   ├── toy/                     RH toy sandbox: checkable training ground for the M4 move (Python + Lean ToyModel)
 │   └── orchestrator_sessions/   per-session ORCHESTRATOR plans
 ├── lean/                        Lean 4 / Mathlib formal verification (Phase 1 substrate as of 2026-05-25)

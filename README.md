@@ -32,6 +32,7 @@ zeta-function/
 │   ├── zero_free/               # Arch 4 (LP/SDP family through 4E.8)
 │   ├── arithmetic_geometric/    # Arch 2 (2A diff, R1-R5, R3.6, R3.6.3, 2C, 2D, 2E)
 │   ├── multifractal/            # Log-correlated field experiments (pre-existing)
+│   ├── primes/                  # Prime-patterns thread: digits across bases, LOS bias, twins vs HL, explicit formula (PRIME_PATTERNS.md)
 │   ├── chaos/                   # Strange attractors: Lyapunov spectra, fractal dimension, multifractal bridge
 │   └── toy/                     # ★ The RH toy sandbox: a checkable training ground for the M4 move
 ├── references/                  # ★ Reference library (26 sources, gitignored PDFs) + tracked index
