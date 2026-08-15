@@ -1,6 +1,6 @@
 # Prime patterns: digits, bases, twins, and the singularity that runs it all
 
-**Date:** 2026-08-13, deepened 2026-08-14. **Modules:** `e5a_digit_patterns.py`, `e5b_twin_primes.py`, `e5c_explicit_formula.py`, `e5d_riemann_spectrum.py`, `e5e_zero_statistics.py`; engines in `primestream.py` (segmented sieve) and `rsz.py` (Riemann-Siegel bulk zero finder); checks in `test_primes.py` (26/26). **Scale:** every number below is measured in this repo. Default pass $N = 10^8$ (seconds); deep pass $N = 10^{12}$, all **37,607,912,018** primes streamed in 9.7 hours on the research box.
+**Date:** 2026-08-13, deepened 2026-08-14. **Modules:** `e5a_digit_patterns.py`, `e5b_twin_primes.py`, `e5c_explicit_formula.py`, `e5d_riemann_spectrum.py`, `e5e_zero_statistics.py`, `e5f_rh_verification.py`, `e5g_race_from_zeros.py`; engines in `primestream.py` (segmented sieve) and `rsz.py` (Riemann-Siegel bulk zero finder); checks in `test_primes.py` (42/42). **Scale:** every number below is measured in this repo. Default pass $N = 10^8$ (seconds); deep pass $N = 10^{12}$, all **37,607,912,018** primes streamed in 9.7 hours on the research box.
 
 **Predictions registered before the deep pass finished, and how they came out.** Six for six, exact:
 
@@ -57,6 +57,32 @@ The shape of the excursion is the interesting part. It does not merely graze zer
 Why nonresidues: $\psi(x; q, a)$ is even-handed, but $\pi$ counts only primes, and the prime **squares** all land in quadratic-residue classes, depressing the prime count there by $\sim \sqrt{x}/\log x$: exactly the size of the fluctuation the L-function zeros produce. The race is a zero-driven oscillation around a square-root-size systematic offset, and Littlewood proved the lead flips infinitely often. This is the first place the side quest touches the main program: the finite-$x$ arithmetic of last digits is controlled by the zeros of Dirichlet L-functions, i.e. by GRH-grade information.
 
 **And unlike the GUE statistics of §5c, this observable is not RH-blind.** The race amplitude comes from terms $x^\rho/\rho$ summed over the zeros of the relevant L-function, so its size is governed by their **real parts**, not merely their heights. A single zero with $\beta = 0.6$ would contribute a term fifteen times the whole on-line contribution; the bias would have been swamped long before $6\times10^{11}$ and the race would look violent and early instead of clean and late. What we measured is a long unbroken bias at exactly the $\sqrt x$ scale with one shallow dip, which is a fingerprint of the zeros sitting on the line. That is weak evidence, since a zero at $\beta = 0.5001$ would be invisible at this height, and it is consistency rather than proof. But it is a genuine contrast with §5c, where every statistic is a function of heights alone and is provably unchanged when zeros are moved off the line. §5d works out exactly how much purchase this family of observables has, and the answer is sobering enough to explain why nobody tests RH with primes.
+
+## 3b. The zeros predict the race, including where it breaks (e5g)
+
+§3 asserts a mechanism: the race is driven by the zeros of $L(s,\chi)$. §5c and §5d turn that into a claim with teeth, that a race sees *real parts* where GUE statistics see only heights. Here the assertion is tested by making the zeros **predict** the race, with no prime data anywhere in the prediction.
+
+For $q = 3$ and $q = 4$ there is one non-principal character, real and primitive, and $\psi(x;q,N) - \psi(x;q,R) = -\psi(x,\chi) = \sum_\rho x^\rho/\rho$. Prime squares all land in the residue class ($p^2 \equiv 1$ mod 3 and mod 4), contributing $-\theta(\sqrt x) \sim -\sqrt x$, which *is* the systematic bias. Undoing it and passing to $\pi$ leaves, under GRH,
+
+$$E(x) := \frac{\log x}{\sqrt x}\big[\pi(x;q,N) - \pi(x;q,R)\big] = 1 + 2\sum_{\gamma > 0} \operatorname{Re}\frac{x^{i\gamma}}{\tfrac12 + i\gamma}.$$
+
+The constant 1 is the bias; the rest is the zeros talking. Zeros come from Oliveira e Silva's tables (10,000 per character, DATASETS.md), computed from the L-functions and knowing nothing about our prime counts. The two sides were produced by completely separate computations.
+
+**Agreement across the whole range.** Comparing prediction with our 10^12 stream on 2,799 sampled $x$ between $10^5$ and $10^{12}$: correlation **+0.9915** (mod 3) and **+0.9935** (mod 4). Predicted mean $E$ is 1.000 and 1.005 against a theoretical bias of exactly 1.
+
+**The event.** Searching $x$ from $2\times10^9$ to $1.8\times10^{14}$ (11.4 in log $x$), the mod-3 prediction has six excursions past the noise floor, and they sit on top of the measured flip:
+
+| | $x$ | ratio to measured |
+|---|---|---|
+| measured first flip (37.6e9 primes) | 608,981,813,029 | 1 |
+| earliest meaningful predicted crossing | 608,091,014,664 | 0.9985 |
+| deepest predicted dip | 610,879,094,740 | 1.0031 |
+
+So zeros of an L-function locate, to within 0.15%, the point where a bias in the primes breaks after holding for 23 billion of them. The residual error is about four times the finest oscillation the truncated sum can resolve ($2\pi/\gamma_{\max} = 7.3\times10^{-4}$ in log $x$), so it is truncation, not disagreement.
+
+**Depth, not just position.** For mod 4 the measured deepest excursion is $-2{,}719$ primes at $x = 1.87\times10^{10}$, i.e. $E = -0.4703$; the zeros predict $E = -0.5302$ there, agreeing to 13%. For mod 3, measured $E = -0.0535$ at the deepest point against a predicted $-0.0971$, same sign and order with the truncation floor at 0.018.
+
+**Honest limits.** The prediction has a resolution floor (the discarded tail contributes ~0.018 RMS to $E$) and a validity floor: $E = 1 + \text{oscillation}$ drops $O(1/\log x)$ terms, so below $x \sim 10^4$ those neglected terms are the size of the excursions and the formula produces dips that are not real. Both are enforced in the code rather than mentioned. One genuine forward prediction is left untested: the zeros put another mod-3 excursion at $x \approx 6.15\times10^{12}$, past where our stream stopped. Checking it needs a $10^{13}$ pass.
 
 ## 4. Twin primes, and the one framework behind sections 2-4
 
@@ -199,8 +225,9 @@ python -m experiments.primes.e5d_riemann_spectrum        # primes locate the zer
 python -m experiments.primes.e5e_zero_statistics         # GUE statistics to the 10^22nd zero
 python -m experiments.primes.e5f_rh_verification 1e7               # verify RH to height 10^7 (~2 h)
 python -m experiments.primes.e5f_rh_verification 1e6 certified     # ... with every sign certified
+python -m experiments.primes.e5g_race_from_zeros 3                 # predict the mod-3 race from L-zeros
 python -m experiments.primes.e5a_digit_patterns 1e12     # deep pass (overnight, checkpointed)
-python -m experiments.primes.test_primes                 # 31/31; auto-discovered by run_all_tests
+python -m experiments.primes.test_primes                           # 42/42; auto-discovered by run_all_tests
 ```
 
 **External datasets.** `e5e` uses A. M. Odlyzko's published tables of zeta zeros, which reach heights no machine here can compute: `zeros1` (first $10^5$ zeros), `zeros3` (zeros $10^{12}{+}1$ through $10^{12}{+}10^4$), `zeros4` ($10^{21}$), `zeros5` ($10^{22}$), from `https://www-users.cse.umn.edu/~odlyzko/zeta_tables/`. They are fetched on demand into the gitignored `_cache/odlyzko/` (about 2 MB total); the module prints the exact `curl` line if they are absent, and `test_primes.py` skips rather than fails the cross-check when they are. Everything else on this page is computed in-repo. The tables are also used as an independent check on `rsz.py`: our own zero positions agree with Odlyzko's to $10^{-4}$ at $t \approx 5000$, and the counts agree exactly.

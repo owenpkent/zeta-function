@@ -234,6 +234,37 @@ def main() -> int:
                    f"{vc['found']} zeros, all signs proven",
                    bool(vc["verified"]) and vc["unresolved"] == 0))
 
+    # ---- e5g: the race predicted from the L-function zeros ----------------
+    from experiments.primes.e5g_race_from_zeros import (
+        E_predicted, RACES, TOS, excursions, load_zeros, tail_rms,
+    )
+    if (TOS / RACES[3][0]).exists():
+        gz = load_zeros(3)
+        checks.append(("mod-3 L-function zeros load: 10,000 of them, first at "
+                       "8.039737 (external anchor)",
+                       gz.size == 10000 and abs(float(gz[0]) - 8.03973715568) < 1e-9))
+        pub = RACES[3][3]
+        Lz = np.linspace(np.log(pub) - 0.02, np.log(pub) + 0.02, 4001)
+        Ez = E_predicted(Lz, gz)
+        exc = [e for e in excursions(Lz, Ez) if e["depth"] < -2 * tail_rms(gz)]
+        near = [e for e in exc if abs(e["x_min"] / pub - 1) < 0.01]
+        checks.append(("the zeros alone put a meaningful negative excursion within 1% "
+                       f"of the measured mod-3 flip at {pub:,} "
+                       f"({len(near)} of {len(exc)} in the window)",
+                       len(near) >= 1))
+        checks.append(("predicted E at the measured flip is negative and small, as a "
+                       "crossing requires",
+                       -0.3 < float(np.interp(np.log(pub), Lz, Ez)) < 0.0))
+        # The bias term is 1 on average over a WIDE range; inside a single
+        # excursion the local mean is not 1, so sample broadly.
+        Lw = np.linspace(np.log(1e6), np.log(1e12), 5000)
+        checks.append(("E averages to the bias constant 1 over six decades "
+                       f"(meas {float(E_predicted(Lw, gz).mean()):.3f})",
+                       abs(float(E_predicted(Lw, gz).mean()) - 1.0) < 0.05))
+    else:
+        checks.append(("L-function zero tables absent: race-prediction checks skipped "
+                       "(see DATASETS.md)", None))
+
     # ---- e5e: the statistics layer ----------------------------------------
     checks.append(("GUE surmise normalizes to 1 and the sine kernel vanishes at 0",
                    abs(float(np.trapezoid(wigner_gue(np.linspace(0, 12, 200001)),
