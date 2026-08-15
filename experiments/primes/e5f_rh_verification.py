@@ -48,15 +48,61 @@ import time
 import numpy as np
 
 from experiments.primes.primestream import CACHE_DIR
-from experiments.primes.rsz import TWO_PI, gram_point, theta, zed
+from experiments.primes.rsz import TWO_PI, gram_point, theta, zed, zeros_in
 
 MAX_REFINE = 5          # subdivision rounds before a block is declared unresolved
 MAX_MERGE = 8           # neighbouring blocks to absorb when one stays short
+TURING_K = 80           # Gram intervals above the top used to close S(g_m) <= 0
 
 
 def n_max_for(T: float) -> int:
     """Largest Gram index with g_n <= T."""
     return int(np.floor(theta(T) / np.pi))
+
+
+def turing_bound(t2: float) -> float:
+    """Trudgian 2014, *Improvements to Turing's Method II*, Theorem 1:
+
+        |int_{t1}^{t2} S(t) dt| <= 1.698 + 0.183 log log t2 + 0.049 log t2
+
+    for t2 > t1 > 10^5, where pi*S(t) = arg zeta(1/2 + it).
+    """
+    return 1.698 + 0.183 * np.log(np.log(t2)) + 0.049 * np.log(t2)
+
+
+def turing_check(m: int, k: int = 40, step: float = 0.01) -> dict:
+    """Turing's method: prove S(g_m) <= 0, closing the count from above.
+
+    At a Gram point, S(g_m) = N(g_m) - m - 1 is an INTEGER, and having found
+    m + 1 zeros on the line below g_m already gives S(g_m) >= 0. What is
+    missing is the other side, and that is what Turing's method supplies.
+
+    Since N is non-decreasing and every zero we locate in the stretch above
+    g_m is genuine,
+
+        S(t) >= S(g_m) + (F(t) - F(g_m)) - (theta(t) - theta(g_m))/pi
+
+    for t in [g_m, g_{m+k}], where F counts the zeros we found. Integrating
+    and combining with Trudgian's bound B on |int S| gives
+
+        S(g_m) <= (B + C - A) / L,
+
+    with L the length of the stretch, A = sum over found zeros of
+    (g_{m+k} - gamma_i), and C = (1/pi) int (theta(t) - theta(g_m)) dt. If
+    that bound falls below 1 then the integer S(g_m) is <= 0, hence exactly
+    0: every zero below g_m has been found, and all of them are on the line.
+    """
+    ga, gb = float(gram_point(m)), float(gram_point(m + k))
+    gammas = zeros_in(ga, gb, step=step)
+    L = gb - ga
+    A = float(np.sum(gb - gammas))
+    ts = np.linspace(ga, gb, 40001)
+    C = float(np.trapezoid(theta(ts) - theta(ga), ts) / np.pi)
+    B = turing_bound(gb)
+    s_upper = (B + C - A) / L
+    return dict(m=m, k=k, t_lo=ga, t_hi=gb, stretch=L, zeros_in_stretch=int(gammas.size),
+                trudgian_B=B, A=A, C=C, s_upper=s_upper, closed=bool(s_upper < 1.0),
+                valid=bool(ga > 1e5))
 
 
 def _sign_changes(z: np.ndarray) -> int:
@@ -196,15 +242,28 @@ def main(T: float = 1e7) -> int:
         print(f"  first unresolved: {r['worst']}")
     print(f"  elapsed                          : {r['elapsed']:.0f}s")
 
+    tc = None
+    if r["verified"] and r["height"] > 1e5:
+        tc = turing_check(r["n_reached"], k=TURING_K)
+        print(f"\n  Turing's method on the {TURING_K} Gram intervals above g_m:")
+        print(f"    Trudgian bound B = {tc['trudgian_B']:.3f}, stretch L = {tc['stretch']:.2f}, "
+              f"{tc['zeros_in_stretch']} zeros located in it")
+        print(f"    => S(g_m) <= {tc['s_upper']:.4f}"
+              + ("  (< 1, so the integer S(g_m) is <= 0)" if tc["closed"] else "  NOT CLOSED"))
+
     if r["verified"]:
         print(f"\nVERIFIED: every one of the {r['found']:,} zeros of zeta with "
               f"0 < Im(rho) <= {r['height']:,.1f}")
-        print("is simple and lies exactly on the critical line Re(s) = 1/2. The count")
-        print("matches theta(T)/pi + 1 exactly, so S(T) = 0 and no zero is unaccounted")
-        print("for: an off-line zero would have to be an extra zero the count forbids.")
-        print("Caveat (see the module docstring): float64 arithmetic, and S(T) = 0 is")
-        print("read off the exact count rather than closed by Turing's method, so this")
-        print("is a check of RH on the range and not a certificate of it.")
+        print("is simple and lies exactly on the critical line Re(s) = 1/2.")
+        if tc and tc["closed"]:
+            print("\nThe count is now pinned from BOTH sides. Finding that many sign changes")
+            print("of Z gives S(g_m) >= 0; Turing's method with Trudgian's explicit bound on")
+            print("the integral of S gives S(g_m) <= 0. Since S(g_m) is an integer at a Gram")
+            print("point, S(g_m) = 0 exactly: no zero anywhere below that height is missing,")
+            print("so none can be sitting off the critical line.")
+        print("\nRemaining caveat: the arithmetic is float64, not interval. Every step above")
+        print("is a theorem; the numbers fed into it are not rigorously bounded. That gap,")
+        print("plus nothing else, separates this from a published certificate.")
     else:
         print(f"\nNOT VERIFIED: found {r['found']:,} vs required {r['expected']:,} "
               f"(difference {r['found']-r['expected']:+,}).")

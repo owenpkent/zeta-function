@@ -195,6 +195,17 @@ def main() -> int:
     checks.append(("n_max_for is consistent with the verified height",
                    n_max_for(1e4) == v["n_reached"]))
 
+    from experiments.primes.e5f_rh_verification import turing_bound, turing_check
+    checks.append(("Trudgian's bound on |integral of S| is 2.5 to 3.5 over our range "
+                   "(meas 2.86 at 1e6, 3.00 at 1e7)",
+                   2.5 < turing_bound(1e6) < 3.5 and turing_bound(1e7) > turing_bound(1e6)))
+    tc = turing_check(n_max_for(2e5), k=80)
+    checks.append(("Turing's method closes the count from above at height 2e5: "
+                   f"S(g_m) <= {tc['s_upper']:.3f} < 1, so the integer S(g_m) is 0",
+                   bool(tc["closed"]) and tc["valid"] and 0 <= tc["s_upper"] < 1))
+    checks.append(("the Turing stretch holds exactly one zero per Gram interval here",
+                   tc["zeros_in_stretch"] == 80))
+
     # ---- e5e: the statistics layer ----------------------------------------
     checks.append(("GUE surmise normalizes to 1 and the sine kernel vanishes at 0",
                    abs(float(np.trapezoid(wigner_gue(np.linspace(0, 12, 200001)),

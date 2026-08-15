@@ -147,13 +147,25 @@ We just spent ten hours reaching $10^{12}$. No engineering closes a gap of 138 o
 
 **Result:**
 
-> Every one of the **21,136,125** zeros of $\zeta$ with $0 < \operatorname{Im}\rho \le 10^7$ is simple and lies exactly on the critical line.
+> Every one of the **21,136,125** zeros of $\zeta$ with $0 < \operatorname{Im}\rho \le 10^7$ is simple and lies exactly on the critical line, and (by the Turing closure below) there are no others.
 
 17,946,647 Gram blocks, Gram's law failing on 14.85% of them (longest block 7), one boundary merge, zero unresolved blocks, 1h54m.
 
 **The failure that came first, because it is the useful part.** The initial run came up *exactly 2 zeros short* and flagged one Gram block, rather than quietly declaring success. Diagnosis: near $t = 6{,}820{,}052$ two zeros sit $0.19$ of a mean spacing apart, both inside one Gram interval, so they contribute no *net* sign change at Gram resolution; a zero also lands essentially on the block boundary ($|Z| = 0.0045$ against a local scale of 50), pushing the pair into the neighbouring block whose surplus was invisible. Recounting a wider window found all 60 zeros present, confirming the shortfall was accounting rather than arithmetic and certainly not RH. The fix absorbs neighbouring blocks until the merged region balances. A second bug surfaced in the same pass: near the top of a range the window can hold fewer than two good Gram points, and the widening logic was capped at the target, so it looped forever. Both are fixed and both are covered by tests. **A genuine counterexample would look different: a Gram block that stays short at every refinement depth**, which is why unresolved blocks are reported individually rather than folded into a total.
 
-**Honest status.** This is a check, not a certificate, and the result is long known. Two things separate it from a published verification: float64 rather than interval arithmetic, and $S(T) = 0$ read off the exact count rather than closed by Turing's method (bounding $\int S$ over a following stretch of Gram points). Both are mechanical and absent. What is ours is the whole pipeline, from the Riemann-Siegel formula to the block bookkeeping, cross-checked against Odlyzko's published table at every height we can reach.
+**Turing's method: the count is now pinned from both sides.** Counting sign changes gives only half the argument. At a Gram point, $S(g_m) = N(g_m) - m - 1$ is an *integer*, and finding $m+1$ zeros on the line gives $S(g_m) \ge 0$; what was missing was $S(g_m) \le 0$, which is exactly what Turing's method supplies. Since $N$ is non-decreasing and every zero we locate above $g_m$ is genuine,
+
+$$S(t) \ge S(g_m) + \big(F(t) - F(g_m)\big) - \frac{\theta(t) - \theta(g_m)}{\pi},$$
+
+and integrating over a stretch of $k$ Gram intervals, then combining with an explicit bound $B$ on $\left|\int S\right|$, gives $S(g_m) \le (B + C - A)/L$ where $L$ is the stretch length, $A = \sum_i (g_{m+k} - \gamma_i)$ over the zeros found in it, and $C = \frac1\pi\int(\theta(t) - \theta(g_m))\,dt$. If that falls below 1, the integer $S(g_m)$ is $\le 0$, hence exactly 0.
+
+We use **Trudgian 2014** (*Improvements to Turing's Method II*, Thm 1): $\left|\int_{t_1}^{t_2} S\right| \le 1.698 + 0.183\log\log t_2 + 0.049\log t_2$ for $t_2 > t_1 > 10^5$. At the top of our range ($B = 2.997$) an 80-interval stretch gives
+
+$$S(g_m) \le 0.0883 < 1 \implies S(g_m) = 0.$$
+
+So the verification is not merely "the count came out right": **no zero below height $10^7$ is missing, therefore none can be sitting off the critical line.** The convergence is fast (S bound $0.93$ at $k=10$, $0.37$ at $k=20$, $0.19$ at $k=40$, $0.088$ at $k=80$), so the closing argument costs seconds on top of a two-hour count.
+
+**Honest status.** One gap remains, and it is now the only one: the arithmetic is float64, not interval. Every step of the argument above is a theorem; the numbers fed into it are not rigorously bounded, so a stray floating-point sign near a very close pair could in principle mislead the count. Closing that needs interval arithmetic on $Z$ (the standard tool is a rigorous Riemann-Siegel remainder plus ball arithmetic), which is mechanical and absent here. The result is also long known: $10^7$ sits far below Platt's $3\times10^{12}$. What is ours is the whole pipeline, from the Riemann-Siegel formula through the Gram-block bookkeeping to the Turing closure, cross-checked against Odlyzko's published table at every height we can reach.
 
 ## 6. Universality, both meanings
 
@@ -197,6 +209,6 @@ Engines: `primestream.py`, a segmented sieve streaming all primes to $N$ in $O(\
 - C. Bays, R. Hudson, *A new bound for the smallest x with pi(x) > li(x)* (2000); J. E. Littlewood (1914); S. Skewes (1933/1955).
 - T. Nicely, computations of Brun's constant; L. Schoenfeld, *Sharper bounds for the Chebyshev functions* (1976).
 - H. L. Montgomery, *The pair correlation of zeros of the zeta function* (1973); F. J. Dyson (the tea, 1972).
-- J. B. Rosser, J. M. Yohe, L. Schoenfeld, *Rigorous computation and the zeros of the Riemann zeta-function* (1969), for Gram blocks and Rosser's rule; A. M. Turing, *Some calculations of the Riemann zeta-function* (1953), for the method that would turn our check into a certificate; D. J. Platt (RH to $3\times10^{12}$), X. Gourdon (to $10^{13}$).
+- J. B. Rosser, J. M. Yohe, L. Schoenfeld, *Rigorous computation and the zeros of the Riemann zeta-function* (1969), for Gram blocks and Rosser's rule; A. M. Turing, *Some calculations of the Riemann zeta-function* (1953), corrected by R. S. Lehman (1970), for the closing argument; **T. S. Trudgian, *Improvements to Turing's Method II*, arXiv:1406.3416 (2014), Theorem 1**, for the explicit bound on $\int S$ used here; D. J. Platt (RH to $3\times10^{12}$), X. Gourdon (to $10^{13}$).
 - A. M. Odlyzko, *On the distribution of spacings between zeros of the zeta function*, Math. Comp. 48 (1987), and the published zero tables used here.
 - E. C. Titchmarsh / C. L. Siegel, the Riemann-Siegel formula; H. Riesel, *Prime Numbers and Computer Methods* (the $C_0$ remainder used in `rsz.py`).
