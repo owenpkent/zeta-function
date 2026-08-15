@@ -1,6 +1,6 @@
 # Prime patterns: digits, bases, twins, and the singularity that runs it all
 
-**Date:** 2026-08-13, deepened 2026-08-14. **Modules:** `e5a_digit_patterns.py`, `e5b_twin_primes.py`, `e5c_explicit_formula.py`, `e5d_riemann_spectrum.py`, `e5e_zero_statistics.py`, `e5f_rh_verification.py`, `e5g_race_from_zeros.py`; engines in `primestream.py` (segmented sieve) and `rsz.py` (Riemann-Siegel bulk zero finder); checks in `test_primes.py` (42/42). **Scale:** every number below is measured in this repo. Default pass $N = 10^8$ (seconds); deep pass $N = 10^{12}$, all **37,607,912,018** primes streamed in 9.7 hours on the research box.
+**Date:** 2026-08-13, deepened 2026-08-14. **Modules:** `e5a_digit_patterns.py`, `e5b_twin_primes.py`, `e5c_explicit_formula.py`, `e5d_riemann_spectrum.py`, `e5e_zero_statistics.py`, `e5f_rh_verification.py`, `e5g_race_from_zeros.py`, `e5h_multichar_races.py`; engines (CPU and GPU) in `primestream.py` (segmented sieve) and `rsz.py` (Riemann-Siegel bulk zero finder); checks in `test_primes.py` (44/44). **Scale:** every number below is measured in this repo. Default pass $N = 10^8$ (seconds); deep pass $N = 10^{12}$, all **37,607,912,018** primes streamed in 9.7 hours on the research box.
 
 **Predictions registered before the deep pass finished, and how they came out.** Six for six, exact:
 
@@ -94,6 +94,35 @@ So zeros of an L-function locate, to within 0.15%, the point where a bias in the
 Recall is perfect at every threshold: **the zeros never miss a real excursion**. Precision is what improves, and the reason is exactly the stated noise: every spurious prediction is shallow (median depth $-0.047$, deepest $-0.067$) while every real one is deep (median $-0.251$, deepest $-0.470$). The two populations barely overlap, so a threshold at four times the truncation floor separates them cleanly, and that is now the default in the code. This is the sense in which the truncated prediction is trustworthy: it cries wolf when its own error bar says it might, and never stays silent through a real event.
 
 **Honest limits.** The prediction has a resolution floor (the discarded tail contributes ~0.018 RMS to $E$) and a validity floor: $E = 1 + \text{oscillation}$ drops $O(1/\log x)$ terms, so below $x \sim 10^4$ those neglected terms are the size of the excursions and the formula produces dips that are not real. Both are enforced in the code rather than mentioned. One genuine forward prediction is left untested: the zeros put another mod-3 excursion at $x \approx 6.15\times10^{12}$, past where our stream stopped. Checking it needs a $10^{13}$ pass.
+
+## 3c. Mod 8 and mod 12: several characters, and races with no bias at all (e5h)
+
+Mod 3 and mod 4 are the easy cases: one non-principal character each, so one set of zeros drives everything. Mod 8 and mod 12 have **three** non-principal characters apiece, and each pair of racing classes hears a different combination of them. The general formula is
+
+$$E(x) = \frac{\nu(b)-\nu(a)}{\varphi(q)} + \frac{1}{\varphi(q)}\sum_{\chi \ne \chi_0}\big(\chi(b)-\chi(a)\big)\,\mathrm{osc}_\chi(x),$$
+
+with $\nu(s)$ the number of square roots of $s$ in $(\mathbb{Z}/q)^*$. Some characters are imprimitive (mod 8 borrows one from mod 4; mod 12 borrows from both mod 3 and mod 4), which is fine analytically ($L(s,\chi)$ differs from $L(s,\chi^*)$ by finitely many Euler factors, moving $\psi$ by $O(\log^2 x)$) and necessary practically, since Oliveira e Silva tabulated 10,000 zeros only for primitive characters and 10 for the rest. The module resolves each character to its inducing primitive one automatically, by matching values on the units.
+
+**Every pairwise race, against our own stream:**
+
+| race | bias | correlation | mean E measured / predicted | RMS diff |
+|---|---|---|---|---|
+| mod 8, 1 vs 3 | $-1$ | +0.9907 | $-1.165$ / $-1.000$ | 0.170 |
+| mod 8, 1 vs 5 | $-1$ | +0.9925 | $-1.148$ / $-0.985$ | 0.169 |
+| mod 8, 1 vs 7 | $-1$ | +0.9941 | $-1.144$ / $-0.987$ | 0.161 |
+| **mod 8, 3 vs 5** | **0** | **+0.9991** | $+0.016$ / $+0.015$ | **0.015** |
+| **mod 8, 3 vs 7** | **0** | **+0.9990** | $+0.021$ / $+0.014$ | **0.020** |
+| **mod 8, 5 vs 7** | **0** | **+0.9986** | $+0.005$ / $-0.002$ | **0.018** |
+| mod 12, 1 vs 5 | $-1$ | +0.9942 | $-1.160$ / $-1.002$ | 0.162 |
+| mod 12, 1 vs 7 | $-1$ | +0.9946 | $-1.160$ / $-1.002$ | 0.162 |
+| mod 12, 1 vs 11 | $-1$ | +0.9938 | $-1.153$ / $-1.002$ | 0.154 |
+| **mod 12, 5 vs 7** | **0** | **+0.9986** | $-0.000$ / $+0.000$ | **0.013** |
+| **mod 12, 5 vs 11** | **0** | **+0.9988** | $+0.007$ / $+0.000$ | **0.018** |
+| **mod 12, 7 vs 11** | **0** | **+0.9987** | $+0.007$ / $+0.000$ | **0.018** |
+
+**The unbiased races are the sharper test.** When both classes are non-squares the square-root term cancels, the bias is exactly 0, and the prediction is a pure sum over zeros with no constant to lean on. Those rows have the *best* agreement in the table: correlations 0.9986 to 0.9991 and RMS differences of 0.013 to 0.020, an order of magnitude tighter than the biased races, whose residual is dominated by the $O(1/\log x)$ terms the asymptotic formula drops (visible as the measured mean sitting at $-1.15$ rather than $-1.00$).
+
+And they behave completely differently in time. A biased race flips rarely: mod 4 took until $x = 26{,}861$ and mod 3 until $6.09\times10^{11}$ for a single sign change. The unbiased mod-8 and mod-12 races change hands **265 to 364 times** across 2,500 sampled points. That is the Chebyshev bias isolated: remove the prime squares from the picture and the "who is winning" question stops having a persistent answer, exactly as Rubinstein-Sarnak's density 1/2 says it should.
 
 ## 4. Twin primes, and the one framework behind sections 2-4
 
@@ -237,6 +266,7 @@ python -m experiments.primes.e5e_zero_statistics         # GUE statistics to the
 python -m experiments.primes.e5f_rh_verification 1e7               # verify RH to height 10^7 (~2 h)
 python -m experiments.primes.e5f_rh_verification 1e6 certified     # ... with every sign certified
 python -m experiments.primes.e5g_race_from_zeros 3                 # predict the mod-3 race from L-zeros
+python -m experiments.primes.e5h_multichar_races 8                 # mod-8 and mod-12 races (3 characters each)
 python -m experiments.primes.e5a_digit_patterns 1e12     # deep pass (overnight, checkpointed)
 python -m experiments.primes.test_primes                           # 42/42; auto-discovered by run_all_tests
 ```
