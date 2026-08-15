@@ -8,3 +8,7 @@ pdfminer.six>=20221105
 pypdf>=3.0.0
 cvxpy>=1.9.0
 duckdb>=1.0.0
+
+# Optional: GPU sieve engine (experiments/primes/primestream_gpu.py).
+# Needs an NVIDIA card; the CPU engine remains the reference implementation.
+# cupy-cuda12x[ctk]

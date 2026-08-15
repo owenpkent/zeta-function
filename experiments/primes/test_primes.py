@@ -234,6 +234,23 @@ def main() -> int:
                    f"{vc['found']} zeros, all signs proven",
                    bool(vc["verified"]) and vc["unresolved"] == 0))
 
+    # ---- the GPU engine must agree with the CPU one exactly ---------------
+    from experiments.primes.primestream_gpu import gpu_available, stream_gpu
+    if gpu_available():
+        c8 = stream(10**8)
+        g8 = stream_gpu(10**8, cache_tag="_gputest")
+        gi = [k for k in c8 if np.asarray(c8[k]).dtype.kind in "iu" and k != "N"]
+        gf = [k for k in c8 if np.asarray(c8[k]).dtype.kind == "f" and k != "elapsed"]
+        checks.append((f"GPU engine reproduces all {len(gi)} integer accumulators "
+                       "bit-identically at 10^8 (pi, constellations, digit tensors, "
+                       "races, gap laws)",
+                       all(np.array_equal(c8[k], g8[k]) for k in gi)))
+        checks.append((f"GPU engine's {len(gf)} float accumulators agree to 1e-12 "
+                       "(they differ in last bits: a different summation order)",
+                       all(np.allclose(c8[k], g8[k], rtol=1e-12) for k in gf)))
+    else:
+        checks.append(("no CUDA device: GPU-vs-CPU equivalence check skipped", None))
+
     # ---- e5g: the race predicted from the L-function zeros ----------------
     from experiments.primes.e5g_race_from_zeros import (
         E_predicted, RACES, TOS, excursions, load_zeros, tail_rms,
