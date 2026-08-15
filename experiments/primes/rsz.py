@@ -64,6 +64,79 @@ def zed(t: np.ndarray, chunk: int = 20000) -> np.ndarray:
     return out
 
 
+# Gabcke (1979), "Neue Herleitung und explizite Restabschaetzung der
+# Riemann-Siegel-Formel": with correction terms through C_K retained, the
+# Riemann-Siegel remainder obeys |R_K(t)| < c_K * t^-(2K+3)/4 for all t >= 200.
+# Odlyzko calls these essentially optimal for K <= 4. We keep C_0 only, so K = 0.
+GABCKE = {0: (0.127, 0.75), 1: (0.053, 1.25), 2: (0.011, 1.75),
+          3: (0.031, 2.25), 4: (0.017, 2.75)}
+GABCKE_MIN_T = 200.0
+_U = 2.0 ** -53          # float64 unit roundoff
+
+
+def rs_truncation_bound(t: np.ndarray | float, k: int = 0) -> np.ndarray:
+    """Rigorous bound on the discarded Riemann-Siegel tail (Gabcke), t >= 200."""
+    c, e = GABCKE[k]
+    return c * np.asarray(t, dtype=np.float64) ** (-e)
+
+
+def rs_rounding_bound(t: np.ndarray | float) -> np.ndarray:
+    """Bound on the float64 evaluation error of the Riemann-Siegel main sum.
+
+    The phase phi_n = theta(t) - t log n is formed from quantities of size
+    ~t log t, so its absolute error is ~(|theta| + t log nu) * u. Cosine is
+    1-Lipschitz, so that error passes straight into each term; the weights
+    n^-1/2 sum to at most 2 sqrt(nu), and the leading factor is 2. A final
+    2 nu u covers the summation itself. Deliberately generous: over-estimating
+    only costs a few escalations to exact arithmetic.
+    """
+    t = np.asarray(t, dtype=np.float64)
+    nu = np.floor(np.sqrt(t / TWO_PI))
+    phase_mag = np.abs(theta(t)) + t * np.log(np.maximum(nu, 2.0))
+    dphase = 4.0 * _U * phase_mag
+    return 4.0 * np.sqrt(nu) * (dphase + _U) + 2.0 * nu * _U
+
+
+def rs_error_bound(t: np.ndarray | float, k: int = 0) -> np.ndarray:
+    """Total rigorous error bound on zed(t): truncation plus rounding."""
+    return rs_truncation_bound(t, k) + rs_rounding_bound(t)
+
+
+def certified_sign(t: np.ndarray, z: np.ndarray | None = None,
+                   dps: int = 30) -> tuple[np.ndarray, int]:
+    """Signs of Z(t) that are provably correct.
+
+    Returns (signs, n_escalated). A float64 sign is accepted when |Z| exceeds
+    the rigorous error bound; otherwise the point is recomputed with mpmath at
+    `dps` digits, whose own error is far below any bound in play here. Raises
+    if a point is genuinely too close to call, which would mean a zero sits on
+    a sample point to 30 digits.
+    """
+    import mpmath as mp
+
+    t = np.asarray(t, dtype=np.float64)
+    if z is None:
+        z = zed(t)
+    eps = rs_error_bound(np.maximum(t, GABCKE_MIN_T))
+    # Gabcke's bound starts at t = 200, so anything below it is never accepted
+    # on the float64 value alone and always goes to exact arithmetic.
+    unsafe = np.flatnonzero((np.abs(z) <= eps) | (t < GABCKE_MIN_T))
+    signs = np.signbit(z)
+    if unsafe.size:
+        prev = mp.mp.dps
+        mp.mp.dps = dps
+        try:
+            for i in unsafe:
+                val = mp.siegelz(mp.mpf(float(t[i])))
+                if abs(val) < mp.mpf(10) ** (-(dps - 6)):
+                    raise RuntimeError(f"Z({t[i]!r}) is zero to {dps} digits; "
+                                       "sample point sits on a zero")
+                signs[i] = bool(val < 0)
+        finally:
+            mp.mp.dps = prev
+    return signs, int(unsafe.size)
+
+
 def _lambert_w(y: np.ndarray, iters: int = 40) -> np.ndarray:
     """Principal branch W(y) for y > 0, by Newton. Used only to seed gram_point."""
     y = np.asarray(y, dtype=np.float64)

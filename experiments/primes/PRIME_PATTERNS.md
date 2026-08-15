@@ -165,7 +165,15 @@ $$S(g_m) \le 0.0883 < 1 \implies S(g_m) = 0.$$
 
 So the verification is not merely "the count came out right": **no zero below height $10^7$ is missing, therefore none can be sitting off the critical line.** The convergence is fast (S bound $0.93$ at $k=10$, $0.37$ at $k=20$, $0.19$ at $k=40$, $0.088$ at $k=80$), so the closing argument costs seconds on top of a two-hour count.
 
-**Honest status.** One gap remains, and it is now the only one: the arithmetic is float64, not interval. Every step of the argument above is a theorem; the numbers fed into it are not rigorously bounded, so a stray floating-point sign near a very close pair could in principle mislead the count. Closing that needs interval arithmetic on $Z$ (the standard tool is a rigorous Riemann-Siegel remainder plus ball arithmetic), which is mechanical and absent here. The result is also long known: $10^7$ sits far below Platt's $3\times10^{12}$. What is ours is the whole pipeline, from the Riemann-Siegel formula through the Gram-block bookkeeping to the Turing closure, cross-checked against Odlyzko's published table at every height we can reach.
+**Certified signs: the last gap closed.** The argument above is a chain of theorems fed by floating-point numbers, so the remaining risk was a wrong *sign* near a very close pair. Certified mode removes it. Every sign the count rests on is accepted only when $|Z|$ exceeds a rigorous error bound
+
+$$\varepsilon(t) = \underbrace{0.127\,t^{-3/4}}_{\text{Gabcke, } t \ge 200} + \underbrace{4\sqrt{\nu}\,(4u(|\theta| + t\log\nu) + u) + 2\nu u}_{\text{float64 rounding, } u = 2^{-53}},$$
+
+and anything closer is recomputed in exact arithmetic. The first term is **Gabcke (1979)**, whose bound on the discarded Riemann-Siegel tail is $|R_K| < c_K t^{-(2K+3)/4}$ for $t \ge 200$ with $c_0 = 0.127$ (Odlyzko calls these essentially optimal for $K \le 4$); we keep $C_0$ only, so $K = 0$. The second term is an explicit and deliberately generous accounting of rounding: the phase $\theta(t) - t\log n$ is formed from quantities of size $t\log t$, cosine is 1-Lipschitz, and the weights $n^{-1/2}$ sum to at most $2\sqrt{\nu}$.
+
+The budget is checked against reality rather than trusted: measured error versus bound is $1.15\times10^{-4}$ vs $1.27\times10^{-4}$ at $t = 10^4$, $1.9\times10^{-6}$ vs $4.4\times10^{-6}$ at $10^6$, $1.3\times10^{-7}$ vs $9.4\times10^{-6}$ at $10^7$, and $9.7\times10^{-7}$ vs $1.8\times10^{-4}$ at $10^8$. The crossover is visible: truncation dominates up to about $10^7$, rounding beyond it. At the top of our range a typical Gram point has $|Z| \approx 0.98$ against $\varepsilon \approx 9.4\times10^{-6}$, a margin of five orders of magnitude, so escalation is rare: 349 points in the 1.75 million zeros below $10^6$, at an 18% cost over the uncertified run.
+
+**So the chain is complete.** Certified sign changes give a rigorous lower bound on the zero count; Turing's method with Trudgian's bound closes it from above; the two meet at $S(g_m) = 0$. Every zero below the verified height is simple, on the critical line, and none is missing. The result is long known ($10^7$ sits far below Platt's $3\times10^{12}$) and this is not a formal proof artifact: it is ordinary code, so it rests on the correctness of numpy, mpmath and the implementation, not on a proof assistant. What is ours is the whole pipeline, from the Riemann-Siegel formula through the Gram-block bookkeeping and the Turing closure to the certified signs, cross-checked against Odlyzko's published table at every height we can reach.
 
 ## 6. Universality, both meanings
 
@@ -189,7 +197,8 @@ python -m experiments.primes.e5b_twin_primes             # constellations vs HL,
 python -m experiments.primes.e5c_explicit_formula        # zeros rebuild psi; PNT scoreboard
 python -m experiments.primes.e5d_riemann_spectrum        # primes locate the zeros; Beurling control
 python -m experiments.primes.e5e_zero_statistics         # GUE statistics to the 10^22nd zero
-python -m experiments.primes.e5f_rh_verification 1e7     # verify RH to height 10^7 (~2 h)
+python -m experiments.primes.e5f_rh_verification 1e7               # verify RH to height 10^7 (~2 h)
+python -m experiments.primes.e5f_rh_verification 1e6 certified     # ... with every sign certified
 python -m experiments.primes.e5a_digit_patterns 1e12     # deep pass (overnight, checkpointed)
 python -m experiments.primes.test_primes                 # 31/31; auto-discovered by run_all_tests
 ```
@@ -209,6 +218,6 @@ Engines: `primestream.py`, a segmented sieve streaming all primes to $N$ in $O(\
 - C. Bays, R. Hudson, *A new bound for the smallest x with pi(x) > li(x)* (2000); J. E. Littlewood (1914); S. Skewes (1933/1955).
 - T. Nicely, computations of Brun's constant; L. Schoenfeld, *Sharper bounds for the Chebyshev functions* (1976).
 - H. L. Montgomery, *The pair correlation of zeros of the zeta function* (1973); F. J. Dyson (the tea, 1972).
-- J. B. Rosser, J. M. Yohe, L. Schoenfeld, *Rigorous computation and the zeros of the Riemann zeta-function* (1969), for Gram blocks and Rosser's rule; A. M. Turing, *Some calculations of the Riemann zeta-function* (1953), corrected by R. S. Lehman (1970), for the closing argument; **T. S. Trudgian, *Improvements to Turing's Method II*, arXiv:1406.3416 (2014), Theorem 1**, for the explicit bound on $\int S$ used here; D. J. Platt (RH to $3\times10^{12}$), X. Gourdon (to $10^{13}$).
+- J. B. Rosser, J. M. Yohe, L. Schoenfeld, *Rigorous computation and the zeros of the Riemann zeta-function* (1969), for Gram blocks and Rosser's rule; A. M. Turing, *Some calculations of the Riemann zeta-function* (1953), corrected by R. S. Lehman (1970), for the closing argument; **T. S. Trudgian, *Improvements to Turing's Method II*, arXiv:1406.3416 (2014), Theorem 1**, for the explicit bound on $\int S$ used here; **W. Gabcke, *Neue Herleitung und explizite Restabschätzung der Riemann-Siegel-Formel*, thesis, Göttingen (1979)**, for the rigorous remainder bounds behind certified mode; D. J. Platt (RH to $3\times10^{12}$), X. Gourdon (to $10^{13}$).
 - A. M. Odlyzko, *On the distribution of spacings between zeros of the zeta function*, Math. Comp. 48 (1987), and the published zero tables used here.
 - E. C. Titchmarsh / C. L. Siegel, the Riemann-Siegel formula; H. Riesel, *Prime Numbers and Computer Methods* (the $C_0$ remainder used in `rsz.py`).

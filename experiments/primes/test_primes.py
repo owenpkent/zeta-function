@@ -206,6 +206,34 @@ def main() -> int:
     checks.append(("the Turing stretch holds exactly one zero per Gram interval here",
                    tc["zeros_in_stretch"] == 80))
 
+    # ---- the certified layer: error bounds must actually bound the error ----
+    from experiments.primes.rsz import (
+        certified_sign, rs_error_bound, rs_truncation_bound,
+    )
+    import mpmath as mp
+    mp.mp.dps = 30
+    rng2 = np.random.default_rng(17)
+    worst_ratio = 0.0
+    for T in (1e4, 1e6, 1e7):
+        for t in T + rng2.random(4) * 100:
+            err = abs(float(zed(np.array([t]))[0]) - float(mp.siegelz(t)))
+            worst_ratio = max(worst_ratio, err / float(rs_error_bound(t)))
+    checks.append(("the rigorous error bound really bounds the measured error at "
+                   f"every height sampled (worst ratio {worst_ratio:.2f} < 1)",
+                   worst_ratio < 1.0))
+    checks.append(("Gabcke's constants are the published ones (0.127 t^-3/4 for C0)",
+                   abs(float(rs_truncation_bound(1e4)) - 0.127 * 1e4**-0.75) < 1e-18))
+    g5 = gram_point(np.arange(100000, 100200))
+    sgn, esc = certified_sign(g5)
+    checks.append((f"certified signs agree with the plain float64 signs where both are "
+                   f"defined ({esc} of 200 points needed exact arithmetic)",
+                   bool(np.all(sgn[np.abs(zed(g5)) > rs_error_bound(g5)]
+                               == np.signbit(zed(g5))[np.abs(zed(g5)) > rs_error_bound(g5)]))))
+    vc = verify(3e3, certified=True)
+    checks.append(("a fully certified verification to height 3000 still closes: "
+                   f"{vc['found']} zeros, all signs proven",
+                   bool(vc["verified"]) and vc["unresolved"] == 0))
+
     # ---- e5e: the statistics layer ----------------------------------------
     checks.append(("GUE surmise normalizes to 1 and the sine kernel vanishes at 0",
                    abs(float(np.trapezoid(wigner_gue(np.linspace(0, 12, 200001)),

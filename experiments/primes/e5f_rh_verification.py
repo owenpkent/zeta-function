@@ -27,18 +27,28 @@ says a block of length L contains exactly L zeros, and blocks that come up
 short are subdivided until the missing sign changes are found. A block that
 cannot be resolved is reported, not silently dropped.
 
-HONEST STATUS. This is a check, not a certificate. Two things separate it
-from a published verification: the arithmetic is float64 rather than
-interval, and closing S(T) = 0 rigorously needs Turing's method (bounding
-the integral of S over a following stretch of Gram points) rather than the
-exact-count argument used here. Both are known, mechanical, and absent. The
-result is also long known: 10^7 is far below the record (Platt 3e12,
-Gourdon 1e13). What is ours is the whole pipeline, from Riemann-Siegel to
-the block bookkeeping.
+CLOSING THE COUNT. Counting sign changes proves only N(g_m) >= m + 1, i.e.
+S(g_m) >= 0. Turing's method supplies the other side, and since S(g_m) is an
+INTEGER at a Gram point it is enough to squeeze it below 1. See turing_check
+below, which uses Trudgian's explicit bound on the integral of S.
+
+CERTIFIED MODE. With certified=True every sign the argument rests on is a
+theorem rather than a floating-point opinion: a float64 sign is accepted only
+when |Z| exceeds a rigorous error bound (Gabcke's bound on the discarded
+Riemann-Siegel tail, plus an explicit accounting of float64 rounding), and
+anything closer is recomputed in exact arithmetic. The escalation count is
+reported, so the reader can see how often the fast path was not enough.
+
+STATUS. With certified=True the chain is complete: certified signs give a
+rigorous lower bound on the zero count, Turing's method closes it from above,
+and the conclusion is that every zero below the height is simple and on the
+critical line. The result itself is long known (Platt 3e12, Gourdon 1e13);
+what is ours is the pipeline, from Riemann-Siegel through the Gram-block
+bookkeeping to the Turing closure.
 
 Usage:
-    python -m experiments.primes.e5f_rh_verification 1e7      # the full run
-    python -m experiments.primes.e5f_rh_verification 1e4      # a quick pass
+    python -m experiments.primes.e5f_rh_verification 1e7            # full run
+    python -m experiments.primes.e5f_rh_verification 1e5 certified  # certified
 """
 from __future__ import annotations
 
@@ -48,7 +58,9 @@ import time
 import numpy as np
 
 from experiments.primes.primestream import CACHE_DIR
-from experiments.primes.rsz import TWO_PI, gram_point, theta, zed, zeros_in
+from experiments.primes.rsz import (
+    TWO_PI, certified_sign, gram_point, rs_error_bound, theta, zed, zeros_in,
+)
 
 MAX_REFINE = 5          # subdivision rounds before a block is declared unresolved
 MAX_MERGE = 8           # neighbouring blocks to absorb when one stays short
@@ -105,11 +117,32 @@ def turing_check(m: int, k: int = 40, step: float = 0.01) -> dict:
                 valid=bool(ga > 1e5))
 
 
-def _sign_changes(z: np.ndarray) -> int:
-    return int(np.count_nonzero(np.signbit(z[:-1]) != np.signbit(z[1:])))
+_ESCALATIONS = [0]      # count of points that needed exact arithmetic
 
 
-def _resolve_block(t_lo: float, t_hi: float, need: int) -> tuple[int, int]:
+def _signs(t: np.ndarray, z: np.ndarray, certified: bool) -> np.ndarray:
+    """Sign bits of Z, provably correct when `certified` is set.
+
+    In certified mode a float64 sign is accepted only when |Z| exceeds the
+    rigorous error bound (Gabcke's remainder plus rounding); anything closer
+    is recomputed exactly. Everything downstream then rests on signs that are
+    theorems rather than floating-point opinions.
+    """
+    if not certified:
+        return np.signbit(z)
+    sb, esc = certified_sign(t, z)
+    _ESCALATIONS[0] += esc
+    return sb
+
+
+def _sign_changes(z: np.ndarray, t: np.ndarray | None = None,
+                  certified: bool = False) -> int:
+    sb = np.signbit(z) if not certified else _signs(t, z, True)
+    return int(np.count_nonzero(sb[:-1] != sb[1:]))
+
+
+def _resolve_block(t_lo: float, t_hi: float, need: int,
+                   certified: bool = False) -> tuple[int, int]:
     """Subdivide a Gram block until `need` sign changes appear.
 
     Returns (found, rounds). Sampling density doubles each round, so a block
@@ -117,7 +150,8 @@ def _resolve_block(t_lo: float, t_hi: float, need: int) -> tuple[int, int]:
     """
     m = 64 * max(need, 1)
     for rounds in range(1, MAX_REFINE + 1):
-        found = _sign_changes(zed(np.linspace(t_lo, t_hi, m)))
+        grid = np.linspace(t_lo, t_hi, m)
+        found = _sign_changes(zed(grid), grid, certified)
         if found >= need:
             return found, rounds
         m *= 4
@@ -125,7 +159,7 @@ def _resolve_block(t_lo: float, t_hi: float, need: int) -> tuple[int, int]:
 
 
 def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
-           progress_every: int = 20) -> dict:
+           progress_every: int = 20, certified: bool = False) -> dict:
     """Verify that every zero up to height T is simple and on the critical line.
 
     `n_start` begins the walk at a Gram index other than 0, which verifies the
@@ -155,7 +189,8 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
             g = gram_point(idx)
             z = zed(g)
             # Gram's law: (-1)^n Z(g_n) > 0. Points where it holds delimit blocks.
-            good = np.signbit(z) == (idx % 2 == 1)
+            sb = _signs(g, z, certified)
+            good = sb == (idx % 2 == 1)
             gi = np.flatnonzero(good)
             if gi.size >= 2 and int(idx[gi[-1]]) > n_cur:
                 break
@@ -168,7 +203,7 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
         exceptions += int(np.count_nonzero(lengths > 1))
 
         # cheap pass: sign changes between Gram points, per block
-        flips = (np.signbit(z[:-1]) != np.signbit(z[1:])).astype(np.int64)
+        flips = (sb[:-1] != sb[1:]).astype(np.int64)
         cum = np.concatenate(([0], np.cumsum(flips)))
         found_per = cum[b_all] - cum[a_all]
 
@@ -179,7 +214,7 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
                 continue
             a, b = int(a_all[k]), int(b_all[k])
             need = int(lengths[k])
-            got, _ = _resolve_block(float(g[a]), float(g[b]), need)
+            got, _ = _resolve_block(float(g[a]), float(g[b]), need, certified)
             if got >= need:
                 found_per[k] = got
                 continue
@@ -194,7 +229,7 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
                 lo_k, hi_k = max(lo_k - 1, 0), min(hi_k + 1, a_all.size - 1)
                 A, B = int(a_all[lo_k]), int(b_all[hi_k])
                 need_m = B - A
-                got_m, _ = _resolve_block(float(g[A]), float(g[B]), need_m)
+                got_m, _ = _resolve_block(float(g[A]), float(g[B]), need_m, certified)
                 if got_m >= need_m:
                     found_per[lo_k : hi_k + 1] = 0
                     found_per[k] = need_m
@@ -224,11 +259,14 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
     )
 
 
-def main(T: float = 1e7) -> int:
-    print(f"E5F: verifying RH up to height T = {T:.3g}")
+def main(T: float = 1e7, certified: bool = False) -> int:
+    print(f"E5F: verifying RH up to height T = {T:.3g}"
+          + ("  [CERTIFIED: every sign checked against a rigorous error bound]"
+             if certified else ""))
+    _ESCALATIONS[0] = 0
     print(f"  Gram indices to walk: {n_max_for(T):,}  "
           f"(that many zeros, plus the one below g_0)")
-    r = verify(T, log=print)
+    r = verify(T, log=print, certified=certified)
 
     print(f"\n  zeros found on the critical line : {r['found']:,}")
     print(f"  zeros required by Riemann-von Mangoldt: {r['expected']:,}")
@@ -238,6 +276,9 @@ def main(T: float = 1e7) -> int:
           f"({100*r['exceptions']/max(r['blocks'],1):.2f}%), longest block {r['max_block']}")
     print(f"  blocks merged at a boundary      : {r['boundary_merges']}")
     print(f"  unresolved blocks                : {r['unresolved']}")
+    if certified:
+        print(f"  signs needing exact arithmetic   : {_ESCALATIONS[0]:,} "
+              f"(bound at the top: {float(rs_error_bound(r['height'])):.2e})")
     if r["worst"]:
         print(f"  first unresolved: {r['worst']}")
     print(f"  elapsed                          : {r['elapsed']:.0f}s")
@@ -261,9 +302,16 @@ def main(T: float = 1e7) -> int:
             print("the integral of S gives S(g_m) <= 0. Since S(g_m) is an integer at a Gram")
             print("point, S(g_m) = 0 exactly: no zero anywhere below that height is missing,")
             print("so none can be sitting off the critical line.")
-        print("\nRemaining caveat: the arithmetic is float64, not interval. Every step above")
-        print("is a theorem; the numbers fed into it are not rigorously bounded. That gap,")
-        print("plus nothing else, separates this from a published certificate.")
+        if certified:
+            print(f"\nEvery sign above is certified: accepted only where |Z| exceeds a rigorous")
+            print(f"error bound (Gabcke's Riemann-Siegel remainder plus float64 rounding), with")
+            print(f"{_ESCALATIONS[0]:,} borderline points recomputed in exact arithmetic. The chain is")
+            print("complete: certified signs bound the count from below, Turing's method bounds")
+            print("it from above, and the two meet.")
+        else:
+            print("\nRemaining caveat: the arithmetic is float64, not interval. Every step above")
+            print("is a theorem; the numbers fed into it are not rigorously bounded. Re-run with")
+            print("the 'certified' argument to close that gap too.")
     else:
         print(f"\nNOT VERIFIED: found {r['found']:,} vs required {r['expected']:,} "
               f"(difference {r['found']-r['expected']:+,}).")
@@ -271,10 +319,17 @@ def main(T: float = 1e7) -> int:
         print("unresolved blocks), NOT that RH failed: a genuine counterexample would")
         print("show up as a Gram block that stays short at every refinement depth.")
 
-    np.savez_compressed(CACHE_DIR / f"e5f_rh_verified_{int(T)}.npz",
-                        **{k: v for k, v in r.items() if k != "worst"})
+    out = {k: v for k, v in r.items() if k != "worst"}
+    out["certified"] = certified
+    out["escalations"] = _ESCALATIONS[0]
+    if tc:
+        out.update({f"turing_{k}": v for k, v in tc.items()})
+    np.savez_compressed(
+        CACHE_DIR / f"e5f_rh_verified_{int(T)}{'_certified' if certified else ''}.npz",
+        **out)
     return 0 if r["verified"] else 1
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(float(sys.argv[1]) if len(sys.argv) > 1 else 1e7))
+    raise SystemExit(main(float(sys.argv[1]) if len(sys.argv) > 1 else 1e7,
+                          certified="certified" in sys.argv[2:]))
