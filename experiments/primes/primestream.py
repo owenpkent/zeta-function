@@ -127,6 +127,15 @@ def stream(N: int, segment: int = SEGMENT, log=None, cache_tag: str = "") -> dic
     prev_gap = -1                           # gap ending at prev_last (boundary gap pair)
     brun_partial = 0.0
 
+    # Every maximal stretch where a race lead is negative, as
+    # (x_first, x_last, min_lead, x_of_min). The sampled lead curve is too
+    # coarse to catch these (they can be narrower than the sample spacing),
+    # and first_cross/min_lead alone record only the earliest and the deepest.
+    # Added after the v3 caches were built, so older .npz files lack it;
+    # consumers should treat it as optional.
+    neg_runs = {name: [] for name in ("race4", "race3")}
+    neg_open = {name: None for name in ("race4", "race3")}
+
     thresholds = np.unique(np.round(np.logspace(2, log10(N), RACE_SAMPLES))).astype(np.int64)
     ap_lut = {q: _digit_lut(q) for q in RACE_MODULI}
     ap_samp = {q: np.zeros((len(thresholds), len(units(q))), dtype=np.int64)
@@ -243,6 +252,34 @@ def stream(N: int, segment: int = SEGMENT, log=None, cache_tag: str = "") -> dic
                 lead_full = np.concatenate(([r["carry"]], lead))
                 r["sample_lead"][j0:j1] = lead_full[pos]
                 r["sample_done"] = j1
+            # -- catalogue the negative excursions, stitching across segments
+            neg = lead < 0
+            if neg.any():
+                idx = np.flatnonzero(neg)
+                brk = np.flatnonzero(np.diff(idx) > 1)
+                starts = np.concatenate(([idx[0]], idx[brk + 1]))
+                ends = np.concatenate((idx[brk], [idx[-1]]))
+                for s_i, e_i in zip(starts, ends):
+                    seg_lead = lead[s_i : e_i + 1]
+                    j = int(np.argmin(seg_lead))
+                    run = [int(p_r[s_i]), int(p_r[e_i]),
+                           int(seg_lead[j]), int(p_r[s_i + j])]
+                    if s_i == 0 and neg_open[name] is not None:
+                        prev = neg_open[name]          # continues from last segment
+                        prev[1] = run[1]
+                        if run[2] < prev[2]:
+                            prev[2], prev[3] = run[2], run[3]
+                    else:
+                        if neg_open[name] is not None:
+                            neg_runs[name].append(neg_open[name])
+                        neg_open[name] = run
+                if not neg[-1]:
+                    neg_runs[name].append(neg_open[name])
+                    neg_open[name] = None
+            elif neg_open[name] is not None:
+                neg_runs[name].append(neg_open[name])
+                neg_open[name] = None
+
             r["carry"] = int(lead[-1])
 
         # -- pi(x; q, a) sampled on the shared log-spaced grid -------------
@@ -293,6 +330,10 @@ def stream(N: int, segment: int = SEGMENT, log=None, cache_tag: str = "") -> dic
     for q in RACE_MODULI:
         ap_samp[q][ap_done:, :] = ap_cum[q]
         acc[f"ap{q}_samp"] = ap_samp[q]
+    for name in neg_runs:
+        runs = neg_runs[name] + ([neg_open[name]] if neg_open[name] else [])
+        acc[f"{name}_neg_runs"] = (np.asarray(runs, dtype=np.int64) if runs
+                                   else np.zeros((0, 4), dtype=np.int64))
 
     _save(cache, N, acc, brun_partial, thresholds, race, time.time() - t0)
     cache.with_suffix(".part.npz").unlink(missing_ok=True)
