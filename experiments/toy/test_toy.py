@@ -25,7 +25,7 @@ from experiments.toy.grader import (
     identity_candidate,
     diag_moment_candidate,
 )
-from experiments.toy import selberg
+from experiments.toy import axiom_census, selberg
 from experiments.toy import ihara
 from experiments.toy import interlacing
 from experiments.toy import alon_boppana
@@ -239,6 +239,40 @@ def test_archimedean_flat_vs_continuous():
     assert d300 < d30, "finite spectra converge to the continuous universal-cover measure"
 
 
+def test_axiom_census_gap():
+    """FE + integrality + Euler-product positivity do NOT force RH.
+
+    The three axioms confine the inverse roots only to |alpha| <= q, the trivial
+    region Re(s) <= 1 that the Euler product supplies for free; RH is Re(s) = 1/2.
+    Genus 1 pins the permitted range exactly; genus 2 shows the RH-violating
+    fraction growing with q. This is why "all Weil cohomologies are the same"
+    cannot deliver the polarization: positivity is not among the axioms that the
+    sameness pins down."""
+    ac = axiom_census
+    ps = ac.power_sums([3, 5], 8)
+    ref = [2, -3]
+    for n in range(2, 9):
+        ref.append(-3 * ref[-1] - 5 * ref[-2])
+    assert ps[:9] == ref[:9], "Newton identities disagree with the genus-1 recursion"
+    assert ac.power_sums([0, 4, 0, 4], 4)[:5] == [4, 0, -8, 0, 16], "genus-2 power sums"
+
+    for q in (5, 7, 9, 13):
+        ok, weil = ac.genus1_range(q)
+        assert min(ok) == -(q + 1) and max(ok) == q, f"axiom range wrong at q={q}"
+        assert any(a * a > 4 * q for a in ok), f"no RH violator at q={q}"
+
+    q, c = ac.REPO_FAKE           # LEARNINGS #123
+    assert c[2] == q * c[0] and c[3] == q * q, "#123 must satisfy the functional equation"
+    assert ac.euler_ok(q, c) and ac.tail_is_safe(q, c), "#123 must have an Euler product"
+    assert not ac.rh_ok(q, c), "#123 must violate RH"
+    assert ac.point_counts(q, c, 4)[1:5] == [2, 40, 182, 660], "#123 point counts"
+
+    small, big = ac.genus2_census(2), ac.genus2_census(9)
+    assert small["violate"] == 0, "q=2 is small enough that the axioms do force RH"
+    assert big["violate"] > big["rh"], "by q=9 most axiom-satisfying models violate RH"
+    assert big["worst"] > 2.9, "worst violation should approach sqrt(q) = 3"
+
+
 def main() -> None:
     tests = [
         test_ground_truth,
@@ -255,6 +289,7 @@ def main() -> None:
         test_interlacing_source_and_faultline,
         test_alon_boppana_marginal,
         test_archimedean_flat_vs_continuous,
+        test_axiom_census_gap,
     ]
     passed = 0
     for t in tests:
