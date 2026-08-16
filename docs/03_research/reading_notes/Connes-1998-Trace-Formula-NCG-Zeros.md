@@ -5,7 +5,9 @@
 > paper: Connes gives a spectral interpretation of the critical zeros as an **absorption
 > spectrum**, recasts the Riemann-Weil explicit formula as a **trace formula** on the
 > adele class space `X = A/k*`, and proves the global trace formula holds **if and only
-> if RH holds for all L-functions with Grossencharakter**. Source of the "absorption
+> if RH holds for all L-functions with Grossencharakter**, for `k` of positive
+> characteristic; the number-field case (including `k = Q`) is asserted as an analogue,
+> not re-proved (see the scope note in the takeaway). Source of the "absorption
 > spectrum" picture and of the K1 wall the project's R3.5/3M analyses diagnosed. Mapped
 > to the four-level framing, the D-H discipline (3M), the orbit/von Mangoldt picture
 > (2R), and the product-surface front (2K, via Connes-Consani 2015 which realizes this
@@ -26,7 +28,23 @@ spectrum), on a Sobolev-weighted `L^2` of the adele class space `X = A/k*` under
 idele class group `C_k = GL_1(A)/k*`. The Riemann-Weil explicit formula becomes a
 **trace formula** (a Lefschetz formula in the spirit of Atiyah-Bott, not a semiclassical
 Selberg formula), and the global trace formula is shown **equivalent to RH for all
-Grossencharakter L-functions** via positivity of the Weil distribution. The whole
+Grossencharakter L-functions** via positivity of the Weil distribution.
+
+**SCOPE, verified against the PDF (2026-08-15).** That equivalence is proved as a
+numbered theorem only in positive characteristic. Theorem 5 (§VIII, p. 42) opens "Let
+`k` be a global field of positive characteritic [sic]", precisely where RH is already
+Weil's theorem, and Connes says so on p. 42: "Remember that we are still in positive
+characteristic where RH is actually a theorem of A. Weil." Even there the trace formula
+is not derived outright; only the equivalence is, and its truth follows indirectly by
+feeding in Weil. For number fields, including `k = Q` (the actual RH case), Connes
+extends the argument through Landau-Pollak-Slepian prolate theory (pp. 44-47), replacing
+the exact commutativity of `P_Lambda` and `hat P_Lambda` used in characteristic `p` with
+an asymptotic angle estimate, and concludes in prose: "This gives the analogue of Lemma
+1, Theorem 5, and Lemma 3" (p. 47). Asserted, not re-proved to the same standard. The
+paper's own Introduction (p. 3) and Abstract state the headline claim without the
+qualifier, which is where the unqualified phrasing in earlier versions of this note came
+from. Theorem 4 (§VII, p. 31), by contrast, holds unconditionally for ANY global field
+including `Q`, and is where the paper's rigorous content sits. The whole
 construction mimics the Weil function-field proof: zeros <-> Frobenius eigenvalues on
 `H^1_et`, functional equation <-> Riemann-Roch / Poincare duality, explicit formula <->
 Lefschetz, RH <-> Castelnuovo positivity. The improvement over the earlier [Co] is the
@@ -209,8 +227,11 @@ formulas (the privileged principal value matches Weil). III: distribution trace 
 
 5. **The equivalence trace formula <=> RH (Theorem 5, §VIII).** §VII proves the trace
    formula unconditionally at every finite set of places `S` (including non-type-I,
-   `|S| >= 3`); §VIII shows the GLOBAL trace formula is equivalent to RH for all
-   Grossencharakter L-functions. The spectral side is entirely canonical (no zeta input);
+   `|S| >= 3`), for any global field, `Q` included; §VIII shows the GLOBAL trace formula
+   is equivalent to RH for all Grossencharakter L-functions, as a numbered theorem only
+   in positive characteristic, with the number-field case asserted as an analogue (see
+   the scope note above: this is the difference between what is proved and what the
+   Abstract claims). The spectral side is entirely canonical (no zeta input);
    the obstruction is the global positivity of the Weil distribution `Delta` (eq. 17,
    24-25). The project's 3M lands here precisely: NCG-trace positivity is the whole game,
    and asserting it is asserting RH. This is the quantitative form of the marginal-
