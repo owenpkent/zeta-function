@@ -93,6 +93,17 @@ So zeros of an L-function locate, to within 0.15%, the point where a bias in the
 
 Recall is perfect at every threshold: **the zeros never miss a real excursion**. Precision is what improves, and the reason is exactly the stated noise: every spurious prediction is shallow (median depth $-0.047$, deepest $-0.067$) while every real one is deep (median $-0.251$, deepest $-0.470$). The two populations barely overlap, so a threshold at four times the truncation floor separates them cleanly, and that is now the default in the code. This is the sense in which the truncated prediction is trustworthy: it cries wolf when its own error bar says it might, and never stays silent through a real event.
 
+**THE FORWARD PREDICTION, REGISTERED THEN CONFIRMED.** Everything above is retrodiction: the flip at $6.09\times10^{11}$ was already measured when the prediction was checked against it. The zeros also placed a *second* excursion at $\approx 6.15\times10^{12}$, two orders of magnitude past anything our stream had reached, so it was registered in advance as a falsifiable window and the $10^{13}$ pass was run at it.
+
+| | window in $x$ | deepest |
+|---|---|---|
+| **predicted** (zeros of $L(s,\chi_3)$, no prime data) | 6,145,835,800,234 .. 6,156,781,763,611 | $E = -0.0976$ at 6,149,985,424,670 |
+| **measured** (216 billion primes counted) | 6,148,171,711,663 .. 6,156,051,951,677 | 3,600 primes behind at 6,151,545,058,303, $E = -0.0427$ |
+
+The measured episode (31,854 individual dips) lies **entirely inside** the predicted window at both ends, with the deepest points 0.026% apart in $x$. One predicted excursion, one measured episode, no misses and no false positives. The amplitude is the softer half of the agreement ($-0.0976$ predicted against $-0.0427$ measured, same sign and order, a factor 2.3 apart), which is the expected behaviour of a 10,000-zero truncation whose noise floor is 0.018: it resolves *where* an excursion sits far better than *how deep* it goes. Reproducible via `verify_prediction(3, res, 6.10e12, 6.20e12)` in e5g, which reports "not conclusive" rather than scoring a miss if the sieve has not yet covered the window.
+
+So §3's mechanism claim is established rather than asserted: the race is the zeros of the Dirichlet L-function talking, precisely enough to say where a 170-year-old bias will break next.
+
 **Honest limits.** The prediction has a resolution floor (the discarded tail contributes ~0.018 RMS to $E$) and a validity floor: $E = 1 + \text{oscillation}$ drops $O(1/\log x)$ terms, so below $x \sim 10^4$ those neglected terms are the size of the excursions and the formula produces dips that are not real. Both are enforced in the code rather than mentioned. One genuine forward prediction is left untested: the zeros put another mod-3 excursion at $x \approx 6.15\times10^{12}$, past where our stream stopped. Checking it needs a $10^{13}$ pass.
 
 ## 3c. Mod 8 and mod 12: several characters, and races with no bias at all (e5h)

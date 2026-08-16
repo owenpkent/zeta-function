@@ -186,6 +186,64 @@ def audit(modulus: int, res: dict, x_lo: float = 1e4, x_hi: float | None = None,
                 pairs=pairs)
 
 
+def episodes(runs: np.ndarray, rel_gap: float = 5e-4) -> list[np.ndarray]:
+    """Merge measured negative runs closer than rel_gap in x into episodes.
+
+    The measured catalogue is fine-grained: the mod-3 flip at 6.09e11 is 10,408
+    separate dips, and the 6.15e12 event is 31,854. The prediction is
+    resolution-limited and produces broad windows, so a like-for-like comparison
+    needs the runs grouped first.
+    """
+    if runs.size == 0:
+        return []
+    out, cur = [], [runs[0]]
+    for prev, row in zip(runs, runs[1:]):
+        if (row[0] - prev[1]) / prev[1] > rel_gap:
+            out.append(np.array(cur))
+            cur = []
+        cur.append(row)
+    out.append(np.array(cur))
+    return out
+
+
+def verify_prediction(modulus: int, res: dict, x_lo: float, x_hi: float,
+                      k_floor: float = 4.0) -> dict:
+    """Did the primes do what the zeros predicted, in a stated window?
+
+    Returns the predicted excursions, the measured episodes, and whether each
+    contains the other. `reached` reports how far the prime stream actually got,
+    so a window the sieve has not covered yet is reported as inconclusive rather
+    than scored as a miss.
+    """
+    g = load_zeros(modulus)
+    floor = tail_rms(g)
+    L = np.linspace(np.log(x_lo), np.log(x_hi),
+                    int(6 * np.log(x_hi / x_lo) * g[-1] / np.pi))
+    pred = [e for e in excursions(L, E_predicted(L, g)) if e["depth"] < -k_floor * floor]
+
+    runs = res.get(f"race{modulus}_neg_runs")
+    runs = np.zeros((0, 4)) if runs is None else runs.astype(float)
+    win = runs[(runs[:, 1] >= x_lo) & (runs[:, 0] <= x_hi)]
+    eps = episodes(win)
+    meas = []
+    for ep in eps:
+        lead = int(ep[:, 2].min())
+        xm = float(ep[np.argmin(ep[:, 2]), 3])
+        meas.append(dict(x_lo=float(ep[0, 0]), x_hi=float(ep[-1, 1]), dips=int(ep.shape[0]),
+                         lead=lead, x_min=xm,
+                         depth=lead * np.log(xm) / np.sqrt(xm)))
+
+    def overlap(a, b):
+        return a["x_lo"] <= b["x_hi"] * 1.001 and b["x_lo"] <= a["x_hi"] * 1.001
+
+    reached = int(res["N"])
+    need = max((e["x_hi"] for e in pred), default=x_hi)
+    return dict(predicted=pred, measured=meas, reached=reached,
+                conclusive=reached >= need,
+                hits=sum(any(overlap(e, m) for m in meas) for e in pred),
+                covered=sum(any(overlap(e, m) for e in pred) for m in meas))
+
+
 def main(modulus: int = 3) -> None:
     fname, N, R, published = RACES[modulus]
     g = load_zeros(modulus)
