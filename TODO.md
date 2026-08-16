@@ -1,8 +1,16 @@
-# TODO — Riemann Zeta Function Study Repo
+# TODO: Riemann Zeta Function Study Repo
 
 > Consolidated 2026-07-17. This file carries OPEN work only. The full session history (every Done item from 2026-05 onward, plus these open items in their original context) is frozen verbatim in [TODO_ARCHIVE.md](TODO_ARCHIVE.md); "(archive NNN)" pointers below are line numbers there. Convention unchanged: `- [ ]` checkboxes, check items off here; on the next compaction pass rotate checked items into the archive.
 
-## Open — the corridor and its pivot (S4/R1; LEARNINGS #158-#164; exit rule fired + closure RATIFIED 2026-07-17)
+## Open: the primes thread (2026-08-16; LEARNINGS #174, [`PRIME_PATTERNS.md`](experiments/primes/PRIME_PATTERNS.md))
+
+- [ ] **Push the certified RH verification past height $10^7$.** The chain is complete end to end (certified Riemann-Siegel signs via Gabcke's bound + Turing's method with Trudgian's constant), so this is now purely compute. `rsz.zed` is single-threaded numpy; the GPU is NOT the lever here (consumer Pascal runs float64 at 1/32 rate and the phases need full double precision), but the 8 CPU cores are unused. Note the measured crossover: above $\sim10^7$ float64 ROUNDING overtakes the Riemann-Siegel truncation, so going higher needs better phase arithmetic (double-double), not more correction terms.
+- [ ] **Reproduce Connes' 50-entry table at his precision.** `positivity/e3s_connes_eta.py` currently recovers the phenomenon at $\sim10^{-2}$; Connes reports $2.6\times10^{-55}$ (2026 paper p. 25) via Caratheodory-Fejer/Dirac-kernel machinery at high precision. An mpmath reproduction would be an independent numerical audit of the one concrete claim in that paper. Explicitly NOT a substitute for the missing proof: the convergence step is unproved by the author's own words, and e3s already shows the construction fires identically for D-H.
+- [ ] **The AHK transfer question, now a checklist rather than an inspiration (#174).** Adiprasito-Huh-Katz manufacture Hodge-Riemann positivity with no variety, via four parts: an LGV counting base case, local links factoring as restriction x contraction, a flip degeneration with signature rigidity, and an ample cone made free by an auxiliary polytope. Three ingredients do NOT transfer and are the actual work: a finite induction with strict descent (RH needs uniformity over an infinite family), an exchange axiom on primes (none known; the divisor lattice of a squarefree integer is the Boolean matroid, realizable everywhere and zeta-free), and an arithmetic analogue of the polytope. ADVERSARY test for any proposal: Babaee-Huh's tropical variety has PD + HL but not HR, so "duality and Lefschetz hold" is not evidence.
+- [ ] **Mathlib PR #41132 (digamma): GREEN, awaiting a maintainer.** Review comments addressed, master merged, adapted to the #42490 `to_fun` split, all CI passing. Only a stale `awaiting-author` label blocks the review queue and we lack the rights to clear it. If it sits, the conventional nudge is a short note on Lean Zulip `#mathlib4 > PR review`.
+- [ ] **Same `logDeriv_mul` breakage will hit `lean/ZetaRH/DigammaExtras.lean` on the next Mathlib bump** (it is pinned at v4.30.0). One-line-per-site fix, already worked out upstream: use `logDeriv_fun_mul` / `logDeriv_fun_div`.
+
+## Open: the corridor and its pivot (S4/R1; LEARNINGS #158-#164; exit rule fired + closure RATIFIED 2026-07-17)
 
 - [x] **THE POST-CORRIDOR PIVOT, FIRST RUNGS EXECUTED 2026-07-17/18 (#166/#167/#168):** both survey rungs discharged the #164 reopen conditions (BBH NOT-REPAIRABLE-AS-SEARCHED; KNS fits-in-part with zero S4 content), and both builds landed on their pre-registered walls nameably: e2al (C1/SP3c, 27/27: the index-only $F/V$ layer Beurling-blind by literal test, arithmetic size entering ONLY at the truncation boundary, $f_{TC}$ non-multiplicative across seven natural variants) and e1q (theta wrap, 25/25: lattice-alone gives only conditioning mirages, hardening monotonically through $M = 154$). Both walls point at the SAME missing tie: the additive lattice bound to the multiplicative structure.
 - [x] **NEXT PIVOT RUNGS (a) and (b): DONE 2026-08-09 (LEARNINGS #173; three parallel builds, two adversary rounds).** (a) The modular/Hecke sweep verdict is FITS-IN-PART ([`viazovska_s4_sweep.md`](docs/03_research/reading_notes/viazovska_s4_sweep.md), adversary PASS_WITH_FIXES): conditions (1)/(4) fit at the corpus's NATIVE quadratic nodes and the magic function is the FIRST in-nature instance of the banked S4 economy (source: modular rigidity = finite-dimensional coefficient spaces); at log nodes the mechanism class IS Riemann-Weil and its one-sided version IS M4 (calibration: an existence proof for the S4 economy, not a route around M4). (b) The $HB_1$ question answers NO-IN-PRINT / OPEN ([`hb1_one_sided_extremal.md`](docs/03_research/reading_notes/hb1_one_sided_extremal.md), whole K-W series swept clean, adversary-replicated with a second toolchain), and the ansatz verification fired CORRECTED ([`e1w_burnol_bilinear.md`](experiments/spectral/e1w_burnol_bilinear.md), 24/24, adversary PASS: $\kappa(L_a) = 0$, signature $(2,0)$; the $(1,1)$ lives on the twisted pairing only), so #168(iii) downgrades at source and the $HB_1$ motivation from $L_a$ evaporates. (c) moved to its own item below.
@@ -24,7 +32,7 @@
 - [ ] **Lean targets (VERIFIER, all classical, from the e1n/e1o .md):** the corrected abscissa lemma (nonnegative-envelope form only; the pre-fix statement is FALSE); the Abel nonneg upgrade; the $(-1)^n n^{1/4}$ witness; the $\pi/4 - 5/(2t)$ closed form; exp-closure of absolutely convergent Dirichlet series; Lemma L (Landau); $\zeta < 0$ on $(0,1)$ via eta; the $s = 1$ pole cancellation. UPDATE (#169 merge): five e1o-side classical targets are ALREADY machine-checked in [`S4Carrier.lean`](lean/ZetaRH/S4Carrier.lean) (#S4C-1 Euler-gate nonnegativity via `vonMangoldt_nonneg`; #S4C-2 tail-divergence kernel modulo the named Chebyshev EXTERNAL hypothesis; #S4C-3 structural-nil span; #S4C-4 decimation rank-1 collapse; #S4C-5 trig-Vandermonde nonsingularity); check overlap before re-formalizing. UPDATE (#172): e1u's VERIFIER target 6 is **SUPERSEDED and PROVED**; the four replacement targets are in [`e1v_christoffel_gauge.md`](experiments/spectral/e1v_christoffel_gauge.md) and are all finite/elementary: (a) **Theorem V2** itself ($\lambda_M(0) \le \cosh(2nG)^{-2}$ via the Chebyshev construction on the square-map image; Mathlib has `Polynomial.Chebyshev.T`, the analytic step is $|T_n(x)| = \cosh(n\operatorname{arccosh} x)$ off $[-1,1]$); (b) the Christoffel identity $\sum_{k<M} p_k(0)^2 = 1/\lambda_M(0)$ at full degree and its Lagrange form $\sum_j \ell_j(0)^2/w_j$ (a Cauchy-Schwarz equality case); (c) the germ-length split $X_{\rm total} = 1/\lambda_M(0) + Q_M(0)$, which with (a)+(b) IS the old target 6 with an explicit rate; (d) rationality/continuity of $1/\lambda_M(0)$ in the atom positions away from collisions (needed to state the continuity obstruction formally). UPDATE (#171): six NEW finite/algebraic targets named in [`e1u_canonical_chain.md`](experiments/spectral/e1u_canonical_chain.md) (Verification targets 1-6, of which 6 is now superseded as above): the footprint-chain identity; nilpotent transfer exactness (two-line matrix lemmas); the Weyl-mass identity; the corrected tail-invariance PAIR; the Hur convention dictionary; and the central-gap length blowup in structural form (total trace-length ~ reciprocal Christoffel function at the footpoint: would make "the type divergence relocates into the length coordinate" a theorem in this gauge).
 - [ ] **Frame-audit follow-ups (2026-07-17):** see [`docs/03_research/ccm_corridor_frame_audit.md`](docs/03_research/ccm_corridor_frame_audit.md) + LEARNINGS #163. Status: falsifiers 2 and 4 DONE same day (#164, [`s4_cheap_falsifiers_survey.md`](docs/03_research/s4_cheap_falsifiers_survey.md); falsifier 2 TRIPPED adversary-verified, exit rule fired conditional on the two pivot-item residuals); falsifiers 1/3 = the optional bounded confirmation above; falsifier 5 (the $\theta \le 1/2$ corner) lives in the SURVEYOR item.
 
-## Open — publications (registry: PUBLICATIONS.md)
+## Open: publications (registry: PUBLICATIONS.md)
 
 - [ ] **P2 (Mathlib PR [#41132](https://github.com/leanprover-community/mathlib4/pull/41132), digamma): ACTIVE, updated 2026-07-17.** Check the fresh reviewer activity and prepare Owen's replies (in his own words per Mathlib AI policy). P1 ([#41133](https://github.com/leanprover-community/mathlib4/pull/41133), `riemannZeta_conj`) is resolved: **merged by Bors 2026-07-07** (GitHub shows state=closed, merged=false; the "[Merged by Bors]" title prefix is mathlib's merge signature). Registry updated; the old "READY: submit" item (archive 190) is superseded.
 - [ ] **P10 rational-root floor: open the mathlib4 PR.** CLEAR-TO-PR since 2026-07-02 (#RR-1/#RR-2 machine-checked in full UFD generality). **2026-07-17: port BUILD-VERIFIED against the pinned checkout** (real Mathlib source, disposable branch, green + axiom-clean, then reverted; instance-cycle fix folded in) **+ PR body staged** ([`rational_root_floor_pr_body.md`](lean/upstream/rational_root_floor_pr_body.md), [`rational_root_floor_port.md`](lean/upstream/rational_root_floor_port.md)); remaining steps mechanical (fork branch, paste verified diff, rebuild, lint, open). Sequencing: after P2 round 2 clears.
@@ -38,7 +46,7 @@
 
 Drift notes (2026-07-17 audit): archive 195 (P8 lit-check) was already DONE 2026-06-16 (verdict: no standalone novelty, fold into P4 Pillar 3). Archive 351 ("Formalize RH equivalences in Lean 4") was done long ago ([`RHEquivalences.lean`](lean/ZetaRH/RHEquivalences.lean), LEARNINGS #64). Both stay checked-off context in the archive.
 
-## Open — research (standing, older threads; full statements at the archive pointers)
+## Open: research (standing, older threads; full statements at the archive pointers)
 
 - [ ] **Direction 8, the real gap:** construct the global Frobenius/Lefschetz signed trace pairing over Spec(Z) that supplies the trace t (= Spec(Z) x Spec(Z) + Gamma_S). Construction work in arithmetic geometry, not a compute task. (archive 152)
 - [ ] **The local-to-global Weil cohomology** (M3/#25, Direction 8's central open step); the pairing must be RH-EQUIVALENT (a sum like $\lambda_n$), not the de Branges cross-term. (archive 258)
@@ -57,18 +65,18 @@ Drift notes (2026-07-17 audit): archive 195 (P8 lit-check) was already DONE 2026
 - [ ] **R3.6.3:** Connes-Consani machinery as INFRASTRUCTURE for the geometric route (topos/sheaf tools for intersection theory despite the K1-failing positivity formulations). (archive 297)
 - [ ] **Arakelov standing directive:** do NOT run a fourth Arakelov front or survey; spend on isolable RH-independent sub-pieces + watch for an external Gamma_S/polarization theorem. (archive 317)
 
-## Open — docs and visualizations
+## Open: docs and visualizations
 
-- [ ] Convert PDFs to Markdown — all 4 source PDFs (text conversions exist in sources/, refine)
-- [ ] **docs/00_intuitive/** — write intuitive-level explanation
-- [ ] **docs/01_undergraduate/** — write undergrad-level explanation
-- [ ] **docs/implications/** — why RH matters (primes, physics, crypto)
-- [ ] manim scene: ZetaSeriesIntro — partial sums of zeta(s), s real
-- [ ] manim scene: ComplexPlane — plotting zeta on the complex plane
-- [ ] manim scene: AnalyticContinuation — extending beyond Re(s) > 1
-- [ ] manim scene: CriticalStrip — the critical strip 0 < Re(s) < 1
-- [ ] manim scene: ZerosOnCriticalLine — known non-trivial zeros at Re(s) = 1/2
-- [ ] manim scene: PrimeConnectionExplainer — zeta and prime counting function
+- [ ] Convert PDFs to Markdown: all 4 source PDFs (text conversions exist in sources/, refine)
+- [ ] **docs/00_intuitive/**: write intuitive-level explanation
+- [ ] **docs/01_undergraduate/**: write undergrad-level explanation
+- [ ] **docs/implications/**: why RH matters (primes, physics, crypto)
+- [ ] manim scene: ZetaSeriesIntro: partial sums of zeta(s), s real
+- [ ] manim scene: ComplexPlane: plotting zeta on the complex plane
+- [ ] manim scene: AnalyticContinuation: extending beyond Re(s) > 1
+- [ ] manim scene: CriticalStrip: the critical strip 0 < Re(s) < 1
+- [ ] manim scene: ZerosOnCriticalLine: known non-trivial zeros at Re(s) = 1/2
+- [ ] manim scene: PrimeConnectionExplainer: zeta and prime counting function
 
 ## ML / formalization backlog
 
