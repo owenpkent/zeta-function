@@ -48,6 +48,26 @@
 > "count = lattice up to `O(1)`" form; the "EXACTLY / deviation 0 at every
 > lambda" wording does not.
 
+> **RECONCILIATION WITH #165/e1p (2026-08-16, the TODO cross-check item).**
+> The banked "unreconciled nuance" is **not a disagreement**: it is a
+> level-of-object collision. e1p's twisted-inner-product caveat attaches to the
+> **operator** level only (its Q1 object, `D = D_0 + P_1` with
+> `P_1 = -|D_0 xi><delta_N|`, non-normal, self-adjoint only in the twisted Weil
+> form). e1p's Q3 block already grades the **form** level rigorous, as a gated
+> check with the in-code comment *"unlike Q1's operator-level case this one is
+> provably clean"*, computing `eigvalsh` of the symmetrized `Q_full` vs
+> `Q_noPole` and asserting `max shift <= 2`. That check IS this file's
+> backbone `|N_Qon(t) - N_Qoff(t)| <= rank(P) = 2`. So the caveat undercuts
+> **only** the non-normal `M`-shadow, exactly as this file already says, and
+> the Hermitian-`Q` reading stands on both lines. Both lines also place the
+> `sqrt13` shift-3 exception at the operator level, so the replication is
+> stronger than the merge note credited. No claim in either dossier moves.
+> Sharpening banked: the twisted metric is realized only to
+> `1.3e-5 .. 4.9e-4` at float precision (the `sa_res` field
+> `operator_spectrum` already returns, measured across `lam` in [3.0, 4.0]),
+> so the caveat is quantitative, not merely formal, and it is the same knob as
+> the ghost mechanism.
+
 ## One-line result
 
 The count half of #154's W6 pole-budget clause is discharged by interlacing up

@@ -49,6 +49,14 @@ bookkeeping to the Turing closure.
 Usage:
     python -m experiments.primes.e5f_rh_verification 1e7            # full run
     python -m experiments.primes.e5f_rh_verification 1e5 certified  # certified
+    python -m experiments.primes.e5f_rh_verification 1e7 workers=8  # all cores
+    python -m experiments.primes.e5f_rh_verification 3e7 certified workers=8 prec=auto
+
+`workers=N` splits the Gram-index range at points where Gram's law holds and
+walks the bands in parallel (see verify_parallel); the result is identical to
+the serial walk, not an approximation. `prec=ld` (or `prec=auto`) computes the
+Riemann-Siegel phase in extended precision, which is what keeps the certified
+error bound below the formula's own truncation error above height 1e7.
 """
 from __future__ import annotations
 
@@ -82,7 +90,8 @@ def turing_bound(t2: float) -> float:
     return 1.698 + 0.183 * np.log(np.log(t2)) + 0.049 * np.log(t2)
 
 
-def turing_check(m: int, k: int = 40, step: float = 0.01) -> dict:
+def turing_check(m: int, k: int = 40, step: float = 0.01,
+                 prec: str = "f8", korder: int = 0) -> dict:
     """Turing's method: prove S(g_m) <= 0, closing the count from above.
 
     At a Gram point, S(g_m) = N(g_m) - m - 1 is an INTEGER, and having found
@@ -104,8 +113,10 @@ def turing_check(m: int, k: int = 40, step: float = 0.01) -> dict:
     that bound falls below 1 then the integer S(g_m) is <= 0, hence exactly
     0: every zero below g_m has been found, and all of them are on the line.
     """
+    # `k` here is the number of Gram intervals in the stretch, not the
+    # Riemann-Siegel correction order; that one is `korder`.
     ga, gb = float(gram_point(m)), float(gram_point(m + k))
-    gammas = zeros_in(ga, gb, step=step)
+    gammas = zeros_in(ga, gb, step=step, prec=prec, k=korder)
     L = gb - ga
     A = float(np.sum(gb - gammas))
     ts = np.linspace(ga, gb, 40001)
@@ -120,7 +131,8 @@ def turing_check(m: int, k: int = 40, step: float = 0.01) -> dict:
 _ESCALATIONS = [0]      # count of points that needed exact arithmetic
 
 
-def _signs(t: np.ndarray, z: np.ndarray, certified: bool) -> np.ndarray:
+def _signs(t: np.ndarray, z: np.ndarray, certified: bool,
+           prec: str = "f8", k: int = 0) -> np.ndarray:
     """Sign bits of Z, provably correct when `certified` is set.
 
     In certified mode a float64 sign is accepted only when |Z| exceeds the
@@ -130,19 +142,20 @@ def _signs(t: np.ndarray, z: np.ndarray, certified: bool) -> np.ndarray:
     """
     if not certified:
         return np.signbit(z)
-    sb, esc = certified_sign(t, z)
+    sb, esc = certified_sign(t, z, prec=prec, k=k)
     _ESCALATIONS[0] += esc
     return sb
 
 
 def _sign_changes(z: np.ndarray, t: np.ndarray | None = None,
-                  certified: bool = False) -> int:
-    sb = np.signbit(z) if not certified else _signs(t, z, True)
+                  certified: bool = False, prec: str = "f8",
+                  k: int = 0) -> int:
+    sb = np.signbit(z) if not certified else _signs(t, z, True, prec, k)
     return int(np.count_nonzero(sb[:-1] != sb[1:]))
 
 
-def _resolve_block(t_lo: float, t_hi: float, need: int,
-                   certified: bool = False) -> tuple[int, int]:
+def _resolve_block(t_lo: float, t_hi: float, need: int, certified: bool = False,
+                   prec: str = "f8", k: int = 0) -> tuple[int, int]:
     """Subdivide a Gram block until `need` sign changes appear.
 
     Returns (found, rounds). Sampling density doubles each round, so a block
@@ -151,23 +164,48 @@ def _resolve_block(t_lo: float, t_hi: float, need: int,
     m = 64 * max(need, 1)
     for rounds in range(1, MAX_REFINE + 1):
         grid = np.linspace(t_lo, t_hi, m)
-        found = _sign_changes(zed(grid), grid, certified)
+        found = _sign_changes(zed(grid, prec=prec, k=k), grid, certified, prec, k)
         if found >= need:
             return found, rounds
         m *= 4
     return found, MAX_REFINE
 
 
+def good_gram_at_or_after(n: int, prec: str = "f8", k: int = 0,
+                          limit: int = 4096) -> int:
+    """Smallest index m >= n at which Gram's law holds, i.e. (-1)^m Z(g_m) > 0.
+
+    Seams for the parallel walk must land on such points: a band that both
+    starts and ends on one contains whole Gram blocks, so no block straddles
+    a seam and the bands' counts add exactly.
+    """
+    m = int(n)
+    while m < n + limit:
+        idx = np.arange(m, min(m + 256, n + limit))
+        z = zed(gram_point(idx), prec=prec, k=k)
+        good = np.flatnonzero(np.signbit(z) == (idx % 2 == 1))
+        if good.size:
+            return int(idx[good[0]])
+        m += 256
+    raise RuntimeError(f"no Gram point satisfying Gram's law within {limit} of {n}")
+
+
 def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
-           progress_every: int = 20, certified: bool = False) -> dict:
+           progress_every: int = 20, certified: bool = False,
+           n_end: int | None = None, prec: str = "f8",
+           korder: int = 0) -> dict:
     """Verify that every zero up to height T is simple and on the critical line.
 
     `n_start` begins the walk at a Gram index other than 0, which verifies the
     band [g_n_start, T] on its own. Useful for testing and for re-checking a
-    region without re-walking everything below it.
+    region without re-walking everything below it. `n_end` stops it at a Gram
+    index instead of at T, which is what lets a band be handed to a worker
+    (see verify_parallel); when both ends are points where Gram's law holds,
+    the band contains whole blocks and its count is exact on its own.
     """
     say = log or (lambda *_: None)
-    n_end = n_max_for(T)
+    n_end = n_max_for(T) if n_end is None else int(n_end)
+    esc0 = _ESCALATIONS[0]
     t0 = time.time()
 
     n_cur = n_start               # Gram index reached so far
@@ -187,9 +225,9 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
             hi = min(n_cur + chunk, n_end) + pad
             idx = np.arange(n_cur, hi + 1)
             g = gram_point(idx)
-            z = zed(g)
+            z = zed(g, prec=prec, k=korder)
             # Gram's law: (-1)^n Z(g_n) > 0. Points where it holds delimit blocks.
-            sb = _signs(g, z, certified)
+            sb = _signs(g, z, certified, prec, korder)
             good = sb == (idx % 2 == 1)
             gi = np.flatnonzero(good)
             if gi.size >= 2 and int(idx[gi[-1]]) > n_cur:
@@ -214,7 +252,8 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
                 continue
             a, b = int(a_all[k]), int(b_all[k])
             need = int(lengths[k])
-            got, _ = _resolve_block(float(g[a]), float(g[b]), need, certified)
+            got, _ = _resolve_block(float(g[a]), float(g[b]), need,
+                                    certified, prec, korder)
             if got >= need:
                 found_per[k] = got
                 continue
@@ -229,7 +268,8 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
                 lo_k, hi_k = max(lo_k - 1, 0), min(hi_k + 1, a_all.size - 1)
                 A, B = int(a_all[lo_k]), int(b_all[hi_k])
                 need_m = B - A
-                got_m, _ = _resolve_block(float(g[A]), float(g[B]), need_m, certified)
+                got_m, _ = _resolve_block(float(g[A]), float(g[B]), need_m,
+                                          certified, prec, korder)
                 if got_m >= need_m:
                     found_per[lo_k : hi_k + 1] = 0
                     found_per[k] = need_m
@@ -256,17 +296,118 @@ def verify(T: float, n_start: int = 0, chunk: int = 20000, log=None,
         blocks=blocks_total, exceptions=exceptions, unresolved=unresolved,
         boundary_merges=boundary_merges,
         max_block=max_block, worst=worst[:10], elapsed=time.time() - t0,
+        escalations=_ESCALATIONS[0] - esc0, prec=prec, korder=korder,
     )
 
 
-def main(T: float = 1e7, certified: bool = False) -> int:
+def _band(job: tuple) -> dict:
+    """One worker's band. Module-level so it survives pickling."""
+    n_lo, n_hi, T, chunk, certified, prec, korder = job
+    r = verify(T, n_start=n_lo, n_end=n_hi, chunk=chunk,
+               certified=certified, prec=prec, korder=korder)
+    r["band"] = (n_lo, n_hi)
+    return r
+
+
+def verify_parallel(T: float, workers: int = 0, chunk: int = 20000,
+                    certified: bool = False, prec: str = "f8", korder: int = 0,
+                    oversample: int = 3, log=None) -> dict:
+    """The same verification, split across processes at Gram-law seams.
+
+    The walk is sequential only because each window starts where the last one
+    ended. Cut the Gram index range at points where Gram's law HOLDS and that
+    dependency disappears: a band bounded by two such points contains whole
+    Gram blocks, so its zero count is exact on its own and the bands' counts
+    add. Seams are found with good_gram_at_or_after, so this is not an
+    approximation, and the aggregate `verified` flag means what it means in
+    the serial walk.
+
+    The work is not uniform: the Riemann-Siegel sum costs O(sqrt(t)) per Gram
+    point, so cost density in the index n goes like sqrt(g_n) ~ sqrt(n) and
+    cumulative cost like n^(3/2). Cutting at n_i = n_end (i/B)^(2/3) therefore
+    gives equal-cost bands, and cutting B = oversample * workers of them lets
+    the pool absorb whatever the model still gets wrong.
+    """
+    import os
+    from concurrent.futures import ProcessPoolExecutor
+
+    say = log or (lambda *_: None)
+    workers = workers or max(1, (os.cpu_count() or 2) - 1)
+    n_end = n_max_for(T)
+    t0 = time.time()
+
+    nbands = max(1, workers * max(1, oversample))
+    frac = (np.arange(1, nbands) / nbands) ** (2.0 / 3.0)
+    seams = [0]
+    for r in (int(round(f * n_end)) for f in frac):
+        s = good_gram_at_or_after(max(r, seams[-1] + 1024), prec, korder)
+        if s < n_end - 1024 and s > seams[-1]:
+            seams.append(s)
+    seams.append(n_end)
+    say(f"  {len(seams)-1} bands over Gram indices 0..{n_end:,} "
+        f"on {workers} workers")
+
+    jobs = [(seams[i], seams[i + 1], T, chunk, certified, prec, korder)
+            for i in range(len(seams) - 1)]
+    # submit + as_completed rather than map, so a long run reports progress as
+    # bands land instead of going silent until the last one finishes. Results
+    # are put back in submission order, since the tiling check depends on it.
+    from concurrent.futures import as_completed
+    parts = [None] * len(jobs)
+    done_n = 0
+    with ProcessPoolExecutor(max_workers=workers) as ex:
+        futs = {ex.submit(_band, j): i for i, j in enumerate(jobs)}
+        for fut in as_completed(futs):
+            i = futs[fut]
+            parts[i] = fut.result()
+            done_n += 1
+            el = time.time() - t0
+            say(f"  band {done_n:2d}/{len(jobs)} done "
+                f"(indices {jobs[i][0]:,}..{jobs[i][1]:,}, "
+                f"{parts[i]['found']:,} zeros, {parts[i]['elapsed']:.0f}s); "
+                f"{el/60:.0f} min elapsed, "
+                f"~{el/done_n*(len(jobs)-done_n)/60:.0f} min left")
+
+    found = sum(p["found"] for p in parts)
+    expected = sum(p["expected"] for p in parts)
+    n_reached = max(p["n_reached"] for p in parts)
+    # Bands must tile exactly: each one ends where the next begins.
+    tiled = all(parts[i]["n_reached"] == parts[i + 1]["n_start"]
+                for i in range(len(parts) - 1))
+    return dict(
+        T=T, n_start=0, n_reached=n_reached, height=float(gram_point(n_reached)),
+        found=found, expected=expected,
+        verified=bool(found == expected and tiled),
+        tiled=bool(tiled), bands=len(parts), workers=workers,
+        blocks=sum(p["blocks"] for p in parts),
+        exceptions=sum(p["exceptions"] for p in parts),
+        unresolved=sum(p["unresolved"] for p in parts),
+        boundary_merges=sum(p["boundary_merges"] for p in parts),
+        max_block=max(p["max_block"] for p in parts),
+        escalations=sum(p["escalations"] for p in parts),
+        worst=[w for p in parts for w in p["worst"]][:10],
+        band_times=[p["elapsed"] for p in parts],
+        elapsed=time.time() - t0, prec=prec, korder=korder,
+    )
+
+
+def main(T: float = 1e7, certified: bool = False, workers: int = 1,
+         prec: str = "f8", k: int = 0) -> int:
     print(f"E5F: verifying RH up to height T = {T:.3g}"
           + ("  [CERTIFIED: every sign checked against a rigorous error bound]"
-             if certified else ""))
+             if certified else "")
+          + (f"  [prec={prec}]" if prec != "f8" else "")
+          + (f"  [C_0..C_{k}]" if k else "")
+          + (f"  [{workers} workers]" if workers != 1 else ""))
     _ESCALATIONS[0] = 0
     print(f"  Gram indices to walk: {n_max_for(T):,}  "
           f"(that many zeros, plus the one below g_0)")
-    r = verify(T, log=print, certified=certified)
+    if workers == 1:
+        r = verify(T, log=print, certified=certified, prec=prec, korder=k)
+    else:
+        r = verify_parallel(T, workers=workers, certified=certified,
+                            prec=prec, korder=k, log=print)
+        _ESCALATIONS[0] = r["escalations"]
 
     print(f"\n  zeros found on the critical line : {r['found']:,}")
     print(f"  zeros required by Riemann-von Mangoldt: {r['expected']:,}")
@@ -278,14 +419,17 @@ def main(T: float = 1e7, certified: bool = False) -> int:
     print(f"  unresolved blocks                : {r['unresolved']}")
     if certified:
         print(f"  signs needing exact arithmetic   : {_ESCALATIONS[0]:,} "
-              f"(bound at the top: {float(rs_error_bound(r['height'])):.2e})")
+              f"(bound at the top: "
+              f"{float(rs_error_bound(r['height'], k=k, prec=prec)):.2e}"
+              + (f", vs {float(rs_error_bound(r['height'])):.2e} at the "
+                 f"float64/C_0 default" if (prec, k) != ("f8", 0) else "") + ")")
     if r["worst"]:
         print(f"  first unresolved: {r['worst']}")
     print(f"  elapsed                          : {r['elapsed']:.0f}s")
 
     tc = None
     if r["verified"] and r["height"] > 1e5:
-        tc = turing_check(r["n_reached"], k=TURING_K)
+        tc = turing_check(r["n_reached"], k=TURING_K, prec=prec, korder=k)
         print(f"\n  Turing's method on the {TURING_K} Gram intervals above g_m:")
         print(f"    Trudgian bound B = {tc['trudgian_B']:.3f}, stretch L = {tc['stretch']:.2f}, "
               f"{tc['zeros_in_stretch']} zeros located in it")
@@ -331,5 +475,13 @@ def main(T: float = 1e7, certified: bool = False) -> int:
 
 
 if __name__ == "__main__":
+    _args = sys.argv[2:]
+    _w = next((int(a.split("=")[1]) for a in _args if a.startswith("workers=")), 1)
+    _p = next((a.split("=")[1] for a in _args if a.startswith("prec=")), "f8")
+    _k = next((int(a.split("=")[1]) for a in _args if a.startswith("k=")), 0)
+    if _p == "auto":
+        from experiments.primes.rsz import best_prec as _bp
+        _p = _bp()
     raise SystemExit(main(float(sys.argv[1]) if len(sys.argv) > 1 else 1e7,
-                          certified="certified" in sys.argv[2:]))
+                          certified="certified" in _args, workers=_w, prec=_p,
+                          k=_k))

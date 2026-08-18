@@ -234,6 +234,128 @@ def main() -> int:
                    f"{vc['found']} zeros, all signs proven",
                    bool(vc["verified"]) and vc["unresolved"] == 0))
 
+    # ---- extended-precision phase path (the lever past height 1e7) --------
+    import mpmath as mp
+    from experiments.primes import rsz as rsz_mod
+    from experiments.primes.rsz import (
+        HAS_LD, LD_MANT, best_prec, rounding_crossover, rs_rounding_bound)
+    tsl = 1e8 + np.arange(4) * 7.3
+    checks.append((f"the float64 phase path is bit-for-bit unchanged by the "
+                   f"precision option (chunking cannot reorder an inner sum)",
+                   np.array_equal(zed(tsl), zed(tsl, prec="f8"))))
+    checks.append((f"float64's rounding bound overtakes the C0 truncation bound "
+                   f"near t = 3e6 (meas {rounding_crossover(0, 'f8'):.2g}), which "
+                   f"is why height 1e7 is where certification starts to cost",
+                   2e6 < rounding_crossover(0, "f8") < 5e6))
+    if HAS_LD:
+        prev = mp.mp.dps
+        mp.mp.dps = 40
+        try:
+            ex = np.array([float(mp.siegelz(mp.mpf(float(x)))) for x in tsl])
+        finally:
+            mp.mp.dps = prev
+        e8 = float(np.abs(zed(tsl) - ex).max())
+        el = float(np.abs(zed(tsl, prec="ld") - ex).max())
+        bl = float(rs_error_bound(1e8, prec="ld"))
+        cross = rounding_crossover(0, "ld")
+        checks.append((f"the {LD_MANT}-bit extended phase beats float64 at height "
+                       f"1e8 against mpmath ({el:.1e} vs {e8:.1e}) and stays "
+                       f"inside its own rigorous bound ({bl:.1e})",
+                       el < e8 and el < bl))
+        checks.append((f"extended phases move the rounding/truncation crossover "
+                       f"from 3e6 to {cross:.2g}, a {cross/rounding_crossover(0,'f8'):.0f}x "
+                       f"gain in certified height",
+                       cross > 5e7))
+        checks.append((f"the extended bound is strictly tighter than the float64 "
+                       f"one above the old crossover and never looser below it",
+                       float(rs_rounding_bound(1e8, "ld")) < float(rs_rounding_bound(1e8))
+                       and float(rs_rounding_bound(1e3, "ld"))
+                       <= float(rs_rounding_bound(1e3))))
+        # ---- the C_1 correction term -------------------------------------
+        from numpy.polynomial.chebyshev import chebval
+        prev = mp.mp.dps
+        mp.mp.dps = 50
+        try:
+            def _psi(z):
+                z = mp.mpf(z)
+                d = mp.cos(mp.pi * z)
+                if abs(d) > mp.mpf(10) ** (-20):
+                    return mp.cos(mp.pi * (z * z / 2 + mp.mpf(3) / 8)) / d
+                w = z - mp.sign(z) / 2
+                return mp.sin(mp.pi * w * (w + 1) / 2) / mp.sin(mp.pi * w)
+            zs = np.linspace(-0.97, 0.97, 33)
+            ref0 = np.array([float(_psi(v)) for v in zs])
+            ref1 = np.array([float(-mp.diff(_psi, mp.mpf(v), 3) / (12 * mp.pi**2))
+                             for v in zs])
+        finally:
+            mp.mp.dps = prev
+        d0 = float(np.abs(chebval(zs, rsz_mod._C0_CHEB) - ref0).max())
+        d1 = float(np.abs(chebval(zs, rsz_mod._C1_CHEB) - ref1).max())
+        checks.append((f"the stored C_0 and C_1 Chebyshev fits reproduce their "
+                       f"mpmath definitions (max dev {d0:.1e} and {d1:.1e}), so "
+                       f"the coefficients are audited rather than magic",
+                       d0 < 1e-13 and d1 < 1e-13))
+        checks.append(("Psi is even so C_1 is odd: the even-index Chebyshev "
+                       "coefficients of C_1 and the odd-index ones of C_0 "
+                       "vanish to 1e-17",
+                       float(np.abs(rsz_mod._C1_CHEB[0::2]).max()) < 1e-17
+                       and float(np.abs(rsz_mod._C0_CHEB[1::2]).max()) < 1e-16))
+        tc1 = 1e6 + np.arange(6) * 11.7
+        prev = mp.mp.dps
+        mp.mp.dps = 40
+        try:
+            exc = np.array([float(mp.siegelz(mp.mpf(float(x)))) for x in tc1])
+        finally:
+            mp.mp.dps = prev
+        ek0 = float(np.abs(zed(tc1, prec="ld") - exc).max())
+        ek1 = float(np.abs(zed(tc1, prec="ld", k=1) - exc).max())
+        checks.append((f"the C_1 term cuts the error by {ek0/max(ek1,1e-300):.0f}x "
+                       f"at t = 1e6 ({ek0:.1e} -> {ek1:.1e}) and stays inside its "
+                       f"own bound, which is the t^-1/2 gain the expansion predicts",
+                       ek1 < ek0 / 100
+                       and ek1 < float(rs_error_bound(1e6, k=1, prec="ld"))))
+        # p = 1/4 is a removable zero of the C_0 quotient: the k=0 form loses
+        # most of its digits there, and the bound has to cover that or the
+        # certified claim is hollow. Regression test for exactly that gap.
+        tpole = np.array([2 * np.pi * (m + f) ** 2
+                          for m in (100, 400, 1200) for f in (0.25, 0.75)])
+        prev = mp.mp.dps
+        mp.mp.dps = 40
+        try:
+            exp_ = np.array([float(mp.siegelz(mp.mpf(float(x)))) for x in tpole])
+        finally:
+            mp.mp.dps = prev
+        pe0 = np.abs(zed(tpole) - exp_)
+        pe1 = np.abs(zed(tpole, prec="ld", k=1) - exp_)
+        b0 = rs_error_bound(tpole)
+        checks.append((f"at the removable zeros of cos(2 pi p) the k=0 quotient "
+                       f"errs by up to {pe0.max():.1e}, and the pointwise "
+                       f"1/|cos| term in the bound still covers it "
+                       f"(worst ratio {float((pe0/b0).max()):.2f} < 1)",
+                       bool((pe0 / b0).max() < 1.0) and pe0.max() > 1e-4))
+        checks.append((f"the k=1 Chebyshev path has no such amplification there "
+                       f"(err {pe1.max():.1e}, {pe0.max()/pe1.max():.0e}x better)",
+                       pe1.max() < 1e-6))
+        va = verify(3e4, certified=True)
+        vb = verify(3e4, certified=True, prec="ld", korder=1)
+        checks.append((f"a certified verification agrees exactly between the "
+                       f"default path and extended-precision C_1 "
+                       f"({va['found']} zeros both ways; escalations "
+                       f"{va['escalations']} -> {vb['escalations']})",
+                       va["found"] == vb["found"] and va["verified"]
+                       and vb["verified"]))
+    else:
+        raised = False
+        try:
+            zed(tsl, prec="ld")
+        except RuntimeError:
+            raised = True
+        checks.append((f"no extended precision here (longdouble mantissa "
+                       f"{LD_MANT} bits), so prec='ld' refuses rather than "
+                       f"claiming a bound it cannot honour; best_prec() = "
+                       f"{best_prec()!r}",
+                       raised and best_prec() == "f8"))
+
     # ---- the GPU engine must agree with the CPU one exactly ---------------
     from experiments.primes.primestream_gpu import gpu_available, stream_gpu
     if gpu_available():

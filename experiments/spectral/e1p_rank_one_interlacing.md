@@ -34,6 +34,36 @@
 >   the #158/#161 class.
 > All 19/19 checks pass in full mode (110s), 16/16 in quick mode (31s).
 
+> **RECONCILIATION WITH #169/e1s (2026-08-16, the TODO cross-check item).**
+> The banked "unreconciled nuance" (LEARNINGS #169 merge note: this line grades
+> the profile *not-a-theorem-instance* via the twisted-inner-product caveat
+> while the parallel line grades Weyl-on-$Q$ *rigorous* $\le 2$) is **not a
+> disagreement**. It is a level-of-object collision, and both statements are
+> already in this file:
+> - The caveat attaches to the **operator** level only ($D = D_0 + P_1$,
+>   $P_1 = -|D_0\xi\rangle\langle\delta_N|$, non-normal, self-adjoint only in
+>   the twisted Weil-form inner product). That is Q1's object.
+> - The **form** level is graded rigorous here too, as a gated check, not a
+>   measurement: `run_q3` computes `eigvalsh` of the symmetrized $Q_{full}$ vs
+>   $Q_{noPole}$ and asserts `max shift <= 2` under the comment *"unlike Q1's
+>   operator-level case this one is provably clean"* (`.py`, Q3 block,
+>   `"FORM-level exact rank-2 Weyl bound holds"`). That check IS #169's
+>   rigorous backbone $|N_{Q_{on}}(t) - N_{Q_{off}}(t)| \le \mathrm{rank}(P)$.
+>
+> So the caveat undercuts **only** the non-normal $M$-shadow; the Hermitian-$Q$
+> reading stands, on both lines. The $\lambda = \sqrt{13}$ shift-3 exception is
+> operator-level in both (here: Q2's `slot_shifts(d0, d)` at the separate
+> $\sqrt{13}$ point; there: the unfiltered $M$ displacement at $N = 34$), so the
+> two lines agree on the exception cell as well and the replication is *stronger*
+> than the merge note credited. Sharpening banked while checking: the twisted
+> metric is realized only approximately at float precision. `operator_spectrum`
+> already returns the $G$-self-adjointness residual
+> $\|GM - M^HG\|/(\|G\|\|M\|)$ with $G = Q - \epsilon I$, measured
+> $1.3\times10^{-5}$ to $4.9\times10^{-4}$ across the $\lambda \in [3.0, 4.0]$
+> cells. The caveat is therefore not only "the textbook hypothesis is
+> unverified" but "the metric that would supply it is realized to $10^{-5}$",
+> which is the same knob as the ghost mechanism.
+
 ## One-line result
 
 The CF rank-one coupling $P_1 = -|D_0\,\xi\rangle\langle\delta_N|$ shifts
