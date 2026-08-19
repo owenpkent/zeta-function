@@ -81,3 +81,26 @@
 | File | Reference | Role |
 |---|---|---|
 | `Gerasimov-Lebedev-Oblezin-From-Archimedean-L-factors-to-Topological-Field-Theories.pdf` | Gerasimov, Lebedev, Oblezin | Archimedean L-factors as topological field theories; a lens on the archimedean place (A_arch / 2I). |
+
+## 09 Quantum gravity and the primes (the 2026-08 sweep, LEARNINGS #176)
+
+Pulled 2026-08-19 for [`local_quantum_gravity_and_primes.md`](../docs/03_research/local_quantum_gravity_and_primes.md).
+Verdict of the sweep: this field reproduces the #113 pattern (ζ realized as a trace, no polarization
+attached), and the structure it hands you for free (unitarity) is provably RH-blind.
+
+| File | Reference | Role |
+|---|---|---|
+| `arxiv_2505.03068.pdf` | Godet, *Möbius randomness in the Hartle-Hawking state*, arXiv:2505.03068 | **The sharpest live candidate.** WDW operator = Casimir on `L²(SL(d,ℤ)\h_d)`; Hartle-Hawking state as a sum over the ζ zeros; primes via primitivity (mechanism 5). Uses RH as input. |
+| `arxiv_2405.09833.pdf` | Godet, *Quantum cosmology as automorphic dynamics*, arXiv:2405.09833 | The 3d predecessor: Artin's billiard, Maloney-Witten, the Möbius average. |
+| `arxiv_2406.01828.pdf` | LeClair, *Spectral Flow for the Riemann zeros*, arXiv:2406.01828 | S-matrix from the Euler product. **Runs the D-H test itself and passes**; independently reaches this repo's conservation law. Gap: the Hamiltonian is never built. |
+| `arxiv_2004.09523.pdf` | Betzios, Gaddam, Papadoulaki, *Black holes, quantum chaos, and the Riemann hypothesis*, SciPost Phys. Core 4, 032 | Gauging CPT discretizes the dilation spectrum; Berry-Keating with a black-hole reading. Existing BK verdict applies. |
+| `arxiv_1510.05818.pdf` | Kim, *Arithmetic Chern-Simons Theory I*, arXiv:1510.05818 | **The named gap.** A Dijkgraaf-Witten TQFT on Galois representations over `Spec(O_K)`; the most literal "quantum gravity on Spec(ℤ)". No contact with the zeros yet. Cross-ref 05. |
+| `arxiv_1609.03012.pdf` | Kim et al., *Arithmetic Chern-Simons Theory II*, arXiv:1609.03012 | Decomposition formula and worked computations. |
+| `arxiv_1705.04758.pdf` | Dragovich, Khrennikov, Kozyrev, Volovich, Zelenov, *p-Adic Mathematical Physics: The First 30 Years* | The Volovich-hypothesis program: non-archimedean spacetime at the Planck scale. Background for "local = local field". |
+| `arxiv_0712.0155.pdf` | Maloney, Witten, *Quantum Gravity Partition Functions in Three Dimensions* | The `SL(2,ℤ)` sum Godet analytically continues. |
+| `arxiv_1101.3116.pdf` | Schumayer, Hutchinson, *Physics of the Riemann Hypothesis* | Survey of the whole physics-of-RH literature; useful map, no new leverage. |
+| `arxiv_0802.4077.pdf` | Agullo, Barbero, Diaz-Polo, Fernandez-Borja, Villaseñor, *Black hole state counting in LQG: a number theoretical approach* | The one genuine LQG-meets-number-theory result. Combinatorial, not zeta-facing. |
+| `arxiv_1507.05818.pdf` | Connes, Consani, *The Scaling Site* | Already covered in 04; filed here for the sweep's completeness. |
+| `arxiv_2205.01391.pdf` | Connes, Consani, *Riemann-Roch for `Spec ℤ`* | As above. |
+| `arxiv_1509.05576.pdf` | Connes, *An essay on the Riemann Hypothesis* | As above. |
+

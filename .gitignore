@@ -55,6 +55,10 @@ build/
 *.pdf
 !sources/*.pdf
 
+# Text extractions of those same papers: the references tier is index-only,
+# so the extracted text is no more committable than the PDF it came from.
+references/**/*.txt
+
 # In-progress / partial browser downloads (never commit)
 *.crdownload
 *.part

@@ -30,6 +30,7 @@ or a form submission.
 14. [Gourdon reference tables](#14-gourdon-reference-tables)
 15. [Sources tried and not obtained](#15-sources-tried-and-not-obtained)
 16. [Re-download and verification](#16-re-download-and-verification)
+17. [LMFDB: level-1 Maass cusp forms](#17-lmfdb-level-1-maass-cusp-forms)
 
 ---
 
@@ -42,6 +43,7 @@ experiments/primes/_cache/
     ├── SHA256SUMS           per-file manifest, 249 entries
     ├── odlyzko/             zeros2, zeros6, zeros6.gz
     ├── lmfdb/               high-precision zeta zeros, Platt sample, Dirichlet L zeros
+    ├── lmfdb_maass/         level-1 Maass cusp form spectral parameters (see section 17)
     ├── tos/                 Oliveira e Silva: primes/, gaps/, twin_gaps/, goldbach/, apc/, zeta/
     ├── oeis/                14 b-files
     ├── gaps_records/        maximal and first-occurrence prime gap tables
@@ -699,3 +701,64 @@ rows; the zeta zero files in sections 2, 3 and 4 parse, are strictly increasing,
 other and with the known value of $\gamma_1$ where they overlap; all 14 OEIS b-files are plain text
 with no HTML contamination. One file was downloaded, found to be a parked-domain placeholder rather
 than data, and deleted (see section 15).
+
+---
+
+## 17. LMFDB: level-1 Maass cusp forms
+
+Added 2026-08-19 for [`e1ab_automorphic_spectrum.py`](../spectral/e1ab_automorphic_spectrum.py) and
+[`local_quantum_gravity_and_primes.md`](../../docs/03_research/local_quantum_gravity_and_primes.md).
+
+**What it is.** The discrete spectrum of the Laplacian on the modular surface
+$\mathbb{H}/PSL(2,\mathbb{Z})$: 2202 weight-0, trivial-character Maass cusp forms of level 1,
+listed by spectral parameter $R$, where the Laplace eigenvalue is $\lambda = 1/4 + R^2$. Values
+carry roughly 100 significant digits. Contributor of record in LMFDB is Holger Then.
+
+This is the "other half" of the automorphic spectrum from the zeta zeros, which is why it is here.
+The zeros are not in this list: they are resonances in the *continuous* (Eisenstein) part, poles of
+the scattering phase $\varphi(s) = \xi(2s-1)/\xi(2s)$ at $s = \rho/2$. Having both halves in hand is
+what lets the probe show they are different universality classes.
+
+**Files** (`_cache/datasets/lmfdb_maass/`):
+
+| File | Bytes | Contents |
+|---|---|---|
+| `lmfdb_maass_level1_raw.txt` | 283,890 | The download verbatim, including LMFDB's header and definitions footer. |
+| `maass_level1_R.txt` | 91,024 | Parsed, sorted ascending. Columns: `R  symmetry  fricke  label`. |
+| `maass_level1.json` | 404,763 | Same records as JSON, retaining the full-precision `R_str`. |
+
+SHA256:
+
+```
+df35f051dad90fe234fe94cb2fb4bf71a4282c9788547919da649734914718e2  lmfdb_maass_level1_raw.txt
+ce5c71bc2f62fcb0b4acd908b6a235d44ebf99440cfe46568bd3b88caf78b2b4  maass_level1_R.txt
+8145824a7b5ac7af3ac4c3152456edea6f228efacba3f1dc07b403c2265e9a50  maass_level1.json
+```
+
+**Two conventions that are easy to get wrong.**
+
+- **Symmetry is coded differently by the API and by the download.** The JSON API reports
+  `symmetry` as $\pm 1$; this search-page download reports `1`/`0`. Cross-checked on the first
+  three forms ($R = 9.5337$ and $12.1730$: API $-1$, here `1`; $R = 13.7798$: API $+1$, here `0`),
+  so **`1` is odd and `0` is even**. The first cusp form of the modular group is the odd one at
+  $R = 9.533695261$.
+- **The list is not complete over its whole range**, and this is the trap that matters. Measured
+  against Weyl's law with the scattering correction,
+  $N(R) \sim R^2/12 - (2R/\pi)\log(R/e\sqrt{\pi/2})$, the staircase tracks to better than 0.5% up
+  to $R = 100$ (617 forms), then drops to 0.94 at $R = 105$ and stays low. Anything statistical
+  must be run **below $R = 100$**: deleting levels at random pushes any spectrum toward Poisson
+  statistics, which is exactly the sort of conclusion this data gets used to test. On the complete
+  range the fitted leading coefficient is $0.083149$ against
+  $\mathrm{Area}/4\pi = 1/12 = 0.083333$, confirming Weyl's law to 0.22% there.
+
+**How it was obtained.** Not through the JSON API. Anonymous API requests were served briefly, then
+throttled into the reCAPTCHA wall described in section 15 (HTTP 200 with an HTML challenge body),
+and `beta.lmfdb.org` refused as well. The route that works is the **search-page download endpoint**,
+which returns plain text and was not throttled:
+
+```bash
+curl -sL -A "Mozilla/5.0" -o lmfdb_maass_level1_raw.txt \
+  "https://www.lmfdb.org/ModularForm/GL2/Q/Maass/?download=1&query=%7B%27level%27%3A+1%7D&level=1&search_type=List"
+```
+
+Prefer this endpoint over `/api/` for any LMFDB table small enough to return whole.
