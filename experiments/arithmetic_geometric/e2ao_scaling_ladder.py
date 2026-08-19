@@ -374,7 +374,7 @@ def run() -> dict:
         multi6=np.array([r["multi6"] for r in rungs1]),
         nbasis=np.array([r["nbasis"] for r in rungs1]),
         fit_slope=slope, fit_intercept=intercept, fit_r2=r2,
-        predicted_exponent=-GAMMA1_HALF_SQ,
+        predicted_exponent=-GAMMA1_SQ, predicted_intercept=LN_4_SQRT_PI,
         floor_sigma=-1.0 if floor_sigma is None else floor_sigma,
         sp4_x0=np.array([r["x0"] for r in rungs2]),
         sp4_resid_true=np.array([r["resid_true"] for r in rungs2]),
