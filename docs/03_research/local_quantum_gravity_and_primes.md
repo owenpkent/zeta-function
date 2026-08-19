@@ -372,6 +372,13 @@ Not a plan, a shortlist, in decreasing order of how much it would change.
   made **indefinite with a sign**, since the Legendre-symbol linking pairing is
   symmetric and its signature is exactly the kind of object M4 wants. If it is definite
   or degenerate for a structural reason, that is a clean negative and closes the door.
+  **EXECUTED 2026-08-19**: [`arithmetic_chern_simons_door.md`](arithmetic_chern_simons_door.md)
+  + probe [`e2am`](../../experiments/arithmetic_geometric/e2am_arithmetic_chern_simons.py)
+  (20/20, LEARNINGS #177). The question dissolves rather than resolves: the linking layer
+  is torsion-valued, so indefinite is a type error there; what the boundary knows of any
+  bulk signature is exactly $\sigma \bmod 8$ (Gauss-Milgram, measured), and that mod-8
+  datum is root-number data, the FE side that §4.2 proved RH-blind. The sign lives in the
+  bulk, and the bulk is the missing carrier.
 - **The Beurling test on LeClair.** He notes his model works with arbitrary real
   impurities, not just $\log p$. A Beurling system has an Euler product with real
   $\log p_j$, so his S-matrix construction goes through verbatim, and Diamond-Montgomery-Vorhauer

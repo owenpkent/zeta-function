@@ -51,12 +51,19 @@
 | `Connes-Consani-2015-Geometry-of-the-Arithmetic-Site.pdf` | Connes & Consani, *Geometry of the Arithmetic Site* | The adèle-class-space geometry; the Connes side of the bridge (R3.5/3M context). |
 | `Connes-1994-Noncommutative-Geometry.pdf` | Connes, *Noncommutative Geometry* (book) | Foliations, the trace, foundational NCG. |
 
-## 05 Arithmetic topology (Morishita bridge background)
+## 05 Arithmetic topology (Morishita bridge background + the arithmetic Chern-Simons corpus, 2026-08-19)
 
 | File | Reference | Role |
 |---|---|---|
 | `Morishita-2009-Analogies-Knots-Primes-3Manifolds-Number-Rings.pdf` | Morishita, arXiv:0904.3399 | Expository knots↔primes; background for the bridge paper arXiv:2508.15971 (closed orbits ↔ primes, used in 2R). |
 | `Li-Sia-2012-Knots-and-Primes-Harvard-Tutorial-Notes.pdf` | Li & Sia, Harvard tutorial 2012 | Accessible course notes on the Morishita book. |
+| `arxiv_1706.03336.pdf` | Chung, D. Kim, M. Kim, Pappas, Park, Yoo, *Abelian arithmetic Chern-Simons theory and arithmetic linking numbers*, IMRN 2019 | The linking-layer paper: abelian ACS invariants expressed through arithmetic linking numbers mod n. Probe: `e2am`. |
+| `arxiv_1905.13610.pdf` | Lee, Park, *Arithmetic Chern-Simons theory with real places*, arXiv:1905.13610 | Extends ACS beyond totally imaginary fields; the archimedean place enters as a boundary/modified-cohomology correction. |
+| `arxiv_2106.02308.pdf` | Hirano, J. Kim, Morishita, *On arithmetic Dijkgraaf-Witten theory*, arXiv:2106.02308 | The DW partition function over number rings; basic constructions and computations. |
+| `arxiv_1911.12964.pdf` | Hirano, *On mod 2 arithmetic Dijkgraaf-Witten invariants for certain real quadratic number fields*, arXiv:1911.12964 | Worked mod-2 DW computations; the invariants reduce to genus-theory data. |
+| `arxiv_2312.17138.pdf` | Chung, D. Kim, M. Kim, Park, Yoo, *Entanglement entropies in the abelian arithmetic Chern-Simons theory*, arXiv:2312.17138 | The corpus's ONE real-valued export: Ent = (rank/nullity of Poitou-Tate localisation maps) x log p, nonnegative by construction (entropic, not a signature). |
+| `arxiv_2504.19078.pdf` | Ben-Bassat, Gropper, *Arithmetic field theory via pro-p duality groups*, arXiv:2504.19078 | The 2025 state: relative Poincare duality for pro-p groups as the TQFT substrate. |
+| `arxiv_1712.07602.pdf` | M. Kim, *Arithmetic Gauge Theory: A Brief Introduction*, arXiv:1712.07602 | The program manifesto; principal bundles across arithmetic, Diophantine gauge fields. |
 
 ## 06 Intersection theory / Hodge index (Direction 8 — the signature step)
 
