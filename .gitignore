@@ -71,3 +71,6 @@ references/**/*.txt
 *.toc
 *.bbl
 *.blg
+
+# Research-figure gallery output (regenerable; keep local)
+visualizations/research/_out/
