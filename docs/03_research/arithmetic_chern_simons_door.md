@@ -331,6 +331,15 @@ Three specific triggers, in decreasing order of force:
    $\mathrm{Spec}(\mathbb{Z})$ whose spectral asymmetry is defined, real-valued, and
    computes CS phases; the APS variation formula would then be a local sign law.
    Nothing in the searched literature constructs one.
+   **DISCHARGED 2026-08-19** ([`arithmetic_eta.md`](arithmetic_eta.md) +
+   [`e1ac`](../../experiments/spectral/e1ac_arithmetic_eta.py), 18/18, LEARNINGS #178):
+   the invariant EXISTS for the abelian flat connections (complex Dirichlet
+   characters), $\eta(\chi) = -(2/\pi)\arg_c L(1/2,\chi)$, mod-2 shadow = the
+   root-number phase (this dossier's layer), variation prime-local with zero
+   archimedean term. And it is EXACTLY RH-blind: the invariant never references
+   $\beta$, and the D-H off-line quadruple cancels identically in every odd test
+   function. The odd sector is exactly solvable and exactly RH-blind; RH is
+   even-sector. Built, measured, typed: not the missing object.
 3. **The ACS program reaching L-functions.** The corpus's own named next steps
    (path integrals of L-function type, entanglement for BF theories and general
    gauge groups). If a *positivity* statement, not a special-value identity, ever
