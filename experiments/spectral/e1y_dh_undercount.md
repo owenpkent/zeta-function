@@ -92,7 +92,35 @@ adversary round's A6 inflates a healthy build's residues by hand and finds
 deficit appears at 10x. So residue inflation causes the deficit and does not
 cause the conservation failure. Nor does the evenness violation: `lam = 3.3`
 has `even_assumption_ok = True` at every precision and still breaks
-conservation. **The cause of the conservation failure is an open residual.**
+conservation.
+
+**ANSWERED 2026-08-18. The symmetry never fails; the inference from it does.**
+The ground state is even to machine precision in the *failing* cells too
+(`1 - even_frac <= 2.2e-16` everywhere), and rotating a healthy `xi` toward an
+odd vector all the way to `even_frac = 0.707` leaves `n_pos = N` untouched.
+So `J M J = -M` holds exactly and `spec(M) = -spec(M)` is not in question.
+What does not follow is `n_pos = N`. Negation symmetry sorts the spectrum into
+real `+-a` pairs (contributing 1 each to `#{Re > 0}`), complex quadruples
+`(z, zbar, -z, -zbar)` (2 each), the exact zero, and one more type it is easy
+to forget: a **purely imaginary pair** `(iy, -iy)`, closed under conjugation
+AND negation, contributing **0**. Hence
+
+> `n_pos = N - #(purely imaginary pairs)`,
+
+verified in all 12 cells (U2-4). D-H carries exactly one such pair at
+`lam` in {3.3, 3.6, sqrt13, 4.0} (at `|Im|` = 28.67, 9.53, 9.05, 6.53) and two
+at `lam = 4.5` (5.98 and 49.19); zeta-off carries none anywhere. So the
+"conservation failure" is a count of eigenvalue pairs that left the real axis
+by colliding at the ORIGIN rather than elsewhere: the e1l/e1s ghost mechanism
+in its symmetric special case, and a genuinely different event from the
+residue inflation that drives the count deficit. **Two symptoms, two
+mechanisms, both now named.**
+
+This also repairs a weakness in this file's own instrument. Those pairs have
+real parts of order `1e-10`, i.e. numerical noise on an exact zero, so `n_pos`
+computed with a `1e-6` cut flips sign against the same quantity computed with
+a `1e-9` cut. The pair count has no threshold in it and is what U2-4 now
+tests.
 
 ## The mechanism
 

@@ -200,6 +200,14 @@ def cell(label, lam, N):
     above = sum(1 for x in real if x >= T)
     below = sum(1 for x in real if 1e-6 < x <= RE_LO)
     cx_pos = sum(1 for z in ev if abs(z.imag) >= IMTOL and z.real > 1e-6)
+    # Eigenvalues ON the imaginary axis. spec(M) = -spec(M) forces real ones
+    # into +-a pairs (1 each to n_pos) and complex ones into quadruples
+    # (2 each), but a PURELY IMAGINARY pair (iy, -iy) is closed under both
+    # conjugation and negation and contributes 0. Their real parts are ~1e-10,
+    # i.e. numerical noise on an exact zero, which is what makes n_pos itself
+    # threshold-sensitive; the pair count is not.
+    imag_pairs = sum(1 for z in ev
+                     if abs(z.real) < 1e-6 and abs(z.imag) > 1e-6) // 2
     ghost_win = sum(1 for z in ev if abs(z.imag) >= IMTOL and RE_LO < z.real < T)
 
     tops = [x for x in real if x > phi * n_hi]
@@ -219,6 +227,7 @@ def cell(label, lam, N):
                  Tfrac=(T - phi * n_hi) / phi, dev=inwin - latt, inwin=inwin,
                  above=above, below=below, n_pos=n_pos, cx_pos=cx_pos,
                  ghost_win=ghost_win, topfrac=topfrac,
+                 imag_pairs=imag_pairs,
                  sweep_lo=int(devs.min()), sweep_hi=int(devs.max()),
                  f_exact=float(np.mean(devs == 0)),
                  eps=float(res["eps"]), eps_global=float(res["eps_global"]),
@@ -306,8 +315,7 @@ def run_u123(results, lam_grid):
     # gets the deficit while conservation SURVIVES, so the two have different
     # causes and only the first is explained. See _e1y_adversary.md.
     check("U2-3 the conservation failures coincide cell-for-cell with the "
-          "structurally deficient builds, an independent count-free symptom "
-          "(its own cause is an open residual, per adversary A6)",
+          "structurally deficient builds, an independent count-free symptom",
           {(p["label"], round(p["lam"], 4)) for p in broken}
           == {(p["label"], round(p["lam"], 4)) for p in panels
               if not recoverable(p)},
@@ -345,7 +353,24 @@ def run_u123(results, lam_grid):
           f"{len(struct)}/{len(dh)} structural; "
           f"sweep ranges = {[(p['sweep_lo'], p['sweep_hi']) for p in dh]}")
 
+    # WHY conservation fails, answered 2026-08-18 (the residual the adversary
+    # round opened). The negation symmetry is EXACT here -- the ground state is
+    # even to machine precision even in the failing cells, and rotating a
+    # healthy one to even_frac = 0.707 does not break conservation -- so the
+    # symmetry is not what fails. What fails is the inference FROM it: spec(M)
+    # = -spec(M) does not force n_pos = N, because a purely imaginary pair is
+    # closed under negation AND conjugation and contributes 0 instead of 1.
+    check("U2-4 the deficit is EXACTLY the number of purely imaginary "
+          "eigenvalue pairs: negation symmetry sorts the spectrum into real "
+          "+-pairs (1 each), complex quadruples (2 each) and imaginary pairs "
+          "(0 each), so n_pos = N - #(imaginary pairs) with no threshold in it",
+          all(p["n_pos"] - p["N"] == -p["imag_pairs"] for p in panels),
+          "holds in all " + str(len(panels)) + " cells; pairs = "
+          + str([p["imag_pairs"] for p in panels]))
     results["u123_rows"] = np.array(rows, dtype=float)
+    results["u2_imag_pairs"] = np.array(
+        [[p["lam"], float(p["label"] == "DH"), p["imag_pairs"],
+          p["n_pos"] - p["N"]] for p in panels], dtype=float)
     return panels
 
 

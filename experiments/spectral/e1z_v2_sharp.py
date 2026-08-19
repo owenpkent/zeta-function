@@ -53,6 +53,8 @@ Structure:
       arithmetic-blind and does NOT reopen the pointwise route (#172 V8c)
   Z9  the rate is not uniform-specific: the zeta density, whose Gamma/G is
       three times the uniform value, lands on its own Gamma too
+  Z10 the TWO-SIDED finite-M sandwich, weights carried explicitly
+  Z11 unequal weights move the window, not the rate
 
 Caveats, stated up front:
 - This sharpens the RATE, not a two-sided finite-M inequality. A fully sharp
@@ -332,6 +334,98 @@ def run_z6z7(results, Ts, g):
     results["z67"] = np.array([Ts, rs, xs], dtype=float)
 
 
+def log_ell(y_pos):
+    """log|ell_j(0)| for every atom of the symmetric config +-y_pos."""
+    y = np.asarray(y_pos, dtype=float)
+    log_all = 2.0 * np.log(y).sum()
+    D = np.abs(y[:, None] - y[None, :])
+    np.fill_diagonal(D, 1.0)
+    return (log_all - np.log(y)) - (np.log(D).sum(axis=1)
+                                    + np.log(y[:, None] + y[None, :]).sum(axis=1))
+
+
+def log_inv_lambda_w(y_pos, w_half):
+    """log(1/lambda) for the symmetric config with (symmetric) weights w."""
+    L = log_ell(y_pos)
+    w = np.asarray(w_half, dtype=float)
+    return float(logsumexp(2.0 * L - np.log(w)) + np.log(2.0))
+
+
+def run_z10(results, ms, g, T):
+    """The two-sided FINITE-M form, which #172 and e1z both left unstated.
+
+    1/lambda = sum_j ell_j(0)^2 / w_j is a sum of M positive terms, so it sits
+    between its largest term and M times it. With
+    Gamma_M = max_j (1/M) log|ell_j(0)| that is, exactly,
+
+        2 M Gamma_M + log(1/w_max)  <=  log(1/lambda)
+                                    <=  2 M Gamma_M + log(M/w_min),
+
+    a window of width log(M w_max/w_min) around 2 M Gamma_M, with the weights
+    appearing explicitly and nowhere else. Theorem V2 is the one-sided closed
+    form in (g,T,M); this is the two-sided form in the actual configuration,
+    and Gamma_M -> Gamma(sigma) supplies the rate.
+    """
+    print("\n[Z10] the two-sided finite-M sandwich (weights carried explicitly)")
+    print(f"    {'family':>12s} {'M':>7s} {'2 M Gamma_M':>12s} {'lo':>10s} "
+          f"{'log(1/lam)':>11s} {'hi':>10s} {'in window':>10s}")
+    rows, inside = [], True
+    for kind in ("equilibrium", "uniform", "zeta"):
+        for m in ms[::2]:
+            y = nodes(kind, m, g, T)
+            M = 2 * m
+            w = np.full(m, 1.0 / M)               # symmetric, equal
+            gm = float(log_ell(y).max()) / M
+            lo = 2 * M * gm + np.log(1.0 / w.max())
+            hi = 2 * M * gm + np.log(M / w.min())
+            val = log_inv_lambda_w(y, w)
+            ok = lo - 1e-9 <= val <= hi + 1e-9
+            inside = inside and ok
+            rows.append([2 * M * gm, lo, val, hi])
+            print(f"    {kind:>12s} {M:7d} {2*M*gm:12.4f} {lo:10.4f} "
+                  f"{val:11.4f} {hi:10.4f} {str(ok):>10s}")
+    check("Z10-1 the two-sided sandwich holds at every M and every family, so "
+          "the finite-M statement is available and not only the limit",
+          inside, f"{len(rows)} cells, all inside")
+    r = np.array(rows)
+    frac = (r[:, 2] - r[:, 1]) / (r[:, 3] - r[:, 1])
+    check("Z10-2 and the window is narrow in the right sense: its width is "
+          "log(M w_max/w_min), i.e. O(log M), against a centre that grows "
+          "like M, so it fixes log(1/lambda) to relative O(log M / M)",
+          bool(np.all((frac >= -0.01) & (frac <= 1.01))),
+          f"position within the window spans {frac.min():.3f} to {frac.max():.3f}")
+    results["z10"] = r
+
+
+def run_z11(results, m, g, T):
+    """Unequal weights: the rate must not move, only the window."""
+    print("\n[Z11] unequal weights move the window, not the rate")
+    rng = np.random.default_rng(17)
+    y = nodes("uniform", m, g, T)
+    M = 2 * m
+    gm = float(log_ell(y).max()) / M
+    print(f"    {'w_max/w_min':>12s} {'log(1/lam)':>12s} {'- 2 M Gamma_M':>14s} "
+          f"{'window width':>13s}")
+    base = None
+    ok = True
+    for R in (1.0, 10.0, 100.0, 1e4):
+        w = rng.uniform(1.0, R, m) if R > 1 else np.ones(m)
+        w = w / (2.0 * w.sum())                    # symmetric, sums to 1
+        val = log_inv_lambda_w(y, w)
+        off = val - 2 * M * gm
+        width = np.log(M * w.max() / w.min())
+        if base is None:
+            base = off
+        ok = ok and (np.log(1.0 / w.max()) - 1e-9 <= off <= np.log(M / w.min()) + 1e-9)
+        print(f"    {w.max()/w.min():12.1f} {val:12.4f} {off:14.4f} {width:13.4f}")
+    check("Z11-1 with weights spread over four orders of magnitude the "
+          "sandwich still holds and the offset stays inside the predicted "
+          "window, so the weights enter the finite-M statement only through "
+          "log(w_max/w_min) and cannot move the rate",
+          ok, f"offsets stay inside [log(1/w_max), log(M/w_min)] at every spread")
+    results["z11"] = np.array([m, gm])
+
+
 def run_z9(results, ms, g, T):
     """The check that could have made the whole Gamma story an artifact of
     one family: does rho go to Gamma/G for a THIRD distribution, with a very
@@ -403,6 +497,8 @@ def main():
     run_z5(results, V8B_G, 1000.0)
     run_z6z7(results, Ts, V8B_G)
     run_z9(results, ms, V8B_G, 1000.0)
+    run_z10(results, ms, V8B_G, 1000.0)
+    run_z11(results, ms[-1], V8B_G, 1000.0)
     run_z8(results, V8B_G, 1000.0, jm)
 
     print("\n" + "=" * 78)

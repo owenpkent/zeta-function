@@ -124,6 +124,19 @@ Nor is the second explained by the evenness violation: `lam = 3.3` has
 **Open residual, recorded rather than papered over: the cause of the
 conservation failure is uncharacterized.**
 
+**[CLOSED 2026-08-18.]** Both candidate hypotheses are dead and the real
+answer is a third thing. The evenness hypothesis fails in both directions:
+`1 - even_frac <= 2.2e-16` in the failing cells, and rotating a healthy `xi`
+to `even_frac = 0.707` leaves `n_pos = N`. So `J M J = -M` is exact and the
+symmetry is not what breaks. What breaks is the INFERENCE: `spec(M) =
+-spec(M)` does not force `n_pos = N`, because a purely imaginary pair
+`(iy, -iy)` is closed under negation and conjugation and contributes 0 to
+`#{Re > 0}` where a real pair contributes 1. Measured law, 12/12 cells:
+`n_pos = N - #(purely imaginary pairs)`. So A6 was right that inflation does
+not cause it, and right for the reason it could not have guessed: inflation
+moves roots off their lattice anchors without driving a pair onto the
+imaginary axis. Two symptoms, two mechanisms.
+
 ## Fixes applied to e1y
 
 1. The "classification, not the integers" defence is **removed** and replaced

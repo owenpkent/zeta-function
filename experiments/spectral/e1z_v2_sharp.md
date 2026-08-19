@@ -148,6 +148,39 @@ drifted to $1.00009$ and the slope overshoots to $0.5065$, both artefacts of a
 fixed grid on a band that is now $10^8$ wide. The clean reading is $T \le
 10^7$, where the slope is $0.4998$ and $0.5000$.
 
+## The two-sided finite-M form
+
+The caveat below used to read "this sharpens the rate, not a two-sided
+finite-M inequality". That was too pessimistic: the finite-M statement is
+available in two lines and was simply never written down. Since
+$1/\lambda_M(0) = \sum_j \ell_j(0)^2/w_j$ is a sum of $M$ positive terms it
+lies between its largest term and $M$ times it, so with the **discrete**
+equilibrium discrepancy $\Gamma_M = \max_j \frac1M\log|\ell_j(0)|$:
+
+> **THEOREM V2-TWO-SIDED.** For any $M$ distinct nonzero atoms with weights
+> $w_j$,
+> $$2M\Gamma_M + \log\frac{1}{w_{\max}} \;\le\; \log\frac{1}{\lambda_M(0)}
+> \;\le\; 2M\Gamma_M + \log\frac{M}{w_{\min}}.$$
+> **Proof.** $\max_j a_j \le \sum_j a_j \le M\max_j a_j$ with
+> $a_j = \ell_j(0)^2/w_j$, then $w_{\min} \le w_j \le w_{\max}$ and
+> $\max_j \ell_j(0)^2 = e^{2M\Gamma_M}$. $\square$
+
+So $\log(1/\lambda_M(0)) = 2M\Gamma_M + O(\log(M\,w_{\max}/w_{\min}))$: a
+window of width $\log(M w_{\max}/w_{\min})$ around a centre that grows like
+$M$, which pins $\log(1/\lambda)$ to relative accuracy $O(\log M/M)$ and
+carries the weights explicitly and nowhere else. Theorem V2 is the one-sided
+closed form in $(g,T,M)$; this is the two-sided form in the actual
+configuration, and $\Gamma_M \to \Gamma(\sigma)$ supplies the rate. Verified
+(Z10) on all three families at $M = 100, 400, 1600$, the measured position
+sitting between 0.24 and 0.57 of the way across the window in every cell.
+
+**The unequal-weight case goes with it (Z11).** Spreading the weights over
+four orders of magnitude at $M = 1600$ moves the offset
+$\log(1/\lambda) - 2M\Gamma_M$ from 11.29 to 11.92 while the predicted window
+widens from 7.38 to 14.66, and the offset stays inside the window at every
+spread. The weights cannot move the rate because they never appear outside
+that logarithm.
+
 ## What it does NOT do
 
 **Z8, the typing.** $\Gamma$ is a functional of $\sigma$ alone. Randomizing
@@ -163,13 +196,15 @@ which is even further from the atoms than that.
 
 ## Caveats
 
-- This sharpens the **rate**, not a two-sided finite-$M$ inequality. A fully
-  sharp theorem would need effective error terms in the convergence
-  $\frac1M\log(1/\lambda) \to 2\Gamma$; what is established here is the limit
-  and its identification, with the contraction rates measured.
-- Weights are **equal** throughout. They contribute $O(\log M)$ to
-  $\log(1/\lambda)$, so they cannot move the rate, but a finite-$M$ statement
-  must carry them and the real builds of #172 do not have equal weights.
+- The finite-$M$ sandwich above is exact and carries the weights, but it is
+  stated in terms of the **discrete** $\Gamma_M$. What is still not effective
+  is the convergence $\Gamma_M \to \Gamma(\sigma)$ itself: the measurements
+  give the contraction rates (roughly $1/M$ at equilibrium, $1.75$-$2.2\times$
+  per doubling elsewhere) but no proved bound on $|\Gamma_M - \Gamma(\sigma)|$
+  in terms of a discrepancy between the empirical and limiting distributions.
+  That is the one genuinely open step, and it is a standard
+  potential-theory-with-discrepancy question rather than anything specific to
+  this object.
 - $\Gamma(\sigma) \ge G$ with equality iff $\sigma$ is the equilibrium
   measure is asserted here on the strength of the standard variational
   characterization plus the measurements; it is not machine-checked.
