@@ -34,12 +34,18 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   refinement-stable): the first positive numerical contact with Suzuki
   (1.2). All $a \ge 1.5$ shape claims gated out by the convergence
   certificate. Live successor below.
-- **B2c-deep. The (1.2) ladder beyond $a \approx 1$ (measured requirements).**
-  50-digit zeros to $T \gtrsim 350$ (one cacheable computation), dps 80+,
-  double-density refinement until the pointwise gate passes per rung; decides
-  whether the recorded narrowing-through-$\Xi$ is a finite-basis artifact or
-  a real finite-$a$ property (the (1.2)-relevant question). Cost M. Spec and
-  walls in [`e2ar_hard_window_xi.md`](../../experiments/arithmetic_geometric/e2ar_hard_window_xi.md).
+- **B2c-deep: EXECUTED 2026-08-20 (LEARNINGS #185, e2as 5/5).** The narrowing
+  is REAL: certified converged $a = 2.0$ rung at a fifth of $\Xi$'s relative
+  mass at $z = 6$; the xi shape is a transient at $a \approx 1$; the approach
+  to Suzuki (1.2) is non-monotone at accessible windows. Successors below.
+- **B2c-deep2. Return-vs-continuation (the (1.2) test where it must show
+  itself).** $a = 3$-$5$: zeros to $T \sim 600$ at 100+ digits (one long
+  cacheable run), dps 100-120 solves, gates and certificates as in e2as.
+  If the shape returns toward $\Xi$: (1.2) survives with a measured
+  crossover; if not: the conjectured limit needs modification. Cost M-L.
+- **B2c-lit. Pull CCM [4]** (the 2025+ successor with the zeta-regularized
+  determinant representation of $\hat v_a$) and re-run the novelty wording
+  of #185 against it. Cost S.
 - **B2d. The frontier-capacity function.** Measure
   $\gamma_{\mathrm{frontier}}(J, \Omega, \sigma)$ and the graded profile's
   per-zero cost (~6 decades/zero in e2aq): how many zeros past the ceiling
