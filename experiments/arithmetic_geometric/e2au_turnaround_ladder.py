@@ -40,10 +40,24 @@ from experiments.arithmetic_geometric.e2ar_hard_window_xi import (
 from experiments.arithmetic_geometric.e2aq_xi_convergence import Xi
 
 HERE = Path(__file__).resolve().parent
-ZCACHE = HERE.parent / "_shared" / "_cache" / "zeros_dps110_T600.json"
+_Z1500 = HERE.parent / "_shared" / "_cache" / "zeros_dps110_T1500.json"
+_Z600 = HERE.parent / "_shared" / "_cache" / "zeros_dps110_T600.json"
+# prefer the deep cache once COMPLETE (the builder writes incrementally, so
+# existence is not readiness): it certifies the a >= 3.5 rungs
+def _deep_ready():
+    if not _Z1500.exists():
+        return False
+    try:
+        zz = json.loads(_Z1500.read_text())
+        return len(zz) > 0 and float(zz[-1][:12]) > 1490.0
+    except Exception:
+        return False
+
+_DEEP = _deep_ready()
+ZCACHE = _Z1500 if _DEEP else _Z600
 
 DPS2 = 110
-T2 = 600.0
+T2 = 1500.0 if _DEEP else 600.0
 ZPTS = [2.0, 4.0, 6.0, 8.0, 10.0]
 
 CHECKS: list[tuple[str, bool, str]] = []

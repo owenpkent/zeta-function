@@ -48,13 +48,22 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   tension dissolves (their evidence lives at $a \le 1.79$; finite-$\lambda$
   proximity is compatible with common narrowing), and the constrained e2at
   run re-scopes to a control.
-- **B2c-deep2 (UNBLOCKED; the sharpened mission): FIND THE TURNAROUND
-  $a^*$.** CCM's Lemma 7.3 proves the kernel's interior limit is $\Xi$, so
-  the measured outbound narrowing (#185) must reverse if the
-  kernel-groundstate proximity persists: locate $a^* \in [3, 5]$ (zeros to
-  $T \sim 600$ at 110 digits: computing; dps-110 solves; e2as gates), or
-  measure where the proximity fails. Either outcome is a first quantitative
-  contact with the conjecture's mechanism. Cost M-L.
+- **B2c-prox (HIGH once deep2 certifies): the proximity test in our hands.**
+  Build CCM's kernel $k_\lambda$ ourselves (the $h_{0,\lambda}, h_{4,\lambda}$
+  prolate combination with vanishing integral; the repo's prolate harnesses
+  e1f/e1g are the starting point) and compare it DIRECTLY against our
+  certified ground state $\xi_\lambda$ across $a$. Their Lemma 7.3 proves
+  $\hat k_\lambda \to \Xi$ interior; our ladder shows $\hat\xi_\lambda$
+  collapsing; if both are right, the proximity CCM observed at $\lambda \le 6$
+  must fail at larger $\lambda$, and measuring where and how it fails is the
+  decisive fact for (1.2). Cost M (prolate functions at high precision).
+- **B2c-deep2: EXECUTED 2026-08-20/21 (LEARNINGS #189, e2au).** CERTIFIED
+  no-turnaround through $a = 4$ (recorded through 5): the (1.2) object
+  collapses monotonically after the $a \approx 1$ transient; ratios
+  bit-stable across the $T = 600 \to 1500$ depth change; certificates
+  cleaned on schedule. The conjecture's fate now rests on B2c-prox above.
+  Optional residue: one depth doubling ($T \sim 3000$ via #188's
+  zero_polish) certifies $a = 4.5$-$5$.
 - **B2d. The frontier-capacity function.** Measure
   $\gamma_{\mathrm{frontier}}(J, \Omega, \sigma)$ and the graded profile's
   per-zero cost (~6 decades/zero in e2aq): how many zeros past the ceiling
