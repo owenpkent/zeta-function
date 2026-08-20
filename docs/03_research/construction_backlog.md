@@ -23,6 +23,23 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
 
 - **B1. The coupled SP4 ladder (where does C1 bind?).** #180 measured the two-sidedness residual FLAT ($10^{-8}$-$10^{-7}$) over prime windows to $e^6$ at the fixed spectral meter: C1 does not bind there. Grow both meters together (extended-precision line engine, narrower probes, emergent spectrum to $T \sim 300$-$1000$) until the residual departs its floor: the measured exchange rate between prime data and spectral data in the object. Cost M (precision engineering).
 - **B2. The wrong polarization, built anyway (the tariff inside the object).** Equip the v0 cokernel with candidate metrics ($L^2$ on the circle; the $\mathcal{E}$-pullback; a Christoffel-weighted metric) and score each against the 7-property SP5 spec cell-by-cell. Pre-registered: every metric making the flow self-adjoint with the right spectrum consumes zero locations (K1) or the uniform growth clause (#160/#171); typing that demand in the object's own coordinates mints coordinate system #4 for M4 (the trojan-ledger's stated purpose for such builds). Probes C2. Cost M.
+- **B2c. The xi-convergence test (from the 2026-08-20 prior-art sweep; HIGH priority).**
+  Suzuki (arXiv:2606.09096, conjecture (1.2)): the localized Weil-form ground
+  state's Fourier transform converges to $\xi(1/2+iz)$ as the window grows.
+  Our 50-digit minimizer (`make_figs.py::ground_state_mp`) already computes
+  the left side: overlay $\hat g^*_\sigma$ against $\Xi$, measure the
+  convergence rate across the ladder, both bases (Gaussian-mode and, for
+  fidelity to the conjecture's interval localization, a compact window).
+  Either outcome matters: convergence measured = numerical support plus a
+  rate for a live conjecture; failure to converge in our family = a family-
+  dependence finding. Cost S. Prior art: the sweep dossier.
+- **B2b. The Omega-ladder (from #181's second law).** The multi-mode window
+  margin saturates in $\sigma$ and is governed by the frequency ceiling
+  $\Omega$: measure margin($\Omega$) at fixed generous $\sigma$, per-rung
+  precision matched to the predicted floor (50-digit protocol from
+  `visualizations/research/make_figs.py::ground_state_mp`), pre-registered
+  exponent = the gap to the first unreachable zero. RH's uniform statement
+  lives in the $\Omega \to \infty$ direction; this ladder prices it. Cost S-M.
 - **B3. The certification-cost theorem (harden #180).** Propagate the e2ao assembly's quadrature/truncation constants into a proven statement: this assembly certifies $\mathrm{margin}(\sigma)$ iff $\sigma \le \sigma^*(\varepsilon)$ with explicit constants, making the $e^{\gamma_1^2\sigma^2}$ price a theorem about the instrument rather than a measurement. Cost S-M; later Lean-able.
 - **B4. The D-H invisibility certificate (harden #179).** Interval-arithmetic lower bound on $|m_{DH}|$ over the landmark window $[85.2, 86.2]$ from the coefficient lattice (smoothed AFE with explicit tails): "the object provably cannot see the off-line pair at any circumference." The completeness failure becomes a THEOREM about the control, and the proof's shape is a template for what a zeta completeness statement must supply. Probes C1's completeness face. Cost M.
 

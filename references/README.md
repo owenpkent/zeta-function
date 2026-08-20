@@ -111,3 +111,27 @@ attached), and the structure it hands you for free (unitarity) is provably RH-bl
 | `arxiv_2205.01391.pdf` | Connes, Consani, *Riemann-Roch for `Spec ℤ`* | As above. |
 | `arxiv_1509.05576.pdf` | Connes, *An essay on the Riemann Hypothesis* | As above. |
 
+
+## 10_weil_positivity
+
+Pulled 2026-08-20 for the SP2-test round and the prior-art sweep
+([`weil_positivity_prior_art_sweep.md`](../docs/03_research/reading_notes/weil_positivity_prior_art_sweep.md)):
+the Weil-quadratic-form corpus (Yoshida - Bombieri - Connes-Consani - CCM - Suzuki), the
+finite-Euler-product line, and the two controls' neighbouring literature. Verdict of the sweep:
+the margin/ground-state instruments (#180/#181, e2ao, gallery entry 20) sit inside Yoshida's
+1992 variational program as operator-refined by CCM and unified by Suzuki 2026 (v2 of 2026-08-18,
+LIVE corpus); the quantitative Gaussian-window decay law and the certification-price framing are
+not stated there; Suzuki's conjecture (1.2) (the localized ground state's Fourier transform
+converges to xi(1/2 + iz)) is directly testable with this repo's 50-digit minimizer machinery.
+
+| File | Reference | Role |
+|---|---|---|
+| `Bombieri-2000-Remarks-on-Weils-Quadratic-Functional-I.pdf` | Bombieri, Rend. Lincei (9) 11 (2000) 183-233 | The minimization theory on L^2 windows: minimum attained; Yoshida's positivity re-proved; negative-eigenvalue count = half the off-line zeros. The theory behind the repo's indefiniteness detectors. |
+| `Suzuki-2026-Weils-Quadratic-Form-via-the-Screw-Function.pdf` | Suzuki, arXiv:2606.09096 (v2 2026-08-18) | THE unifier: Yoshida/Bombieri/CC/CCM via screw functions + de Branges; conjecture (1.2): ground-state FT -> xi. Flags a continuity gap in Bombieri Thm 5. WATCH: live. |
+| `Suzuki-2022-Screw-Line-of-the-Riemann-Zeta-Function.pdf` | Suzuki, arXiv:2209.04658 | The screw-function substrate (the #171 corridor engaged this line). |
+| `2024-Hilbert-Schmidt-Integral-Operator-and-the-Weil-Distribution.pdf` | arXiv:2404.13427 | Trace-class operator adjacent to the Weil distribution; nonnegative-eigenvalue construction. |
+| `Connes-Consani-2020-Weil-Positivity-Trace-Formula-Archimedean.pdf` | Connes, Consani, arXiv:2006.13771 | Weil positivity at the archimedean place; the CC half of the localized-form operator story. |
+| `Gonek-2007-Finite-Euler-Products-and-RH.pdf` | Gonek, arXiv:0704.3448 | RH iff short truncated Euler products approximate zeta in most of the right half-strip: the e2ap Part-B condensation's in-print home. |
+| `Gonek-Hughes-Keating-2005-Hybrid-Euler-Hadamard-Product.pdf` | GHK, arXiv:math/0511182 | The hybrid product: primes and zeros as complementary factors; context for the two-meter law. |
+| `Broucke-Debruyne-Vindas-2020-Beurling-Integers-RH-Large-Oscillation.pdf` | arXiv:2004.11501 | Beurling integers with RH and large oscillation: counting data underdetermines the analytic structure (the A1/A4 controls' neighbouring theory). |
+| `Carneiro-etal-2025-Fourier-Optimization-Pair-Correlation.pdf` | arXiv:2502.05106 | The Fourier-optimization/extremal-function school on pair correlation: the community for the band-ceiling (Omega) extremal question. |
