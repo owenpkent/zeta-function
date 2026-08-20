@@ -1,0 +1,1205 @@
+{
+ "generated_by": "experiments/lemma_db/lean_targets.py",
+ "sources": [
+  "lean/README.md",
+  "experiments/spectral/e1u_canonical_chain.md",
+  "experiments/spectral/e1v_christoffel_gauge.md",
+  "experiments/spectral/e1z_v2_sharp.md"
+ ],
+ "status_codes": [
+  "DISCHARGED",
+  "DRAFTED",
+  "OPEN",
+  "UNVERIFIED"
+ ],
+ "feasibility_codes": [
+  "READY",
+  "TYPABLE",
+  "FEASIBLE",
+  "THEORY-GAP",
+  "NUMERIC",
+  "MATHLIB-BLOCKED",
+  "DONE"
+ ],
+ "targets": [
+  {
+   "id": "#FE-1",
+   "statement": "Replace `HasFunctionalEquation` placeholder with the real classical statement.",
+   "source": "lean/README.md (Basic.lean)",
+   "status": "OPEN",
+   "feasibility": "TYPABLE",
+   "value": "MED",
+   "feasibility_why": "Real functional-equation predicate for the LFunction structure: design work; the zeta instance is Mathlib-native (completedRiemannZeta_one_sub, already used by #MB-6).",
+   "mathlib_routes": [
+    "completedRiemannZeta_one_sub",
+    "Complex.Gamma"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#EP-1",
+   "statement": "Replace `HasEulerProduct` placeholder with the real Euler product convergence form.",
+   "source": "lean/README.md (Basic.lean)",
+   "status": "OPEN",
+   "feasibility": "TYPABLE",
+   "value": "MED",
+   "feasibility_why": "Real Euler-product convergence form: Mathlib has the Euler product machinery for zeta and Dirichlet L-series.",
+   "mathlib_routes": [
+    "EulerProduct namespace (Mathlib.NumberTheory.EulerProduct.Basic)",
+    "riemannZeta_eulerProduct (verify exact name)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#S-1..#S-3",
+   "statement": "Add Selberg-class axioms S1 (convergence), S2 (continuation), S4 (Ramanujan).",
+   "source": "lean/README.md (Basic.lean)",
+   "status": "OPEN",
+   "feasibility": "TYPABLE",
+   "value": "LOW",
+   "feasibility_why": "Selberg-class axioms as predicates: typable against Mathlib's LSeries API; the content is definitional design.",
+   "mathlib_routes": [
+    "LSeries, LSeriesSummable (Mathlib.NumberTheory.LSeries.Basic)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#DH-c",
+   "statement": "Verify `dhCoefficient` against Conrey-Ghosh 1988 (and Titchmarsh 1986 §10.25).",
+   "source": "lean/README.md (DavenportHeilbronn.lean)",
+   "status": "OPEN",
+   "feasibility": "NUMERIC",
+   "value": "LOW",
+   "feasibility_why": "Verifying the Conrey-Ghosh constant against the literature is a certified-numerics task (transcendental constant comparison); no interval-arithmetic tactic in Mathlib at the needed scale.",
+   "mathlib_routes": [
+    "norm_num (insufficient for the transcendental parts)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#DH-conv",
+   "statement": "Prove convergence of `davenportHeilbronnSeries` on Re s > 1.",
+   "source": "lean/README.md (DavenportHeilbronn.lean)",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "Convergence of the D-H series on Re s > 1: standard Dirichlet series comparison; the LSeriesSummable API carries it.",
+   "mathlib_routes": [
+    "LSeriesSummable_of_isBigO / comparison lemmas (verify exact names)",
+    "DirichletCharacter L-series API"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#DH-cont",
+   "statement": "Construct meromorphic continuation via Hurwitz-zeta decomposition.",
+   "source": "lean/README.md (DavenportHeilbronn.lean)",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "Meromorphic continuation via Hurwitz zeta: Mathlib now HAS hurwitzZeta with continuation and functional equation (landed 2024), so the decomposition route is unblocked; medium-sized assembly.",
+   "mathlib_routes": [
+    "hurwitzZeta (Mathlib.NumberTheory.LSeries.HurwitzZeta*)",
+    "DirichletCharacter.LFunction (Dirichlet continuation)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#DH-zero",
+   "statement": "Verify `dh_first_offline_zero` is in `nonTrivialZeros davenport_heilbronn`.",
+   "source": "lean/README.md (DavenportHeilbronn.lean)",
+   "status": "OPEN",
+   "feasibility": "NUMERIC",
+   "value": "HIGH",
+   "feasibility_why": "Certifying that 0.808+85.699i is a zero of the continued D-H function needs verified complex evaluation of Hurwitz zeta at height 85.7: no certified-numerics infrastructure in Mathlib for that. High value (the K2 discipline's Lean face), blocked on numerics, not on theory.",
+   "mathlib_routes": [
+    "ABSENT: interval arithmetic for special functions"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#Fejer-1",
+   "statement": "Prove the Fejér ceiling `c_1 ≤ cos(π/(N+2))` (Mathlib upstream candidate).",
+   "source": "lean/README.md (LineRestriction.lean)",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "The Fejer ceiling c_1 <= cos(pi/(N+2)) is a finite extremal trig-polynomial fact (Fejer kernel positivity + eigenvalue of the tridiagonal form); no missing theory, careful finite work.",
+   "mathlib_routes": [
+    "Real.cos, Finset trig sums",
+    "Matrix.PosSemidef (tridiagonal route)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#LR-2",
+   "statement": "Define the restriction-to-1D operator and give the actual c_1 bound.",
+   "source": "lean/README.md (LineRestriction.lean)",
+   "status": "OPEN",
+   "feasibility": "TYPABLE",
+   "value": "MED",
+   "feasibility_why": "Restriction-to-1D operator and the c_1 bound: the data types are already in LineRestriction.lean; structural, unblocked.",
+   "mathlib_routes": [
+    "existing UnivariateCosPoly/BivariateCosPoly in-repo"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#LR-3",
+   "statement": "Give the precise LP-witness form and derive contradiction-from-violation.",
+   "source": "lean/README.md (LineRestriction.lean)",
+   "status": "OPEN",
+   "feasibility": "TYPABLE",
+   "value": "LOW",
+   "feasibility_why": "LP-witness form + contradiction-from-violation: design work on in-repo types; no Mathlib gap.",
+   "mathlib_routes": [
+    "existing in-repo types"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#BP-1",
+   "statement": "Define the blueprint quotient `ℕ[B•] / ≈` carrying the relation set.",
+   "source": "lean/README.md (LambdaBlueprints.lean)",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "LOW",
+   "feasibility_why": "The blueprint quotient N[B]/~ is constructible with Mathlib congruence quotients (RingCon) over a monoid algebra.",
+   "mathlib_routes": [
+    "RingCon (Mathlib.RingTheory.Congruence)",
+    "MonoidAlgebra"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#BP-F1",
+   "statement": "Correct F_1 model (not the trivial PUnit collapse).",
+   "source": "lean/README.md (LambdaBlueprints.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "LOW",
+   "feasibility_why": "A correct F_1 model needs monoid-scheme / blueprint geometry; absent from Mathlib (README coverage-gap list).",
+   "mathlib_routes": [
+    "ABSENT: F_1 / monoid schemes / blueprints"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#BP-fiber",
+   "statement": "The central open computation Spec(ℤ) ×_F_1 Spec(ℤ).",
+   "source": "lean/README.md (LambdaBlueprints.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "MED",
+   "feasibility_why": "Spec(Z) x_F1 Spec(Z) is the central open computation of the direction itself; research-level, and its substrate (#BP-F1) is Mathlib-absent.",
+   "mathlib_routes": [
+    "ABSENT: F_1 geometry"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#MB-1",
+   "statement": "ζ pole at s=1 `(s-1)ζ(s)→1`. DISCHARGED via `riemannZeta_residue_one` (no sorry).",
+   "source": "lean/README.md (MathlibBridge.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#MB-2",
+   "statement": "ζ(s)≠0 for Re s>1. DISCHARGED via `riemannZeta_ne_zero_of_one_lt_re` (no sorry).",
+   "source": "lean/README.md (MathlibBridge.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#MB-3..#MB-5",
+   "statement": "Hurwitz availability (#MB-3), L-Hurwitz decomposition (#MB-4, sorry), Fejér (#MB-5, sorry).",
+   "source": "lean/README.md (MathlibBridge.lean)",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "#MB-4 (L-Hurwitz decomposition) is unblocked now that Mathlib has hurwitzZeta; #MB-5 is the Fejer bound (see #Fejer-1). Mixed row; each half feasible.",
+   "mathlib_routes": [
+    "hurwitzZeta",
+    "see #Fejer-1"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#MB-6",
+   "statement": "ζ functional equation `Λ(1-s)=Λ(s)`. DISCHARGED via `completedRiemannZeta_one_sub` (no sorry).",
+   "source": "lean/README.md (MathlibBridge.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#2G-1",
+   "statement": "2G function-field signature: `G_prim` negative definite ⟺ Hasse-Weil `t² < 4g²q`. PROVED (no sorry).",
+   "source": "lean/README.md (HodgeIndex.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#2G-2",
+   "statement": "Front A milestone 1: the `C×C` divisor scaffold derives `G_prim` from the intersection numbers (`primGram_eq_Gprim`); endpoint `curveSquare_negDef_iff_hasseWeil`. Machine-checks the geometry→`G_prim` reduction 2G asserted in a comment. PROVED (no sorry), axiom-clean.",
+   "source": "lean/README.md (CurveSquareIntersection.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#FF-1",
+   "statement": "Lever B, the eigenvalue-extraction link (genus 1): a non-real root of `X²−tX+q` has `|α|² = q` (`eigenvalue_modulus`, via Vieta on the conjugate); `t² < 4q ⇒ the roots are non-real` (`root_nonreal`); hence `NegDef ⇒ |α| = √q` (`functionfield_RH_elliptic_of_hodge`); and the full chain ...",
+   "source": "lean/README.md (FunctionFieldRH.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#FF-geom",
+   "statement": "Lever B gap, now carried as an explicit HYPOTHESIS, not a sorry: the Castelnuovo-Severi inequality `t² < 4q` is the `hodge_index` field of `EllipticFrobeniusData` (`negDef_of_curve` derives `NegDef` from it sorry-free). The whole file is now SORRY-FREE; discharging this hypothesis (proving ...",
+   "source": "lean/README.md (FunctionFieldRH.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "MED",
+   "feasibility_why": "Castelnuovo-Severi (t^2 < 4q from the curve) is carried as an explicit hypothesis, not a sorry; discharging it needs algebraic-curve intersection theory Mathlib lacks.",
+   "mathlib_routes": [
+    "ABSENT: curve intersection theory"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#FF-M0",
+   "statement": "Lever B roadmap milestone M-0 (the discriminant bridge for the elementary Hasse proof): a positive-semidefinite real binary form `m²+t·mn+q·n²` has `t² ≤ 4q` (`disc_nonpos_of_posSemidef`); positive-definite gives the strict `t² < 4q` (`disc_neg_of_posDef`). The positive mirror of #2G-1; the step ...",
+   "source": "lean/README.md (FunctionFieldRH.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#FF-M1",
+   "statement": "Lever B milestone M-1, the isogeny DEGREE API (algebraic core). `degForm t q m n = m²+t·mn+q·n²` (= `deg(m·1+n·φ)`); Hasse bridge `disc_nonpos_of_int_nonneg`: degree form `≥ 0` on the lattice `ℤ·1⊕ℤ·φ` ⟹ `t² ≤ 4q` (integer→rational by homogeneity, rational→real by density via `exists_rat_btwn`; ...",
+   "source": "lean/README.md (IsogenyDegree.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#FF-M1B",
+   "statement": "Lever B M-1 route B (Tate module): the Weil-pairing / determinant mechanism behind `deg = det`, internalizing O2. Coordinate version: `weilForm x y = x₀y₁−x₁y₀` (the symplectic model of the Weil pairing on `T_ℓ E ≅ ℤ²`); `weilForm_mulVec` (`weilForm (A·x) (A·y) = (det A)·weilForm x y`); ...",
+   "source": "lean/README.md (TateModule.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#FF-O3",
+   "statement": "Lever B O3 wiring: connects the chain to Mathlib's elliptic-curve local L-factor. `localFactor_root_normSq` (RH for the abstract local factor `1-aT+qT²`: `a²<4q` ⟹ every complex root has `|·|²=1/q`, via the reciprocal `α=β⁻¹` and the eigenvalue extraction #FF-1); ...",
+   "source": "lean/README.md (LocalFactor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#ClassA-1",
+   "statement": "Direction 8E Class A no-go: `skew_nilpotent_eq_zero` (real skew + nilpotent ⟹ 0, elementary trace proof) + `sen_no_nilpotent_part` + `sen_nilpotent_part_not_isNilpotent` (a non-semisimple Sen module admits no definite invariant cup form; Petrov ν≠0) + `bskew_nilpotent_eq_zero_of_gram` (Gram-factor ...",
+   "source": "lean/README.md (SenDefiniteObstruction.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#ClassC-1",
+   "statement": "Direction 8E Class C no-go: `negDef_depends_on_trace` (the Hasse-Weil/Rosati `NegDef` predicate is non-constant in the trace `t`) + `no_trace_blind_signature` (no `t`-blind predicate `P g q` decides `NegDef g q t`; the arithmetic-blind AHK combinatorial signature cannot carry RH-positivity, #48). ...",
+   "source": "lean/README.md (TraceBlindObstruction.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#2H-1",
+   "statement": "2H Faltings-Hriljac arithmetic Hodge index: Néron-Tate height-pairing Gram matrix is `PosDef`. Sorry (needs Mathlib canonical heights + Faltings-Hriljac).",
+   "source": "lean/README.md (HodgeIndex.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "HIGH",
+   "feasibility_why": "Faltings-Hriljac / Neron-Tate height-pairing positivity: Mathlib has no canonical heights, no arithmetic intersection theory, nothing past WeierstrassCurve point arithmetic. The M4-adjacent row; blocked at the foundations.",
+   "mathlib_routes": [
+    "ABSENT: canonical heights / Arakelov theory"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#ZC-1",
+   "statement": "Upstream-staged (Mathlib-style, dependency-free): the conjugation symmetry `riemannZeta_conj` (`ζ(s̄) = conj ζ(s)` for `s ≠ 1`) + `riemannZeta_conj_eq_zero_iff` (zeros are conjugation-symmetric). Absent from Mathlib (which has the functional equation `riemannZeta_one_sub` but not this reflection); ...",
+   "source": "lean/README.md (RiemannZetaConj.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#M4-1",
+   "statement": "M4 (the real target): the arithmetic polarization face of RH for ζ, the Spec(ℤ) lift of `eigenvalue_modulus`. `critical_line_iff_fe_reflection` (`1−ρ = conj ρ ⟺ Re ρ = 1/2`); `fe_partner_mem_nonTrivialZeros` (the functional equation `riemannZeta_one_sub` provides the perfect pairing `ρ ↔ 1−ρ` on ...",
+   "source": "lean/README.md (ArithmeticPolarization.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#EF-1",
+   "statement": "The Weil explicit formula for ζ: a `WeilExplicitFormula` bundle exists (spectral side = arch + pole − prime). Sorry (needs digamma kernel + sum-over-zeros theory).",
+   "source": "lean/README.md (ExplicitFormula.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "HIGH",
+   "feasibility_why": "The Weil explicit formula bundle needs sum-over-zeros theory (Hadamard factorization of xi, zero-counting, contour machinery); none of it is in Mathlib. The digamma kernel half is already discharged in-repo (#EF-arch).",
+   "mathlib_routes": [
+    "ABSENT: Hadamard product / zero-sum theory for zeta"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#EF-2",
+   "statement": "The Weil positivity criterion: `weilForm`-positivity on all admissible tests ⟺ `RiemannHypothesis zeta`. The Architecture-3 centerpiece (LEARNINGS #17). Sorry.",
+   "source": "lean/README.md (ExplicitFormula.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "HIGH",
+   "feasibility_why": "The Weil positivity criterion (RH iff weilForm >= 0) sits on top of #EF-1's bundle; the Architecture-3 centerpiece, blocked behind the same explicit-formula infrastructure.",
+   "mathlib_routes": [
+    "depends on #EF-1"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#EF-2a",
+   "statement": "Construct `weilForm` (the Hermitian form `∑_ρ f̂(ρ)\\overline{f̂(\\barρ)}`) from the bundle via the positive-type/self-dual test. Sorry.",
+   "source": "lean/README.md (ExplicitFormula.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "MED",
+   "feasibility_why": "Constructing weilForm from the bundle needs the zero-sum convergence theory of #EF-1.",
+   "mathlib_routes": [
+    "depends on #EF-1"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#EF-arch",
+   "statement": "The archimedean kernel. Kernel part DISCHARGED: `digamma := logDeriv Complex.Gamma`, `digamma_eq` proved, `archKernel` concrete, and the basic algebraic identities `digamma_add_one` (`ψ(s+1)=ψ(s)+1/s`), `digamma_reflection` (`ψ(1-s)-ψ(s)=π cot(πs)`), and `digamma_add_nat` (`ψ(s+n)=ψ(s)+∑_{k<n} ...",
+   "source": "lean/README.md (ExplicitFormula.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#EF-class",
+   "statement": "The analytic side-conditions on `AdmissibleTest` (smoothness/decay/strip of holomorphy) that make the functionals well-defined and #EF-1 true.",
+   "source": "lean/README.md (ExplicitFormula.lean)",
+   "status": "OPEN",
+   "feasibility": "TYPABLE",
+   "value": "MED",
+   "feasibility_why": "The admissible-test side conditions are typable TODAY against Mathlib's Schwartz space; stating them well is design work and would sharpen #EF-1 even before its proof is reachable.",
+   "mathlib_routes": [
+    "SchwartzMap (Mathlib.Analysis.Distribution.SchwartzSpace)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#EF-K2",
+   "statement": "The D-H instance showing the criterion does NOT certify RH for Davenport-Heilbronn (prime side delocalises; experiment 3M #20).",
+   "source": "lean/README.md (ExplicitFormula.lean)",
+   "status": "OPEN",
+   "feasibility": "THEORY-GAP",
+   "value": "MED",
+   "feasibility_why": "The D-H non-certification instance needs the D-H continuation (#DH-cont) plus enough explicit-formula scaffolding to state the delocalization; ordered behind those.",
+   "mathlib_routes": [
+    "depends on #DH-cont, #EF-1"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#FA-1",
+   "statement": "Replace the placeholder `EulerProductData` fields with the real Euler-product local-factor data, convergence on `Re(s)>1`, uniqueness, and the von-Mangoldt log-derivative. The formation guard itself (`no_dh_cupTarget`) is proved no-sorry.",
+   "source": "lean/README.md (FrobeniusAlgebra.lean)",
+   "status": "OPEN",
+   "feasibility": "TYPABLE",
+   "value": "LOW",
+   "feasibility_why": "Real Euler-product local-factor data for EulerProductData: the Mathlib Euler-product API supplies the ingredients.",
+   "mathlib_routes": [
+    "EulerProduct namespace",
+    "ArithmeticFunction.vonMangoldt"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#FA-2",
+   "statement": "Replace the toy `Unit` `FrobeniusTateTwist`/`FrobeniusCupTarget` with the actual `H^2 = C(-1)` fundamental class and arithmetic `H^1`, then prove bilinearity/perfectness/flow derivation. Positivity remains the M4 standard-conjecture target.",
+   "source": "lean/README.md (FrobeniusAlgebra.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "MED",
+   "feasibility_why": "The genuine H^2 = C(-1) fundamental class and arithmetic H^1 are the missing cohomology of Spec(Z) itself; research-level and Mathlib-absent.",
+   "mathlib_routes": [
+    "ABSENT: arithmetic cohomology"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#ACC-1",
+   "statement": "The numerical positivity certificate `(weilGram K N b).PosDef` for zeta (min-eig +0.035; e3c/e3m). Necessary-not-sufficient. Sorry (needs concrete numerical entries + a PosDef witness).",
+   "source": "lean/README.md (AccidentAudit.lean)",
+   "status": "OPEN",
+   "feasibility": "NUMERIC",
+   "value": "MED",
+   "feasibility_why": "The PosDef witness for the truncated Weil Gram has entries built from log p and log pi; certifying min-eig +0.035 needs verified transcendental numerics Mathlib lacks (norm_num cannot bound Real.log).",
+   "mathlib_routes": [
+    "ABSENT: certified numerics for Real.log entries"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#ACC-2",
+   "statement": "`weilGram_noncirc`: positivity of `weilGram` does NOT entail `RiemannHypothesis zeta` (the same construction for Davenport-Heilbronn would otherwise prove a false RH; the M2.6 stealth window #34). Sorry (needs the explicit D-H witness Gram + its off-line zero, ties to #DH-zero). The ...",
+   "source": "lean/README.md (AccidentAudit.lean)",
+   "status": "OPEN",
+   "feasibility": "THEORY-GAP",
+   "value": "MED",
+   "feasibility_why": "The non-circularity statement needs the explicit D-H witness Gram and its off-line zero, i.e. it is ordered behind #DH-zero (NUMERIC) and the D-H continuation.",
+   "mathlib_routes": [
+    "depends on #DH-zero"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#RB-1",
+   "statement": "`robin_criterion`: Robin's inequality `∀ n ≥ 5041, σ(n) < e^γ n log log n` ⟺ RH. Sorry (full RH-equivalence; unformalized in any prover).",
+   "source": "lean/README.md (RHEquivalences.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "LOW",
+   "feasibility_why": "Robin's criterion as a full RH-equivalence: research-scale analytic number theory (explicit formula, Nicolas-Robin machinery), unformalized in any prover.",
+   "mathlib_routes": [
+    "ABSENT: explicit-formula infrastructure"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#LG-1",
+   "statement": "`lagarias_criterion`: Lagarias's inequality `∀ n ≥ 1, σ(n) ≤ H_n + e^{H_n} log H_n` ⟺ RH. Sorry. Also backs `RH_arith_iff_RiemannHypothesis` (the Π⁰₁ kernel witness, no new sorry).",
+   "source": "lean/README.md (RHEquivalences.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "MED",
+   "feasibility_why": "Lagarias's criterion iff RH: same scale as #RB-1; it also backs the Pi01 kernel witness, hence slightly higher value.",
+   "mathlib_routes": [
+    "ABSENT: explicit-formula infrastructure"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#MT-1",
+   "statement": "`mertens_criterion`: the Mertens bound `M(x) = O(x^{1/2+ε})` ⟺ RH. Sorry.",
+   "source": "lean/README.md (RHEquivalences.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "LOW",
+   "feasibility_why": "Mertens bound iff RH: needs Perron/contour machinery absent from Mathlib.",
+   "mathlib_routes": [
+    "ABSENT: Perron formula / contour integration for L-series"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#LI-1",
+   "statement": "`li_criterion`: Li/Keiper positivity `∀ n ≥ 1, λ_n ≥ 0` ⟺ RH, given the `LiData` Keiper-Li representation. Sorry. #LI-def (the convergent symmetric-pairing form of the sum-over-zeros identity) is the `LiData.keiperLi` field's deep content.",
+   "source": "lean/README.md (RHEquivalences.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "MED",
+   "feasibility_why": "Li's criterion needs the sum-over-zeros (Keiper-Li) representation: the same zero-sum theory gap as #EF-1.",
+   "mathlib_routes": [
+    "ABSENT: zero-sum theory"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#NB-1",
+   "statement": "`nymanBeurling_criterion`: the Báez-Duarte distances `d_N → 0` ⟺ RH, given `NymanBeurlingData`. Sorry. #NB-def (the tie of `dist` to the actual L²(0,1) closure of dilated fractional parts) is the opaque data.",
+   "source": "lean/README.md (RHEquivalences.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "MED",
+   "feasibility_why": "Nyman-Beurling: the L2(0,1) closure statement is partially typable (Mathlib has Lp spaces), but the equivalence proof is research-scale; no density/closure criterion machinery for dilated fractional parts.",
+   "mathlib_routes": [
+    "MeasureTheory.Lp (statement side)",
+    "ABSENT: the closure theory"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "V1",
+   "statement": "#82 Lemma 2 (cocycle rigidity): `increments_eq_log_iff_eq_vonMangoldt`, the increments `B(p*n) - B(n) = log p` (all primes `p`, all `n ≥ 1`) ⟺ `b n = Λ n` for `n ≥ 2` with `b 1` free. PROVED (sorry-free; axioms = `[propext, Classical.choice, Quot.sound]`).",
+   "source": "lean/README.md (CrystalCocycle.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "V2",
+   "statement": "#82 Lemma 1 (quasi-invariance collapse): `flat_ray_of_quasiInvariance` (full ℕ× form) and `flat_ray_of_prime_quasiInvariance` (prime-generated form, induction on the minimal prime factor); the quasi-invariant combs are exactly the flat ray `c n = c 1 * n^(-β)`. PROVED (sorry-free).",
+   "source": "lean/README.md (CrystalCocycle.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "V3",
+   "statement": "#82 increment nonnegativity: `divisorSum_le_divisorSum_mul_of_nonneg`, `0 ≤ b → B n ≤ B (p*n)` via `Nat.divisors_subset_of_dvd`. PROVED (sorry-free).",
+   "source": "lean/README.md (CrystalCocycle.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "V4",
+   "statement": "#86 B1 G_log rigidity (`b1_glog_rigidity.md`): prime-translate quasi-invariant Radon measures on ℝ form the ray `c·exp(-βx)dx`. OPEN (not attempted). Mathlib ingredients exist: `AddSubgroup.dense_or_cyclic`, `Measure.withDensity`, `MeasureTheory.Measure.isAddLeftInvariant_eq_smul` (Haar ...",
+   "source": "lean/README.md (CrystalCocycle.lean)",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "The G_log rigidity lemma: the file itself names the Mathlib ingredients (dense-or-cyclic, Haar uniqueness, withDensity); the missing assembly is the vague-continuity upgrade from dense-translate invariance to full invariance. Multi-day, unblocked.",
+   "mathlib_routes": [
+    "AddSubgroup.dense_or_cyclic",
+    "MeasureTheory.Measure.withDensity",
+    "Haar uniqueness (isAddLeftInvariant smul characterization)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#VT-NP1",
+   "statement": "NP-1 (e2vv / #128): finite Euler-product zero-freeness on `Re(s)>0` + the M4-reduction. `localFactor_ne_zero` (`1-p^{-s} ≠ 0` for `p ≥ 2`, via `‖p^{-s}‖ = p^{-Re s} < 1`), `finiteEulerProductInv_ne_zero` (a finite product `∏_{p∈S}(1-p^{-s})` is nonzero), `np1_reduction` (every finite stage is ...",
+   "source": "lean/README.md (VT_NP1.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#119/R3.5",
+   "statement": "Tighten the `GeometricPositivity` placeholder so \"realizes the signature INTEGER\" is not read as \"proves the primitive-part DEFINITENESS\" (#119). `RealizesSignatureInteger` (free, RH-blind: `realizesSignatureInteger_rhBlind` holds for ζ and D-H), `PrimitivePartDefinite` (= RH-equivalent), ...",
+   "source": "lean/README.md (R3_5.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#TOY-1",
+   "statement": "The toy sandbox Lean face (companion to `experiments/toy/`): genus-1 grader correctness, both directions. `toy_reproduce_weil` (`t² ≤ 4q ⟹ |α|² = q`) and the NEW off-line witness `toy_reject_fake` (`4q < t² ⟹ ∃` a root off the circle, via `(t+√(t²−4q))/2`), packaged in `toy_grader_genus1_correct`. ...",
+   "source": "lean/README.md (ToyModel.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#2M-VT",
+   "statement": "2M Arakelov-assembly residues (#132), the two isolable RH-independent targets Front 3 flagged. VT1 (per-prime Hasse sign): `perPrime_negDef_iff_hasse` (the per-prime `(1,p)` Gram `!![-2g,-t;-t,-2g·p]` is negative definite ⟺ `t²<4g²p`, = `negDef_iff_hasseWeil` at `q=p`, a SPECIALIZATION not new) + ...",
+   "source": "lean/README.md (ArakelovAssembly.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#FF-O1",
+   "statement": "Name the single open residual of lever B as a Prop: `FrobeniusMatrixExists p` (existence of the rank-2 integer Frobenius matrix `A`, `det A = p`, non-negative isogeny degrees) + `functionfield_RH_of_frobeniusMatrixExists` (RH-for-the-curve REDUCES to it). The reduction is PROVED (no sorry, ...",
+   "source": "lean/README.md (FunctionFieldRH.lean)",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "HIGH",
+   "feasibility_why": "The O1 existence (rank-2 integer Frobenius with deg >= 0) is the scheme-theoretic Tate-module construction: FLT-adjacent, months-long, Mathlib lacks E[n], Tate modules, Weil pairing, isogeny degrees (route-B audit in README).",
+   "mathlib_routes": [
+    "ABSENT: Tate module / Weil pairing / isogeny theory"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#FF-O1-iface",
+   "statement": "Lever B O1 as a SINGLE typed contract on Mathlib's REAL object (`WeierstrassCurve.localPolynomial`), with everything downstream machine-checked. `FrobeniusTateData R W` (the O1 existence: a rank-2 integer Frobenius `A` with `det A = qOf R`, `trace A = aOf R W` PINNED to Mathlib's `q=#κ`, ...",
+   "source": "lean/README.md (FrobeniusExistence.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#SC-1",
+   "statement": "The #143 Schur-Cohn kernel, Cohn's criterion at genus 1: `roots_on_circle_of_window` (`c² ≤ 4` ⟹ every root of `z² − cz + 1` has `normSq z = 1`, via `eigenvalue_modulus_le` at `q = 1`) + converse `window_of_roots_on_circle` (explicit off-circle real root `(c+√(c²−4))/2`), the gate `schur_cohn_gate` ...",
+   "source": "lean/README.md (SchurCohn.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#SC-2",
+   "statement": "The reversal identity behind Cohn's derivative trick: for self-inversive `p` (`reflect (natDegree p) p = p`) over any commutative ring, `reflect (natDegree p − 1) (derivative p) = natDegree p • p − X · derivative p` (`reflect_derivative_self_inversive`), proved coefficient-wise ...",
+   "source": "lean/README.md (SchurCohn.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#SC-3",
+   "statement": "Gauss-Lucas: every root of `derivative p` lies in `convexHull ℝ` of the roots of `p`. Mathlib ALREADY HAS THIS (`Polynomial.rootSet_derivative_subset_convexHull_rootSet`, in `Mathlib.Analysis.Complex.Polynomial.GaussLucas`, with explicit convex-combination weights via ...",
+   "source": "lean/README.md ((Mathlib))",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#SC-4",
+   "statement": "Cohn forward, general degree: if every root of a nonconstant `p : ℂ[X]` lies ON the unit circle (`normSq z = 1`), every root of `derivative p` lies in the closed unit disk (`derivative_roots_in_disk`). Proof: the closed ball is convex and contains the roots, hence their hull; apply #SC-3. PROVED ...",
+   "source": "lean/README.md (GaussLucas.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#SC-5",
+   "statement": "Cohn converse, general degree (the hard half): for self-inversive `p` with conj-fixed (real) coefficients and `natDegree p ≥ 1`, all roots of `p'` in the closed disk ⟹ all roots of `p` ON the circle (`cohn_converse`; real-coefficient form `cohn_converse_real`; the iff capstone `cohn_criterion` = ...",
+   "source": "lean/README.md (GaussLucas.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#GF-1",
+   "statement": "The prime-forced factor's leading coefficient: `leadingCoeff_linearFactor` / `leadingCoeff_linearFactor_pow` (`lead((p·X-1)^m) = p^m` over `ℤ[X]`, via `leadingCoeff_linear` + `leadingCoeff_pow`). PROVED (no sorry); axiom-clean.",
+   "source": "lean/README.md (GaussFloor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#GF-2",
+   "statement": "The single-prime floor: `pow_dvd_leadingCoeff` (`(p·X-1)^m ∣ f ⟹ p^m ∣ lead f`, by multiplicativity of the leading coefficient, `leadingCoeff_dvd_leadingCoeff`). No polynomial-coprimality argument anywhere in the chain. PROVED (no sorry); axiom-clean.",
+   "source": "lean/README.md (GaussFloor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#GF-3",
+   "statement": "The divisibility floor over a finite prime set: `prod_primePow_dvd_leadingCoeff` (`∀ p ∈ P` prime, `(p·X-1)^{m p} ∣ f ⟹ ∏_{p∈P} p^{m p} ∣ lead f`), recombining the per-prime floors on the INTEGER side (`isCoprime_primePow` + `Finset.prod_dvd_of_coprime`). PROVED (no sorry); axiom-clean.",
+   "source": "lean/README.md (GaussFloor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#GF-4",
+   "statement": "The height floor + sharpness: `gauss_floor` (`f ≠ 0 ⟹ ∏ p^{m p} ≤ |lead f|`; with vF multiplicities `m_p = ⌊log_p x⌋` the log form is `log|lead f| ≥ ψ(x)`) and the equality case `canonical_leadingCoeff` / `canonical_ne_zero` / `canonical_attains_floor` (the vF canonical product `∏ (p·X-1)^{m p}` ...",
+   "source": "lean/README.md (GaussFloor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#GF-5",
+   "statement": "The Gauss's-lemma step + capstone: `linearFactor_isPrimitive` / `linearFactor_pow_isPrimitive`, `dvd_of_map_dvd` (one-sided Gauss descent: primitive `g ∣ f` over ℚ ⟹ over ℤ, routing `f` through `primPart`), `linearFactor_pow_dvd_of_rootMultiplicity` (vanishing at `1/p` over ℚ with multiplicity `m` ...",
+   "source": "lean/README.md (GaussFloor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#GF-6",
+   "statement": "Minimal-degree rigidity (the e2ah rank-one clause): `map_linearFactor_pow` (the ℚ-factorization of the mapped prime factor), `canonical_dvd_of_vanishing` (the canonical product `∏ (p·X-1)^{m p}` divides EVERY prime-forced vanisher; the root factors at the distinct points `1/p` are pairwise coprime ...",
+   "source": "lean/README.md (GaussFloor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#RR-1",
+   "statement": "The rational root theorem with multiplicity (P10 FORMAL axis, Mathlib-PR unit): over a UFD `A` with fraction field `K` (the exact typeclass context of Mathlib's `RationalRoot.lean`), `den_pow_rootMultiplicity_dvd_leadingCoeff`: `(den A r) ^ rootMultiplicity r (p.map (algebraMap A K)) ∣ ...",
+   "source": "lean/README.md (RationalRootFloor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#RR-2",
+   "statement": "The multi-point product version: `prod_den_pow_rootMultiplicity_dvd_leadingCoeff`: for any `s : Finset K`, `∏_{r ∈ s} (den A r) ^ rootMultiplicity r (p.map (algebraMap A K)) ∣ p.leadingCoeff`. The denominators of distinct points need NOT be pairwise coprime in `A` (over `ℤ`: `1/4` and `3/4` share ...",
+   "source": "lean/README.md (RationalRootFloor.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#MTF-1",
+   "statement": "T1 of the model-theoretic Frobenius arc (LEARNINGS #156): the NG1 endomorphism-rigidity kernel. (a) Prime-ring rigidity: `endo_fixes_natCast` / `endo_fixes_intCast` (any `f : R →+* R` fixes every ℕ/ℤ cast; Mathlib's `map_natCast`/`map_intCast` restated as the project-facing statements). (b) ...",
+   "source": "lean/README.md (ModelTheoreticFrobenius.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#MTF-1w2",
+   "statement": "#MTF-1 consensus witness #2 (independent second formalization of the NG1 rigidity kernel). `ng1_rigidity_indep` (`σ.comp (algebraMap ℚ R) = algebraMap ℚ R` for every ring endomorphism `σ` of every commutative ℚ-algebra `R`) + `ng1_rigidity_indep_apply` (the pointwise form). Re-derived from the ...",
+   "source": "lean/README.md (TamenessTrade.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#TT-1",
+   "statement": "Multiplication from addition and squaring (Robinson squares toy, arithmetic core). `two_mul_mul_eq` (`2*x*y = (x+y)^2 - x^2 - y^2` over any `CommRing`) + `two_mul_mul_add_sq_eq` (the subtraction-free `2*x*y + (x^2+y^2) = (x+y)^2` over any `CommSemiring`, valid over ℕ). A VALUE-PINNING toy of the ...",
+   "source": "lean/README.md (TamenessTrade.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#MTF-1w3",
+   "statement": "#MTF-1 consensus witness #3 (CANONICAL at 3 witnesses). `ng1_rigidity_w3` (`σ.comp (algebraMap ℚ R) = algebraMap ℚ R` for every ring endomorphism `σ` of every commutative ℚ-algebra `R`) + `ng1_rigidity_w3_apply` (pointwise). Third independent formalization, route DISTINCT from #1 ...",
+   "source": "lean/README.md (BorgerVacuity.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#MTF-3",
+   "statement": "The Borger VACUITY core (T3, PROVEN). `natCast_isUnit_of_ne_zero` (`(q:R)` a unit in any ℚ-algebra for `q ≠ 0`), `span_natCast_eq_top` / `span_natCast_eq_top_of_prime` (`Ideal.span {(q:R)} = ⊤`), `quotient_span_natCast_subsingleton` (`Subsingleton (R ⧸ (q))`, the residue ring `R/qR = 0`), and the ...",
+   "source": "lean/README.md (BorgerVacuity.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#MTF-2",
+   "statement": "The ultraproduct object (T2, PARTIAL). `productFrobenius` (coordinatewise Frobenius `[(x_a)] ↦ [(x_a^{P a})]` on Mathlib's genuine DEPENDENT ultraproduct `Filter.Product (fun a => ZMod (P a)) l`, a bare function) + `productFrobenius_coe` + `productFrobenius_fixes_diag` (fixes the diagonal integers ...",
+   "source": "lean/README.md (BorgerVacuity.lean)",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "Completing the ultraproduct Frobenius to a RingHom needs the ring-language + CompatibleRing + Los transport on Filter.Product; Mathlib has the pieces (ModelTheory.Algebra.Ring, Ultraproduct) but not the assembled transport. README estimates multi-day; unblocked.",
+   "mathlib_routes": [
+    "FirstOrder.Language.ring (Mathlib.ModelTheory.Algebra.Ring.Basic)",
+    "CompatibleRing",
+    "FirstOrder.Language.Ultraproduct (Los)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#MTF-4",
+   "statement": "The cardinality dichotomy (T4, BLOCKED-ON-MATHLIB). NG2(iii): every internal subset of `K` is finite or of cardinality `≥ 2^{ℵ₀}`, so no internal set is the prime-indexed diagonal. MISSING from Mathlib: a `Saturated` / κ-saturation predicate on `FirstOrder.Language.Structure`; the type-realization ...",
+   "source": "lean/README.md ((Mathlib gap))",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "LOW",
+   "feasibility_why": "NG2(iii) needs a saturation predicate, type-realization machinery, and an internal-subset API on Filter.Product; README records Mathlib has none of these at the pin.",
+   "mathlib_routes": [
+    "ABSENT: saturation / internal-subset API"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "#TT-2",
+   "statement": "Primes definable from von Mangoldt. `prime_iff_vonMangoldt`: the full `↔` `n.Prime ↔ Λ n ≠ 0 ∧ ∀ m < n, Λ m ≠ Λ n` over `ArithmeticFunction.vonMangoldt`. Both directions proved: forward (`vonMangoldt_apply_prime` gives `Λ n = log n ≠ 0`; any `m < n` with `Λ m = log n` is a prime power whose ...",
+   "source": "lean/README.md (TamenessTrade.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#S4C-1",
+   "statement": "The prime-side inequality (the Euler gate), e1o VERIFIER target 1 (S4/R1 arc, #162). `prime_side_inequality`: with NONNEGATIVE coefficients `w` (the Euler gate, stated explicitly), a pointwise majorant `chi i ≤ sel i`, and `0 ≤ chi i`, `∑_{i∈S} w i·chi i ≤ ∑_{i∈T} w i·sel i` for `S ⊆ T` (majorant ...",
+   "source": "lean/README.md (S4Carrier.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#S4C-2",
+   "statement": "Tail divergence via Chebyshev blocks (KERNEL), e1o target 2. `tendsto_exp_div_succ_sq_atTop` (`e^k/(k+1)^2 → +∞`, via `Real.tendsto_exp_div_pow_atTop 2` + an eventual comparison `(1/4)e^k/k^2 ≤ e^k/(k+1)^2`) + `tail_pairing_not_summable` (if the e-adic block masses dominate `c·e^k` and the majorant ...",
+   "source": "lean/README.md (S4Carrier.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#S4C-3",
+   "statement": "The structural nil (change-of-basis atom), e1o target 3. `span_exp_pair_eq_span_trig`: over ℂ, `Submodule.span ℂ {e^{+iθ}, e^{-iθ}} = Submodule.span ℂ {cos θ, sin θ}` as subspaces of `ℝ → ℂ` (Euler, via `Complex.cos_add_sin_I`/`cos_sub_sin_I`/`I_sq` and `Submodule.mem_span_pair` both ways). With `θ ...",
+   "source": "lean/README.md (S4Carrier.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#S4C-4",
+   "statement": "Decimation rank-1 collapse, e1o target 4. `decGen_eval_eq` (the generator `e^{2πi(Km)u/L}` at `u_0+j(L/K)` equals its value at `u_0`; the phase advances by `2πmj ∈ 2πℤ`, invisible to `exp`, via `Complex.exp_int_mul_two_pi_mul_I`) + `decimation_rank_one` (by `Submodule.span_induction`: EVERY `f ∈ ...",
+   "source": "lean/README.md (S4Carrier.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "#S4C-5",
+   "statement": "Full price at incommensurable points (the trig Vandermonde), e1o target 5. `trig_vandermonde_nonsingular` (distinct points `z_j = e^{2πi u_j/L}` on the circle, i.e. `z` injective, give `(Matrix.vandermonde z).det ≠ 0`, via Mathlib's `Matrix.det_vandermonde_ne_zero_iff`) + ...",
+   "source": "lean/README.md (S4Carrier.lean)",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "LOW",
+   "feasibility_why": "Already sorry-free in the repo per lean/README.md (see that row for the axioms line).",
+   "mathlib_routes": [],
+   "notes": ""
+  },
+  {
+   "id": "e1u-1",
+   "statement": "The footprint-chain identity (finite, algebraic, Lean-friendly): for an M-atom probability measure with Jacobi data (b, a) and closure polynomials $p_M, q_M$: the product $B_{M-1}(z)\\cdots B_0(z)$ with $B_k = I + zJu_ku_k^T$, $u_k = (q_k(0), -p_k(0))$, and Weyl closure $u(X) = J u_M$ yields ...",
+   "source": "experiments/spectral/e1u_canonical_chain.md",
+   "status": "OPEN",
+   "feasibility": "THEORY-GAP",
+   "value": "MED",
+   "feasibility_why": "The footprint-chain identity (transfer product reproduces the Cauchy transform) is a finite rational-function identity per M, but every object in it (orthonormal polynomial values, closure polynomials, Weyl closure) must be defined from scratch; same missing apparatus as e1v-3.",
+   "mathlib_routes": [
+    "Matrix (Fin 2) (Fin 2) R products",
+    "ABSENT: orthogonal-polynomial recurrence / Weyl function theory"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1u-2",
+   "statement": "Nilpotent transfer exactness: $(J u u^T)^2 = 0$, hence the indivisible-interval propagator is exactly $I + z l J P$; and $e^T u(t)$ is constant along an indivisible interval (the two facts the whole rung leans on; two-line matrix lemmas).",
+   "source": "experiments/spectral/e1u_canonical_chain.md",
+   "status": "DRAFTED",
+   "feasibility": "READY",
+   "value": "MED",
+   "feasibility_why": "Nilpotent transfer exactness: (J u u^T)^2 = 0 and the degree-one propagator composition. Two-line matrix lemmas on explicit 2x2 matrices; DRAFTED in VerifierQueue.lean (#VQ-3a/#VQ-3b). The constancy-along-indivisible-interval clause follows from the same computation.",
+   "mathlib_routes": [
+    "Matrix.mul_apply + Fin.sum_univ_two (entrywise proof)",
+    "Matrix notation !![..] (Mathlib.LinearAlgebra.Matrix.Notation)"
+   ],
+   "lean_ref": "rankOneTransfer_sq",
+   "notes": "Statement draft with sorry body in lean/ZetaRH/VerifierQueue.lean; UNVERIFIED on this box (no toolchain); not wired into ZetaRH.lean."
+  },
+  {
+   "id": "e1u-3",
+   "statement": "The Weyl-mass identity: $\\int_0^X f^T H \\bar f\\,dt = |f_1(0)|^2\\, \\mathrm{Im}\\,m/\\mathrm{Im}\\,z$ for the Weyl solution of a finite chain with indivisible tail (measured exact to 6.7e-51; follows from $d/dx(u^TJ\\bar u) = (z-\\bar z) u^TH\\bar u$ plus the tail annihilation).",
+   "source": "experiments/spectral/e1u_canonical_chain.md",
+   "status": "OPEN",
+   "feasibility": "THEORY-GAP",
+   "value": "MED",
+   "feasibility_why": "The Weyl-mass identity needs the Weyl solution of a finite chain with indivisible tail: definitions absent from Mathlib (same gap as e1v-3/e1u-1). The finite-chain version is matrix calculus once the objects exist.",
+   "mathlib_routes": [
+    "ABSENT: canonical-system Weyl theory",
+    "derivative identity d/dx (u^T J conj u) via Matrix calculus"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1u-4",
+   "statement": "Tail invariance of germ data [ADVERSARY-corrected]: lengths, angles, and $M(x)$ on $[0, X]$ are independent of the tail angle (the tail enters the Mobius closure of m); the Weyl tail-mass PROFILE is NOT tail-invariant (measured shifts to 0.28: the Weyl solution's boundary vector is the tail ...",
+   "source": "experiments/spectral/e1u_canonical_chain.md",
+   "status": "OPEN",
+   "feasibility": "THEORY-GAP",
+   "value": "LOW",
+   "feasibility_why": "Tail invariance of germ data (the adversary-corrected pair): requires the chain apparatus first; then both clauses are finite linear algebra. Blocked behind the same definitional build.",
+   "mathlib_routes": [
+    "ABSENT: chain/Weyl definitions (see e1v-3)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1u-5",
+   "statement": "The Hur dictionary: our (m, boundary) convention equals Hur's $u_1(0) = 0$ trace-normed convention up to the standard J-Mobius change; pin the exact transformation (this also settles which of TAIL-N/D/0 is Hur's canonical embedding of a finite chain).",
+   "source": "experiments/spectral/e1u_canonical_chain.md",
+   "status": "OPEN",
+   "feasibility": "THEORY-GAP",
+   "value": "LOW",
+   "feasibility_why": "The Hur convention dictionary is a source-text calibration (a J-Mobius change of convention), not a theorem about Mathlib objects; lowest value as a Lean target until the chain apparatus exists.",
+   "mathlib_routes": [
+    "ABSENT: chain/Weyl definitions (see e1v-3)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1u-6",
+   "statement": "The central-gap length blowup (structural form): for an even atomic probability measure with no atoms in $(-g, g)$, the footprint chain's total trace-length grows like the reciprocal Christoffel function at 0 (exponential in M at fixed gap fraction); the U1 panel is the numerical shadow; a clean ...",
+   "source": "experiments/spectral/e1u_canonical_chain.md",
+   "status": "DISCHARGED",
+   "feasibility": "DONE",
+   "value": "MED",
+   "feasibility_why": "Superseded by e1v Theorem V2 + the germ-length split (e1v_christoffel_gauge.md, Verification targets 1-3): the central-gap length blowup is now a THEOREM with the explicit rate cosh(2nG)^2 (LEARNINGS #172), not a conjectured shape. The Lean face of the discharge is the #VQ-2 draft (e1v-1).",
+   "mathlib_routes": [
+    "see e1v-1 (#VQ-2 draft)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1v-1",
+   "statement": "Theorem V2 itself (finite, elementary): the Chebyshev construction, $|T_n(x)| = \\cosh(n \\operatorname{arccosh} x)$ for $x > 1$, and the conclusion $\\lambda_M(0) \\le \\cosh(2nG)^{-2}$. Mathlib has Chebyshev polynomials (`Polynomial.Chebyshev.T`); the analytic step is the $\\cosh$ representation off ...",
+   "source": "experiments/spectral/e1v_christoffel_gauge.md",
+   "status": "DRAFTED",
+   "feasibility": "TYPABLE",
+   "value": "HIGH",
+   "feasibility_why": "Theorem V2 (#172): lambda_M(0) <= cosh(2nG)^{-2}. DRAFTED in VerifierQueue.lean (#VQ-2) as the existence of the Chebyshev competitor polynomial, with G in explicit log form. Mathlib has Chebyshev polynomials; the cosh representation off [-1,1] follows from the complex cos identity at imaginary argument. Mathlib gap recorded: no Real.arcosh (hand-rolled arcoshReal, itself a small upstream candidate).",
+   "mathlib_routes": [
+    "Polynomial.Chebyshev.T (Mathlib.RingTheory.Polynomial.Chebyshev)",
+    "Polynomial.Chebyshev.T_complex_cos (cosh via cos(i x); verify exact name)",
+    "Real.cosh (Mathlib.Analysis.Complex.Exponential)",
+    "ABSENT: Real.arcosh (use log (x + sqrt (x^2 - 1)))"
+   ],
+   "lean_ref": "v2_germ_bound",
+   "notes": "Statement draft with sorry body in lean/ZetaRH/VerifierQueue.lean; UNVERIFIED on this box (no toolchain); not wired into ZetaRH.lean."
+  },
+  {
+   "id": "e1v-2",
+   "statement": "The Christoffel identity $\\sum_{k<M} p_k(0)^2 = 1/\\lambda_M(0)$ for an $M$-atom probability measure (the reproducing-kernel/Christoffel-Darboux statement at full degree), and its Lagrange form $\\sum_j \\ell_j(0)^2/w_j$. Both are finite linear algebra; the Lagrange form is a Cauchy-Schwarz equality ...",
+   "source": "experiments/spectral/e1v_christoffel_gauge.md",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "The Christoffel identity sum_k p_k(0)^2 = 1/lambda_M(0) via orthonormal polynomials (Christoffel-Darboux at full degree). Mathlib has NO orthogonal-polynomial theory, but gramSchmidt on the finite-dimensional polynomial space against the discrete inner product supplies the basis; assembly work, no blocker. The Lagrange form clause is e1z-2 (DRAFTED).",
+   "mathlib_routes": [
+    "gramSchmidt (Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho)",
+    "EuclideanSpace / PiLp for the discrete L2",
+    "Polynomial.degreeLT (the finite-dimensional carrier)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1v-3",
+   "statement": "The germ-length split $X_{\\text{total}} = 1/\\lambda_M(0) + Q_M(0)$, which together with 1 and 2 supersedes e1u VERIFIER target 6 by proving it with an explicit rate rather than conjecturing the shape.",
+   "source": "experiments/spectral/e1v_christoffel_gauge.md",
+   "status": "OPEN",
+   "feasibility": "THEORY-GAP",
+   "value": "MED",
+   "feasibility_why": "The germ-length split X_total = 1/lambda_M(0) + Q_M(0) needs the Kac-Krein footprint chain (Jacobi data, transfer matrices, Weyl closure) DEFINED first; Mathlib has no canonical systems, Krein strings, or Jacobi-matrix theory. All objects are finite 2x2 matrix products, so the definitions are hand-buildable, but that build precedes any theorem. Together with e1v-1/e1v-2 this supersedes e1u-6.",
+   "mathlib_routes": [
+    "Matrix (Fin 2) (Fin 2) R (all objects finite)",
+    "Matrix.vecMulVec (rank-one generators)",
+    "ABSENT: canonical systems / Krein strings / Jacobi matrices"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1v-4",
+   "statement": "Continuity/rationality of $1/\\lambda_M(0)$ in the atom positions away from collisions (needed to state the obstruction formally): the functional is a rational function with poles only on the collision locus.",
+   "source": "experiments/spectral/e1v_christoffel_gauge.md",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "LOW",
+   "feasibility_why": "Continuity/rationality of 1/lambda_M(0) in the atom positions away from collisions: immediate from the Lagrange closed form (a rational function with poles on the collision locus) once e1z-2 lands. Formalizes the #172 obstruction statement; low standalone value.",
+   "mathlib_routes": [
+    "ContinuousAt, Continuous.div (pole-free locus)",
+    "the e1z-2 Lagrange closed form as input"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1z-1",
+   "statement": "$\\Gamma \\ge G$ with equality iff $\\sigma = \\omega_E$. The Frostman characterization: $U^{\\omega_E}$ is constant on $E$ and minimizes the energy, so $\\max_E U^\\sigma - U^\\sigma(0) \\ge g_E(0)$ for every $\\sigma$ supported on $E$. Classical, and the cleanest formal statement here.",
+   "source": "experiments/spectral/e1z_v2_sharp.md",
+   "status": "OPEN",
+   "feasibility": "MATHLIB-BLOCKED",
+   "value": "HIGH",
+   "feasibility_why": "Frostman's theorem (Gamma(sigma) >= G with equality iff sigma is the equilibrium measure). The STATEMENT is typable (U^sigma as a Bochner integral of -Real.log |x - y| against a probability measure; the closed-form G of VerifierQueue.lean), but the PROOF needs logarithmic potential theory: existence/uniqueness of the equilibrium measure, the maximum principle for potentials, capacity. Mathlib has NONE of it (no capacity, no equilibrium measure, no Green's function, no subharmonic functions); the nearest material is the holomorphic maximum principle (Complex.AbsMax). This is the cleanest classical target in the queue and it is squarely Mathlib-blocked: the useful output is that a potential-theory foundation would have to be built or upstreamed first.",
+   "mathlib_routes": [
+    "MeasureTheory.Measure (carrier for sigma)",
+    "MeasureTheory.integral (U^sigma as Bochner integral)",
+    "Real.log",
+    "Mathlib.Analysis.Complex.AbsMax (nearest maximum principle; not sufficient)",
+    "ABSENT: capacity / equilibrium measure / subharmonicity"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1z-2",
+   "statement": "The interpolation identity $1/\\lambda_M(0) = \\sum_j \\ell_j(0)^2/w_j$ at full degree (already listed as a #172 target; unchanged).",
+   "source": "experiments/spectral/e1z_v2_sharp.md",
+   "status": "DRAFTED",
+   "feasibility": "READY",
+   "value": "HIGH",
+   "feasibility_why": "The interpolation identity 1/lambda_M(0) = sum_j l_j(0)^2/w_j at full degree. Finite linear algebra. The Cauchy-Schwarz kernel (both halves) is DRAFTED in VerifierQueue.lean (#VQ-1a lower bound, #VQ-1b attainment) with the Lagrange step carried as a hypothesis in the honest #S4C-2 kernel style; the polynomial half then needs only Mathlib's Lagrange interpolation. Same content as e1v-2's Lagrange clause.",
+   "mathlib_routes": [
+    "Lagrange.interpolate (Mathlib.LinearAlgebra.Lagrange)",
+    "Lagrange.eq_interpolate (verify exact name)",
+    "Finset.sum_mul_sq_le_sq_mul_sq (finite Cauchy-Schwarz; verify exact name)",
+    "Finset.sum_nonneg + sq_nonneg (the t = 1/B expansion route, API-light)"
+   ],
+   "lean_ref": "christoffel_pairing_lower_bound",
+   "notes": "Statement draft with sorry body in lean/ZetaRH/VerifierQueue.lean; UNVERIFIED on this box (no toolchain); not wired into ZetaRH.lean."
+  },
+  {
+   "id": "e1z-3",
+   "statement": "The uniform potential in closed form: $U^\\sigma$ for $\\sigma$ uniform on $\\pm[g,T]$ is elementary (two $x\\log x$ antiderivatives), and its maximum over $E$ is at $\\sqrt{gT}$. Finite calculus, no measure theory.",
+   "source": "experiments/spectral/e1z_v2_sharp.md",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "The uniform potential on +-[g,T] in closed form and its maximum at sqrt(gT). Elementary: two x log x antiderivatives and a derivative-sign argument. No missing theory, but real calculus labor (deriv computations, monotonicity on intervals).",
+   "mathlib_routes": [
+    "Real.log, deriv (Mathlib.Analysis.Calculus.Deriv.Basic)",
+    "StrictMonoOn via deriv sign (Mathlib.Analysis.Calculus.MeanValue)",
+    "intervalIntegral (for the antiderivative identity)"
+   ],
+   "notes": ""
+  },
+  {
+   "id": "e1z-4",
+   "statement": "$\\Gamma_{\\text{unif}}/G = \\tfrac12\\log T + O(1)$ as $T\\to\\infty$ at fixed $g$, which is target 3 plus the asymptotics of $G = \\operatorname{arccosh}(\\cdot)/2 \\sim g/T$.",
+   "source": "experiments/spectral/e1z_v2_sharp.md",
+   "status": "OPEN",
+   "feasibility": "FEASIBLE",
+   "value": "MED",
+   "feasibility_why": "Gamma_unif/G = (1/2) log T + O(1): asymptotics of e1z-3's closed form plus arccosh(x) ~ sqrt(2(x-1)) near 1 (G ~ g/T). Depends on e1z-3; the asymptotic language is present (Asymptotics.IsBigO).",
+   "mathlib_routes": [
+    "Asymptotics.IsBigO (Mathlib.Analysis.Asymptotics)",
+    "Filter.Tendsto, Filter.atTop",
+    "Real.log asymptotics (Real.tendsto_log_atTop etc.)"
+   ],
+   "notes": ""
+  }
+ ]
+}

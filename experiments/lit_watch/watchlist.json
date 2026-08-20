@@ -1,0 +1,123 @@
+{
+  "_comment": "Live-corpus watchlist for the RH proof program. Built by grepping docs/03_research/reading_notes/, references/ READMEs, and docs/03_research/*.md for arXiv identifiers, then curated down to the papers this project's live constructions actually depend on or actively track (the Weil-positivity section-10 corpus, the CCM/Connes-Consani lineage, and the named-author WATCH list from sourcing_gap_r1.md and the periodic watch_sweep notes). Not every citation in the repo is here: this is the subset where a new version or a new listing is actionable within days, not the full historical bibliography.",
+  "papers": [
+    {
+      "id": "2606.09096",
+      "note": "Suzuki, 'Weil's quadratic form via the screw function'. Conjecture (1.2) (ground-state Fourier transform -> xi(1/2+iz)) is exactly the object this project's experiments (B2c/e2at) probe numerically. v2 dated 2026-08-18; MANDATORY watch."
+    },
+    {
+      "id": "2511.22755",
+      "note": "Connes-Consani-Moscovici, 'Zeta Spectral Triples'. Lemma 7.3 and the Section 7 determinant-class limit are load-bearing for this project's M4/frontier work (LEARNINGS #186, e2at). MANDATORY watch."
+    },
+    {
+      "id": "2511.23257",
+      "note": "'Quadratic Forms, Real Zeros and Echoes of the Spectral Action' (CCM-adjacent). Tracked alongside 2511.22755 as part of the D_log family line; recently moved from arXiv-only to a CMP print run with no new arXiv content, so a version bump here would be a real signal."
+    },
+    {
+      "id": "2209.04658",
+      "note": "Suzuki, 'Screw line of the Riemann zeta function' (2022). The screw-function substrate that Suzuki 2606.09096 builds on and that this project's #171 de Branges corridor work engaged directly."
+    },
+    {
+      "id": "2404.13427",
+      "note": "'Hilbert-Schmidt Integral Operator and the Weil Distribution'. Trace-class operator adjacent to the Weil distribution with a nonnegative-eigenvalue construction; section-10 Weil-positivity corpus."
+    },
+    {
+      "id": "2006.13771",
+      "note": "Connes-Consani, 'Weil positivity and trace formula the archimedean place'. The CC half of the localized-form operator story that CCM 2511.22755 and Suzuki 2606.09096 both build on."
+    },
+    {
+      "id": "0704.3448",
+      "note": "Gonek, 'Finite Euler products and the Riemann Hypothesis'. RH iff short truncated Euler products approximate zeta in most of the right half-strip; the in-print home for this project's e2ap Part-B S-finite Euler ladder."
+    },
+    {
+      "id": "math/0511182",
+      "note": "Gonek-Hughes-Keating, 'A Hybrid Euler-Hadamard product formula for the Riemann zeta function'. Primes and zeros as complementary factors; context for this project's two-meter law. Old-style arXiv ID (pre-2007 scheme)."
+    },
+    {
+      "id": "2004.11501",
+      "note": "Broucke-Debruyne-Vindas, 'Beurling integers with RH and large oscillation'. Neighbouring theory for this project's Beurling discipline / Cramer control (counting data underdetermines analytic structure)."
+    },
+    {
+      "id": "2502.05106",
+      "note": "Carneiro et al., Fourier-optimization / pair-correlation extremal-function paper. The community for this project's band-ceiling (Omega) extremal question (#181(ii))."
+    },
+    {
+      "id": "2602.15941",
+      "note": "Consani, 2026 listing. Named-author watch (Connes/Consani/Moscovici/van Suijlekom lineage); tracked in watch_sweep_2026-07-18.md as already-known so a version bump or successor is the signal."
+    },
+    {
+      "id": "2606.06604",
+      "note": "Connes-Consani, 'Absolute Geometry and Spec(Z)' (2026). Direct CCM-lineage successor; read at depth in this project's reading notes."
+    },
+    {
+      "id": "2605.20224",
+      "note": "Groskin, CCM D_log truncation precursor. The lineage that 2607.02828 continues; watch for a follow-up turning its technique toward the Section-7 uniform-limit (M4) question."
+    },
+    {
+      "id": "2607.02828",
+      "note": "Groskin, truncated Weil quadratic form (Guinand-Weil dictionary + archimedean-tail positivity certification). CCM-axis infrastructure paper, explicitly disclaims any RH claim; watch for a follow-up that does make one."
+    },
+    {
+      "id": "2602.04022",
+      "note": "Connes, 'RH: Past, Present...' letter (2026). Named-author watch; direct statement of the program's current self-assessment from its principal author."
+    },
+    {
+      "id": "2602.20313",
+      "note": "Michalowski, Polya-frequency order of the de Bruijn-Newman kernel. Convergent independent work on Direction 12 (de Bruijn-Newman criticality); watch for any result reaching Lambda <= 0 rather than the current Lambda <= 0.22 upper bound."
+    },
+    {
+      "id": "2212.05366",
+      "note": "Dor-Hrushovski, model-theoretic Frobenius limit theory. Explicit WATCH item in sourcing_gap_r1.md: the one corner of the model-theoretic corpus moving toward L-function data; re-check for any archimedean or global place entering."
+    },
+    {
+      "id": "2509.17600",
+      "note": "Kulikov-Nazarov-Sodin (lineage), 'Critical and asymmetric Fourier uniqueness pairs'. Named-author watch (Fourier-uniqueness / irregular-nodes school); surfaced incidentally in watch_sweep_2026-07-18.md, not yet first-read."
+    },
+    {
+      "id": "2509.14953",
+      "note": "'Spectral Criteria for Uniqueness Pairs of Unitary Transforms'. Same named-author watch as 2509.17600; both flagged for a first-read check in the next sweep cycle."
+    },
+    {
+      "id": "2512.12374",
+      "note": "Drinfeld-module RH preprint. The closest comparator this project's R1 sourcing-gap audit found to a variety-free purity source (fails: function-field only, not Spec(Z)); watch for any generalization attempt toward the global base."
+    },
+    {
+      "id": "2310.18423",
+      "note": "Metaplectic self-dual Sonin projector. Flagged in sourcing_gap_r1.md as the sole unbuilt S4-carrier variant after this project's e1r/e1s probes closed every buildable family; watch for any paper that constructs it."
+    },
+    {
+      "id": "2207.02033",
+      "note": "Chen-Moriwaki, arithmetic Hilbert-Samuel positivity over adelic curves. Graded ADJACENT-WATCH in reading_notes/README.md: generalizes the base (not a self-product), wrong polarity for M4 as stated, but the nearest per-variety positivity result to this project's target."
+    }
+  ],
+  "keyword_queries": [
+    {
+      "query": "Weil positivity",
+      "note": "Guards the localization program (Yoshida/Bombieri/CC/CCM/Suzuki) this project's #180/#181 margin and ground-state measurements sit inside."
+    },
+    {
+      "query": "Weil explicit formula",
+      "note": "Guards the broader explicit-formula literature underlying Architecture 3 (direct positivity) and the S-finite Euler ladder."
+    },
+    {
+      "query": "Li coefficients",
+      "note": "Guards the Li-criterion positivity literature (lambda_n >= 0), one of this project's two named Architecture-3 objects."
+    },
+    {
+      "query": "Nyman-Beurling",
+      "note": "Guards the Nyman-Beurling density criterion, one of the two open Level-4 routes not yet given a D-H discrimination test."
+    },
+    {
+      "query": "de Branges space",
+      "note": "Guards the de Branges-space literature: the corridor this project's #163/#164/#171 rounds closed for their own reasons, and the language Suzuki 2606.09096 now formulates the whole localization program in."
+    },
+    {
+      "query": "determinant class zeta",
+      "note": "Guards the determinant-class trace-formula shape (the W6 spec in sourcing_gap_r1.md): a carrier on which xi(s) is the regularized characteristic polynomial of one operator with an independently computable pole budget."
+    },
+    {
+      "query": "Riemann hypothesis positivity",
+      "note": "Broad catch-all for any new positivity-criterion paper that does not use the other six queries' specific vocabulary."
+    }
+  ]
+}
