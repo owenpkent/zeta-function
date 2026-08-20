@@ -23,7 +23,28 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
 
 - **B1. The coupled SP4 ladder (where does C1 bind?).** #180 measured the two-sidedness residual FLAT ($10^{-8}$-$10^{-7}$) over prime windows to $e^6$ at the fixed spectral meter: C1 does not bind there. Grow both meters together (extended-precision line engine, narrower probes, emergent spectrum to $T \sim 300$-$1000$) until the residual departs its floor: the measured exchange rate between prime data and spectral data in the object. Cost M (precision engineering).
 - **B2. The wrong polarization, built anyway (the tariff inside the object).** Equip the v0 cokernel with candidate metrics ($L^2$ on the circle; the $\mathcal{E}$-pullback; a Christoffel-weighted metric) and score each against the 7-property SP5 spec cell-by-cell. Pre-registered: every metric making the flow self-adjoint with the right spectrum consumes zero locations (K1) or the uniform growth clause (#160/#171); typing that demand in the object's own coordinates mints coordinate system #4 for M4 (the trojan-ledger's stated purpose for such builds). Probes C2. Cost M.
-- **B2c. The xi-convergence test (from the 2026-08-20 prior-art sweep; HIGH priority).**
+- **B2c/B2b: EXECUTED 2026-08-20 (LEARNINGS #183, e2aq 10/10).** Soft-window
+  xi-test: family-dependence typed (hole norm-stuffing; locking exact to
+  $10^{-38}$); Omega-ladder: nearest-gap law refuted, replaced by the graded
+  FRONTIER LAW ($\sigma$-slope $= -(\gamma_{frontier}-\Omega)^2$ to 2 percent).
+  Live successors below.
+- **B2c-hard: EXECUTED 2026-08-20 (LEARNINGS #184, e2ar 8/8).** Hard-window
+  B-spline instrument: rigidity restored; at the basis-converged window
+  $a = 1$ the ground state IS the xi shape ($L^2$ residual 0.051,
+  refinement-stable): the first positive numerical contact with Suzuki
+  (1.2). All $a \ge 1.5$ shape claims gated out by the convergence
+  certificate. Live successor below.
+- **B2c-deep. The (1.2) ladder beyond $a \approx 1$ (measured requirements).**
+  50-digit zeros to $T \gtrsim 350$ (one cacheable computation), dps 80+,
+  double-density refinement until the pointwise gate passes per rung; decides
+  whether the recorded narrowing-through-$\Xi$ is a finite-basis artifact or
+  a real finite-$a$ property (the (1.2)-relevant question). Cost M. Spec and
+  walls in [`e2ar_hard_window_xi.md`](../../experiments/arithmetic_geometric/e2ar_hard_window_xi.md).
+- **B2d. The frontier-capacity function.** Measure
+  $\gamma_{\mathrm{frontier}}(J, \Omega, \sigma)$ and the graded profile's
+  per-zero cost (~6 decades/zero in e2aq): how many zeros past the ceiling
+  can $J$ modes annihilate, and at what precision schedule. Cost S.
+- **(superseded) B2c original spec, kept for the record:**
   Suzuki (arXiv:2606.09096, conjecture (1.2)): the localized Weil-form ground
   state's Fourier transform converges to $\xi(1/2+iz)$ as the window grows.
   Our 50-digit minimizer (`make_figs.py::ground_state_mp`) already computes
