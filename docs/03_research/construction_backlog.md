@@ -38,14 +38,22 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   is REAL: certified converged $a = 2.0$ rung at a fifth of $\Xi$'s relative
   mass at $z = 6$; the xi shape is a transient at $a \approx 1$; the approach
   to Suzuki (1.2) is non-monotone at accessible windows. Successors below.
-- **B2c-deep2. Return-vs-continuation (the (1.2) test where it must show
-  itself).** $a = 3$-$5$: zeros to $T \sim 600$ at 100+ digits (one long
-  cacheable run), dps 100-120 solves, gates and certificates as in e2as.
-  If the shape returns toward $\Xi$: (1.2) survives with a measured
-  crossover; if not: the conjectured limit needs modification. Cost M-L.
-- **B2c-lit. Pull CCM [4]** (the 2025+ successor with the zeta-regularized
-  determinant representation of $\hat v_a$) and re-run the novelty wording
-  of #185 against it. Cost S.
+- **B2c-lit: DONE 2026-08-20 (LEARNINGS #186).** CCM [4] (arXiv:2511.22755)
+  pulled and read at depth: interior-only convergence (Lemma 7.3), real
+  numerics, no unconstrained-bottom shape measurement: #185's novelty claim
+  survives re-scoped.
+- **B2c-obj (HIGH; gates deep2). Settle the (1.2) object and build the
+  interior fit.** e2at (LEARNINGS #186) split the circle into three objects
+  (unconstrained bottom: narrows, certified; pole-constrained bottom:
+  unconverged at matched resolution, $z0$-normalization meaningless since
+  $\Xi(i/2) = 1/2$ violates the constraint; CCM's explicit $k_\lambda$:
+  provably $\to \Xi$ interior). Tasks: read CCM's domain definitions at
+  source (is Suzuki's $A_a$ their problem?); constrained solves at higher
+  resolution with an INTERIOR fit on $z \in [4, 10]$ and the convergence
+  gate. Cost M.
+- **B2c-deep2 (BLOCKED on B2c-obj). Return-vs-continuation at $a = 3$-$5$**:
+  zeros to $T \sim 600$ at 100+ digits, dps 100-120, gates as in e2as, run
+  on the SETTLED object. Cost M-L.
 - **B2d. The frontier-capacity function.** Measure
   $\gamma_{\mathrm{frontier}}(J, \Omega, \sigma)$ and the graded profile's
   per-zero cost (~6 decades/zero in e2aq): how many zeros past the ceiling

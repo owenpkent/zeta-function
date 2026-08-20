@@ -135,3 +135,11 @@ converges to xi(1/2 + iz)) is directly testable with this repo's 50-digit minimi
 | `Gonek-Hughes-Keating-2005-Hybrid-Euler-Hadamard-Product.pdf` | GHK, arXiv:math/0511182 | The hybrid product: primes and zeros as complementary factors; context for the two-meter law. |
 | `Broucke-Debruyne-Vindas-2020-Beurling-Integers-RH-Large-Oscillation.pdf` | arXiv:2004.11501 | Beurling integers with RH and large oscillation: counting data underdetermines the analytic structure (the A1/A4 controls' neighbouring theory). |
 | `Carneiro-etal-2025-Fourier-Optimization-Pair-Correlation.pdf` | arXiv:2502.05106 | The Fourier-optimization/extremal-function school on pair correlation: the community for the band-ceiling (Omega) extremal question. |
+
+Addendum 2026-08-20 (B2c-lit): `Connes-Consani-Moscovici-2025-Zeta-Spectral-Triples.pdf`
+(arXiv:2511.22755, Suzuki's [4]) joined section 10. Read at depth for the e2at round
+(LEARNINGS #186): Section 6 numerics (D_log spectra vs the first twenty zeros), Section 7
+(e_n curves, kernel-vs-ground-state proximity, and Lemma 7.3: the constrained kernel's FT
+converges to Xi INTERIOR-uniformly on the open strip). The pole-constraint boundary fact
+(Xi(i/2) = 1/2, so Xi violates the constraint) and the three-object split are recorded in
+the e2at dossier.
