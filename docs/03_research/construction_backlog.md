@@ -42,18 +42,19 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   pulled and read at depth: interior-only convergence (Lemma 7.3), real
   numerics, no unconstrained-bottom shape measurement: #185's novelty claim
   survives re-scoped.
-- **B2c-obj (HIGH; gates deep2). Settle the (1.2) object and build the
-  interior fit.** e2at (LEARNINGS #186) split the circle into three objects
-  (unconstrained bottom: narrows, certified; pole-constrained bottom:
-  unconverged at matched resolution, $z0$-normalization meaningless since
-  $\Xi(i/2) = 1/2$ violates the constraint; CCM's explicit $k_\lambda$:
-  provably $\to \Xi$ interior). Tasks: read CCM's domain definitions at
-  source (is Suzuki's $A_a$ their problem?); constrained solves at higher
-  resolution with an INTERIOR fit on $z \in [4, 10]$ and the convergence
-  gate. Cost M.
-- **B2c-deep2 (BLOCKED on B2c-obj). Return-vs-continuation at $a = 3$-$5$**:
-  zeros to $T \sim 600$ at 100+ digits, dps 100-120, gates as in e2as, run
-  on the SETTLED object. Cost M-L.
+- **B2c-obj: SETTLED AT SOURCE 2026-08-20 (LEARNINGS #187).** CCM's QWλ is
+  the restriction to the FULL $L^2$ window ($\kappa$ weightless): (1.2)'s
+  object IS the unconstrained bottom, #185 applies directly, the CCM-numerics
+  tension dissolves (their evidence lives at $a \le 1.79$; finite-$\lambda$
+  proximity is compatible with common narrowing), and the constrained e2at
+  run re-scopes to a control.
+- **B2c-deep2 (UNBLOCKED; the sharpened mission): FIND THE TURNAROUND
+  $a^*$.** CCM's Lemma 7.3 proves the kernel's interior limit is $\Xi$, so
+  the measured outbound narrowing (#185) must reverse if the
+  kernel-groundstate proximity persists: locate $a^* \in [3, 5]$ (zeros to
+  $T \sim 600$ at 110 digits: computing; dps-110 solves; e2as gates), or
+  measure where the proximity fails. Either outcome is a first quantitative
+  contact with the conjecture's mechanism. Cost M-L.
 - **B2d. The frontier-capacity function.** Measure
   $\gamma_{\mathrm{frontier}}(J, \Omega, \sigma)$ and the graded profile's
   per-zero cost (~6 decades/zero in e2aq): how many zeros past the ceiling

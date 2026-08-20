@@ -116,6 +116,7 @@ the real standalone output.
 | [P9](#p9) | Paired-subtorus circle-rootedness: E over conjugate-paired phases of det(zI−DU), U unitary, is circle-rooted (all m) | Theorem (positive) | Elementary proof, every step numerically verified (50-digit) | 🟡 DEVELOPING | arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR | novelty-passed; **draft written** ([`publications/paired_subtorus/`](publications/paired_subtorus/), 5 pp, compiles); gate: checker verdicts + MathSciNet (human) + citation pins |
 | [P10](#p10) | The Gauss-lemma height floor: minimal log-height of a prime-forced integer vanisher = ψ(x) exactly (the vF disc model has no Siegel-lemma slot); multiplicity rational-root floor absent from Mathlib | Negative (closed branch) + Formal | Lean, axiom-clean (#GF-1..#GF-5) + integer-exact Python; uniqueness clause numerics-only (#GF-6 candidate) | 🟡 DEVELOPING | Mathlib PR (generalized multiplicity rational-root floor); exposition folds into P4 counting-roads; no standalone note | novelty-passed 2026-07-02 |
 | [P11](#p11) | The tameness trade: assembling the explicit formula's prime side is a tame/wild fault-line phenomenon (Leg A saturation PROVEN-but-orthogonal; Leg B "tame cannot carry primes" REFUTED via Kaplan-Shelah; archimedean-order invariant; C3 archimedean-injection RH-engine reading) | Expository (structural obstruction) | Synthesis of published corpus + PROVEN Lemma P3; keystone OPEN | 🟡 DEVELOPING | arXiv math.LO / math.NT note; companion to P4 §6.2 | draft written ([`publications/tameness_trade/`](publications/tameness_trade/)); gated on keystone staying OPEN |
+| [P12](#p12) | The localized Weil-form ground state, measured: the Gaussian-window margin law $4\sqrt{\pi}\sigma e^{-\gamma_1^2\sigma^2}$, the graded annihilation frontier, exact zero-locking, the xi-shape transient at $a \approx 1$ with certified narrowing, and the turnaround hunt for CCM-Suzuki (1.2) | Numerical study (measurement + instrumentation) | Numerical, certified: 50/80/110-digit protocols, per-rung convergence gates, tail + mixing certificates, pre-registrations with refutations documented | 🔵 STRONG (conditional: e2au verdict + law-novelty pass) | arXiv math.NT note (6-10 pp) | gate-scored 2026-08-20; outline ([`publications/weil_ground_state/`](publications/weil_ground_state/)); LEARNINGS #180-#187 |
 
 ---
 
@@ -700,3 +701,47 @@ Kept so they are not re-proposed as novel.
   replies still owed. (iv)
   Consistency fix: corrected the [PS14] attribution "Point-Schmidt" → "Palacin-Sklinos" in obstruction_map
   §6.2/§7 to match the verified-at-source attribution in the P11 note.
+
+### P12 {#p12}
+
+**The localized Weil-form ground state, measured.** 🔵 STRONG (conditional)
+
+- **Claim.** A certified numerical study of the ground state of Weil's quadratic form localized to a
+  window, the object of Yoshida's 1992 variational program, CCM's "Zeta spectral triples," and
+  Suzuki's 2026 unification, whose conjecture (1.2) says its Fourier transform converges to
+  $\xi(1/2+iz)$. Contents: (i) the single-mode margin law $\mathrm{margin}(\sigma) =
+  4\sqrt{\pi}\,\sigma\,e^{-\gamma_1^2\sigma^2}$ (slope and intercept to four figures over 38 orders;
+  the worst window mode is the UNMODULATED bump because the explicit formula cancels the pole:
+  measured, then derived); (ii) the multi-mode margin governed by the graded ANNIHILATION FRONTIER
+  (the $\sigma$-slope selects the first unannihilatable zero to 2 percent; node precision degrades
+  ~6 decades per zero across the frontier); (iii) EXACT zero-locking (nodes on reachable zeros to
+  working precision, $10^{-38}$-$10^{-41}$); (iv) the xi-shape TRANSIENT: the hard-window ground
+  state matches $\Xi$ at $a = 1$ ($L^2$ residual 0.051, refinement-stable) and then narrows,
+  certified through $a = 2.5$ at 80 digits: the approach to (1.2) is non-monotone; (v) the
+  turnaround hunt at $a = 2.5$-$5$ (e2au, in flight), whose either outcome is a first quantitative
+  contact with the conjectured mechanism; (vi) the instrument corpus: certificates that caught their
+  own artifacts (capacity scaling, precision starvation, cutoff exploitation, basis-convergence
+  gates, per-quantity convergence, the $\Xi(i/2) = 1/2$ boundary fact).
+- **Gate 1 (complete?).** Each rung is finished with its certificates; the note's arc completes when
+  e2au lands. Independent of RH's truth throughout.
+- **Gate 2 (verification).** Numerically validated with stated precision and controls at every
+  claim; the two closed-form laws are elementary derivations verified against the data and are
+  upgradeable to small rigorous propositions (given the certified low zeros).
+- **Gate 3 (novelty).** Swept 2026-08-20 ([`weil_positivity_prior_art_sweep.md`](docs/03_research/reading_notes/weil_positivity_prior_art_sweep.md),
+  nine-paper library + CCM [4] at depth): nearest prior work Yoshida 1992 (the program), Bombieri
+  2000 (minimization theory), CCM 2511.22755 (kernel numerics, $D_{\log}$ spectra: NOT the
+  unconstrained bottom's shape), Suzuki 2606.09096 (numerics for his (1.12) only). The shape
+  measurements and both laws did not surface; the laws flagged for one more targeted pass
+  (Fourier-optimization school) before drafting.
+- **Gate 4 (D-H soundness).** The instruments carry the discipline (the e2an pipeline's
+  componentwise bracket; the D-H Weil form correctly reads indefinite). 4b (K1): the note claims
+  no progress toward RH and says so prominently: it measures finite-scale structure of an
+  RH-equivalent form and tests a live conjecture's object.
+- **Gate 5 (honest framing).** Pre-registrations and their refutations are the note's spine
+  (midgap-dodge refuted; nearest-gap law refuted; naive constrained reconciliation refuted; each
+  replaced by the sharper measured law).
+- **Gate 6 (venue/effort).** arXiv math.NT numerical-study note, 6-10 pp; drafting 2-4 sessions
+  once e2au's verdict lands. The one thing that has to happen next: **e2au's turnaround verdict**,
+  then the law-novelty pass, then draft.
+- **Sources.** LEARNINGS #180-#187; e2ao/e2an/e2aq/e2ar/e2as/e2at/e2au dossiers;
+  `references/10_weil_positivity/`.
