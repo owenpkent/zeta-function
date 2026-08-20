@@ -84,8 +84,9 @@ def anim9(T):
                   "(zero zeros) and add one cosine wave per zero pair, in height order. Every "
                   "wave has the same shape; only its frequency (the zero's height) and phase "
                   "differ. Ninety-one pairs later the waves have conspired into the prime "
-                  "staircase, corner by corner. Nothing about the primes was fed in: the "
-                  "staircase is stored in the zeros.")
+                  "staircase, corner by corner (up to the ripple of stopping at 91 pairs; "
+                  "the exact identity needs them all). Nothing about the primes was fed "
+                  "in: the staircase is stored in the zeros.")
 
 
 # ---------------------------------------------------------------------------
@@ -278,7 +279,133 @@ def anim12(T):
                   "uniformly, and this is what its absence looks like.")
 
 
-ANIMS = {9: anim9, 10: anim10, 11: anim11, 12: anim12}
+# ---------------------------------------------------------------------------
+# 14. GUE blindness: move the zeros off the line, the statistics never move
+# ---------------------------------------------------------------------------
+
+def anim14(T):
+    print("anim 14: GUE blindness")
+    from experiments.primes import rsz
+    g, s, _, _ = MF.gue_data()
+    rng = np.random.default_rng(174)          # the LEARNINGS number, for the record
+    win = g[:48]
+    y = win - win[0]
+    w = rng.uniform(-1.0, 1.0, len(win))
+    amps = np.concatenate([np.full(8, 0.0), np.linspace(0.0, 0.35, 50),
+                           np.full(16, 0.35)])
+    bins = np.linspace(0, 3.5, 46)
+    hist0, _ = np.histogram(s, bins=bins, density=True)
+    sx = np.linspace(0, 3.5, 400)
+
+    with plt.style.context(T["style"]):
+        fig, (axl, axr) = plt.subplots(1, 2, figsize=(11.5, 5.4), width_ratios=[1, 1.9])
+        axl.axvline(0.5, color=T["muted"], ls="--", lw=1)
+        (dots,) = axl.plot(np.full(len(win), 0.5), y, "o", ms=5, color=T["red"])
+        atxt = axl.text(0.05, 0.95, "", transform=axl.transAxes, fontsize=12,
+                        color=T["fg"], va="top")
+        axl.set_xlim(0, 1)
+        axl.set_ylim(-0.5, float(y[-1]) + 0.5)
+        axl.set_xlabel("Re(s)")
+        axl.set_ylabel("height above 1e6")
+        axl.set_title("48 zeros, pushed off the line")
+        axr.stairs(hist0, bins, fill=True, color=T["blue"], alpha=0.55,
+                   label="gap distribution of the SAME heights")
+        axr.plot(sx, rsz.wigner_gue(sx), color=T["red"], lw=2, label="GUE")
+        ftxt = axr.text(0.5, 0.55, "", transform=axr.transAxes, fontsize=12.5,
+                        ha="center", color=T["fg"])
+        axr.set_xlim(0, 3.5)
+        axr.set_ylim(0, 1.05)
+        axr.set_xlabel("gap to the next zero  (unit mean)")
+        axr.set_ylabel("probability density")
+        axr.set_title("the statistics, recomputed every frame")
+        axr.legend(fontsize=9)
+
+        def update(i):
+            a = amps[i]
+            dots.set_data(0.5 + a * w, y)
+            # recompute the statistic from the ordinates: identical by construction
+            h, _ = np.histogram(s, bins=bins, density=True)
+            same = np.array_equal(h, hist0)
+            atxt.set_text(f"max |Re - 1/2| = {a:.2f}")
+            ftxt.set_text("recomputed: bit-for-bit identical" if same and a > 0
+                          else ("" if a == 0 else "changed (!)"))
+            ftxt.set_color(T["green"] if same else T["red"])
+            return dots, atxt, ftxt
+
+        anim = FuncAnimation(fig, update, frames=len(amps), blit=False)
+        save_anim(anim, "14_anim_gue_blind", T, "GUE blindness: statistics cannot see RH",
+                  "The punchline the previous entry needs: every spectral statistic (gaps, "
+                  "pair correlation, all of GUE) is computed from the zeros' HEIGHTS only. "
+                  "Here 48 zeros are pushed off the line, farther than any conjecture allows, "
+                  "while the gap distribution is honestly recomputed at every frame: it is "
+                  "bit-for-bit identical throughout. The repo's measured version (LEARNINGS "
+                  "#174) did this to 400 zeros with every statistic in the battery. So GUE "
+                  "agreement, however beautiful, is Level 3 evidence: it motivates the hidden "
+                  "operator but cannot decide RH. The proof has to live where the real parts "
+                  "live: in the positivity (Level 4), which is the margin story of entries 6 "
+                  "and 12.")
+
+
+# ---------------------------------------------------------------------------
+# 16. the polar trace, live, then sliding off the line
+# ---------------------------------------------------------------------------
+
+def anim16(T):
+    print("anim 16: the polar trace and the off-line morph")
+    t, zline, tm, sigmas, fam = MF.polar_data()
+    gz = MF.zeta_gammas(50.0)
+    n_trace = 70
+    heads = np.linspace(2.0, 50.0, n_trace)
+    n_morph = len(sigmas)
+    frames = n_trace + 8 + n_morph + 14
+
+    with plt.style.context(T["style"]):
+        fig, ax = plt.subplots(figsize=(8.4, 7.2))
+        ax.plot([0], [0], "+", ms=15, mew=2.4, color=T["red"], zorder=5)
+        (path,) = ax.plot([], [], lw=1.1, color=T["blue"], alpha=0.9)
+        (head,) = ax.plot([], [], "o", ms=8, color=T["gold"])
+        txt = ax.text(0.03, 0.97, "", transform=ax.transAxes, fontsize=13,
+                      color=T["fg"], va="top")
+        sub = ax.text(0.03, 0.90, "", transform=ax.transAxes, fontsize=10.5,
+                      color=T["muted"], va="top")
+        ax.set_xlim(-3.2, 5.0)
+        ax.set_ylim(-3.6, 3.6)
+        ax.set_aspect("equal")
+        ax.set_xlabel("Re zeta")
+        ax.set_ylabel("Im zeta")
+        ax.set_title("zeta(s), s = sigma + i t")
+
+        def update(i):
+            if i < n_trace + 8:
+                th = heads[min(i, n_trace - 1)]
+                sel = t <= th
+                path.set_data(zline.real[sel], zline.imag[sel])
+                head.set_data([zline.real[sel][-1]], [zline.imag[sel][-1]])
+                hits = int(np.sum(gz <= th))
+                txt.set_text(f"sigma = 0.500    t = {th:.1f}")
+                sub.set_text(f"origin passes so far: {hits}  (each one is a zero)")
+            else:
+                j = min(i - n_trace - 8, n_morph - 1)
+                sg = sigmas[j]
+                z = fam[sg]
+                path.set_data(z.real, z.imag)
+                head.set_data([], [])
+                txt.set_text(f"sigma = {sg:.3f}")
+                sub.set_text("sliding off the line: the curve lets go of the origin")
+            return path, head, txt, sub
+
+        anim = FuncAnimation(fig, update, frames=frames, blit=True)
+        save_anim(anim, "16_anim_polar", T, "Tracing zeta, then letting go of the line",
+                  "First the classic picture live: the point zeta(1/2 + i t) sweeps out its "
+                  "spiral as t climbs, and every pass through the red cross is a zero (the "
+                  "counter ticks to ten by t = 50). Then the real part slides from 0.500 to "
+                  "0.750 and the whole curve deforms: the loops that used to close exactly "
+                  "on the origin detach and drift away. The zeros live only where the curve "
+                  "comes home. RH: this exactness happens at Re(s) = 1/2 and nowhere else "
+                  "in the strip.")
+
+
+ANIMS = {9: anim9, 10: anim10, 11: anim11, 12: anim12, 14: anim14, 16: anim16}
 
 
 def main():

@@ -226,8 +226,10 @@ def fig3(T):
         save(fig, "03_explicit_formula", T, "Zeros build the primes",
              "psi(x) jumps by log p at every prime power (grey staircase). The other curve is x "
              "minus one cosine-like wave per zero pair: with 0 zeros it is just the smooth line; "
-             "with 10 it wobbles; with all 91 pairs below height 200 it locks onto the staircase, "
-             "corners and all. Zeros and primes are exact Fourier duals: this is the two-sided "
+             "with 10 it wobbles; with all 91 pairs below height 200 it locks onto the staircase "
+             "corner by corner, up to the finite-truncation ripple (about 0.1 at x = 10 growing "
+             "to about 1 near x = 100, i.e. under one percent of the plot; more zeros shrink it: "
+             "the exact identity needs them all). Zeros and primes are exact Fourier duals: this is the two-sided "
              "trace formula (SP4) as a picture, and it is why the zeros' positions are not "
              "decoration; they carry all the prime information. The animated version below "
              "adds the zeros one at a time.")
@@ -459,6 +461,475 @@ def fig8(T):
 
 
 # ---------------------------------------------------------------------------
+# 13. the GUE statistics: the agreement, and its exact blindness
+# ---------------------------------------------------------------------------
+
+def gue_data():
+    """~30k zeros near height 1e6 from the primes-thread Riemann-Siegel engine,
+    with unfolded spacings and the empirical pair correlation."""
+    if "gue" not in _CACHE:
+        from experiments.primes import rsz
+        print("fig 13: computing ~30k zeros near height 1e6 (rsz engine)")
+        t0 = 1.0e6
+        g = rsz.zeros_in(t0, t0 + 15750.0)
+        s = rsz.unfold(g)
+        u, r2 = rsz.pair_correlation(s, umax=3.0, nbins=60)
+        _CACHE["gue"] = (g, s, u, r2)
+        print(f"  {len(g)} zeros, mean unfolded spacing {float(np.mean(s)):.4f}")
+    return _CACHE["gue"]
+
+
+def fig13(T):
+    from experiments.primes import rsz
+    g, s, u, r2 = gue_data()
+    sx = np.linspace(0, 3.5, 400)
+    with plt.style.context(T["style"]):
+        fig, (axl, axr) = plt.subplots(1, 2, figsize=(12.5, 5.8))
+        axl.hist(s, bins=np.linspace(0, 3.5, 46), density=True, color=T["blue"],
+                 alpha=0.55, label=f"{len(g):,} zeros near height 1e6")
+        axl.plot(sx, rsz.wigner_gue(sx), color=T["red"], lw=2,
+                 label="GUE random-matrix prediction")
+        axl.plot(sx, np.exp(-sx), "--", color=T["grey"], lw=1.5,
+                 label="uncorrelated (Poisson) foil")
+        axl.set_xlabel("gap to the next zero  (unit mean)")
+        axl.set_ylabel("probability density")
+        axl.set_title("consecutive-gap distribution")
+        axl.legend(fontsize=9)
+        axr.plot(u, r2, "o", ms=4, color=T["blue"], label="measured pair correlation")
+        axr.plot(sx, rsz.sine_kernel(sx), color=T["red"], lw=2,
+                 label="Montgomery / GUE sine kernel")
+        axr.axhline(1.0, ls="--", color=T["grey"], lw=1.5, label="Poisson foil")
+        axr.set_xlim(0, 3)
+        axr.set_ylim(0, 1.25)
+        axr.set_xlabel("distance between zeros  (unit mean)")
+        axr.set_ylabel("relative pair density")
+        axr.set_title("two-point correlation")
+        axr.legend(fontsize=9, loc="lower right")
+        fig.suptitle("The zeros repel like eigenvalues of a random Hermitian matrix "
+                     "(computed locally; the Hilbert-Polya hint)", fontsize=13.5)
+        save(fig, "13_gue_agreement", T, "The GUE statistics: the operator hint",
+             "Roughly thirty thousand zeros near height one million, computed here by the "
+             "primes thread's Riemann-Siegel engine. Left: the gaps between consecutive "
+             "zeros avoid zero (repulsion) and follow the GUE random-matrix curve, not the "
+             "uncorrelated foil. Right: the two-point correlation matches Montgomery's sine "
+             "kernel. This is the strongest hint that the zeros are the spectrum of a hidden "
+             "self-adjoint operator. The essential caveat is the next entry: this entire "
+             "picture is computed from the zeros' HEIGHTS alone, so it is provably blind to "
+             "the one thing RH asserts.")
+
+
+# ---------------------------------------------------------------------------
+# 15. the polar picture: zeta as a curve threading the origin
+# ---------------------------------------------------------------------------
+
+def polar_data():
+    """zeta trajectories via mpmath everywhere. (The Riemann-Siegel engine is
+    NOT usable here: its asymptotic main sum is empty below t ~ 2 pi, and the
+    curve's low-t arc from zeta(1/2) = -1.4604 is exactly what these pictures
+    must get right. Verified against the classical reference plot.)"""
+    if "polar" not in _CACHE:
+        print("fig 15: zeta trajectories (mpmath; ~20 s, cached across themes)")
+        mp.mp.dps = 12
+        t = np.arange(0.0, 50.0, 0.02)
+        zline = np.array([complex(mp.zeta(mp.mpc(0.5, tt))) for tt in t])
+        tm = np.arange(0.0, 50.0, 0.05)
+        sigmas = np.round(np.linspace(0.5, 0.75, 26), 4)
+        fam = {}
+        for sg in sigmas:
+            if abs(sg - 0.5) < 1e-9:
+                fam[sg] = np.interp(tm, t, zline.real) + 1j * np.interp(tm, t, zline.imag)
+            else:
+                fam[sg] = np.array([complex(mp.zeta(mp.mpc(sg, tt))) for tt in tm])
+        _CACHE["polar"] = (t, zline, tm, sigmas, fam)
+    return _CACHE["polar"]
+
+
+def _traj(ax, z, tvals, T, cmap="viridis"):
+    from matplotlib.collections import LineCollection
+    pts = np.column_stack([z.real, z.imag]).reshape(-1, 1, 2)
+    segs = np.concatenate([pts[:-1], pts[1:]], axis=1)
+    lc = LineCollection(segs, cmap=cmap, array=tvals[:-1], lw=1.3)
+    ax.add_collection(lc)
+    ax.plot([0], [0], "+", ms=14, mew=2.2, color=T["red"], zorder=5)
+    ax.set_xlim(-3.2, 5.0)
+    ax.set_ylim(-3.6, 3.6)
+    ax.set_aspect("equal")
+    ax.set_xlabel("Re zeta")
+    return lc
+
+
+def fig15(T):
+    t, zline, tm, sigmas, fam = polar_data()
+    gz = zeta_gammas(50.0)
+    with plt.style.context(T["style"]):
+        fig, (axl, axr) = plt.subplots(1, 2, figsize=(12.5, 6.4))
+        lc = _traj(axl, zline, t, T)
+        axl.set_ylabel("Im zeta")
+        axl.set_title(f"on the critical line: {len(gz)} passes through 0 for t <= 50\n"
+                      "(every pass through the cross IS a zero)")
+        z75 = fam[sigmas[-1]]
+        _traj(axr, z75, tm, T)
+        axr.set_title("at Re(s) = 0.75: the curve loops and loops\nand never returns to 0")
+        cb = fig.colorbar(lc, ax=[axl, axr], shrink=0.8, pad=0.02)
+        cb.set_label("t  (height)")
+        fig.suptitle("zeta as a moving point: s = sigma + i t, t running upward", fontsize=13.5)
+        save(fig, "15_polar_line", T, "The polar picture: threading the origin",
+             "Fix the real part and let t run: zeta(sigma + i t) traces a curve in the "
+             "complex plane (color = height). On the critical line (left) the curve spirals "
+             "and keeps threading the origin: ten exact passes below t = 50, one per zero. "
+             "At Re(s) = 0.75 (right) the same function loops endlessly but never touches "
+             "the cross. RH is the statement that the coming-home-to-zero behaviour happens "
+             "ONLY at Re(s) = 1/2: the animated version below traces the curve live and "
+             "then slides the real part, watching the origin passes detach.")
+
+
+# ---------------------------------------------------------------------------
+# 17. the phase plot: arg zeta over the plane (Wegert-style domain coloring)
+# ---------------------------------------------------------------------------
+
+def fig17(T):
+    if "phase" not in _CACHE:
+        print("fig 17: phase grid (mpmath; ~1-2 min, cached across themes)")
+        mp.mp.dps = 8
+        sig = np.linspace(-5.5, 3.5, 150)
+        tt = np.linspace(0.02, 40.0, 420)
+        A = np.empty((len(tt), len(sig)))
+        for i, t in enumerate(tt):
+            for j, s in enumerate(sig):
+                A[i, j] = float(mp.arg(mp.zeta(mp.mpc(s, t))))
+        _CACHE["phase"] = (sig, tt, A)
+    sig, tt, A = _CACHE["phase"]
+    gz = zeta_gammas(40.0)
+    with plt.style.context(T["style"]):
+        fig, ax = plt.subplots(figsize=(10.5, 8))
+        ax.imshow((A + pi) / (2 * pi), origin="lower", aspect="auto", cmap="hsv",
+                  extent=[sig[0], sig[-1], tt[0], tt[-1]], interpolation="bilinear")
+        ax.axvline(0.5, color="k", lw=0.8, ls="--", alpha=0.6)
+        ax.plot([0.5] * len(gz), gz, "o", ms=9, mfc="none", mec="k", mew=1.6)
+        ax.plot([-2, -4], [0.35, 0.35], "o", ms=9, mfc="none", mec="k", mew=1.6)
+        ax.plot([1], [0.35], "s", ms=9, mfc="none", mec="k", mew=1.9)
+        ax.annotate("trivial zeros", (-3, 1.2), ha="center", fontsize=10, color="k")
+        ax.annotate("pole", (1.15, 1.4), fontsize=10, color="k")
+        ax.set_xlabel("Re(s)")
+        ax.set_ylabel("Im(s)")
+        ax.set_title("the phase of zeta: hue = arg zeta(s); every color pinwheel is a zero, "
+                     "the pole winds the other way")
+        save(fig, "17_phase_plot", T, "The phase plot: zeros as pinwheels",
+             "Color every point by the ANGLE of zeta(s) (hue runs one full cycle as the "
+             "angle does). A zero is a point where all colors meet, winding counter-"
+             "clockwise (circles: the trivial zeros at -2, -4 and the critical-line zeros); "
+             "the pole at s = 1 is the reverse pinwheel (square). Counting zeros inside a "
+             "region = counting how often the color wheel turns along its boundary (the "
+             "argument principle): this picture is literally how N(T) is computed, and it "
+             "makes visible that zeros are topological objects: they cannot quietly vanish, "
+             "only move. RH says all the on-strip pinwheels sit on the dashed line.")
+
+
+# ---------------------------------------------------------------------------
+# 18. zeros hear the primes: the dual spike plot (instrument)
+# ---------------------------------------------------------------------------
+
+def fig18(T):
+    from experiments.primes import rsz
+    if "spikes" not in _CACHE:
+        print("fig 18: ~8900 zeros (rsz), then the trigonometric sum over them")
+        g = rsz.zeros_in(10.0, 9000.0)
+        w = 0.5 * (1 + np.cos(pi * np.arange(len(g)) / len(g)))     # Hann taper
+        t = np.linspace(0.2, 4.6, 6000)
+        S = np.zeros_like(t)
+        for i in range(0, len(g), 800):
+            S = S + (w[i:i + 800, None] * np.cos(np.outer(g[i:i + 800], t))).sum(axis=0)
+        P = np.abs(S) / np.sum(w)
+        _CACHE["spikes"] = (g, t, P)
+    g, t, P = _CACHE["spikes"]
+    lam = lambda_sieve(105)
+    npow = [n for n in range(2, 100) if lam[n] > 0]
+    pred = np.array([lam[n] / np.sqrt(n) for n in npow])
+    # scale the predicted comb to the measured log-2 peak
+    i2 = np.argmin(np.abs(t - log(2)))
+    scale = P[max(0, i2 - 5):i2 + 6].max() / pred[0]
+    with plt.style.context(T["style"]):
+        fig, ax = plt.subplots(figsize=(12.5, 6.2))
+        ax.plot(t, P, lw=0.9, color=T["blue"],
+                label=f"|weighted sum of cos(t gamma)| over {len(g)} zeros")
+        ml, sl, bl = ax.stem([log(n) for n in npow], pred * scale,
+                             linefmt="-", markerfmt=" ", basefmt=" ")
+        plt.setp(sl, color=T["red"], alpha=0.75, lw=1.6)
+        for n in (2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25, 27, 32, 49, 64, 81):
+            ax.annotate(str(n), (log(n), pred[npow.index(n)] * scale),
+                        textcoords="offset points", xytext=(0, 5),
+                        ha="center", fontsize=8.5, color=T["red"])
+        ax.set_xlim(0.2, 4.6)
+        ax.set_ylim(0, None)
+        ax.set_xlabel("t   (the spike at t = log n)")
+        ax.set_ylabel("spectral power of the zeros")
+        ax.legend(fontsize=10, loc="upper right")
+        ax.set_title("the zeros, summed as pure tones, spike EXACTLY at log(prime powers), "
+                     "with heights Lambda(n)/sqrt(n)")
+        save(fig, "18_zeros_hear_primes", T, "The zeros hear the primes",
+             "The reverse direction of figure 2: there, integer sums produced the zeros; "
+             "here, sum cos(t gamma) over 8,880 zeros (computed locally) and the result "
+             "spikes at t = log 2, log 3, log 4, log 5 ... : every prime POWER announces "
+             "itself, with the predicted heights Lambda(n)/sqrt(n) (red comb, one scale "
+             "factor fitted at log 2, all other heights then forced). This is the explicit "
+             "formula read backwards, and it sharpens the GUE lesson of entry 14: the "
+             "zeros' statistics DO carry arithmetic (these spikes are invisible to pure "
+             "random-matrix universality), yet consume only the heights, so even THIS "
+             "cannot see the real parts. The conservation law, drawn from the statistics "
+             "side.")
+
+
+# ---------------------------------------------------------------------------
+# 19. Z(t), Gram points, and the Lehmer near-miss
+# ---------------------------------------------------------------------------
+
+def fig19(T):
+    from experiments.primes import rsz
+    if "zt" not in _CACHE:
+        t1 = np.arange(10.0, 110.0, 0.01)
+        z1 = rsz.zed(t1)
+        ng = np.arange(-1, 300)
+        gp = rsz.gram_point(ng)
+        sel = (gp >= 10.0) & (gp <= 110.0)
+        gp, ng = gp[sel], ng[sel]
+        zg = rsz.zed(gp)
+        t2 = np.arange(7004.0, 7006.2, 0.0005)
+        z2 = rsz.zed(t2)
+        _CACHE["zt"] = (t1, z1, gp, ng, zg, t2, z2)
+    t1, z1, gp, ng, zg, t2, z2 = _CACHE["zt"]
+    gram_ok = np.sign(zg) == np.where(ng % 2 == 0, 1.0, -1.0)
+    with plt.style.context(T["style"]):
+        fig, (ax, axl) = plt.subplots(2, 1, figsize=(12.5, 8))
+        ax.plot(t1, z1, lw=0.8, color=T["blue"])
+        ax.axhline(0, color=T["muted"], lw=0.8)
+        ax.plot(gp[gram_ok], np.zeros(int(gram_ok.sum())), "|", ms=12, color=T["green"],
+                label="Gram points (sign as predicted)")
+        if (~gram_ok).any():
+            ax.plot(gp[~gram_ok], np.zeros(int((~gram_ok).sum())), "|", ms=12,
+                    color=T["red"], label="Gram's law fails")
+        ax.set_xlim(10, 110)
+        ax.set_xlabel("t")
+        ax.set_ylabel("Z(t)")
+        ax.legend(fontsize=9, loc="upper right")
+        ax.set_title("Z(t): a REAL function whose sign changes are the zeros "
+                     "(this is what certified verification walks)")
+        axl.plot(t2, z2, lw=1.1, color=T["blue"])
+        axl.axhline(0, color=T["muted"], lw=0.8)
+        # the close pair: the two sign changes inside [7005.0, 7005.2]
+        win = (t2 >= 7005.0) & (t2 <= 7005.2)
+        tw, zw = t2[win], z2[win]
+        ic = np.flatnonzero(np.sign(zw[:-1]) != np.sign(zw[1:]))
+        z1p, z2p = float(tw[ic[0]]), float(tw[ic[1]])
+        between = (tw > z1p) & (tw < z2p)
+        ext = float(zw[between][np.argmax(np.abs(zw[between]))])
+        axl.annotate("the Lehmer pair: two zeros "
+                     f"{z2p - z1p:.3f} apart;\nbetween them Z barely reaches {ext:.4f}\n"
+                     "(see the zoom)", (7005.08, 0.0),
+                     textcoords="offset points", xytext=(-190, -60), fontsize=10.5,
+                     color=T["red"], arrowprops=dict(arrowstyle="->", color=T["red"]))
+        axi = axl.inset_axes([0.60, 0.55, 0.37, 0.42])
+        axi.plot(t2, z2, lw=1.2, color=T["blue"])
+        axi.axhline(0, color=T["muted"], lw=0.7)
+        axi.set_xlim(7005.02, 7005.15)
+        axi.set_ylim(-0.012, 0.006)
+        axi.set_title("zoom: the arch", fontsize=9)
+        axi.tick_params(labelsize=7)
+        axl.set_xlim(7004.0, 7006.2)
+        axl.set_ylim(-1.2, 1.2)
+        axl.set_xlabel("t")
+        axl.set_ylabel("Z(t)")
+        axl.set_title("Lehmer's phenomenon: RH survives here by less than 0.005")
+        save(fig, "19_zt_gram", T, "Z(t), Gram points, and the Lehmer near-miss",
+             "Top: the Riemann-Siegel Z function, a real rotation of zeta on the line; "
+             "every sign change is a zero, which is how this repo's certified verification "
+             "walked 118.5 million of them. Ticks mark Gram points, where Z is 'supposed' "
+             "to alternate sign; the red ones are Gram-law failures (about 15 percent "
+             "eventually). Bottom: the famous Lehmer pair near t = 7005: two zeros only "
+             "0.04 apart, with |Z| between them under five thousandths. If that little arch "
+             "had failed to cross, RH would be false. Nothing protects it in any proven "
+             "way: this is what the missing positivity has to forbid, forever.")
+
+
+# ---------------------------------------------------------------------------
+# 20. the near-failure direction: the Weil form's ground state (instrument)
+# ---------------------------------------------------------------------------
+
+def ground_state(sigma: float, cutoff: float = 1e-10):
+    """Generalized bottom eigenvector of the zero-side Weil Gram against the
+    L2 Gram, on the modulated-Gaussian window basis (zeros to T = 200, basis
+    small enough that the Gram has full rank: no truncation-null ambiguity)."""
+    gz = zeta_gammas(200.0)
+    domega = 1.0 / (2.0 * sigma)
+    omegas = np.arange(0.0, 34.0 + 1e-9, domega)
+    W1, W2 = np.meshgrid(omegas, omegas, indexing="ij")
+    G = (sigma * np.sqrt(pi) / 2) * (np.exp(-sigma ** 2 * (W1 - W2) ** 2 / 4)
+                                     + np.exp(-sigma ** 2 * (W1 + W2) ** 2 / 4))
+    def ghat(w, tv):
+        return sigma * np.sqrt(pi / 2) * (np.exp(-sigma ** 2 * (tv - w) ** 2 / 2)
+                                          + np.exp(-sigma ** 2 * (tv + w) ** 2 / 2))
+    tab = np.array([ghat(w, gz) for w in omegas])
+    Qz = 2.0 * tab @ tab.T
+    wG, V = np.linalg.eigh(G)
+    keep = wG > cutoff * wG[-1]
+    Wm = V[:, keep] / np.sqrt(wG[keep])
+    ev, U = np.linalg.eigh(Wm.T @ Qz @ Wm)
+    c = Wm @ U[:, 0]                       # G-normalized: c'Gc = 1
+    return omegas, c, float(ev[0])
+
+
+def ground_state_mp(sigma: float = 0.55, dps: int = 50):
+    """High-precision minimizer. Needed because the margin at this scale
+    (~1e-26) sits far below double precision AND below what float-accurate
+    zeros can support, so both the arithmetic and the zeros run at `dps`
+    digits. Zeros are disk-cached across runs."""
+    import json
+    zcache = OUT / "_zeros_dps50.json"
+    mp.mp.dps = dps
+    if zcache.exists():
+        gz = [mp.mpf(s) for s in json.loads(zcache.read_text())]
+    else:
+        print(f"  computing 91 zeros at {dps} digits (one-time, disk-cached)")
+        gz = []
+        k = 1
+        while True:
+            z = mp.zetazero(k)
+            if mp.im(z) > 200:
+                break
+            gz.append(mp.im(z))
+            k += 1
+        zcache.write_text(json.dumps([mp.nstr(g, dps) for g in gz]))
+    domega = 1.0 / (2.0 * sigma)
+    omegas = np.arange(0.0, 34.0 + 1e-9, domega)
+    J = len(omegas)
+    sg = mp.mpf(sigma)
+    G = mp.zeros(J, J)
+    for a in range(J):
+        for b in range(J):
+            wa, wb = mp.mpf(omegas[a]), mp.mpf(omegas[b])
+            G[a, b] = (sg * mp.sqrt(mp.pi) / 2) * (mp.e**(-sg**2 * (wa - wb)**2 / 4)
+                                                   + mp.e**(-sg**2 * (wa + wb)**2 / 4))
+    tab = mp.zeros(J, len(gz))
+    for a in range(J):
+        wa = mp.mpf(omegas[a])
+        for b, g in enumerate(gz):
+            tab[a, b] = sg * mp.sqrt(mp.pi / 2) * (mp.e**(-sg**2 * (g - wa)**2 / 2)
+                                                   + mp.e**(-sg**2 * (g + wa)**2 / 2))
+    Qz = 2 * tab * tab.T
+    L = mp.cholesky(G)
+    Li = mp.inverse(L)
+    A = Li * Qz * Li.T
+    E, V = mp.eigsy(A)
+    i0 = min(range(J), key=lambda i: E[i])
+    v = mp.matrix([V[r, i0] for r in range(J)])
+    c = Li.T * v
+    cf = np.array([float(c[r]) for r in range(J)])
+    norm = float(mp.re((c.T * (G * c))[0]))
+    lg = float(mp.log10(abs(E[i0]))) if E[i0] != 0 else float("-inf")
+    return omegas, cf / np.sqrt(norm), lg
+
+
+def _nodes(tv, gh):
+    i = np.flatnonzero(np.sign(gh[:-1]) != np.sign(gh[1:]))
+    return tv[i]
+
+
+def fig20(T):
+    if "gs" not in _CACHE:
+        print("fig 20: ground states of the window Weil form across scales")
+        GS = {sg: ground_state(sg)[:2] for sg in (0.20, 0.25, 0.30, 0.35)}
+        print("  50-digit solves at sigma = 0.45, 0.55 (margins below fp need real precision)")
+        om45, cf45, lg45 = ground_state_mp(0.45)
+        om, cf, lg = ground_state_mp(0.55)
+        GS[0.55] = (om, cf)
+        slope = (lg - lg45) * np.log(10) / (0.55 ** 2 - 0.45 ** 2)
+        print(f"  multi-mode margin: 1e{lg45:.1f} at 0.45, 1e{lg:.1f} at 0.55; "
+              f"implied exponent {slope:.0f} per sigma^2 (single-mode law: -199.8)")
+        # locking metric, both directions: does every zero get a node, and how
+        # many of the minimizer's nodes sit on zeros vs free in the central hole
+        gzz = zeta_gammas(60.0)
+        gz_band = gzz[gzz <= 38.0]
+        tvv = np.linspace(1.0, 38.0, 8000)
+        for sg, (omg, cc) in sorted(GS.items()):
+            gh = np.zeros_like(tvv)
+            for w, co in zip(omg, cc):
+                gh += co * sg * np.sqrt(pi / 2) * (np.exp(-sg**2 * (tvv - w)**2 / 2)
+                                                   + np.exp(-sg**2 * (tvv + w)**2 / 2))
+            nd = _nodes(tvv, gh)
+            if len(nd):
+                z2n = [float(np.min(np.abs(nd - g))) for g in gz_band]
+                in_hole = int(np.sum(nd < 14.0))
+                print(f"  sigma = {sg}: every-zero-gets-a-node max dist = "
+                      f"{max(z2n):.3f} (median {np.median(z2n):.3f}); "
+                      f"{in_hole}/{len(nd)} nodes free inside the hole")
+        _CACHE["gs"] = GS
+    GS = _CACHE["gs"]
+    gz = zeta_gammas(60.0)
+    lam = lambda_sieve(60)
+    tv = np.linspace(0, 55, 3000)
+    x = np.arange(-14.0, 14.0, 2e-3)
+    with plt.style.context(T["style"]):
+        fig, (axs, axa) = plt.subplots(2, 1, figsize=(12.5, 9))
+        for k, (sg, (omegas, c)) in enumerate(sorted(GS.items())):
+            gh = np.zeros_like(tv)
+            for w, cc in zip(omegas, c):
+                gh += cc * sg * np.sqrt(pi / 2) * (np.exp(-sg ** 2 * (tv - w) ** 2 / 2)
+                                                   + np.exp(-sg ** 2 * (tv + w) ** 2 / 2))
+            gh = gh / np.max(np.abs(gh)) * (1 if gh[np.argmax(np.abs(gh))] > 0 else -1)
+            axs.plot(tv, gh + 2.2 * k, lw=1.1, color=T["blue"])
+            tag = f"sigma = {sg}" + ("  (50-digit solve)" if sg > 0.5 else "")
+            axs.text(45.5, 2.2 * k + 0.35, tag, fontsize=10, color=T["fg"])
+            axs.axhline(2.2 * k, color=T["muted"], lw=0.4)
+            gx = np.zeros_like(x)
+            for w, cc in zip(omegas, c):
+                gx += cc * np.exp(-x * x / (2 * sg ** 2)) * np.cos(w * x)
+            from scipy.signal import fftconvolve
+            corr = fftconvolve(gx, gx) * 2e-3
+            xc = np.arange(len(corr)) * 2e-3 + 2 * x[0]
+            corr = corr / np.max(np.abs(corr))
+            sel = (xc >= 0) & (xc <= 5.0)
+            axa.plot(xc[sel], corr[sel] + 1.4 * k, lw=1.1, color=T["blue"])
+            axa.text(4.55, 1.4 * k + 0.28, f"sigma = {sg}", fontsize=10, color=T["fg"])
+            axa.axhline(1.4 * k, color=T["muted"], lw=0.4)
+        for g in gz:
+            axs.axvline(g, color=T["zline"], lw=0.9, zorder=0)
+        axs.set_xlim(0, 55)
+        axs.set_xlabel("tau   (vertical lines = the zeros)")
+        axs.set_ylabel("ghat of the ground state (stacked)")
+        axs.set_title("the spectral shape of the ALMOST-NEGATIVE direction, as the window grows")
+        for n in range(2, 55):
+            if lam[n] > 0:
+                axa.axvline(log(n), color=T["zline"], lw=0.9, zorder=0)
+                if n in (2, 3, 4, 5, 7, 8, 9, 11, 16, 32):
+                    axa.text(log(n), -0.75, str(n), ha="center", fontsize=8,
+                             color=T["muted"])
+        axa.set_xlim(0, 5)
+        axa.set_xlabel("x   (vertical lines = log of prime powers; the Weil form's prime "
+                       "term samples the autocorrelation exactly there)")
+        axa.set_ylabel("autocorrelation (stacked)")
+        save(fig, "20_ground_state", T, "The near-failure direction (instrument)",
+             "A research instrument, not an illustration. For each window scale, solve for "
+             "the function on which the Weil form is SMALLEST per unit mass: the direction "
+             "in which positivity almost fails, i.e. M4's hardest direction at that scale. "
+             "Three measured facts from this instrument's first runs. (i) At EVERY scale "
+             "the minimizer places a node on every zero its frequency band can reach, to "
+             "0.004: it interpolate-vanishes on the spectrum, always; its surplus freedom "
+             "(0 of 6 nodes at sigma 0.2, 13 of 32 at 0.55) parks inside the central hole "
+             "where the form cannot charge it. (ii) Because of that, the multi-mode margin "
+             "SATURATES in sigma (measured exponent -12 per sigma^2 against the "
+             "single-mode law's -199.8): the bottom is set by the leak past the frequency "
+             "CEILING onto the first unreachable zero, so the honest scaling variable for "
+             "the full space is the band ceiling, not the window width: a second law, "
+             "distinct from entry 6's. (iii) Beyond sigma ~ 0.45 the margin sits so far "
+             "below double precision that a naive solve returns an arbitrary member of a "
+             "numerical null cone, so the large-scale curves here are 50-digit solves on "
+             "50-digit zeros: the certification-cost law at the eigenvector level. "
+             "Bottom panel: the minimizer's autocorrelation, which is exactly what the "
+             "explicit formula's prime term samples at log(prime powers) (vertical lines). "
+             "Whatever this object converges to IS the shape a positivity proof must "
+             "control.")
+
+
+# ---------------------------------------------------------------------------
 # the gallery UI
 # ---------------------------------------------------------------------------
 
@@ -578,12 +1049,13 @@ build();
     print(f"  wrote index.html ({len(items)} entries)")
 
 
-FIGS = {1: fig1, 2: fig2, 3: fig3, 4: fig4, 5: fig5, 6: fig6, 7: fig7, 8: fig8}
+FIGS = {1: fig1, 2: fig2, 3: fig3, 4: fig4, 5: fig5, 6: fig6, 7: fig7, 8: fig8,
+        13: fig13, 15: fig15, 17: fig17, 18: fig18, 19: fig19, 20: fig20}
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--only", type=int, default=0, help="build a single figure (1-8)")
+    ap.add_argument("--only", type=int, default=0, help="build a single figure (1-8, 13)")
     ap.add_argument("--html", action="store_true", help="rebuild index.html only")
     args = ap.parse_args()
     t0 = time.time()
