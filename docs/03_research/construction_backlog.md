@@ -48,15 +48,16 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   tension dissolves (their evidence lives at $a \le 1.79$; finite-$\lambda$
   proximity is compatible with common narrowing), and the constrained e2at
   run re-scopes to a control.
-- **B2c-prox (HIGH once deep2 certifies): the proximity test in our hands.**
-  Build CCM's kernel $k_\lambda$ ourselves (the $h_{0,\lambda}, h_{4,\lambda}$
-  prolate combination with vanishing integral; the repo's prolate harnesses
-  e1f/e1g are the starting point) and compare it DIRECTLY against our
-  certified ground state $\xi_\lambda$ across $a$. Their Lemma 7.3 proves
-  $\hat k_\lambda \to \Xi$ interior; our ladder shows $\hat\xi_\lambda$
-  collapsing; if both are right, the proximity CCM observed at $\lambda \le 6$
-  must fail at larger $\lambda$, and measuring where and how it fails is the
-  decisive fact for (1.2). Cost M (prolate functions at high precision).
+- **B2c-prox: EXECUTED 2026-08-21 (LEARNINGS #190, e2av 4/4).** The kernel is
+  a scalar multiple of $\Xi$ to six decimals at every window (Lemma 7.3
+  exact-at-scale); the proximity decays monotonically past CCM's evidence
+  range (0.9988 at $a=1$, their numerics reproduced, to 0.715 at $a=4$):
+  the #189 dichotomy resolved; the $\Xi$-shape exists in every window but is
+  not the minimizer beyond $a \approx 1$.
+- **B2c-gap (cheap; the arc's coda).** Measure the energy sub-optimality of
+  the $\Xi$-state: $Q(k_\lambda)/\|k_\lambda\|^2$ against $\lambda_0(a)$
+  across the ladder: what a corrected selection principle must pay. One run
+  on existing machinery. Cost S.
 - **B2c-deep2: EXECUTED 2026-08-20/21 (LEARNINGS #189, e2au).** CERTIFIED
   no-turnaround through $a = 4$ (recorded through 5): the (1.2) object
   collapses monotonically after the $a \approx 1$ transient; ratios

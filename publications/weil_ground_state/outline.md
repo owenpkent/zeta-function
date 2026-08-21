@@ -37,10 +37,20 @@ refuted by its runs, and the refutations are reported as the results they produc
    $\kappa$): the measured object IS (1.2)'s; the pole-constrained control (ratios explode;
    $\Xi(i/2) = 1/2$ violates the constraint; CCM's Lemma 7.3 is interior-only); why the
    finite-$\lambda$ kernel-groundstate proximity is compatible with common narrowing.
-6. **The turnaround.** [e2au verdict slot: either $a^*$ located on $[2.5, 5]$, or monotone
-   continuation with the proximity question posed]. Composition with CCM's proven kernel limit;
-   what each outcome means for (1.2).
-7. **Instrument appendix.** The certificate suite and what each caught (capacity scaling, precision
+6. **The turnaround hunt and its verdict.** Certified NO-turnaround through $a = 4$ (recorded to
+   5): the ground state collapses monotonically (110-digit zeros to $T = 1500$; the tail
+   arithmetic predicting its own certificate cures twice; ratios bit-stable across zero depths).
+7. **The proximity resolution (the closing section).** CCM's kernel $k_\lambda = E(\psi_0 -
+   \alpha\psi_4)$ built from their own equations is a scalar multiple of $\Xi$ to six decimals at
+   every window (their Lemma 7.3 exact-at-scale, no transient), while the kernel-groundstate
+   proximity: the step CCM name "the main remaining obstacle to our approach to RH": decays
+   monotonically past their $\lambda \le 6$ evidence range ($|\cos|$: 0.9988 at $a = 1$,
+   reproducing their numerics, to 0.715 at $a = 4$; substitution caveat dead from $a = 2.5$).
+   Every proven and measured fact coexists; the constructive close: the $\Xi$-shape exists in
+   every window space, exactly, and simply stops being the minimizer beyond $a \approx 1$: a
+   corrected limit conjecture needs a different selection principle, whose price (the energy gap
+   $Q(k_\lambda)/\|k_\lambda\|^2$ vs $\lambda_0$) is measurable. [B2c-gap slot if run.]
+8. **Instrument appendix.** The certificate suite and what each caught (capacity scaling, precision
    starvation, cutoff exploitation, basis-convergence gates, the removable-pole evaluation);
    reproducibility pointers (all code and 50-110-digit zero caches in the repository).
 

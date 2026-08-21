@@ -116,7 +116,7 @@ the real standalone output.
 | [P9](#p9) | Paired-subtorus circle-rootedness: E over conjugate-paired phases of det(zI−DU), U unitary, is circle-rooted (all m) | Theorem (positive) | Elementary proof, every step numerically verified (50-digit) | 🟡 DEVELOPING | arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR | novelty-passed; **draft written** ([`publications/paired_subtorus/`](publications/paired_subtorus/), 5 pp, compiles); gate: checker verdicts + MathSciNet (human) + citation pins |
 | [P10](#p10) | The Gauss-lemma height floor: minimal log-height of a prime-forced integer vanisher = ψ(x) exactly (the vF disc model has no Siegel-lemma slot); multiplicity rational-root floor absent from Mathlib | Negative (closed branch) + Formal | Lean, axiom-clean (#GF-1..#GF-5) + integer-exact Python; uniqueness clause numerics-only (#GF-6 candidate) | 🟡 DEVELOPING | Mathlib PR (generalized multiplicity rational-root floor); exposition folds into P4 counting-roads; no standalone note | novelty-passed 2026-07-02 |
 | [P11](#p11) | The tameness trade: assembling the explicit formula's prime side is a tame/wild fault-line phenomenon (Leg A saturation PROVEN-but-orthogonal; Leg B "tame cannot carry primes" REFUTED via Kaplan-Shelah; archimedean-order invariant; C3 archimedean-injection RH-engine reading) | Expository (structural obstruction) | Synthesis of published corpus + PROVEN Lemma P3; keystone OPEN | 🟡 DEVELOPING | arXiv math.LO / math.NT note; companion to P4 §6.2 | draft written ([`publications/tameness_trade/`](publications/tameness_trade/)); gated on keystone staying OPEN |
-| [P12](#p12) | The localized Weil-form ground state, measured: the Gaussian-window margin law $4\sqrt{\pi}\sigma e^{-\gamma_1^2\sigma^2}$, the graded annihilation frontier, exact zero-locking, the xi-shape transient at $a \approx 1$ with certified narrowing, and the turnaround hunt for CCM-Suzuki (1.2) | Numerical study (measurement + instrumentation) | Numerical, certified: 50/80/110-digit protocols, per-rung convergence gates, tail + mixing certificates, pre-registrations with refutations documented | 🔵 STRONG (conditional: e2au verdict + law-novelty pass) | arXiv math.NT note (6-10 pp) | gate-scored 2026-08-20; outline ([`publications/weil_ground_state/`](publications/weil_ground_state/)); LEARNINGS #180-#187 |
+| [P12](#p12) | The localized Weil-form ground state, measured: the Gaussian-window margin law $4\sqrt{\pi}\sigma e^{-\gamma_1^2\sigma^2}$, the graded annihilation frontier, exact zero-locking, the xi-shape transient at $a \approx 1$ with certified narrowing, and the turnaround hunt for CCM-Suzuki (1.2) | Numerical study (measurement + instrumentation) | Numerical, certified: 50/80/110-digit protocols, per-rung convergence gates, tail + mixing certificates, pre-registrations with refutations documented | 🔵 STRONG (measurement COMPLETE; conditional only on the law-novelty pass) | arXiv math.NT note (6-10 pp) | gate-scored 2026-08-20; measurement closed 2026-08-21 with the proximity resolution (kernel exactly $\Xi$; proximity 0.9988 → 0.715); outline ([`publications/weil_ground_state/`](publications/weil_ground_state/)); LEARNINGS #180-#190 |
 
 ---
 
@@ -740,8 +740,12 @@ Kept so they are not re-proposed as novel.
 - **Gate 5 (honest framing).** Pre-registrations and their refutations are the note's spine
   (midgap-dodge refuted; nearest-gap law refuted; naive constrained reconciliation refuted; each
   replaced by the sharper measured law).
-- **Gate 6 (venue/effort).** arXiv math.NT numerical-study note, 6-10 pp; drafting 2-4 sessions
-  once e2au's verdict lands. The one thing that has to happen next: **e2au's turnaround verdict**,
-  then the law-novelty pass, then draft.
-- **Sources.** LEARNINGS #180-#187; e2ao/e2an/e2aq/e2ar/e2as/e2at/e2au dossiers;
+- **Gate 6 (venue/effort).** arXiv math.NT numerical-study note, 6-10 pp; drafting 2-4 sessions.
+  Measurement CLOSED 2026-08-21: certified no-turnaround through $a = 4$ (e2au) and the proximity
+  resolution (e2av: the kernel is exactly $\Xi$ at every window; the kernel-groundstate proximity,
+  CCM's self-named main remaining obstacle, decays 0.9988 $\to$ 0.715 past their evidence range;
+  the $\Xi$-shape exists in every window but is not the minimizer beyond $a \approx 1$). The one
+  thing that has to happen next: **the law-novelty pass**, then draft. Optional coda first:
+  B2c-gap (the energy sub-optimality of the $\Xi$-state, one cheap run).
+- **Sources.** LEARNINGS #180-#190; e2an/e2ao/e2aq/e2ar/e2as/e2at/e2au/e2av dossiers;
   `references/10_weil_positivity/`.
