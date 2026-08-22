@@ -54,10 +54,16 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   range (0.9988 at $a=1$, their numerics reproduced, to 0.715 at $a=4$):
   the #189 dichotomy resolved; the $\Xi$-shape exists in every window but is
   not the minimizer beyond $a \approx 1$.
-- **B2c-gap (cheap; the arc's coda).** Measure the energy sub-optimality of
-  the $\Xi$-state: $Q(k_\lambda)/\|k_\lambda\|^2$ against $\lambda_0(a)$
-  across the ladder: what a corrected selection principle must pay. One run
-  on existing machinery. Cost S.
+- **B2c-gap: EXECUTED 2026-08-21 (LEARNINGS #191, e2aw 10/10).** The naive
+  gap is real at $a = 1$ (the $\Xi$-state pays ten orders; a 5-percent shape
+  deviation buys them), and the pre-registered pincer FIRED at $a = 1.5$:
+  the kernel's exact-vanishing identity makes its true window energy
+  tail-controlled ($\lg B \approx -2\pi e^{2a}/\ln 10$), undercutting the
+  instrument's certified bottom by 4/92/8060 orders at $a = 1.5/2/4$: the
+  certified collapse re-scopes to the resolvable subspace, (1.2) is
+  horizon-limited for every direct-minimization instrument, and the B2c
+  chain closes with the season's second horizon law. Optional hardening:
+  interval arithmetic on the three tail integrals.
 - **B2c-deep2: EXECUTED 2026-08-20/21 (LEARNINGS #189, e2au).** CERTIFIED
   no-turnaround through $a = 4$ (recorded through 5): the (1.2) object
   collapses monotonically after the $a \approx 1$ transient; ratios

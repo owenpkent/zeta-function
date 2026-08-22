@@ -134,7 +134,7 @@ converges to xi(1/2 + iz)) is directly testable with this repo's 50-digit minimi
 | `Gonek-2007-Finite-Euler-Products-and-RH.pdf` | Gonek, arXiv:0704.3448 | RH iff short truncated Euler products approximate zeta in most of the right half-strip: the e2ap Part-B condensation's in-print home. |
 | `Gonek-Hughes-Keating-2005-Hybrid-Euler-Hadamard-Product.pdf` | GHK, arXiv:math/0511182 | The hybrid product: primes and zeros as complementary factors; context for the two-meter law. |
 | `Broucke-Debruyne-Vindas-2020-Beurling-Integers-RH-Large-Oscillation.pdf` | arXiv:2004.11501 | Beurling integers with RH and large oscillation: counting data underdetermines the analytic structure (the A1/A4 controls' neighbouring theory). |
-| `Carneiro-etal-2025-Fourier-Optimization-Pair-Correlation.pdf` | arXiv:2502.05106 | The Fourier-optimization/extremal-function school on pair correlation: the community for the band-ceiling (Omega) extremal question. |
+| `Das-Ismoilov-Ramos-2025-Fourier-Optimization-Pair-Correlation.pdf` | arXiv:2502.05106 | The Fourier-optimization/extremal-function school on pair correlation: the community for the band-ceiling (Omega) extremal question. (Renamed 2026-08-21: the prior `Carneiro-etal` filename misattributed the authorship; the paper is Das-Ismoilov-Ramos, building on Carneiro-Milinovich-Ramos arXiv:2310.01913. Caught by the P12 law-novelty pass, discrepancy D3.) |
 
 Addendum 2026-08-20 (B2c-lit): `Connes-Consani-Moscovici-2025-Zeta-Spectral-Triples.pdf`
 (arXiv:2511.22755, Suzuki's [4]) joined section 10. Read at depth for the e2at round

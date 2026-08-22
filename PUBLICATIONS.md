@@ -116,7 +116,7 @@ the real standalone output.
 | [P9](#p9) | Paired-subtorus circle-rootedness: E over conjugate-paired phases of det(zI−DU), U unitary, is circle-rooted (all m) | Theorem (positive) | Elementary proof, every step numerically verified (50-digit) | 🟡 DEVELOPING | arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR | novelty-passed; **draft written** ([`publications/paired_subtorus/`](publications/paired_subtorus/), 5 pp, compiles); gate: checker verdicts + MathSciNet (human) + citation pins |
 | [P10](#p10) | The Gauss-lemma height floor: minimal log-height of a prime-forced integer vanisher = ψ(x) exactly (the vF disc model has no Siegel-lemma slot); multiplicity rational-root floor absent from Mathlib | Negative (closed branch) + Formal | Lean, axiom-clean (#GF-1..#GF-5) + integer-exact Python; uniqueness clause numerics-only (#GF-6 candidate) | 🟡 DEVELOPING | Mathlib PR (generalized multiplicity rational-root floor); exposition folds into P4 counting-roads; no standalone note | novelty-passed 2026-07-02 |
 | [P11](#p11) | The tameness trade: assembling the explicit formula's prime side is a tame/wild fault-line phenomenon (Leg A saturation PROVEN-but-orthogonal; Leg B "tame cannot carry primes" REFUTED via Kaplan-Shelah; archimedean-order invariant; C3 archimedean-injection RH-engine reading) | Expository (structural obstruction) | Synthesis of published corpus + PROVEN Lemma P3; keystone OPEN | 🟡 DEVELOPING | arXiv math.LO / math.NT note; companion to P4 §6.2 | draft written ([`publications/tameness_trade/`](publications/tameness_trade/)); gated on keystone staying OPEN |
-| [P12](#p12) | The localized Weil-form ground state, measured: the Gaussian-window margin law $4\sqrt{\pi}\sigma e^{-\gamma_1^2\sigma^2}$, the graded annihilation frontier, exact zero-locking, the xi-shape transient at $a \approx 1$ with certified narrowing, and the turnaround hunt for CCM-Suzuki (1.2) | Numerical study (measurement + instrumentation) | Numerical, certified: 50/80/110-digit protocols, per-rung convergence gates, tail + mixing certificates, pre-registrations with refutations documented | 🔵 STRONG (measurement COMPLETE; conditional only on the law-novelty pass) | arXiv math.NT note (6-10 pp) | gate-scored 2026-08-20; measurement closed 2026-08-21 with the proximity resolution (kernel exactly $\Xi$; proximity 0.9988 → 0.715); outline ([`publications/weil_ground_state/`](publications/weil_ground_state/)); LEARNINGS #180-#190 |
+| [P12](#p12) | The localized Weil-form ground state, measured: the Gaussian-window margin law $4\sqrt{\pi}\sigma e^{-\gamma_1^2\sigma^2}$, the graded annihilation frontier, zero-side locking, the xi-shape transient at $a \approx 1$ with certified narrowing through $a = 4$, the kernel-groundstate proximity measurement, and the HORIZON: the $\Xi$-state's exact-vanishing energy bound undercuts every direct-minimization floor from $a = 1.5$ ((1.2) numerically undecidable beyond the accessible strip, priced at $2\pi e^{2a}/\ln 10$ digits) | Numerical study (measurement + instrumentation + one certified bound) | Numerical, certified: 50/80/110-digit protocols, per-rung convergence gates, tail + mixing certificates, the $10^{-73}$-verified vanishing identity, pre-registrations with refutations documented (including the one re-scoping the study's own headline trend) | 🔵 STRONG (measurement COMPLETE; novelty pass DONE; draft v0.2 WRITTEN) | arXiv math.NT note (6-10 pp) | gate-scored 2026-08-20; measurement closed 2026-08-21 (e2av proximity + e2aw horizon); law-novelty pass + draft 2026-08-21 ([`publications/weil_ground_state/draft.md`](publications/weil_ground_state/draft.md)); LEARNINGS #180-#191 |
 
 ---
 
@@ -714,38 +714,56 @@ Kept so they are not re-proposed as novel.
   the worst window mode is the UNMODULATED bump because the explicit formula cancels the pole:
   measured, then derived); (ii) the multi-mode margin governed by the graded ANNIHILATION FRONTIER
   (the $\sigma$-slope selects the first unannihilatable zero to 2 percent; node precision degrades
-  ~6 decades per zero across the frontier); (iii) EXACT zero-locking (nodes on reachable zeros to
-  working precision, $10^{-38}$-$10^{-41}$); (iv) the xi-shape TRANSIENT: the hard-window ground
-  state matches $\Xi$ at $a = 1$ ($L^2$ residual 0.051, refinement-stable) and then narrows,
-  certified through $a = 2.5$ at 80 digits: the approach to (1.2) is non-monotone; (v) the
-  turnaround hunt at $a = 2.5$-$5$ (e2au, in flight), whose either outcome is a first quantitative
-  contact with the conjectured mechanism; (vi) the instrument corpus: certificates that caught their
-  own artifacts (capacity scaling, precision starvation, cutoff exploitation, basis-convergence
-  gates, per-quantity convergence, the $\Xi(i/2) = 1/2$ boundary fact).
-- **Gate 1 (complete?).** Each rung is finished with its certificates; the note's arc completes when
-  e2au lands. Independent of RH's truth throughout.
+  ~6 decades per zero across the frontier); (iii) zero-side locking (nodes on reachable zeros to
+  working precision, $10^{-38}$-$10^{-41}$; reworded 2026-08-21 per novelty-pass D1: the
+  arithmetic-side siblings, Connes 2602.04022 §5 and Groskin 2605.20224, are in print and deeper,
+  so the claim is the zero-side face plus the frontier structure they do not resolve); (iv) the
+  xi-shape TRANSIENT: the hard-window ground state matches $\Xi$ at $a = 1$ ($L^2$ residual 0.051,
+  refinement-stable) and then narrows, certified through $a = 4$ at 80-110 digits (no-turnaround,
+  e2au); (v) the proximity measurement: CCM's kernel is exactly $\Xi$ at every window while the
+  kernel-groundstate proximity decays 0.9988 $\to$ 0.715 (e2av); (vi) THE HORIZON (e2aw, the
+  closing result): the kernel's full-line Mellin transform vanishes exactly at every on-line zero
+  (verified to $10^{-73}$), so its window energy is tail-controlled and collapses
+  doubly-exponentially, undercutting the instrument's certified bottom from $a = 1.5$ (4/92/8060
+  orders at $a = 1.5/2/4$): the certified narrowing re-scopes to the RESOLVABLE-SUBSPACE optimum,
+  (1.2) is numerically undecidable by direct minimization beyond $a \approx 1.5$-$2$ (priced:
+  $\sim 2\pi e^{2a}/\ln 10$ digits), and nothing measured contradicts the CCM expectation about
+  the continuum object; (vii) the instrument corpus: certificates that caught their own artifacts
+  (capacity scaling, precision starvation, cutoff exploitation, basis-convergence gates,
+  per-quantity convergence, the $\Xi(i/2) = 1/2$ boundary fact, projection-floor typing).
+- **Gate 1 (complete?).** COMPLETE 2026-08-21: every rung finished with its certificates (e2au,
+  e2av, e2aw landed). Independent of RH's truth throughout.
 - **Gate 2 (verification).** Numerically validated with stated precision and controls at every
   claim; the two closed-form laws are elementary derivations verified against the data and are
   upgradeable to small rigorous propositions (given the certified low zeros).
 - **Gate 3 (novelty).** Swept 2026-08-20 ([`weil_positivity_prior_art_sweep.md`](docs/03_research/reading_notes/weil_positivity_prior_art_sweep.md),
   nine-paper library + CCM [4] at depth): nearest prior work Yoshida 1992 (the program), Bombieri
   2000 (minimization theory), CCM 2511.22755 (kernel numerics, $D_{\log}$ spectra: NOT the
-  unconstrained bottom's shape), Suzuki 2606.09096 (numerics for his (1.12) only). The shape
-  measurements and both laws did not surface; the laws flagged for one more targeted pass
-  (Fourier-optimization school) before drafting.
+  unconstrained bottom's shape), Suzuki 2606.09096 (numerics for his (1.12) only). **Law-novelty
+  pass EXECUTED 2026-08-21** ([`publications/weil_ground_state/_evidence/law_novelty_pass.md`](publications/weil_ground_state/_evidence/law_novelty_pass.md),
+  17 queries, ~30 documents, full search log): Law 1 (the margin closed form) NOT SURFACED
+  (nearest: Connes arXiv:2602.04022 §6.4's exp-of-exp law for the arithmetic-side sibling:
+  different object, variable, mechanism; cite to preempt); Law 2 PARTIAL: the frontier law proper
+  NOT SURFACED, but zero-locking has in-print arithmetic-side empirical siblings predating ours
+  (Connes §5 fifty-zero table; Groskin arXiv:2605.20224 at 307-329 digits): claim (iii) reworded
+  in the draft per discrepancy D1 (zero-side face + frontier structure, not first observation).
+  Housekeeping: the mislabeled library PDF renamed (D3); the Groskin/Silva/Andrews cluster
+  confirmed on the lit watchlist (D4).
 - **Gate 4 (D-H soundness).** The instruments carry the discipline (the e2an pipeline's
   componentwise bracket; the D-H Weil form correctly reads indefinite). 4b (K1): the note claims
   no progress toward RH and says so prominently: it measures finite-scale structure of an
   RH-equivalent form and tests a live conjecture's object.
 - **Gate 5 (honest framing).** Pre-registrations and their refutations are the note's spine
-  (midgap-dodge refuted; nearest-gap law refuted; naive constrained reconciliation refuted; each
-  replaced by the sharper measured law).
-- **Gate 6 (venue/effort).** arXiv math.NT numerical-study note, 6-10 pp; drafting 2-4 sessions.
-  Measurement CLOSED 2026-08-21: certified no-turnaround through $a = 4$ (e2au) and the proximity
-  resolution (e2av: the kernel is exactly $\Xi$ at every window; the kernel-groundstate proximity,
-  CCM's self-named main remaining obstacle, decays 0.9988 $\to$ 0.715 past their evidence range;
-  the $\Xi$-shape exists in every window but is not the minimizer beyond $a \approx 1$). The one
-  thing that has to happen next: **the law-novelty pass**, then draft. Optional coda first:
-  B2c-gap (the energy sub-optimality of the $\Xi$-state, one cheap run).
-- **Sources.** LEARNINGS #180-#190; e2an/e2ao/e2aq/e2ar/e2as/e2at/e2au/e2av dossiers;
-  `references/10_weil_positivity/`.
+  (midgap-dodge refuted; nearest-gap law refuted; naive constrained reconciliation refuted; and
+  the capstone: the study's own headline trend re-scoped by its own energy coda, reported as
+  prominently as the trend: Section 7.4 of the draft).
+- **Gate 6 (venue/effort).** arXiv math.NT numerical-study note, 6-10 pp. Measurement CLOSED
+  2026-08-21 (e2au no-turnaround; e2av proximity; e2aw horizon). Law-novelty pass DONE 2026-08-21
+  (tracked evidence with full search log). **Draft v0.2 WRITTEN 2026-08-21**
+  ([`publications/weil_ground_state/draft.md`](publications/weil_ground_state/draft.md): all
+  sections, verdicts integrated, references from the verified pass). Remaining: Owen's author
+  decisions (name block, acknowledgments, categories), figures F1-F4 (slots + data sources named
+  in the draft), a length pass, optional interval-arithmetic hardening of the e2aw bound; then
+  the courtesy-communication call (2511.22755/2606.09096 authors, Owen's call).
+- **Sources.** LEARNINGS #180-#191; e2an/e2ao/e2aq/e2ar/e2as/e2at/e2au/e2av/e2aw dossiers;
+  `references/10_weil_positivity/`; `publications/weil_ground_state/_evidence/law_novelty_pass.md`.
