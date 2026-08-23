@@ -108,7 +108,15 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
 
 ## 3. Family C: foreign instances of the pipeline
 
-- **C1. The function-field twin (the shadow instance).** The same five-component pipeline for a curve over $\mathbb{F}_q$ (start with the e2b curve over $\mathbb{F}_5$): lattice = effective divisors by degree, circle circumference $\log q$ (every place commensurable), multiplier = the curve's zeta on its line. Expect: emergent spectrum EXACTLY periodic (the rung-2 arithmetic progression, step $2\pi/\log q$), SP4 exact (Grothendieck), SP5 backed by Hodge index. Deliverable: the $\mathbb{F}_q$ column of the satisfiability matrix filled by MEASUREMENT through identical code; the per-cell difference between the zeta column and the $\mathbb{F}_q$ column is the missing structure, displayed in one table. Also the standing regression control for every future candidate. The shadow discipline applied to the assembly itself. Cost M.
+- **C1: EXECUTED 2026-08-23 (LEARNINGS #193, e2ay 13/13).** The F_q column
+  filled by measurement on the e2b curve: every expectation landed (exact
+  periodicity to $10^{-16}$, SP4 exact Lefschetz, SP5 inhabited with Hasse
+  margin 1.47 backed by Hodge index), plus one unpre-registered structural
+  cell: the FF world needs the pole-ARRAY regularizer (single-pole fails at
+  $10^{14}$; the array form, available from lattice data, is exact at
+  $10^{-12}$). The per-cell zeta-vs-F_q table is in the dossier; the run is
+  the standing regression control. Residues: higher-genus extension (cheap);
+  C4 gains measured witnesses per field.
 - **C2. The eta-form second variation (#178 trigger 1, given shape).** The finite-conductor second-variation matrix of the arithmetic eta over character space; measure its signature and what forces it. Pre-registered fork: it reproduces the Weil form (M4 in APS costume: coordinate #5) or fails forcing (trigger 1 hardens). Cost M.
 - **C3. The CCM Section-7 operator audit (rung-4 hand-off, still unexecuted).** Implement the arXiv 2511.22755 determinant family ($\det_{reg} = -i\lambda^{-iz}\hat\xi(z)$) at finite cutoff; run the R3.5/K1 audit, the W6-vs-#143 gate, and the pipeline scorecard on it. Cost M-L.
 - **C4. B2-Lean: the interface as a structure.** `SPInterface` with the five components as fields; the function-field instance inhabits it sorry-free (extending ToyModel/FunctionFieldRH); v0 as the four-of-five finite-scale inhabitant; D-H and Beurling as typed refusals (which field cannot be filled, as a type error). The matrix becomes machine-checked and "the missing object" a first-class term. Cost L.
