@@ -16,7 +16,18 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
 
 - **A1. The Cramer control (lattice-density without Euler, counting side).** Integers $= \{n + u_n\}$, $u_n$ iid uniform $[-\tfrac12,\tfrac12]$, fixed seed: $N(x) = x + O(1)$ EXACTLY, multiplicative structure destroyed. Expect: pole/residue PASS (density exact), duality FAIL (jitter kills Poisson/theta), Euler cells FAIL, emergent spectrum unstable. KILL FOR THE FRAME: if duality passes, $x + O(1)$ counting alone buys the FE and the fourth clause is wrong; chase immediately. Completes the 2x2: the pair (A1, Beurling) separates density-lattice from multiplicative-freeness on the counting side the way (zeta, D-H) separates them on the form side. Cost S.
 - **A2. The S-finite Euler ladder (smooth-number lattices).** Lattice $=$ $P$-smooth numbers, $P$ stepping through the primes: Euler exact at every rung, additive lattice absent at every finite rung (zero density, $R = 0$), recovered only at $P = \infty$. Measure duality defect($P$), residue($P$), and the multiplier's dip-depth toward the zeta zeros vs $P$. Pre-registered: the FE is NOT bought incrementally (defect stays $O(1)$, pole stays absent, then both appear only in the limit); if instead the defect decays smoothly, the lattice is purchasable in installments and the all-or-nothing reading of the fourth clause needs repair. Either outcome is a coordinate on WHERE the lattice enters. Cost S.
-- **A3. The off-line implant: the rigidity curve (Frankenstein multiplier).** Move one zero pair of $\xi$ off the line by $\delta$ via a Blaschke factor and track the prime side: the correction to the von Mangoldt measure is an explicit CONTINUOUS density (mass off the log-prime-power lattice). Measure leak($\delta$, window $X$): pre-registered law $\sim e^{\delta X}$-growth, invisible for $X \ll 1/\delta$: the object-side twin of the primes-thread bound (an off-line zero above height $3\times10^{12}$ needs $x \sim 10^{150}$ to surface). Deliverable: the CALIBRATED detector: what an off-line zero costs in Euler-structure violation, as a curve. KILL: if some discrete redistribution of $a_n$ absorbs the leak on the lattice, the detector is weaker than believed and the bracket needs a sharper clause. Probes C2's contrapositive. Cost S-M.
+- **A3: EXECUTED 2026-08-22 (LEARNINGS #192, e2ax 12/12).** The implant done
+  FE-honestly (merge-and-split, the local de Bruijn-Newman move); the
+  $e^{\delta X}$ law refined to the exact envelope $4(\cosh(\delta u)-1)$,
+  height-independent; the calibrated curve $U^*(\delta) = 1.41/\delta$
+  (density register; register table banked). The kill FIRED as the
+  primes-thread twin predicted (lattice absorbs in-window, lattice-
+  agnostically), and the sharper clause it demands landed measured: the
+  rigidity is ADMISSIBILITY: free-weight imitation is perfect and traces
+  the pole's Lorentzian ghost; the nonneg fake pays $\cosh(\delta U)$ in
+  multiplicity AND still fails ($\ge 0.33$ residual): C2's contrapositive
+  is a positivity statement. Optional residues: the sign-constrained
+  lattice cell; the ghost as an instrument.
 - **A4. The zeta-to-Beurling interpolation ramp.** $b_p(t) = p\,e^{t\varepsilon_p}$, $t \in [0,1]$: drift, duality defect, and vM-identity stability vs $t$ at fixed data depth. Pre-registered (the counting-side twin of #172's continuity obstruction): a smooth ramp with no cliff, knee position set by the data meter, i.e. finite-scale instruments cannot see the arithmetic 0/1: quantifying exactly where arithmetic becomes visible to finite data. Cost S.
 
 ## 2. Family B: upgrades to the assembled object at its two joints
