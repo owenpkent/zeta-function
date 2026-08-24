@@ -130,7 +130,19 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   the standing regression control. Residues: higher-genus extension (cheap);
   C4 gains measured witnesses per field.
 - **C2. The eta-form second variation (#178 trigger 1, given shape).** The finite-conductor second-variation matrix of the arithmetic eta over character space; measure its signature and what forces it. Pre-registered fork: it reproduces the Weil form (M4 in APS costume: coordinate #5) or fails forcing (trigger 1 hardens). Cost M.
-- **C3. The CCM Section-7 operator audit (rung-4 hand-off, still unexecuted).** Implement the arXiv 2511.22755 determinant family ($\det_{reg} = -i\lambda^{-iz}\hat\xi(z)$) at finite cutoff; run the R3.5/K1 audit, the W6-vs-#143 gate, and the pipeline scorecard on it. Cost M-L.
+- **C3: EXECUTED 2026-08-23 (LEARNINGS #195, e2ba 9/9).** The 2511.22755
+  family built from the reading note and validated by the exact zero-side
+  identity ($10^{-3}$; it caught both pilot bugs). The funding value
+  $\varepsilon_N(\lambda)$ tracks Connes §6.4's doubly-exponential law
+  (ratios 0.97-1.73) and is horizon-priced (dps $\sim 4\pi\lambda^2/\ln10$:
+  71 at their $\sqrt{13}$, 546 at Groskin's 10: their own choices confirm);
+  BOTH pre-registered D-H flip windows refuted: the faithful twin tracks
+  zeta to the floor (the firewall signal itself horizon-limited: the
+  off-line negativity pays the #180-#183 annihilation price); reality
+  persists on an O(1)-indefinite synthetic control. Gates: R3.5 wall met
+  with price tag; W6 upgrade = M4 at this family; #194 refinement minted:
+  M4 = UNIFORM-in-$\lambda$ D1 under D2 $\wedge$ D3. Residue: the D-H flip
+  location as a costed mp job (23257 closed-form arch entries).
 - **C4. B2-Lean: the interface as a structure.** `SPInterface` with the five components as fields; the function-field instance inhabits it sorry-free (extending ToyModel/FunctionFieldRH); v0 as the four-of-five finite-scale inhabitant; D-H and Beurling as typed refusals (which field cannot be filled, as a type error). The matrix becomes machine-checked and "the missing object" a first-class term. Cost L.
 
 ## 4. Suggested order
