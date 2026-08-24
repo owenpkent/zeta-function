@@ -154,7 +154,16 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   with price tag; W6 upgrade = M4 at this family; #194 refinement minted:
   M4 = UNIFORM-in-$\lambda$ D1 under D2 $\wedge$ D3. Residue: the D-H flip
   location as a costed mp job (23257 closed-form arch entries).
-- **C4. B2-Lean: the interface as a structure.** `SPInterface` with the five components as fields; the function-field instance inhabits it sorry-free (extending ToyModel/FunctionFieldRH); v0 as the four-of-five finite-scale inhabitant; D-H and Beurling as typed refusals (which field cannot be filled, as a type error). The matrix becomes machine-checked and "the missing object" a first-class term. Cost L.
+- **C4: EXECUTED 2026-08-24 (LEARNINGS #197, `lean/ZetaRH/SPInterface.lean`,
+  full library GREEN at 3763 jobs, axiom-clean).** `SPInterface` with the
+  five components as fields; `SPInterface.rh` proves every inhabitant
+  satisfies its RH; `curveF5` inhabits it sorry-free with the e2ay column
+  as machine-checked witnesses; `SPInterfaceSans5` + `sans5_sp5_iff_hasse`
+  makes the missing fifth field EQUIVALENT to the Hasse content (M4's
+  genus-1 shadow as an iff); D-H refused at SP3 (`dh_no_euler_point`:
+  $\kappa^2 = -1$ impossible) and Beurling/jitter refused at the lattice
+  (`b_determined` quantization + `beurling_refusal`). Bonus: first
+  verified Lean state on this box (toolchain + Mathlib cache installed).
 
 ## 4. Suggested order
 

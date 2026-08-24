@@ -39,3 +39,4 @@ import ZetaRH.ModelTheoreticFrobenius
 import ZetaRH.TamenessTrade
 import ZetaRH.BorgerVacuity
 import ZetaRH.S4Carrier
+import ZetaRH.SPInterface
