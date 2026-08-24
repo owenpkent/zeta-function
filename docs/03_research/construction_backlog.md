@@ -33,7 +33,19 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
 ## 2. Family B: upgrades to the assembled object at its two joints
 
 - **B1. The coupled SP4 ladder (where does C1 bind?).** #180 measured the two-sidedness residual FLAT ($10^{-8}$-$10^{-7}$) over prime windows to $e^6$ at the fixed spectral meter: C1 does not bind there. Grow both meters together (extended-precision line engine, narrower probes, emergent spectrum to $T \sim 300$-$1000$) until the residual departs its floor: the measured exchange rate between prime data and spectral data in the object. Cost M (precision engineering).
-- **B2. The wrong polarization, built anyway (the tariff inside the object).** Equip the v0 cokernel with candidate metrics ($L^2$ on the circle; the $\mathcal{E}$-pullback; a Christoffel-weighted metric) and score each against the 7-property SP5 spec cell-by-cell. Pre-registered: every metric making the flow self-adjoint with the right spectrum consumes zero locations (K1) or the uniform growth clause (#160/#171); typing that demand in the object's own coordinates mints coordinate system #4 for M4 (the trojan-ledger's stated purpose for such builds). Probes C2. Cost M.
+- **B2: EXECUTED 2026-08-23 (LEARNINGS #194, e2az 12/12).** The three metrics
+  measured out a trilemma sharper than pre-registered: self-adjointness is
+  FREE (all diagonal), and within the family D1 (primitive-positive)
+  IMPLIES failing both D2 (K1-clean) and D3 (Euler contact): flat-on-dips
+  IS the Weil form ($2.5\times10^{-5}$ Gram match; D-H passes at 1.00);
+  the pullback is clean but $7.5\times10^{-8}$-massless at the dips (#170
+  measured in-object) while seeing D-H's landmark at 0.058; Christoffel
+  concentrates only at degree = atom count (#172 physics; D-H twin 311x)
+  and its K1-clean surrogate starves the dips by 21 percent. COORDINATE
+  #4 MINTED: M4 = the Euler side funding positivity exactly where its own
+  transform vanishes (trojan ledger Section 10; score C3 against it
+  first). Residues: the $|m'|^2$-channel finite statement (VERIFIER
+  nugget); the pullback degeneracy locus as a candidate-screen.
 - **B2c/B2b: EXECUTED 2026-08-20 (LEARNINGS #183, e2aq 10/10).** Soft-window
   xi-test: family-dependence typed (hole norm-stuffing; locking exact to
   $10^{-38}$); Omega-ladder: nearest-gap law refuted, replaced by the graded
