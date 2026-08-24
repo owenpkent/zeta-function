@@ -129,7 +129,18 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   $10^{-12}$). The per-cell zeta-vs-F_q table is in the dossier; the run is
   the standing regression control. Residues: higher-genus extension (cheap);
   C4 gains measured witnesses per field.
-- **C2. The eta-form second variation (#178 trigger 1, given shape).** The finite-conductor second-variation matrix of the arithmetic eta over character space; measure its signature and what forces it. Pre-registered fork: it reproduces the Weil form (M4 in APS costume: coordinate #5) or fails forcing (trigger 1 hardens). Cost M.
+- **C2: EXECUTED 2026-08-23 (LEARNINGS #196, e2bb 11/11).** The fork took
+  its unlisted third branch: the eta-Hessian on the FE-closed pencil
+  EXISTS canonically (null rows $10^{-26}$; tau/step/T-stable) and its
+  (1,1) signature is FORCED at both conductors: by HOLOMORPHY (zeros move
+  holomorphically in the mixing parameter, so eta is harmonic at leading
+  Abel order: traceless, measured 0.000/0.045 trace-to-norm). Coordinate
+  #5 minted as a no-go with a mechanism: the eta route's curvature is
+  conformally rigid: no positivity can be sourced there (#178's parity
+  kill at second order). Trigger 1 hardened-with-structure; trigger 3 is
+  the eta arc's only open door. Extras: $b_6(\kappa) = (\kappa^2+1)\log6$
+  (e2an's 1.936 in closed form); the non-commuting-limits estimator
+  lesson; the holomorphy-tracelessness VERIFIER nugget.
 - **C3: EXECUTED 2026-08-23 (LEARNINGS #195, e2ba 9/9).** The 2511.22755
   family built from the reading note and validated by the exact zero-side
   identity ($10^{-3}$; it caught both pilot bugs). The funding value
