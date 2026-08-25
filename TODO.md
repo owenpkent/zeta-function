@@ -19,7 +19,7 @@ Standing build-to-test queue on the assembled SP-object (wrong is ok; every buil
 - [ ] **A3: the rigidity curve.** Implant one off-line zero pair via a Blaschke factor and measure the off-lattice leak of the von Mangoldt measure vs displacement and window: the calibrated cost of an off-line zero, object-side.
 - [ ] **C1: the function-field twin.** The identical five-component pipeline on a curve over $\mathbb{F}_q$: the shadow column of the satisfiability matrix filled by measurement; per-cell zeta-vs-$\mathbb{F}_q$ difference = the missing structure in one table.
 - [ ] **B2: the wrong polarization, built anyway.** Candidate metrics on the v0 cokernel scored against the 7-property SP5 spec: type, in the object's own coordinates, what data a self-adjointness metric must consume (expected: the #160/#171 growth clause or zero locations).
-- [ ] Follow-ups hardening #179/#180: the coupled SP4 ladder (B1), the certification-cost theorem (B3), the D-H invisibility certificate (B4); heavier tier: eta-form second variation (C2), CCM 2511 operator audit (C3), B2-Lean interface (C4).
+- [ ] Follow-ups hardening #179/#180: the coupled SP4 ladder (B1), the certification-cost theorem (B3); ~~the D-H invisibility certificate (B4)~~ **DONE 2026-08-25** (e2bd 21/21, LEARNINGS #199: $c_{DH} = 0.330$ certified over the landmark window, selectivity proven, AFE-imbalance instrument lesson banked); ~~heavier tier C2/C3/C4~~ **ALL DONE 2026-08-23/24** (#196/#195/#197).
 
 ## Open: the primes thread (2026-08-16; LEARNINGS #174, [`PRIME_PATTERNS.md`](experiments/primes/PRIME_PATTERNS.md))
 

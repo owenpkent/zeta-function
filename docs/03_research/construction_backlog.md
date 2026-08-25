@@ -124,7 +124,20 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   exponent = the gap to the first unreachable zero. RH's uniform statement
   lives in the $\Omega \to \infty$ direction; this ladder prices it. Cost S-M.
 - **B3. The certification-cost theorem (harden #180).** Propagate the e2ao assembly's quadrature/truncation constants into a proven statement: this assembly certifies $\mathrm{margin}(\sigma)$ iff $\sigma \le \sigma^*(\varepsilon)$ with explicit constants, making the $e^{\gamma_1^2\sigma^2}$ price a theorem about the instrument rather than a measurement. Cost S-M; later Lean-able.
-- **B4. The D-H invisibility certificate (harden #179).** Interval-arithmetic lower bound on $|m_{DH}|$ over the landmark window $[85.2, 86.2]$ from the coefficient lattice (smoothed AFE with explicit tails): "the object provably cannot see the off-line pair at any circumference." The completeness failure becomes a THEOREM about the control, and the proof's shape is a template for what a zeta completeness statement must supply. Probes C1's completeness face. Cost M.
+- **B4: EXECUTED 2026-08-25 (LEARNINGS #199, e2bd 21/21).** The certificate
+  landed: $c_{DH} = 0.33032\ldots$ certified (arb, radius $\sim10^{-96}$) over
+  the full landmark window; the same meter certified at $\le 4.7\times10^{-4}$
+  on D-H's own ON-line zero 83.109 and at $\le 2.2\times10^{-4}$ on zeta's
+  84.7355 (selectivity proven); zeta same-window floor 0.978 (floors are
+  zero-distance geometry, not arithmetic); all three pre-registrations FIRED.
+  Instrument lesson banked: the spec's x=1-split smoothed AFE is exact at
+  points but provably unbalanced for interval sweeps ($h\,e^{+\pi t/4}$
+  inflation; measured lower bound exactly 0 where the balanced
+  Euler-Maclaurin route certifies 0.97): completed-object representations are
+  point instruments; sweeps need the balanced side. Template reading: line
+  floors are purchasable from FE + zero geometry for any lattice, so zeta's
+  completeness must be funded off the line restriction (#194 restated from
+  the control side). Residue: the floor-vs-distance law (dossier Section 5.3).
 
 ## 3. Family C: foreign instances of the pipeline
 
