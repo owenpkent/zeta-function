@@ -28,7 +28,15 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   multiplicity AND still fails ($\ge 0.33$ residual): C2's contrapositive
   is a positivity statement. Optional residues: the sign-constrained
   lattice cell; the ghost as an instrument.
-- **A4. The zeta-to-Beurling interpolation ramp.** $b_p(t) = p\,e^{t\varepsilon_p}$, $t \in [0,1]$: drift, duality defect, and vM-identity stability vs $t$ at fixed data depth. Pre-registered (the counting-side twin of #172's continuity obstruction): a smooth ramp with no cliff, knee position set by the data meter, i.e. finite-scale instruments cannot see the arithmetic 0/1: quantifying exactly where arithmetic becomes visible to finite data. Cost S.
+- **A4: EXECUTED 2026-08-24 (LEARNINGS #198, e2bc 8/8).** Both
+  pre-registrations landed: NO CLIFF (drift and duality linear in $t$,
+  log-log slopes 0.974/0.926; a 0.1-percent jitter lifts the drift nine
+  orders off the integer floor) and the knee IS the data meter's
+  ($t^*$ moves 4+ orders between $X = 15000$ and $60000$); the vM
+  identity exact at every $t$ (the Euler clause never breaks). The
+  counting-side continuity trilogy (#172 pointwise / #188 sequence /
+  A4 instrument) is complete; FAMILY A is complete. Banked: the ramp as
+  a calibration axis for any future counting-side detector.
 
 ## 2. Family B: upgrades to the assembled object at its two joints
 
