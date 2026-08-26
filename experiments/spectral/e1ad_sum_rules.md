@@ -125,3 +125,39 @@ The termination law is **exact on every collision rung**: the Verblunsky recursi
 4. **Attack the BEUR reading**: vary the Beurling $\varepsilon$ (0.05, 0.5) and the seed; the R2 mechanism predicts the diagonal convergence point moves with $\varepsilon$; a failure of that prediction reopens the typing of the BEUR-TRUE separation.
 5. **Attack the gauge scope**: run the D-ladder at irrational $L$ (golden); the prediction from limit 3 is blindness at ALL $D$ (no exact collisions); a detection there would be a new mechanism outside the collision law.
 6. **Independent re-verification** of determinism (S9), the npz byte-stability across runs, and the teeth of the source scan, on a second machine (the e1v case-7 pattern; not run here).
+
+## Addendum 2026-08-25 (LEARNINGS #205): the adversary round ran, case 3 became e1ae, and three corrections land
+
+The posed cases were executed ([`_e1ad_adversary.md`](_e1ad_adversary.md), probe
+[`_e1ad_adversary.py`](_e1ad_adversary.py); cases 1, 2, 4, 5, 6 plus e1v case 7;
+case 3 executed separately as the build [`e1ae_prony_horizon`](e1ae_prony_horizon.md)).
+Verdicts: cases 1, 2 MISSED (with S5a's pinned 4x band exposed as a 3-seed
+small-sample artifact: SNAP sits at the 75th percentile of a 12-seed jitter
+ensemble, unremarkable); case 4 LANDED; case 5 LANDED; case 6 and e1v case 7
+CLEAN (this-host replication; cross-machine remains open). Corrections applied
+to this dossier's record:
+
+1. **Honest limit 3 is corrected.** "At irrational L the snapped orbit never
+   collides exactly" is FALSE: there are TWO collision channels, and the
+   t-space rounding channel (m = nint(D k log p) coinciding) is
+   wrap-independent: collision rungs exist at L = golden (11 at D = 40, 2 at
+   D = 100), and the rank law n_term = M_d - 1 held EXACTLY there. The
+   horizon law is therefore GAUGE-INDEPENDENT through the t-channel, a
+   strictly stronger statement than the original claim.
+2. **R2's GPERM clause gains a scale scope.** GPERM retains the collision
+   channel exactly (zero gaps survive the shuffle; termination invariant at
+   every coarse D): "destroys every arithmetic correlation" holds at scales
+   ABOVE the collision channel; the R2 kill itself stands (the main grid is
+   collision-free).
+3. **R2's BEUR scale-mixture mechanism is REFUTED** (handed-forward item 3
+   executed with answer "kill"): the distance to TRUE is not monotone in the
+   Beurling epsilon (d_mid reverses at eps = 0.5 at both sizes); the
+   BEUR-TRUE separation keeps its typing via GPERM, but the proposed
+   mechanism paragraph is downgraded to a refuted candidate.
+
+**The horizon law is re-scoped by e1ae** (this dossier's handed-forward item 1
+and case 3): the birthday-scale pricing is REGISTER-RELATIVE: the Prony
+register detects the scale-D lattice at M = 78 atoms and 14 digits where this
+rung's register needs sqrt(2D) = 1414 atoms (D = 1e6, zero collisions). The
+termination law, the measured tables, and the D-to-infinity obstruction stand;
+the totalized atom pricing does not. See e1ae for the falsifier-4 disposition.
