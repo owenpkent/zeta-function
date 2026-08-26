@@ -123,7 +123,19 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   `visualizations/research/make_figs.py::ground_state_mp`), pre-registered
   exponent = the gap to the first unreachable zero. RH's uniform statement
   lives in the $\Omega \to \infty$ direction; this ladder prices it. Cost S-M.
-- **B3. The certification-cost theorem (harden #180).** Propagate the e2ao assembly's quadrature/truncation constants into a proven statement: this assembly certifies $\mathrm{margin}(\sigma)$ iff $\sigma \le \sigma^*(\varepsilon)$ with explicit constants, making the $e^{\gamma_1^2\sigma^2}$ price a theorem about the instrument rather than a measurement. Cost S-M; later Lean-able.
+- **B3: EXECUTED 2026-08-25 (LEARNINGS #200, e2be 14/14).** The theorem
+  landed with the budget SHARP: the explicit four-clause bound majorizes all
+  11 #180 rungs at looseness 3.3x-5.1x (tolerance was $10^4$), so the #180
+  floor is closed-form-understood (interpolation at the $\log n$ nodes
+  dominant); $\sigma^* = 0.2367$ proven-certifiable vs 0.30 measured
+  crossing (bracket = the looseness); the $e^{\gamma_1^2\sigma^2}$ price is
+  a theorem clause (digits $\ge \gamma_1^2\sigma^2/\ln 10$), paid
+  constructively at $\sigma = 0.5$ (dps-50 certifies the $7\times10^{-22}$
+  margin to $10^{-29}$; the tracked float64 row fails 16 orders short).
+  Lean-able residue: three finite nuggets (Gaussian-tail chain, the
+  RS-based $\sum\Lambda(n)/\sqrt n$ lemma, the interpolation bound).
+  Residue: the signed-error bracket-narrowing at the $\log 2$ node
+  (dossier Section 4.2).
 - **B4: EXECUTED 2026-08-25 (LEARNINGS #199, e2bd 21/21).** The certificate
   landed: $c_{DH} = 0.33032\ldots$ certified (arb, radius $\sim10^{-96}$) over
   the full landmark window; the same meter certified at $\le 4.7\times10^{-4}$
