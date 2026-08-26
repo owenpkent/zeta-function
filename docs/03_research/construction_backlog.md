@@ -1,6 +1,6 @@
 # The construction backlog: build-to-test list
 
-**Date**: 2026-08-19. **Status**: standing backlog (Owen's directive: build things, wrong is ok). **Provenance**: the #179/#180 arc ([`e2an_sp_object_v0.md`](../../experiments/arithmetic_geometric/e2an_sp_object_v0.md), [`e2ao_scaling_ladder.md`](../../experiments/arithmetic_geometric/e2ao_scaling_ladder.md)): the assembled SP-object plus its ladder showed that a deliberately wrong construction returns coordinates, and that the pipeline can score ANY coefficient lattice cell-by-cell. This file is the queue of constructions worth building on that principle.
+**Date**: 2026-08-19. **Status**: **FRAME CLOSED 2026-08-25** (frame audit, LEARNINGS #201, [`sp_backlog_frame_audit.md`](sp_backlog_frame_audit.md): INSTRUMENT-COMPLETE-AND-CLOSE; no new probes; B1/B2d survive as BANK MAINTENANCE only, one bounded closing session). Original status: standing backlog (Owen's directive: build things, wrong is ok). **Provenance**: the #179/#180 arc ([`e2an_sp_object_v0.md`](../../experiments/arithmetic_geometric/e2an_sp_object_v0.md), [`e2ao_scaling_ladder.md`](../../experiments/arithmetic_geometric/e2ao_scaling_ladder.md)): the assembled SP-object plus its ladder showed that a deliberately wrong construction returns coordinates, and that the pipeline can score ANY coefficient lattice cell-by-cell. This file is the queue of constructions worth building on that principle.
 
 ## 0. Rules every build carries
 
