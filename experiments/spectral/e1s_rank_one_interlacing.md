@@ -396,3 +396,20 @@ decomposition, secular residual, N-step and lambda-step tables, twin table).
 cache is written; the e1k harness is imported read-only (comb streams and the
 `build_float`/`operator_spectrum` functions; no zero lists).
 
+
+## Addendum 2026-08-25 (LEARNINGS #202): the count/location dichotomy sharpened by arXiv:2608.13637
+
+Alpöge-Furman ("More than two thirds of the zeta zeros are simple and on the
+critical line", Lean-verified, unconditional) refines this dossier's dichotomy
+without contradicting it. Adopted wording, adjudicating the
+[`watch_sweep_2026-08-25.md`](../../docs/03_research/reading_notes/watch_sweep_2026-08-25.md)
+discrepancy-log item 2: the eigenvalue COUNT on the compressed Weil form is
+structure-cheap up to O(1) (Weyl-on-Q, this dossier); a positive PROPORTION of
+LOCATION is purchasable unconditionally from the compressed form by
+rank-trace-inertia bookkeeping at Fourier support 1 (2/3 at the indicator
+window, 0.6725 at Montgomery-Taylor; each off-line pair pays exactly one unit
+of positive index via Sylvester inertia); FULL location (proportion 1,
+completeness) remains M4, the paper's own ceiling statement concurring for its
+mechanism ("RH itself is out of reach of the mechanism"; support-1 =
+pair-correlation information). Deep read with adversary pass:
+[`alpoge_furman_two_thirds.md`](../../docs/03_research/reading_notes/alpoge_furman_two_thirds.md).

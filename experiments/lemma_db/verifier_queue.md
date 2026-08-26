@@ -37,9 +37,9 @@ Top of the queue, feasibility x value. Full table: run the tool; per-target
 
 | rank | id | feas | value | statement (short) | verdict / route |
 |---|---|---|---|---|---|
-| 1 | e1z-2 (= e1v-2 Lagrange clause) | READY | HIGH | Interpolation identity $1/\lambda_M(0) = \sum_j \ell_j(0)^2/w_j$ at full degree | **DRAFTED** (#VQ-1a/#VQ-1b). Finite Cauchy-Schwarz + Mathlib `Lagrange.interpolate`. |
-| 2 | e1u-2 | READY | MED | Nilpotent transfer $(Juu^T)^2 = 0$ + degree-one propagator | **DRAFTED** (#VQ-3a/#VQ-3b). Two-line matrix lemmas, `!![..]` + `Fin.sum_univ_two`. |
-| 3 | e1v-1 | TYPABLE | HIGH | Theorem V2: $\lambda_M(0) \le \cosh(2nG)^{-2}$ | **DRAFTED** (#VQ-2). `Polynomial.Chebyshev.T` exists; Mathlib gap: no `Real.arcosh` (local `arcoshReal`). |
+| 1 | e1z-2 (= e1v-2 Lagrange clause) | READY | HIGH | Interpolation identity $1/\lambda_M(0) = \sum_j \ell_j(0)^2/w_j$ at full degree | **PROVED 2026-08-25** (#VQ-1a/#VQ-1b sorry-free, axioms clean; LEARNINGS #202). Lagrange `hpair` still carried as hypothesis. |
+| 2 | e1u-2 | READY | MED | Nilpotent transfer $(Juu^T)^2 = 0$ + degree-one propagator | **PROVED 2026-08-25** (#VQ-3a/#VQ-3b sorry-free, axioms clean; LEARNINGS #202). |
+| 3 | e1v-1 | TYPABLE | HIGH | Theorem V2: $\lambda_M(0) \le \cosh(2nG)^{-2}$ | **PROVED 2026-08-25** (#VQ-2 sorry-free, axioms clean; LEARNINGS #202; e1u target 6 discharged in Lean). `arcoshReal` + proved `cosh_arcoshReal` = ready Mathlib upstream candidate. |
 | 4 | #EF-class | TYPABLE | MED | Admissible-test side conditions for the explicit formula | Typable against `SchwartzMap` today; sharpens #EF-1 before its proof is reachable. |
 | 5 | #FE-1, #EP-1, #LR-2 | TYPABLE | MED | Real FE / Euler-product predicates; restriction operator | Design work on Mathlib-native objects (`completedRiemannZeta_one_sub`, `EulerProduct`). |
 | 6 | #DH-cont, #DH-conv | FEASIBLE | MED | D-H continuation and convergence | Unblocked since Mathlib gained `hurwitzZeta` + Dirichlet continuation (2024). |
