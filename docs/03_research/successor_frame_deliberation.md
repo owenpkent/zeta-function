@@ -179,10 +179,12 @@ output. F2's target is also a ceiling theorem, so the distinction is stated here
 than discovered later: #199/#200 were theorems about instruments this project built, and
 their only consumers are this project's meters. A ceiling for the finite-rank
 prime-funded certificate class would be a theorem about the mechanism CLASS that holds
-the current world record, externally authored and Lean-verified modulo its named analytic
-hypotheses (the coverage boundary matters: the prime-side inputs are carried as
-hypotheses, not formalized, and that is exactly F1's surface; hence F1's verify-at-source
-item); its content answers "why
+the current world record, externally authored and Lean-verified (CORRECTED 2026-08-26 by
+the F1 at-source verification: the paper's Appendix A claims FULL coverage, no hypotheses
+on the main theorems' types; the earlier "carried as hypotheses" clause here and in the
+AF note was a fetch-summarizer confabulation, the month's third; the F1 surface is
+renamed: the paper's self-report vs the unaudited repository, with the audit checklist
+riding the F2a skim); its content answers "why
 does the record sit near 2/3 and what, exactly, must a completeness proof consume": that
 is registry-grade mathematics with an external audience either way, and its contrapositive
 is the sharpened M4 spec, not a note that our own meter is blind. The trap variant to
@@ -212,8 +214,26 @@ the bank pattern again, and exit 3 below fires.
      the end of its second dedicated session (F2b), or by the frame's fourth session
      overall, whichever comes first: the audit fires early, with "the information wall
      resists both branches" recorded as the finding.
-  3. Two consecutive minted claims fail the #201 derivability check: the frame is
-     re-measuring the wall; the audit fires immediately.
+  3. (REPLACED 2026-08-26 by the frame's first audit, [`funding_boundary_audit_1.md`](funding_boundary_audit_1.md)
+     Q2, after the original wording's letter fired at session two and was honored:
+     the original, "two consecutive minted claims fail the #201 derivability check",
+     strictly dominated the tripwire and fired on every honest measurement pair.)
+     Re-measurement drift, two prongs, each checkable by the session's ADVERSARY
+     against written state with no ORCHESTRATOR discretion. **(3a) Unscheduled
+     measurement:** any session graded under this frame's wiring that is not one of
+     the four Section 7 sessions executing its registered spec (added, repeated, or
+     substituted work) and that produces no Section 5 metric item passing the
+     derivability check fires the audit immediately: the frame has grown itself a
+     measurement session, the bank pattern's signature. (A session forced by exit 4's
+     own deep-read clause is graded under exit 4, not 3a.) **(3b) Label inflation:**
+     two consecutive sessions whose dossier or LEARNINGS draft files a minted claim
+     AS a coordinate, constraint, or theorem-shape which the session adversary's
+     derivability run (or the Section 5 bar) then fails fire the audit immediately:
+     the check caught the label both times, and repetition is the pattern. Honest
+     UNMOVED grades on registered sessions never trip this exit: those belong to the
+     three-UNMOVED tripwire and to exit 2's session-four deadline. This exit cannot
+     be disarmed by editing the Section 7 plan: sessions added after registration are
+     3a's subject, not its exemption.
   4. External event: anyone (including the AF authors) moves the proportion past the
      in-class ceiling or poses the class question in print: deep-read first, re-scope
      against it.
@@ -237,8 +257,13 @@ or does not (the trigger is serviced and hardened, and stays closed).
 half: (i) the known proportion-vs-support landscape (what conditional inputs between
 support 1 and full HL* buy, in print; the Goldston line and the paper's own conditional
 table), so the frame never re-derives known conditional results; (ii) verify the Aryan
-and BGSTB support-1 mean values at source (adversary A1: they are the AF Lean
-formalization's carried hypotheses, i.e. exactly F1's surface). Build half: make the
+and BGSTB support-1 mean values at source (EXECUTED 2026-08-26,
+[`reading_notes/af_funding_inputs_verification.md`](reading_notes/af_funding_inputs_verification.md):
+identities resolved to arXiv:1902.05473 and arXiv:2306.04799, both statements verified
+on two routes, and AF proves its own budget IN-HOUSE with strictly weaker inputs, the
+credits being lineage; adversary A1's "carried hypotheses" premise was itself the
+confabulation corrected above, so the surface is the self-report-vs-repository audit,
+queued for F2a). Build half: make the
 compressed form's off-diagonal funding need explicit at support $1 + \delta$ (which
 prime-pair sums enter, at what weight), then run F1a's typing at the pre-stated
 second-order register with the Beurling prime side as the density-alone comparator, the

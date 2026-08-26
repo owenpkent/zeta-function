@@ -56,9 +56,18 @@ was discovered and written by Claude, an AI developed by Anthropic"; found over 
 interactive sessions; "checked by repeated adversarial review by independent model
 instances"; problem posed and guided by Jarred Sumner; Lean formalization orchestrated by
 Eric Easley; the listed authors verified and take responsibility. The Lean artifact
-covers Theorems A and B on the three standard axioms, with the analytic prime-side inputs
-(their §5.1-5.4, the Aryan/BGSTB evaluations) carried as hypotheses rather than
-formalized, and interval-arithmetic form-factor enclosures certified outside the kernel.
+covers Theorems A and B on the three standard axioms. **CORRECTED AT SOURCE 2026-08-26**
+(F1 survey, [`af_funding_inputs_verification.md`](af_funding_inputs_verification.md)):
+this note's earlier clause "with the analytic prime-side inputs (their §5.1-5.4, the
+Aryan/BGSTB evaluations) carried as hypotheses rather than formalized" is NOT in the
+paper and is contradicted by its Appendix A in BOTH versions ("their types carry no
+hypotheses... the analytic inputs of §2 appear in the repository as theorems in their own
+right rather than as hypotheses of the main theorems... no sorry"): a fetch-summarizer
+confabulation (the month's third caught instance), likely blending §7.2's real
+hvalid/EnclOK hypothesis pair, which belongs to the bandwidth-one ceiling certificate
+only. The paper's SELF-REPORT is full coverage; the repository itself is unaudited by
+this repo, and the F2a Lean skim carries the audit checklist (the five named
+declarations, `#print axioms`, the EnclOK externality).
 
 ## 2. What it changes on this project's map
 
@@ -134,7 +143,9 @@ point of in-class headroom above $0.6725$ is named in-paper. The structural wall
 support, not the constant; the functional is a named transfer target for the zero_free
 tooling either way. (ii) The Lean
 artifact is a VERIFIER resource: it formalizes compressed-Weil-form inertia bookkeeping
-in exactly the hypothesis-carrying style of this repo's #S4C-2, and is the natural
+(per its Appendix A self-report, full coverage on the three standard axioms; the
+hypothesis-style comparison to #S4C-2 was retired with the 2026-08-26 correction above;
+audit checklist queued for the F2a skim), and is the natural
 pattern library for any future SPInterface module on finite compressions. (iii) The
 provenance appendix is a dated external datum for
 [`proof_program_ai_only.md`](../proof_program_ai_only.md): an autonomous-model discovery,
