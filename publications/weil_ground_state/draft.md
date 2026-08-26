@@ -2,7 +2,7 @@
 
 **Owen Kent**
 
-*Draft v0.2, 2026-08-21. Target: arXiv math.NT (cross-list math.CA), 6-10 pp. Registry: PUBLICATIONS.md P12. Status: full text drafted (all sections; law-novelty pass integrated; e2aw horizon verdict integrated). Open for Owen: author block/acknowledgments, arXiv categories, figure generation (slots marked), repository pointer in 8.3, and a length pass (currently runs long for a note; candidates for compression: 2-3 detail paragraphs and the 8.2 list).*
+*Draft v0.3, 2026-08-25. Target: arXiv math.NT (cross-list math.CA), 6-10 pp. Registry: PUBLICATIONS.md P12. Status: full text drafted; figures F1-F4 generated (`make_figures.py`, `figures/`); length pass done (Section 8.2 and two placement paragraphs compressed). Open for Owen: author block/acknowledgments, arXiv categories, repository pointer in 8.3, courtesy-communication go/no-go.*
 
 ---
 
@@ -70,7 +70,7 @@ where $\gamma_{\mathrm{frontier}}$ is the first zero the family cannot annihilat
 
 **Unified reading.** Both margin laws are one statement at different capacities: the window margin is a single-zero Gaussian leak at the family's annihilation-capacity edge. The single-mode family pays $\gamma_1$; a $J$-mode family pays $\gamma_{\mathrm{frontier}}(J)$. An instrument lesson with teeth: the naive $\sigma$-sweep (letting mode count vary with $\sigma$) has the OPPOSITE sign of the physical derivative ($+25$ versus $-85$: growing capacity deepens annihilation faster than the Gaussian narrows); one earlier two-point retrodiction that ignored this is downgraded to coincidence in the record.
 
-**Placement of the frontier law.** The targeted pass found no prior statement of the $\sigma$-slope selection rule, the two-plus-zero overshoot of the naive ceiling, or a per-zero geometric precision cost for zeta zeros. The structural relatives, each short of the law: superoscillation energy costs (band-limited families CAN oscillate past their ceiling at a price exponential in the feature count: the qualitative twin of the overshoot, never applied to zeta zeros); the Fourier-uniqueness capacity accounting (Kulikov's density inequality, saturated by the zeta-zero plus log-lattice node system in Bondarenko-Radchenko-Seip, whose interpolation basis is the infinite-capacity endpoint: every zero eventually paid exactly once, with the basis breaking if a single node is removed); and complementary-slackness root placement in the LP/sign-uncertainty school. Connes' fifty-zero error table is itself a graded profile (roughly a decade of error per zero at cutoff 13), reported as data with no rate statement and no frontier selection rule.
+**Placement of the frontier law.** The targeted pass found no prior statement of the $\sigma$-slope selection rule, the two-plus-zero overshoot, or a per-zero geometric precision cost for zeta zeros. The structural relatives, each short of the law: superoscillation energy costs (oscillation past a band ceiling at exponential price: the overshoot's qualitative twin, never applied to zeta zeros); the Fourier-uniqueness capacity accounting (Kulikov's density inequality; the Bondarenko-Radchenko-Seip interpolation basis as the infinite-capacity endpoint); complementary-slackness root placement in the LP/sign-uncertainty school. Connes' fifty-zero error table is itself a graded profile (roughly a decade per zero at cutoff 13), reported as data with no rate statement and no selection rule.
 
 ## 4. The $\xi$-shape transient
 
@@ -141,7 +141,7 @@ $\log_{10} B(a)$ tracks $-2\pi e^{2a}/\ln 10$ up to a slowly growing polynomial 
 
 This re-scopes the note's own headline trend, and we state the correction as prominently as the trend. The certified narrowing of Sections 4 and 6 is a real, reproducible statement about the RESOLVABLE-SUBSPACE optimum: the deepest state expressible at the stated basis and precision, a well-defined object that is dps-robust (80 and 110 digits agree) and refinement-stable under the gates. It is NOT a statement about the continuum ground state beyond $a^*$, because the continuum valley is doubly-exponentially deeper than every floor in play. In particular: nothing measured here contradicts the CCM expectation about their operator's actual ground state; their kernel is variationally excellent (doubly-exponentially near-null); and the proximity decay of Section 7.2 is a statement about the resolvable optimum, with everything in agreement at $a = 1$ where the instrument still sees the continuum.
 
-The same lens re-reads the sibling numerics. CCM's proximity evidence spans $\lambda \le 6$, i.e. $a \le 1.79$, which straddles the horizon (at $a = 1.79$, $B \sim 10^{-88}$: past any double-precision floor). On the arithmetic side, Groskin measures $\lambda_{\min} \approx 10^{-334}$ at basis size 250 and 500 digits while his own extrapolation ($10^{-537}$) and Connes' Section-6.4 law ($10^{-530}$) place the true bottom some 200 orders deeper [G26a, C26]: the arithmetic-side face of the same crossover. The zero-side horizon here appears to be the first certified instance: the kernel is an explicit witness, and the bound is unconditional.
+The same lens re-reads the sibling numerics: CCM's proximity evidence ($\lambda \le 6$, $a \le 1.79$) straddles the horizon ($B \sim 10^{-88}$ at its edge), and on the arithmetic side Groskin's measured $\lambda_{\min} \approx 10^{-334}$ sits some 200 orders above his own extrapolation and Connes' Section-6.4 law [G26a, C26]: the same crossover's two in-print faces. The zero-side horizon here appears to be the first certified instance: the kernel is an explicit witness and the bound is unconditional.
 
 **The closing statement.** The window ground state of the Weil form is $\Xi$-shaped where instruments can see the continuum ($a \lesssim 1$, at a measured ten-order energy premium for the exact $\Xi$ shape), and beyond that the conjecture's object recedes behind a doubly-exponential horizon that this note prices. What direct numerics can still decide about (1.2) is exhausted by the accessible strip; progress beyond it belongs to the analytic route, for which the exact-vanishing identity of Section 7.3, elementary as it is, is the working prototype: it is the one tool here that sees the bottom of the valley at every window.
 
@@ -153,25 +153,40 @@ Per solve: (i) exact-form construction (closed-form FTs and Grams; no quadrature
 
 ### 8.2 What each certificate caught (its own artifact)
 
-- **Capacity scaling:** a fixed-$J$ ladder produced a rising residual that was pure capacity artifact; caught and corrected by tying knot count to window width.
-- **Cutoff exploitation:** the $a = 3$ rung at $T = 200$ was excluded by its own tail certificate (the family exploits the zero cutoff; tail $10^{-15}$ against a floor-level margin).
-- **Precision starvation:** the refined $a = 2$ solve at 50 digits was genuinely degenerate (gap $0.9$, $\lambda_0$ at the dps floor); 80 digits resolved it (gap $2080$). Separately, the degree-25 Gram loses PD-ness at 38 digits of alternating-sum cancellation at $J = 189$.
-- **Basis-convergence gating:** the first hard-window run's $a = 2$ ratios shifted by up to $20.9$ under knot doubling: all $a \ge 1.5$ shape claims were gated out until the deep protocol passed them.
-- **Solver-null-cone artifacts (soft family):** beyond $\sigma \approx 0.45$ a double-precision generalized eigensolve returns an arbitrary member of a numerical null cone; the first run's shapes there were artifacts, caught by their own grid-oscillation diagnostic; the fix is the high-precision protocol of Section 1.3.
-- **Boundary-fact check:** the removable-pole evaluation $\Xi(i/2) = 1/2$ (mp-verified) turned a puzzling constrained-control explosion into a structural statement.
-- **Projection-floor typing (the energy coda):** the within-basis Rayleigh quotient of the projected kernel is floor-typed at every rung (at $a = 1$ the residual is edge-layer-driven, since hard-window splines vanish at $\pm a$ while the kernel does not; from $a = 1.5$ it is the interior approximation floor at fixed knot pitch): the honest kernel energies are the tail-identity values, and the projection column is reported as the basis's kernel-representation floor.
-- **Identity-before-use:** the exact-vanishing identity behind the Section-7 bound was verified numerically (direct oscillatory integral against the tail route, relative deviation $10^{-73}$) before any bound built on it was cited.
+- **Capacity scaling:** a fixed-$J$ ladder's rising residual was pure capacity artifact; fixed by tying knot count to window width.
+- **Cutoff exploitation:** the $a = 3$, $T = 200$ rung was excluded by its own tail certificate (tail $10^{-15}$ against a floor-level margin).
+- **Precision starvation:** the $a = 2$ solve at 50 digits was genuinely degenerate (gap $0.9$); 80 digits resolved it (gap $2080$). Separately, the degree-25 Gram loses positive-definiteness at 38 digits ($J = 189$).
+- **Basis-convergence gating:** first-run $a = 2$ ratios shifted by up to $20.9$ under knot doubling; all $a \ge 1.5$ shape claims were gated out until the deep protocol passed them.
+- **Solver null cones (soft family):** beyond $\sigma \approx 0.45$ a double-precision generalized eigensolve returns an arbitrary null-cone member; caught by its own grid-oscillation diagnostic, fixed by the Section 1.3 protocol.
+- **Boundary-fact check:** $\Xi(i/2) = 1/2$ (mp-verified) turned the constrained-control explosion into a structural statement.
+- **Projection-floor typing:** within-basis kernel quotients are floor-typed at every rung (edge layer at $a = 1$; interior approximation floor beyond), so the honest kernel energies are the tail-identity values.
+- **Identity-before-use:** the exact-vanishing identity was verified (direct integral against the tail route, $10^{-73}$) before any bound built on it was cited.
 
 ### 8.3 Reproducibility
 
-All code, dossiers, and the 50/80/110-digit zero caches live in the public repository [REPO POINTER TO FINALIZE]; each experiment is a standalone module with its checks (`e2an`, `e2ao`, `e2aq`, `e2ar`, `e2as`, `e2at`, `e2au`, `e2av`, `e2aw`), and every headline number above is reproduced by a tracked `.npz` artifact next to its script.
+All code, dossiers, and the 50/80/110-digit zero caches live in the public repository `https://github.com/owenpkent/zeta-function`; each experiment is a standalone module with its checks (`e2an`, `e2ao`, `e2aq`, `e2ar`, `e2as`, `e2at`, `e2au`, `e2av`, `e2aw`), and every headline number above is reproduced by a tracked `.npz` artifact next to its script. The figures are generated by `publications/weil_ground_state/make_figures.py` from those artifacts.
 
-## Figures (to generate for submission)
+## Figures (generated: `make_figures.py`; PDF for LaTeX and PNG preview in `figures/`)
 
-- **F1** The single-mode margin law over 38 orders with the prime-side certification floor (source: the research gallery's margin figure machinery; data `e2ao_scaling_ladder.npz`).
-- **F2** The graded annihilation frontier: per-zero node precision across $\gamma_6..\gamma_9$ (data `e2aq_xi_convergence.npz`).
-- **F3** The $a$-ladder: $z_0$-normalized FT ratios with convergence gates, the transient and the narrowing (data `e2as_deep_xi_ladder.npz`, `e2au_turnaround_ladder.npz`).
-- **F4** The horizon: $\lambda_0(a)$ vs the kernel bound $B(a)$ and sharp values on a log scale, crossover marked (data `e2aw_energy_gap.npz`).
+![F1](figures/f1.png)
+
+**F1 (Section 2).** The single-mode margin law over 38 orders of magnitude: exact zero-side margins (points) against $4\sqrt{\pi}\,\sigma\,e^{-\gamma_1^2\sigma^2}$ (dashed), with the prime-side assembly floor and the certification crossing at $\sigma = 0.3$. Data: `e2ao_scaling_ladder.npz`.
+
+![F2](figures/f2.png)
+
+**F2 (Section 3).** The graded annihilation frontier. Left: node precision across $\gamma_6..\gamma_9$ (about six decades per zero; the $\sigma$-slope selects $\gamma_8$). Right: the fixed-grid margin slope, measured $-85.2$ against $-(\gamma_8-\Omega)^2 = -87.0$. Data: `e2aq_xi_convergence.npz`; per-zero profile from the reference configuration.
+
+![F3](figures/f3.png)
+
+**F3 (Sections 4, 6).** The hard-window ladder: $z_0$-normalized Fourier-transform ratios to $\Xi$ at $z = 2, 4, 6$ across $a = 1..5$: the transient at $a \approx 1$, then the certified monotone narrowing. Open markers: rungs outside their convergence gates (recorded, no claim). Data: `e2as_deep_xi_ladder.npz`, `e2au_turnaround_ladder.npz`.
+
+![F4](figures/f4.png)
+
+**F4 (Section 7).** The horizon. Top (zoom): the instrument's certified bottom $\lambda_0(a)$, the kernel's unconditional bound $B(a)$, sharp values where cancellation permits, and the crossover $a^* \in (1, 1.5]$ (92 orders at $a = 2$). Bottom (full range): the doubly-exponential plunge (8060 orders at $a = 4$); beyond the crossover the computed minimizer is the resolvable-subspace optimum. Data: `e2aw_energy_gap.npz`.
+
+## Acknowledgments
+
+This note measures objects introduced and developed by A. Connes, C. Consani, H. Moscovici, and M. Suzuki, and engages numerical work of A. Groskin; the author thanks them for making their programs and data available in print. The numerical experiments and the drafting of this note were carried out with substantial assistance from Claude (Anthropic), operated by the author; the author designed the study, verified the results, and is solely responsible for the content.
 
 ## References
 
