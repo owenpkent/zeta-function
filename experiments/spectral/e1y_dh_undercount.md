@@ -254,3 +254,17 @@ converse**: signs flipped into zeta do not manufacture the deficit.
 | `rh_content` | NONE. A coefficient/conditioning property, never a zero location (#158/#161 class) |
 | `k1_clean` | YES (guards installed, never tripped; only combs and geometry read) |
 | `frontier_delta` | ZERO. Retires a handed-forward puzzle; M4 untouched |
+
+## Scope coda (2026-08-26, LEARNINGS #210)
+
+The U5 sentence above ("the near-null ground state needs the *combination* of
+D-H's dense period-5 coefficient stream with D-H's own density") was derived
+inside the zeta/D-H swap family only. The salvaged chi3/chi4 positive control
+(`_e1s_dh_undercount_euler_control.md`, re-run this date:
+`_evidence/e1s_euler_control_rerun_2026-08-26.out.txt`) shows a sparse
+prime-power-supported conductor-3/4 stream with its own matched density
+collapses `gap_even` as hard or harder than D-H at the same cells. So the
+discriminator is zeta-vs-everything-else at this harness, the harness's
+validity domain is plausibly conductor-1-only, and the D-H discipline ALONE
+would have passed this RH-information-free signal: it took a believed-RH-true
+Euler L-function to expose it (the instrument lesson recorded at #210).

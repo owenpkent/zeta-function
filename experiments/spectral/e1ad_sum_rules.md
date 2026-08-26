@@ -161,3 +161,31 @@ register detects the scale-D lattice at M = 78 atoms and 14 digits where this
 rung's register needs sqrt(2D) = 1414 atoms (D = 1e6, zero collisions). The
 termination law, the measured tables, and the D-to-infinity obstruction stand;
 the totalized atom pricing does not. See e1ae for the falsifier-4 disposition.
+
+## Citation appendix (salvaged from PR #7, 2026-08-26; LEARNINGS #210)
+
+An in-print "why" for the closed register, extracted from the PR #7 branch's
+Christoffel corpus sweep (`christoffel_corpus_sweep_2026-07-30.md`, branch
+`overnight-wave-172-173`, Section 3; extract carried here because that sweep is
+not tracked on main): every boundedness theorem in the Widom-factor /
+Szego-Widom strand is conditioned on the support being THICK (positive Lebesgue
+measure, locally quantified: homogeneous, Parreau-Widom, regular with positive
+a.c. density), while the chain's spectrum at finite $\lambda$ and in the limit
+is discrete and Lebesgue-null, so the Totik-Widom apparatus is structurally
+inapplicable, not merely silent. The corpus knows the failure mode is real:
+Widom factors are UNBOUNDED for the Julia set of $(z-\lambda)^2$ with
+$\lambda > 2$, can grow subexponentially of any prescribed order on thin
+Cantor-type sets (Goncharov-Hatinoglu), and the best general bound for a
+uniformly perfect set is only $W_n(e) = O(n^c)$ (Andrievskii).
+
+The sharpest single citation: Christiansen-Simon-Zinchenko, "Widom Factors and
+Szego-Widom Asymptotics, a Review" (arXiv:2112.06450), whose Open Problem 2.2
+asks whether ANY Lebesgue-null set has bounded Widom factors. The prefactor
+uniformity this register would have needed is an open problem of that corpus
+itself, on the side of the thickness dichotomy where it has no positive results
+at all.
+
+Criticality thread (one-line pointer, filed here because
+`experiments/criticality/` carries no notes file): Romik, orthogonal-polynomial
+expansions of $\Xi$, arXiv:1902.06330 (86pp; zero prior repo mentions), a
+salvaged pointer from PR #7.

@@ -301,11 +301,23 @@ Full record: [`../../experiments/spectral/e1o_s4_carrier.md`](../../experiments/
   face of the sieve axioms when unconditional (walls at parity), and is RH-consuming when
   paired with the explicit formula; no third mode in print, and e1o's divergence measurement
   is WHY (the raw line pairing is not even posable without a horizon).
-- **Against #152/#153**: the lattice clause reappears as the unique glue across
+- **Against #152/#153**: the lattice clause reappears as the glue across
   incommensurable circles: per-prime cheapness is EXACT (the {k log p} orbit on
   R/(log p)Z costs 0.20 = 1/5 ideal, the multiplicity avatar of #153's per-prime W6
-  exactness); what is missing is the glue, whose only known carrier is N(x) = x + O(1) /
+  exactness); what is missing is the glue, whose carrier here is N(x) = x + O(1) /
   theta-FE. Fourth witness for the #152 bracket, now from the extremal-function side.
+  [AMENDED (correction 2026-08-26, salvaged from PR #7; LEARNINGS #210),
+  reading_notes/modular_hecke_sweep_2026-07-30.md D1: this bullet previously said "the
+  UNIQUE glue" whose "ONLY known carrier" is the lattice. False as written. There are
+  exactly TWO known glues across incommensurable circles: the additive lattice, and
+  Lee-Yang stability of a multivariate polynomial (Kurasov-Sarnak, J. Math. Phys. 61
+  (2020) 083501, arXiv:2004.05678 Thm 1, for arbitrary reals b_j > 1; classified by
+  Alon-Cohen-Vinzant arXiv:2303.03201 Cor. 1.4). The verdict SURVIVES with a better
+  reason: the second glue takes an arbitrary multiplicative generator set as input and
+  consumes no lattice, so it is Beurling-generic by its own hypotheses and the Section 3
+  DMV screen kills it BY NAME. The S4 spec's clause 4 (lattice-consuming, MANDATORY) is
+  CONFIRMED. Open tension D3 (Lee-Yang polarity vs the breadth program's demotion)
+  logged, not resolved.]
 - **Against #145/#149**: the vF-model verdict ("S4 is the only open slot") is re-verified on
   a second carrier, now with numbers: the slot is empty not for lack of searching but
   because decimation-sourced cheapness provably requires commensurability.

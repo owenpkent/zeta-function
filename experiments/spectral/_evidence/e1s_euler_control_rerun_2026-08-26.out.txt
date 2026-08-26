@@ -1,0 +1,69 @@
+# Re-run 2026-08-26 on main @ 0f2c2c7 (salvage of PR #7, LEARNINGS #210); .venv python 3.x, mpmath per script (dps=25 where set)
+# Wall time: real 2m08.4s (user 2m09.3s). Command: python -m experiments.spectral._evidence.e1s_euler_control
+==============================================================================
+STEP 0: pre-registered prediction (see module docstring above)
+==============================================================================
+  CORRECT attribution -> chi3/chi4 gap_even robust, grows with lambda
+  FALSIFIED attribution -> chi3/chi4 gap_even also collapses like D-H
+
+==============================================================================
+STEP 1: reproduction of _e1s_dh_undercount.md section 4 (N=8, dps default float64)
+==============================================================================
+  lam=2.00  Zoff gap_even=2.8325e+00   DH gap_even=1.6213e+00   ratio(Zoff/DH)=1.747e+00
+  lam=2.50  Zoff gap_even=3.9000e+00   DH gap_even=1.2979e+00   ratio(Zoff/DH)=3.005e+00
+  lam=3.00  Zoff gap_even=4.8222e+00   DH gap_even=9.1703e-02   ratio(Zoff/DH)=5.259e+01
+  lam=3.30  Zoff gap_even=5.3346e+00   DH gap_even=7.4228e-03   ratio(Zoff/DH)=7.187e+02
+  lam=3.60  Zoff gap_even=5.8357e+00   DH gap_even=3.0802e-04   ratio(Zoff/DH)=1.895e+04
+  lam=4.00  Zoff gap_even=6.4858e+00   DH gap_even=1.1882e-05   ratio(Zoff/DH)=5.459e+05
+  lam=4.50  Zoff gap_even=7.2548e+00   DH gap_even=1.0746e-05   ratio(Zoff/DH)=6.751e+05
+  lam=5.00  Zoff gap_even=7.9848e+00   DH gap_even=1.3798e-04   ratio(Zoff/DH)=5.787e+04
+  lam=5.50  Zoff gap_even=8.6817e+00   DH gap_even=5.3664e-05   ratio(Zoff/DH)=1.618e+05
+
+==============================================================================
+STEP 2: chi3/chi4 CFG + stream construction + structural sanity check
+==============================================================================
+  chi3: modulus=3 parity=1 dens_a=0.750 dens_b=-0.0461
+       support n<=30: [2, 4, 5, 7, 8, 11, 13, 16, 17, 19, 23, 25, 29]
+       non-prime-power entries in support (should be EMPTY if genuinely Euler-product / completely multiplicative): []
+  chi4: modulus=4 parity=1 dens_a=0.750 dens_b=0.2416
+       support n<=30: [3, 5, 7, 9, 11, 13, 17, 19, 23, 25, 27, 29]
+       non-prime-power entries in support (should be EMPTY if genuinely Euler-product / completely multiplicative): []
+
+  quick zero-match sanity (N=10, lam~2.8, low-height known zeros):
+    chi3: known zeros (T<=15) = [8.0397, 11.2492]
+         8.0397 ->   8.0396  (err 1.55e-04)
+        11.2492 ->  11.2492  (err 4.15e-05)
+    chi4: known zeros (T<=15) = [6.0209, 10.2438, 12.9881]
+         6.0209 ->   6.0207  (err 2.31e-04)
+        10.2438 ->  10.2417  (err 2.07e-03)
+        12.9881 ->  12.9788  (err 9.31e-03)
+
+==============================================================================
+STEP 3: gap_even sweep across lam, N=8, IDENTICAL construction/code path
+==============================================================================
+  lam         Zoff           DH         chi3         chi4  chi3/Zoff  chi4/Zoff
+ 2.00   2.8325e+00   1.6213e+00   6.4201e-01   1.4733e+00  2.267e-01  5.201e-01
+ 2.50   3.9000e+00   1.2979e+00   6.5949e-03   3.2549e-01  1.691e-03  8.346e-02
+ 3.00   4.8222e+00   9.1703e-02   9.8236e-05   3.4293e-03  2.037e-05  7.112e-04
+ 3.30   5.3346e+00   7.4228e-03   6.5249e-05   2.4955e-04  1.223e-05  4.678e-05
+ 3.60   5.8357e+00   3.0802e-04   1.8063e-05   5.4656e-05  3.095e-06  9.366e-06
+ 4.00   6.4858e+00   1.1882e-05   7.9183e-07   2.3890e-06  1.221e-07  3.683e-07
+ 4.50   7.2548e+00   1.0746e-05   1.9831e-06   5.3723e-06  2.733e-07  7.405e-07
+ 5.00   7.9848e+00   1.3798e-04   1.6671e-04   1.2162e-04  2.088e-05  1.523e-05
+ 5.50   8.6817e+00   5.3664e-05   1.3733e-05   3.1229e-05  1.582e-06  3.597e-06
+
+==============================================================================
+SUMMARY TABLE (for report)
+==============================================================================
+| lam | Zoff gap | DH gap | chi3 gap | chi4 gap | Zoff/DH | Zoff/chi3 | Zoff/chi4 |
+|---|---|---|---|---|---|---|---|
+| 2.0 | 2.832e+00 | 1.621e+00 | 6.420e-01 | 1.473e+00 | 1.75e+00 | 4.41e+00 | 1.92e+00 |
+| 2.5 | 3.900e+00 | 1.298e+00 | 6.595e-03 | 3.255e-01 | 3.00e+00 | 5.91e+02 | 1.20e+01 |
+| 3.0 | 4.822e+00 | 9.170e-02 | 9.824e-05 | 3.429e-03 | 5.26e+01 | 4.91e+04 | 1.41e+03 |
+| 3.3 | 5.335e+00 | 7.423e-03 | 6.525e-05 | 2.496e-04 | 7.19e+02 | 8.18e+04 | 2.14e+04 |
+| 3.6 | 5.836e+00 | 3.080e-04 | 1.806e-05 | 5.466e-05 | 1.89e+04 | 3.23e+05 | 1.07e+05 |
+| 4.0 | 6.486e+00 | 1.188e-05 | 7.918e-07 | 2.389e-06 | 5.46e+05 | 8.19e+06 | 2.71e+06 |
+| 4.5 | 7.255e+00 | 1.075e-05 | 1.983e-06 | 5.372e-06 | 6.75e+05 | 3.66e+06 | 1.35e+06 |
+| 5.0 | 7.985e+00 | 1.380e-04 | 1.667e-04 | 1.216e-04 | 5.79e+04 | 4.79e+04 | 6.57e+04 |
+| 5.5 | 8.682e+00 | 5.366e-05 | 1.373e-05 | 3.123e-05 | 1.62e+05 | 6.32e+05 | 2.78e+05 |
+

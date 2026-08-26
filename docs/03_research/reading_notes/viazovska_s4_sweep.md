@@ -441,3 +441,9 @@ Full report: [`_modular_rung_adversary.md`](_modular_rung_adversary.md). Verdict
 5. **DMV and Beurling screens confirmed applied with mechanisms** (density-only parts
    partitioned out and pre-killed; the Beurling failure named at the construction step with
    e1m/e1q quantitative anchors), not merely cited.
+
+Addendum (salvaged from PR #7, 2026-08-26; LEARNINGS #210): two further non-uniformity
+citations for the family-parameter verdict: Mallows-Odlyzko-Sloane, J. Algebra 36 (1975)
+68-76 (the prescribed-vanishing extremal modular form develops a negative coefficient at
+large weight) and Zhou, arXiv:2604.10914 ($\dim S_{d/2}(\mathrm{SL}_2(\mathbb{Z})) \le 1$
+rules out LP sharpness for all $d \ge 48$).
