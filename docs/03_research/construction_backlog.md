@@ -40,7 +40,16 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
 
 ## 2. Family B: upgrades to the assembled object at its two joints
 
-- **B1. The coupled SP4 ladder (where does C1 bind?).** #180 measured the two-sidedness residual FLAT ($10^{-8}$-$10^{-7}$) over prime windows to $e^6$ at the fixed spectral meter: C1 does not bind there. Grow both meters together (extended-precision line engine, narrower probes, emergent spectrum to $T \sim 300$-$1000$) until the residual departs its floor: the measured exchange rate between prime data and spectral data in the object. Cost M (precision engineering).
+- **B1: EXECUTED 2026-08-25 (LEARNINGS #204, e2bg 10/10, ALL THREE
+  pre-registrations FIRED): THE BANK'S CLOSING BUILD.** The audit's
+  falsifier 2 resolved to lands-where-priced: across the fully coupled
+  ladder ($x_0$ to 7, $X$ to $10^6$, measured ceiling $T^* = 197$) the
+  object's residual is predicted by a purely internal budget to ratios
+  2.66/2.78/1.32: C1 does NOT bind inside the costed meters; the residual
+  IS the internally-measurable displacement functional. Four pilot catches
+  banked (the $t{=}0$ arch bin, the data-priced ceiling, the pole's grid
+  clause, duplicate dips + displacement-is-data-drift); the ceiling is
+  DETECTOR-limited (flat across 14x data). THE BANK IS CLOSED.
 - **B2: EXECUTED 2026-08-23 (LEARNINGS #194, e2az 12/12).** The three metrics
   measured out a trilemma sharper than pre-registered: self-adjointness is
   FREE (all diagonal), and within the family D1 (primitive-positive)
@@ -102,10 +111,15 @@ The conservation law says zeta = Euler product $\wedge$ additive lattice. The pi
   cleaned on schedule. The conjecture's fate now rests on B2c-prox above.
   Optional residue: one depth doubling ($T \sim 3000$ via #188's
   zero_polish) certifies $a = 4.5$-$5$.
-- **B2d. The frontier-capacity function.** Measure
-  $\gamma_{\mathrm{frontier}}(J, \Omega, \sigma)$ and the graded profile's
-  per-zero cost (~6 decades/zero in e2aq): how many zeros past the ceiling
-  can $J$ modes annihilate, and at what precision schedule. Cost S.
+- **B2d: EXECUTED 2026-08-25 (LEARNINGS #203, e2bf; the four FAILing gates
+  are the finding).** The per-zero schedule is UNIVERSAL (5.1-6.9
+  decades/zero, spread 1.34x, five configs); the frontier is
+  ceiling-monotone and its DEPTH is working-precision-relative while the
+  slope-selected carrier is intrinsic (#183 reconciled by the level-set
+  typing); the MARGIN face is attainment-limited WITH CERTIFICATES
+  (nested certified Rayleigh quotients $-83.8 \to -70.4 \to -55.4$:
+  eigsy attainment degrades with $J$; eigenvalue readouts of
+  near-degenerate localized families are not data).
 - **(superseded) B2c original spec, kept for the record:**
   Suzuki (arXiv:2606.09096, conjecture (1.2)): the localized Weil-form ground
   state's Fourier transform converges to $\xi(1/2+iz)$ as the window grows.
