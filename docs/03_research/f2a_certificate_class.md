@@ -19,9 +19,14 @@
 > required-fix list 1-7, per the adversary's own prescription: folded into F2b's opening
 > block, no new session, no 3a event. Each applied fix is tagged in place as "(re-pose
 > fix N, per the adversary report)". The re-posed definition returns to the adversary
-> for a bounded delta-check before F2b theorem-shape work starts. This document still
-> attacks nothing and proves nothing beyond what the adversary report proved. No em
-> dashes anywhere.
+> for a bounded delta-check before F2b theorem-shape work starts. (4) DELTA-CHECKED
+> 2026-08-28 ([`_f2a_delta_check.md`](_f2a_delta_check.md)): verdict PASS_WITH_EDITS;
+> the formal clause-by-clause re-run lands AF and GLSS I/II in-class; the one real hole
+> (the link fine-class smuggler, traced to the prescription's own fix-1 wording) is
+> closed by edits 1-3, all seven edits applied verbatim in place, each tagged
+> "(delta-check edit N)". F2b theorem-shape work proceeds on this text. This document
+> still attacks nothing and proves nothing beyond what the adversary and delta-check
+> reports proved. No em dashes anywhere.
 
 **The question this class formalizes**, verbatim from the frame registration
 ([`successor_frame_deliberation.md`](successor_frame_deliberation.md) Section 4, Wall 2):
@@ -159,8 +164,9 @@ profiles, the two-sided explicit-formula read
 
 $$\sum_\rho f(\rho) = W_{\mathrm{prime}}(f) + W_\infty(f) + o(\text{stated class}),$$
 
-with the exact identity still excluded: every link read carries its stated o-class
-slack, so C0(ii)'s exclusion stands. This is the channel C0(ii) promised and the posed
+with the exact identity still excluded: every link family is sup-normalized and
+carries $o(TL)$ absolute slack under the T-uniformity discipline (clause (b) read as
+$\sup|f_T| \le 1$), so C0(ii)'s exclusion stands (delta-check edit 2). This is the channel C0(ii) promised and the posed
 version never delivered, and it repairs the two breaks the adversary found. (a) Prime
 grants now fund $W_{\mathrm{prime}}$ evaluations past support 1 (the e1af Section 2
 family $\{B_X(h)\}$ at weight $\log(H/h)$ enters exactly here), so the prime
@@ -201,8 +207,12 @@ inherits the law's error class wherever it does.
 
 **Error classes for CONJECTURAL grants: o-class only, read absolutely (re-pose fix 4,
 per the adversary report).** The cap is scoped to conjectural grants: $o(TL)$ at the
-$TL$ normalization on the zero side, $o(X)$ per shift on the prime side, $o$(stated
-class) at the link. The o-class is ABSOLUTE per family, not relative to the family's
+$TL$ normalization on the zero side, $o(X)$ per shift on the prime side; at the link,
+$o(TL)$ absolute per sup-normalized family ($\sup|f_T| \le 1$; the grant's stated class
+names its support/window profile, never a rate finer than $o(TL)$), with
+constant-in-$T$ link members not grantable (the no-fixed-height clause applies at the
+link: a fixed test function's read is $T$-independent, so any vanishing stated class
+forces the exact identity, C0(ii)'s excluded object) (delta-check edit 1). The o-class is ABSOLUTE per family, not relative to the family's
 own main term. The posed parenthetical "(equivalently vanishing relative error)" was
 false in general (Fujii at bounded $\lambda$ has main term $\asymp T$, not $\asymp TL$)
 and is deleted (A3(iii)); the two readings are load-bearing in opposite directions, and
@@ -223,8 +233,9 @@ labeled extension in Section 6, item 6, with the collapse-prevention restriction
 spelled there.
 
 **T-uniformity of granted families (re-pose fix 2, per the adversary report).** Every
-granted family must satisfy: (a) fixed finite arity $n$; (b) kernel applied to rescaled
-gap vectors with $T$-independent bounded amplitude (normalize $\sup|K| \le 1$);
+granted family must satisfy: (a) fixed finite arity $n$; (b) $T$-independent bounded
+amplitude in every channel (gap kernels normalized $\sup|K| \le 1$; link test families
+$\sup|f_T| \le 1$) (delta-check edit 3);
 (c) $T$-dependence confined to a support/window parameter carrying a per-family
 uniformity clause in the GLSS Remark 1 style; (d) error $o(TL)$ absolute per family;
 (e) joint satisfiability per the clause below. The reason is the adversary's A3(i)
@@ -254,7 +265,11 @@ buys is recorded in Section 3(b). Two further syntactic consequences, both delib
   selects a grant set $G \subset \mathcal{P}$ that is satisfied, jointly with C0 and
   the proven core, by at least one configuration, and is a theorem modulo $G$. The
   class question quantifies over all jointly satisfiable $G$ (this is how law-blindness
-  and "granted freely, any support" are made precise simultaneously). The posed wording
+  and "granted freely, any support" are made precise simultaneously). Channel
+  asymmetry, noted: prime-channel laws mention no configuration, so for them joint
+  satisfiability degenerates to truth about the actual primes; an HL\*-granting
+  certificate's class membership is contingent on HL\* exactly as its theorem is
+  (delta-check edit 7). The posed wording
   was "consistent", and mere logical consistency is not enough (A3(ii)): a grant set
   consistent as a theory but unsatisfiable with C0 + core (example:
   "$N^{\circledast}(T) = \frac12 TL + o(TL)$", impossible since
@@ -469,14 +484,19 @@ why the discipline is load-bearing and not cosmetic. The certificate covers the
 widened pool: the adversary re-ran the collapse hunt over
 $\mathcal{P}_{\mathrm{link}}$ at o-class with $T$-uniform test classes (near-line
 splits at $\beta - \frac12 = 1/(\Delta L)$ cost $O(1)$ per event in every link read up
-to support $\Delta$), so the three-channel pool remains collapse-safe. The cost is
+to support $\Delta$), so the three-channel pool remains collapse-safe; the
+delta-check's link fine-class smuggler (a windowed fixed test function at a
+self-stated vanishing class, which would have re-pinned the matching class to zeta's
+multiset per A4(i)) is closed by the link clauses of the error cap and discipline
+(b) (delta-check edit 4). The cost is
 recorded with the certificate, not hidden: the same constructions that prove
 collapse-safety make the naive no-go itself cheap (Section 5's re-aim carries the
 consequence).
 
 **The K1 check on the target.** A class no-go neither implies nor consumes RH, and is
 compatible with both truth values: in its counterexample-configuration form (Section 5)
-it asserts the existence of a C0-configuration matching a grant set with $E$ unbounded
+it asserts the existence of a C0-configuration matching a grant set with $E$ unbounded,
+and for the C4-loc register with $N_{\mathrm{off}}$ unbounded (delta-check edit 5)
 (an existence the adversary's constructions have in fact proven for every jointly
 satisfiable grant set), which is a statement about the interface's resolving power,
 true or false independently of where zeta's zeros actually sit. If RH is true, the
@@ -610,7 +630,10 @@ one or both of the adversary's two honest re-aims, both syntactic, both preservi
 Section 3(b) discipline. (a) The QUANTITATIVE visibility-floor law: for a granted
 family set with stated window and error profiles, the certified exchange rate between
 defect growth and slack, i.e. which $E$-growth rates are certifiable-against at which
-granted classes; the perturbation constructions give the lower bulk of the curve, the
+granted classes, stated at both co-primary registers (the $E$-curve primary, its
+$N_{\mathrm{off}}$ reading via the domination $N_{\mathrm{off}} \le E$ and the
+(S)-move floor showing the marginal cannot improve on it) (delta-check edit 6); the
+perturbation constructions give the lower bulk of the curve, the
 GLSS $o(TL)$ ceiling the upper, and the theorem is the CURVE, not the endpoint. (b)
 The zeta-scope honesty theorem: the no-go proven WITH the scope sentence above as its
 content, priced honestly as a class-level generalization of the #199/BGSTB blindness
@@ -715,7 +738,13 @@ structure CorrelationCertificate (G : Set LawFamily) where
    prime-side parametrization of the ES scalar the GLSS engine consumes, the two
    parametrizations of $\mathcal{P}$ partially merge without the RH-priced GM dictionary,
    and the class simplifies. A bounded fetch rides F2b; nothing in the definition depends
-   on its outcome (both parametrizations are already first-class).
+   on its outcome (both parametrizations are already first-class). FETCH EXECUTED
+   2026-08-28 ([`reading_notes/mueller_1983_es_equivalence.md`](reading_notes/mueller_1983_es_equivalence.md)):
+   Mueller's equivalence is stated UNDER RH per the one content-bearing source located
+   (Ivic math/0312097, p. 12; [SINGLE-SOURCE], the paper itself paywalled), so the
+   parametrizations do NOT merge unconditionally and this definition's two-channel
+   choice stands; open thread flagged in the note (Gallagher-Mueller 1978's RH
+   dependency was later removed, so removability here is unknown).
 6. **The power-saving error sub-pool.** Excluded from the default pool (C2's G-LAW
    clause) because its $k = 1$ member is RH (landscape row E5) and its admission
    collapses the question by smuggling. The labeled optional extension, if F2b ever needs
