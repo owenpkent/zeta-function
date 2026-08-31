@@ -7,11 +7,14 @@ from where, in what format, and how to get it again.
 
 Downloaded 2026-08-15. Total on disk: 77,673,220 bytes (74.1 MB) across 249 files.
 A second round on 2026-08-30 (sections 18 to 21) added 469,476,819 bytes (469.5 MB) across 164
-files. A per-file checksum manifest is written at `_cache/datasets/SHA256SUMS` (regenerate with the
-command in section 16).
+files. A third micro-round on 2026-08-31 (section 22) added 1,073,965 bytes across 3 files via the
+LMFDB SQL mirror. A per-file checksum manifest is written at `_cache/datasets/SHA256SUMS`
+(regenerate with the command in section 16).
 
-Everything here was fetched anonymously over plain HTTP(S). Nothing required a login, a payment,
-or a form submission.
+Everything here was fetched anonymously over plain HTTP(S) with one exception: section 22 came
+through the LMFDB MCP SQL mirror (`mcp.lmfdb.org`), which serves signed short-lived download URLs
+for SQL exports; the exact query is quoted there for re-execution. Nothing required a login, a
+payment, or a form submission.
 
 ## Contents
 
@@ -36,6 +39,7 @@ or a form submission.
 19. [LMFDB: sibling L-function zeros, degrees 2-4](#19-lmfdb-sibling-l-function-zeros-degrees-2-4)
 20. [LMFDB: abelian variety isogeny classes over finite fields (Weil polynomial tables)](#20-lmfdb-abelian-variety-isogeny-classes-over-finite-fields-weil-polynomial-tables)
 21. [Physics resonance spectra: ENDF neutron resonances and Kerr quasinormal modes (QNM)](#21-physics-resonance-spectra-endf-neutron-resonances-and-kerr-quasinormal-modes-qnm)
+22. [LMFDB SQL mirror: degree-3 GL3 Maass L-function zeros](#22-lmfdb-sql-mirror-degree-3-gl3-maass-l-function-zeros)
 
 ---
 
@@ -45,12 +49,13 @@ or a form submission.
 experiments/primes/_cache/
 ├── odlyzko/                 pre-existing: zeros1, zeros3, zeros4, zeros5 (see section 2)
 └── datasets/                everything in this document
-    ├── SHA256SUMS           per-file manifest, 416 entries
+    ├── SHA256SUMS           per-file manifest, 419 entries
     ├── odlyzko/             zeros2, zeros6, zeros6.gz
     ├── lmfdb/               high-precision zeta zeros, Platt sample, Dirichlet L zeros
     │   ├── platt/data/      three binary .dat zero-block windows (see section 18)
     │   ├── siblings/        degree 2/4 sibling L-function zeros (see section 19)
-    │   └── av_fq/           abelian variety isogeny classes over F_q (see section 20)
+    │   ├── av_fq/           abelian variety isogeny classes over F_q (see section 20)
+    │   └── gl3_maass/       degree-3 GL3 Maass L-function zeros via the SQL mirror (see section 22)
     ├── lmfdb_maass/         level-1 Maass cusp form spectral parameters (see section 17)
     ├── tos/                 Oliveira e Silva: primes/, gaps/, twin_gaps/, goldbach/, apc/, zeta/
     ├── oeis/                14 b-files
@@ -1070,6 +1075,27 @@ unlabeled, three independent ways:
   object exists for them.
 - Direct guesses (`3-1-1.1-c11e2-0-0`) 404'd on both hosts.
 
+**Addendum 2026-08-31 (SQL-mirror recheck; see section 22 for the access route).** Both absences
+above were re-confirmed at the database level, upgrading the three-way web probes to exhaustive
+stratum scans against the LMFDB SQL mirror's `lfunc_lfunctions` table (24.2M rows):
+
+- **Symmetric square of Delta:** the *entire* degree-3 stratum is 1,552 records, every one with
+  origin prefix `ModularForm/GL3/Q` (a `GROUP BY` over the stratum returns exactly one origin
+  class) and motivic weight 0. No symmetric-square origin exists at degree 3 anywhere in the table.
+- **Level-1 Maass form L-function (degree 2):** the degree-2, conductor-1 stratum starts at motivic
+  weight 11 (the weight-12 holomorphic forms); no motivic-weight-0 record exists there, and zero
+  records in the whole table have origin prefix `ModularForm/GL2/Q/Maass`.
+
+One snapshot discrepancy surfaced: the mirror's degree-3 stratum (1,552 records, all
+`self_dual = false`) does not contain the 11 all-self-dual conductor-1 records the `www.lmfdb.org`
+API returned on 2026-08-30. The two views are different snapshots of the GL3 data; the mirror
+carries the non-self-dual batch (acquired as section 22), the www API that day showed only the
+older self-dual batch. Neither is a superset of the other.
+
+Also verified 2026-08-31 against the mirror: all five records in the table above match it exactly
+on `order_of_vanishing`, first-zero value (every stored digit of `z1`), listed-zero count, and the
+genus-2 record's null `accuracy` field.
+
 **Serves.** Extends the repo's Euler-positive-control instrument (LEARNINGS #210: chi3/chi4,
 believed-RH-true through the e1k harness collapse gap_even 4.7-6.9 orders, harder than D-H) from
 degree-1 Dirichlet characters up through degrees 2 and 4, with genuine rank diversity built in: two
@@ -1152,7 +1178,12 @@ script used to accept or reject each response.
 
 **Slices pulled.** All six requested slices landed, each COMPLETE (downloaded row count equals the
 LMFDB stats page's own stated count for that $(g,q)$ selection, checked both from the file's own
-self-reported header line and an independent line count). No slice was paged, capped, or shrunk;
+self-reported header line and an independent line count). Re-verified 2026-08-31 against the LMFDB
+SQL mirror (see section 22 for the route): a direct `COUNT(*)` on `av_fq_isog` per slice filter
+reproduces all six row counts exactly (6,184 / 3,621 / 5,242 / 1,645 / 14,325 / 164,937), with the
+$g=1$ slice's 118 distinct field sizes confirmed by `COUNT(DISTINCT q)`. This is a third,
+independent completeness witness (live database, not the stats page the downloads were checked
+against). No slice was paged, capped, or shrunk;
 the endpoint returned every matching row in one shot up to 164,937 rows with no sign of a silent
 truncation limit.
 
@@ -1533,3 +1564,85 @@ literature has repeatedly proposed as a structural analogy to the zeta zeros. Ha
 Berti-Cardoso-Starinets numbers on disk (rather than citing the paper secondhand) lets that
 document's comparison be checked against real values instead of asserted from memory, starting from
 the exact Schwarzschild fundamental mode landmark validated above.
+
+---
+
+## 22. LMFDB SQL mirror: degree-3 GL3 Maass L-function zeros
+
+Added 2026-08-31. The complete degree-3 stratum of LMFDB's `lfunc_lfunctions` table: 1,552 GL3
+Maass cusp form L-functions with their stored zeros, spectral parameters, and functional-equation
+data. This fills the degree-3 rung of the section 19 sibling ladder, which the 2026-08-30 round
+attempted (via the symmetric square of Delta) and could not fill because no such record exists in
+LMFDB; GL3 Maass forms are what the database actually has at degree 3.
+
+**Source and access route.** Not the web download endpoints of sections 3-19: this pull came
+through the **LMFDB MCP SQL mirror** (`mcp.lmfdb.org`, a read-only PostgreSQL mirror of the
+production database, reached via the `lmfdb` MCP server's `export_query` tool, which returns a
+signed ~10-minute download URL streaming the result set). The exact query, re-executable against
+any LMFDB SQL mirror:
+
+```sql
+SELECT label, origin, conductor, order_of_vanishing, self_dual, conjugate,
+       root_angle, accuracy, z1, z2, z3, positive_zeros, mu_imag, mu_real, "Lhash"
+FROM lfunc_lfunctions WHERE degree = 3 ORDER BY conductor, label
+```
+
+Route notes for future pulls, learned this session: the mirror times out on unindexed full-table
+scans of the 24.2M-row `lfunc_lfunctions` (a `GROUP BY` over `degree = 2`, and any `GROUP BY` over
+all of `lfunc_instances`, both timed out); filters on `degree`, `conductor`, and `label` use
+indexes and return fast. The plain `label` column does not exist on `ec_curvedata` (it is
+`lmfdb_label` there). The `lfunc_dir_zeros` table (7.6M rows, visible in `list_tables`) is
+permission-denied to the mirror role. None of the section 15/19 reCAPTCHA/throttling machinery
+applies on this route.
+
+**Files** (`_cache/datasets/lmfdb/gl3_maass/`):
+
+| File | Bytes | Rows/lines | sha256 |
+|---|---|---|---|
+| `gl3_maass_degree3_all.jsonl` | 1,068,977 | 1,552 | `4073f6eaccf58d4357ccec61a408e791217698b41142bddbaa2ee2b7d440eba7` |
+| `validate_gl3.py` | 4,331 | | `7124707f05fade16721fa5a0debeb90cde3a950e1902d313bd692b463550b882` |
+| `_validation_report.txt` | 657 | | (validator stdout, regenerated on each run; VERDICT: PASS) |
+
+**Format.** JSON Lines, one L-function per line, 15 keys per record (the SELECT list above).
+`positive_zeros` is a JSON array of decimal strings; `mu_imag`/`mu_real` are the
+functional-equation shift arrays (all real parts 0 here); `conductor` is a string-encoded numeric.
+The label grammar is the section 19 hyphenated one (`3-1-1.1-r0e3-<spectral>-0`), with the
+spectral parameters embedded in the label and repeated at full precision in `mu_imag`.
+
+**Contents.** Conductor 1: 1,428 records; conductor 4: 124 records. All are non-self-dual
+(`self_dual = false` throughout; they come in conjugate pairs), all have `order_of_vanishing` 0,
+and every record carries zeros: 20,146 listed positive zeros in total, 3 to 21 per record.
+
+**Precision inhomogeneity, sharper than section 19's.** The `accuracy` field is null on all 1,552
+records, and the stored zero strings range from 14 significant digits down to as few as 2 on the
+shortest entries. LMFDB's own column documentation says the last stored digit may be off by one.
+Treat these as ~coordinate-quality zeros for structural/statistical use, not as certified values
+like the section 3/18 zeta zeros; any downstream use needing certified digits must recompute.
+
+**Validation** (`validate_gl3.py`, report in `_validation_report.txt`, VERDICT: PASS): every line
+parses with exactly the expected keys; every `positive_zeros` list is strictly positive and
+strictly increasing; `z1`/`z2`/`z3` agree with the leading list entries on every record; the
+conjugate pairing closes as an involution on all of conductor 1.
+
+**Upstream data quirks, all confined to the conductor-4 batch (inventoried, not repaired):** that
+batch stores URL-style strings in the `Lhash` column itself (not hashes); 20 of its records have
+`conjugate = null` despite `self_dual = false`; and one record's `conjugate` is a malformed URL
+containing a stray `*` and space (`.../19.76654_5.26298*/0.4512678 /`), which breaks the pairing
+involution for exactly the two records that are each other's partners
+(`3-2e2-1.1-r0e3-m5.26m19.77p25.03-0` / `...p5.26p19.77m25.03-0`). These are facts about LMFDB's
+conductor-4 GL3 upload, preserved verbatim; the zeros themselves validate cleanly.
+
+**Snapshot caveat.** As recorded in the section 19 addendum: the mirror's degree-3 stratum and the
+`www.lmfdb.org` API's 2026-08-30 degree-3 view (11 records, all self-dual) are different snapshots
+with no containment either way. This file is the mirror's view; the 11 self-dual conductor-1
+records of the www view are not in it.
+
+**Serves.** The degree-3 rung of the section 19 ladder, with two properties the ladder previously
+lacked. First, degree 3 itself: the Euler-positive-control instrument now has believed-GRH-true
+L-functions at degrees 1, 2, 3, and 4. Second, non-self-duality: every section 19 entry is
+self-dual (real Dirichlet coefficients, root number a sign); these 1,552 have genuinely complex
+coefficient data and come in conjugate pairs, so any RH-discipline detector that silently assumes
+realness/self-duality (a symmetric functional equation, a sign-valued root number, a real spectral
+measure) trips here and nowhere else in the collection. The limitation to note before leaning on
+it: no rank diversity (all order-of-vanishing 0, unlike the section 19 rank 0/1/3 spread) and the
+precision inhomogeneity above.
