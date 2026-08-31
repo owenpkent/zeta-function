@@ -99,7 +99,7 @@ The **[Generalized Riemann Hypothesis](https://en.wikipedia.org/wiki/Generalized
 
 GRH implies:
 - Primes in arithmetic progressions are equidistributed at the best possible rate
-- The least prime in a progression $a \pmod{q}$ is $O((\phi(q)\log q)^2)$ ([Linnik's theorem](https://en.wikipedia.org/wiki/Linnik%27s_theorem) with sharp constant)
+- The least prime in a progression $a \pmod{q}$ is $O((\phi(q)\log q)^2)$ (the GRH-conditional sharpening; [Linnik's theorem](https://en.wikipedia.org/wiki/Linnik%27s_theorem) is the unconditional $q^{O(1)}$ version)
 - Many results in computational number theory
 
 **[Automorphic L-functions](https://en.wikipedia.org/wiki/Automorphic_L-function):** The [Langlands program](https://en.wikipedia.org/wiki/Langlands_program) predicts that all "reasonable" L-functions (from automorphic representations of $GL_n$ over number fields) are automorphic, have functional equations, and satisfy GRH. Proving functoriality would unify these.
