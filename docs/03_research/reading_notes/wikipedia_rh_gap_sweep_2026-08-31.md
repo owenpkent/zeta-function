@@ -97,6 +97,11 @@ Speiser coordinate is another FE-consequence the D-H discipline files as RH-blin
 bin as scattering unimodularity; if they do not, Speiser engages more than the functional
 equation and earns a deeper look. Either way it is a new measured row in the reformulation
 ledger, at the cost of one `_shared` probe.
+**EXECUTED 2026-08-31, same day (LEARNINGS #214,
+[`e_speiser_dh`](../../../experiments/criticality/e_speiser_dh.md), 11/11):** the mechanism
+transplants, and locally: exactly one D-H derivative zero left of the line at the off-line
+height ($s^* = 0.40537 + 85.7051i$), none below it, $\zeta'$ clean through $t = 100$. Speiser
+files FE-only (RH-blind bin), as pre-registered.
 
 ### Tier 2: ledger paragraphs, no new machinery
 
