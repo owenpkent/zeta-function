@@ -39,7 +39,7 @@ Top of the queue, feasibility x value. Full table: run the tool; per-target
 |---|---|---|---|---|---|
 | 1 | e1z-2 (= e1v-2 Lagrange clause) | READY | HIGH | Interpolation identity $1/\lambda_M(0) = \sum_j \ell_j(0)^2/w_j$ at full degree | **PROVED 2026-08-25** (#VQ-1a/#VQ-1b sorry-free, axioms clean; LEARNINGS #202). Lagrange `hpair` still carried as hypothesis. |
 | 2 | e1u-2 | READY | MED | Nilpotent transfer $(Juu^T)^2 = 0$ + degree-one propagator | **PROVED 2026-08-25** (#VQ-3a/#VQ-3b sorry-free, axioms clean; LEARNINGS #202). |
-| 3 | e1v-1 | TYPABLE | HIGH | Theorem V2: $\lambda_M(0) \le \cosh(2nG)^{-2}$ | **PROVED 2026-08-25** (#VQ-2 sorry-free, axioms clean; LEARNINGS #202; e1u target 6 discharged in Lean). `arcoshReal` + proved `cosh_arcoshReal` = ready Mathlib upstream candidate. |
+| 3 | e1v-1 | TYPABLE | HIGH | Theorem V2: $\lambda_M(0) \le \cosh(2nG)^{-2}$ | **PROVED 2026-08-25** (#VQ-2 sorry-free, axioms clean; LEARNINGS #202; e1u target 6 discharged in Lean). `arcoshReal` + proved `cosh_arcoshReal` = ~~ready Mathlib upstream candidate~~ withdrawn 2026-08-31 (already upstream at the pin, see section 4). |
 | 4 | #EF-class | TYPABLE | MED | Admissible-test side conditions for the explicit formula | Typable against `SchwartzMap` today; sharpens #EF-1 before its proof is reachable. |
 | 5 | #FE-1, #EP-1, #LR-2 | TYPABLE | MED | Real FE / Euler-product predicates; restriction operator | Design work on Mathlib-native objects (`completedRiemannZeta_one_sub`, `EulerProduct`). |
 | 6 | #DH-cont, #DH-conv | FEASIBLE | MED | D-H continuation and convergence | Unblocked since Mathlib gained `hurwitzZeta` + Dirichlet continuation (2024). |
@@ -66,8 +66,11 @@ three e1z targets and the top of the e1v list are unblocked: the split is
 exactly "potential-theory limit statements blocked, finite/variational
 statements open for business."
 
-Two small upstream candidates fell out of the triage: `Real.arcosh` (absent;
-`arcoshReal` in the draft file is the standard log form) and the finite
+Two small upstream candidates fell out of the triage: `Real.arcosh` (recorded
+here as absent; CORRECTED 2026-08-31: `Mathlib.Analysis.SpecialFunctions.Arcosh`
+landed upstream 2026-03-23, before the v4.30.0 pin, so the gap claim was stale
+at the time of writing and the PR candidate is withdrawn, see
+`lean/upstream/arcosh_pr_body.md` DO-NOT-SUBMIT banner) and the finite
 Christoffel-variational identity (#VQ-1), which is generic enough for
 Mathlib's analysis library.
 
@@ -111,7 +114,8 @@ theorem v2_germ_bound (M : ℕ) (g T : ℝ) (hg : 0 < g) (hgT : g < T)
 
 where `bandGreen g T = arcoshReal ((T^2 + g^2) / (T^2 - g^2)) / 2` and
 `arcoshReal x = Real.log (x + Real.sqrt (x^2 - 1))` (the recorded
-`Real.arcosh` gap). This is the Lean face of the e1u-6 discharge.
+`Real.arcosh` gap; stale, see the 2026-08-31 correction above: Mathlib has
+`Real.arcosh` at the pin). This is the Lean face of the e1u-6 discharge.
 
 **#VQ-3a/#VQ-3b (e1u-2), the nilpotent transfer atoms** on explicit `!![..]`
 matrices: `rankOneTransfer u ^ 2 = 0` and the additive degree-one propagator
@@ -131,8 +135,9 @@ exact current names I could not certify without a toolchain.
    `cosh`-representation work off `[-1,1]`).
 2. After #VQ-1: the polynomial-side Lagrange step (`Lagrange.interpolate` at
    full degree), turning the kernel into the full e1z-2/e1v-2 identity.
-3. `Real.arcosh` as a small Mathlib PR (definition + `cosh_arcosh`,
-   `arcosh_cosh`, monotonicity), unblocking the clean statement of `bandGreen`.
+3. ~~`Real.arcosh` as a small Mathlib PR~~ WITHDRAWN 2026-08-31: already in
+   Mathlib at the pin (`Mathlib.Analysis.SpecialFunctions.Arcosh`, upstream
+   2026-03-23); `bandGreen` can be restated against `Real.arcosh` directly.
 
 ## 6. Adversarial test cases (for ADVERSARY)
 

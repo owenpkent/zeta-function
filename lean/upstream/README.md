@@ -21,10 +21,20 @@ is no CLA step in current Mathlib.
 |----|---------------|---------|---------------------|
 | digamma: reflection, iterated recurrence, duplication | [`../ZetaRH/DigammaExtras.lean`](../ZetaRH/DigammaExtras.lean) | [`digamma_pr_body.md`](digamma_pr_body.md) | `Mathlib/Analysis/SpecialFunctions/Gamma/Digamma.lean` |
 | `riemannZeta_conj`: conjugation symmetry of ζ | [`../ZetaRH/RiemannZetaConj.lean`](../ZetaRH/RiemannZetaConj.lean) | [`riemann_zeta_conj_pr_body.md`](riemann_zeta_conj_pr_body.md) | `Mathlib/NumberTheory/LSeries/RiemannZeta.lean` |
+| ~~`Real.arcosh`~~ **DO NOT SUBMIT** (duplicate, see body) | [`Arcosh.lean`](Arcosh.lean) (staged record only, unwired) | [`arcosh_pr_body.md`](arcosh_pr_body.md) | already merged: `Mathlib/Analysis/SpecialFunctions/Arcosh.lean` (2026-03-23) |
+| Cohn's criterion for self-inversive polynomials | [`../ZetaRH/GaussLucas.lean`](../ZetaRH/GaussLucas.lean) + [`../ZetaRH/SchurCohn.lean`](../ZetaRH/SchurCohn.lean) (no new file; already proved in-repo) | [`cohn_criterion_pr_body.md`](cohn_criterion_pr_body.md) | new file, `Mathlib/Analysis/Complex/Polynomial/CohnCriterion.lean` (suggested) |
 
-The two are **independent** (different target files, no shared new lemmas), so they are two separate
-PRs and can go in either order. Suggested order: **digamma first** (it has been staged longest and
-its only open question is now resolved), then `riemannZeta_conj`.
+The two open PRs are **independent** (different target files, no shared new lemmas), so they are two
+separate PRs and can go in either order. Suggested order: **digamma first** (it has been staged
+longest and its only open question is now resolved), then `riemannZeta_conj`.
+
+The `arcosh` package is **closed, not to be submitted**: a build-verified check against the pinned
+Mathlib this session found `Real.arcosh` already merged upstream (2026-03-23, before this project's
+own v4.30.0 pin), a superset of everything this package would have proposed. Full finding in
+[`arcosh_pr_body.md`](arcosh_pr_body.md). The Cohn's-criterion package is genuinely open (the absence
+was re-confirmed against the pin this session) but **queues after digamma and the P10
+rational-root-floor PR clear**, per the sequencing note at the top of
+[`cohn_criterion_pr_body.md`](cohn_criterion_pr_body.md).
 
 Background notes: [`digamma_contribution.md`](digamma_contribution.md) (digamma context).
 

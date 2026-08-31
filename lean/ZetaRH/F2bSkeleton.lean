@@ -2,13 +2,16 @@
 F2b statement skeleton: the visibility-floor law over the certificate class.
 
 Companion to docs/03_research/f2b_visibility_floor.md (frame session F2b,
-2026-08-28). DELIBERATELY UNIMPORTED by ZetaRH.lean (the original VerifierQueue
-pattern): this file is the Section 5 bar's artifact (statements VERIFIER-drafted
-with the hypothesis load priced), not a discharged batch. Register lemmas whose
+2026-08-28). Originally deliberately unimported (the Section 5 bar's artifact,
+statements VERIFIER-drafted with the hypothesis load priced); IMPORTED by
+ZetaRH.lean since the 2026-08-31 batch discharged V-F2b-6, making the file
+sorry-free (the VerifierQueue precedent: discharged batches join the build).
+Register lemmas whose
 content is finite arithmetic are PROVED; analytic steps are carried as named
 hypotheses in the honest KERNEL style of #VQ-1a/#S4C-2 (the polynomial/analytic
-input as hypothesis, the finite inequality as theorem); theorem-shape statements
-are sorry-bodied with their loads priced in comments.
+input as hypothesis, the finite inequality as theorem); the one theorem-shape
+statement (V-F2b-6) is now PROVED against its carried hypothesis, so the file
+is sorry-free.
 
 Model: the horizontal-line multiplicity profile of a C0 window is carried as a
 `Multiset ℕ` (the h-profile: one entry per occupied horizontal line). The
@@ -29,7 +32,8 @@ Hypothesis loads, priced per target:
            the second derivative (Bernstein's inequality for exponential type
            is the in-print source; exponential-type machinery is not in
            Mathlib, so the analytic input rides as `hg''`); the finite MVT
-           step is the draftable kernel, left sorry with its route noted.
+           kernel is PROVED (Cauchy MVT against t^2, then the mean value
+           inequality on g'; sharp constant, no factor-2 loss).
   V-F2b-7 (floor statement shape)    : the class quantifier (battery, slack,
            matching) abstracted; carried as a NAMED PROP (a def, not a
            sorry-bodied theorem: the theorem form was refutable at degenerate
@@ -189,7 +193,7 @@ theorem cosh_envelope (d u : ℝ) :
 /- V-F2b-6: the second-difference bound (Bernstein carried as hypothesis).  -/
 /- ------------------------------------------------------------------------ -/
 
-/-- V-F2b-6 (sorry-bodied; the analytic input rides as `hbound`): if g is twice
+/-- V-F2b-6 (PROVED; the analytic input rides as `hbound`): if g is twice
 differentiable with |g''| <= B everywhere (for exponential type Theta and
 sup-norm 1, Bernstein gives B = Theta^2: the in-print source; exponential-type
 machinery is not in Mathlib, so the bound is the carried hypothesis), then the
@@ -197,20 +201,79 @@ symmetric second difference at half-spacing a obeys the L2b bound.
 The first derivative is carried EXPLICITLY as `g'` with its own `HasDerivAt`
 hypothesis (session adversary F7: the earlier `deriv g` form was refutable via
 junk-value `deriv` at a non-differentiable g, e.g. the indicator of {0} with
-B = 0). Route: two applications of the mean value theorem, or Taylor with the
-Lagrange remainder (`taylor_mean_remainder_lagrange`). Finite, draftable,
-queued. -/
+B = 0). Route actually used (sharp constant, no factor-2 loss): with
+phi(t) = g(x+t) + g(x-t) - 2g(x), Cauchy's mean value theorem
+(`exists_ratio_hasDerivAt_eq_ratio_slope`) against v(t) = t^2 on [0, a] gives
+c in (0, a) with a^2 * (g'(x+c) - g'(x-c)) = phi(a) * 2c; the mean value
+inequality on g' (`Convex.norm_image_sub_le_of_norm_hasDerivWithin_le` on
+Set.univ) bounds |g'(x+c) - g'(x-c)| <= B * 2c; divide by 2c > 0. -/
 theorem second_difference_bound
     (g g' g'' : ℝ → ℝ) (B a x : ℝ)
     (hg' : ∀ t, HasDerivAt g (g' t) t)
     (hg'' : ∀ t, HasDerivAt g' (g'' t) t)
     (hbound : ∀ t, |g'' t| ≤ B) (ha : 0 ≤ a) :
     |g (x + a) + g (x - a) - 2 * g x| ≤ a ^ 2 * B := by
-  sorry
+  rcases eq_or_lt_of_le ha with rfl | hapos
+  · have h0 : g (x + 0) + g (x - 0) - 2 * g x = 0 := by simp [two_mul]
+    rw [h0, abs_zero]
+    norm_num
+  · -- WHY a difference quotient: phi(0) = 0 and v(0) = 0 make the Cauchy MVT
+    -- ratio exactly the second difference over a^2, with no telescoping loss.
+    have hphi : ∀ t : ℝ, HasDerivAt (fun s => g (x + s) + g (x - s) - 2 * g x)
+        (g' (x + t) - g' (x - t)) t := by
+      intro t
+      have h1 : HasDerivAt (fun s : ℝ => g (x + s)) (g' (x + t)) t := by
+        simpa [Function.comp_def] using
+          (hg' (x + t)).comp t ((hasDerivAt_id t).const_add x)
+      have h2 : HasDerivAt (fun s : ℝ => g (x - s)) (-g' (x - t)) t := by
+        simpa [Function.comp_def] using
+          (hg' (x - t)).comp t ((hasDerivAt_id t).const_sub x)
+      simpa [sub_eq_add_neg] using (h1.add h2).sub_const (2 * g x)
+    have hcont : Continuous fun s : ℝ => g (x + s) + g (x - s) - 2 * g x :=
+      continuous_iff_continuousAt.mpr fun t => (hphi t).continuousAt
+    obtain ⟨c, hc, heq⟩ :=
+      exists_ratio_hasDerivAt_eq_ratio_slope
+        (fun s => g (x + s) + g (x - s) - 2 * g x)
+        (fun t => g' (x + t) - g' (x - t)) hapos hcont.continuousOn
+        (fun t _ => hphi t) (fun t => t ^ 2) (fun t => 2 * t)
+        (continuous_pow 2).continuousOn
+        (fun t _ => by simpa using hasDerivAt_pow 2 t)
+    have hc0 : (0 : ℝ) < c := hc.1
+    have h2c : (0 : ℝ) < 2 * c := by linarith
+    have hkey : a ^ 2 * (g' (x + c) - g' (x - c))
+        = (g (x + a) + g (x - a) - 2 * g x) * (2 * c) := by
+      have h0 : g (x + 0) + g (x - 0) - 2 * g x = 0 := by simp [two_mul]
+      calc a ^ 2 * (g' (x + c) - g' (x - c))
+          = (a ^ 2 - 0 ^ 2) * (g' (x + c) - g' (x - c)) := by norm_num
+        _ = ((g (x + a) + g (x - a) - 2 * g x)
+              - (g (x + 0) + g (x - 0) - 2 * g x)) * (2 * c) := heq
+        _ = (g (x + a) + g (x - a) - 2 * g x) * (2 * c) := by rw [h0, sub_zero]
+    have hlip : |g' (x + c) - g' (x - c)| ≤ B * (2 * c) := by
+      have h := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
+        (f := g') (f' := g'') (s := Set.univ)
+        (fun t _ => (hg'' t).hasDerivWithinAt)
+        (fun t _ => by simpa using hbound t) convex_univ
+        (Set.mem_univ (x - c)) (Set.mem_univ (x + c))
+      rw [Real.norm_eq_abs, Real.norm_eq_abs] at h
+      have hd : x + c - (x - c) = 2 * c := by ring
+      rwa [hd, abs_of_pos h2c] at h
+    -- WHY cancel rather than divide: the inequality is multiplied through by
+    -- the positive 2c the MVT produced, keeping everything in ring form.
+    have hmul : |g (x + a) + g (x - a) - 2 * g x| * (2 * c)
+        ≤ a ^ 2 * B * (2 * c) := by
+      have e1 : |g (x + a) + g (x - a) - 2 * g x| * (2 * c)
+          = |(g (x + a) + g (x - a) - 2 * g x) * (2 * c)| := by
+        rw [abs_mul, abs_of_pos h2c]
+      rw [e1, ← hkey, abs_mul, abs_of_nonneg (sq_nonneg a)]
+      calc a ^ 2 * |g' (x + c) - g' (x - c)|
+          ≤ a ^ 2 * (B * (2 * c)) :=
+            mul_le_mul_of_nonneg_left hlip (sq_nonneg a)
+        _ = a ^ 2 * B * (2 * c) := by ring
+    exact le_of_mul_le_mul_right hmul h2c
 
 /- ------------------------------------------------------------------------ -/
 /- V-F2b-7: the floor statement shape (grant-set-indexed, per the re-posed  -/
-/- class definition's Lean sketch; sorry-bodied).                            -/
+/- class definition's Lean sketch; a named Prop, not asserted).              -/
 /- ------------------------------------------------------------------------ -/
 
 /-- An abstract read battery over a configuration type: finitely many reads,

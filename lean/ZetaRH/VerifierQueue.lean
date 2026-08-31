@@ -133,9 +133,15 @@ theorem christoffel_pairing_attained {M : ℕ} (w c : Fin M → ℝ)
 /-! ## #VQ-2: Theorem V2, the Chebyshev germ bound (e1v-1) -/
 
 /-- Inverse hyperbolic cosine in the standard logarithmic closed form.
-    Mathlib has `Real.arsinh` but (as of the v4.30.0 pin) no `Real.arcosh`;
-    this local definition records that gap and is itself a small upstream
-    candidate. For `1 ≤ x` it satisfies `Real.cosh (arcoshReal x) = x`. -/
+    STALE GAP CLAIM, corrected 2026-08-31: the original note here said Mathlib
+    has `Real.arsinh` but no `Real.arcosh`; in fact
+    `Mathlib.Analysis.SpecialFunctions.Arcosh` (with `Real.arcosh` in the
+    `x + sqrt(x^2 - 1)` log form and the full lemma set) landed upstream
+    2026-03-23, BEFORE the v4.30.0 pin, and is present in the pinned checkout.
+    This local definition is therefore redundant with Mathlib, kept only for
+    build stability of the discharged batch; the upstream-PR candidate is
+    withdrawn (see lean/upstream/arcosh_pr_body.md, marked DO NOT SUBMIT).
+    For `1 ≤ x` it satisfies `Real.cosh (arcoshReal x) = x`. -/
 noncomputable def arcoshReal (x : ℝ) : ℝ :=
   Real.log (x + Real.sqrt (x ^ 2 - 1))
 
