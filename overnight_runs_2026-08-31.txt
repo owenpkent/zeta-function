@@ -1,0 +1,3 @@
+replication suite e1ad/e1v/e1ae/e2bg | PID 1469506 | summary /home/owen/dev/zeta-function/experiments/spectral/_cache/replication_2026-08-31_summary.log | expect ~30-45 min
+e2au depth-double T=3000 | PID 1469602 | log /home/owen/dev/zeta-function/experiments/arithmetic_geometric/_cache/e2au_depth3000_overnight.log | expect ~1-2 h (zeros ~10-15 min, rungs a=4.0/4.5/5.0 ~13/17/23 min, incremental npz per rung)
+e5i S(T) probe | PID 1469722 | log experiments/primes/_cache/e5i_overnight.log | expect ~8-9 h (Platt windows done in first minute, all PASS; low-range [0,2e7] scan ETA 8.1 h at 20/800 chunks)

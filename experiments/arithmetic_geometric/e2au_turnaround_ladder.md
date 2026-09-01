@@ -34,3 +34,36 @@ The parallel algorithms round (LEARNINGS #188) landed two tools this ladder's su
 ## 4. Hand-off
 
 (i) **B2c-prox** (HIGH, the decisive test: spec in the backlog); (ii) optional: one depth doubling ($T \sim 3000$ via zero_polish) to certify $a = 4.5$-$5$; (iii) P12 Section 6 now has its content: draft after the law-novelty pass; the note's headline is the certified collapse plus the proximity dichotomy.
+
+## 5. Addendum 2026-09-01: the depth doubling executed, a = 5.0 CERTIFIED (hand-off (ii) discharged)
+
+Driver [`e2au_depth3000.py`](e2au_depth3000.py) (thin by construction: imports this
+instrument unmodified and retargets only T2 = 3000 / DPS2 = 110; zero supply from
+`zero_polish` exactly as Section 3 prescribed, 2469 zeros to T = 3000 at 110 digits,
+count-checked against `mp.nzeros(3000)`); overnight run 2026-08-31, **6/6 checks passed**,
+8982 s; tracked archive [`e2au_depth3000.npz`](e2au_depth3000.npz), log in `_cache/`.
+
+| rung | J (base/ref) | lg lam0 | gap | mixing | basis gate | verdict |
+|---|---|---|---|---|---|---|
+| a = 4.0 (control) | 106/218 | -55.17 | 6433 | 4e-12 | 0.0062 | CERTIFIED (as at T = 1500) |
+| a = 4.5 | 120/246 | -56.79 | 3192 | 4e-10 | 0.1341 | recorded (basis gate, unchanged) |
+| a = 5.0 | 134/274 | -60.29 | 51270 | 9e-08 | 0.0294 | **CERTIFIED (new)** |
+
+Three facts land:
+
+1. **The overlap control is bit-stable.** Every rung's refined ratios agree with the stored
+   T = 1500 values to max |dr| <= 2.78e-16: the T-doubling changes NOTHING in the readout,
+   only in the certificates, exactly the #185/#189 bit-stability pattern one deeper.
+2. **The #189 tail-arithmetic prediction FIRED.** The a = 5.0 mixing certificate went from
+   ~1 (uncertifiable) at T = 1500 to 9e-08 at T = 3000: one depth doubling cured it, as the
+   dossier's tail estimate predicted. The certified no-turnaround ladder now runs through
+   a = 5.0 (r(z=2): +0.3254 -> +0.2405 -> +0.0752, monotone collapse, no turnaround).
+3. **a = 4.5's failure is typed, not cured: it is basis starvation, not tail mixing.** Its
+   mixing improved 4e-03 -> 4e-10 with depth while the basis gate sat at 0.134 in both runs:
+   depth buys tail control, only more knots buy basis convergence. The rung stays recorded
+   with its ratios (bit-stable, collapse-consistent); certifying it is a knot-count question
+   (J beyond 120/246), not a zero-data question.
+
+P12 impact: the paper's certified range extends from a = 4 to a = 5 with the a = 4.5 gap
+typed; the horizon-verdict wording ("recorded to 5") can now say "certified to 5, with the
+a = 4.5 interior point basis-limited". Hand-off (ii) above is discharged.
