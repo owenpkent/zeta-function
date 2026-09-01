@@ -165,9 +165,9 @@ the totalized atom pricing does not. See e1ae for the falsifier-4 disposition.
 ## Citation appendix (salvaged from PR #7, 2026-08-26; LEARNINGS #210)
 
 An in-print "why" for the closed register, extracted from the PR #7 branch's
-Christoffel corpus sweep (`christoffel_corpus_sweep_2026-07-30.md`, branch
-`overnight-wave-172-173`, Section 3; extract carried here because that sweep is
-not tracked on main): every boundedness theorem in the Widom-factor /
+Christoffel corpus sweep
+([`christoffel_corpus_sweep_2026-07-30.md`](../../docs/03_research/reading_notes/christoffel_corpus_sweep_2026-07-30.md),
+Section 3): every boundedness theorem in the Widom-factor /
 Szego-Widom strand is conditioned on the support being THICK (positive Lebesgue
 measure, locally quantified: homogeneous, Parreau-Widom, regular with positive
 a.c. density), while the chain's spectrum at finite $\lambda$ and in the limit

@@ -1,0 +1,33 @@
+C1  exact Lagrange identity vs independent Gram-Schmidt (footpoint 0)
+  PASS  M=8 gap=13.6  K_M(0,0)=1.060739e+01   rel.dev 5.3e-60
+  PASS  M=12 gap=4.9  K_M(0,0)=8.732996e+00   rel.dev 1.2e-58
+  PASS  M=10 gap=1.0  K_M(0,0)=5.505373e+00   rel.dev 2.5e-59
+
+C2  dichotomy in finite form (window top fixed at 160, gap 13.6 vs no gap)
+    M= 24   logK_gapped=   4.4789 (0.18662 per atom)   logK_nogap=   2.9769 (0.12404 per atom)
+    M= 48   logK_gapped=  11.0337 (0.22987 per atom)   logK_nogap=   3.7375 (0.07786 per atom)
+    M= 96   logK_gapped=  25.7086 (0.26780 per atom)   logK_nogap=   4.4749 (0.04661 per atom)
+    M=192   logK_gapped=  55.7790 (0.29052 per atom)   logK_nogap=   5.1971 (0.02707 per atom)
+  PASS  gapped: per-atom log K is bounded below by 0.15 at every M  [PINNED]   min 0.18662
+  PASS  gapped: per-atom log K INCREASES along the grid (rate persists)   0.18662 -> 0.29052
+  PASS  gapless: per-atom log K DECREASES along the grid (rate collapses)   0.12404 -> 0.02707
+  PASS  the gapped/gapless log-K ratio does not shrink along the grid   1.50 -> 10.73
+
+C3  two-layer split: relocation moves the PREFACTOR, gap size moves the RATE
+    (a) relocation drift  |d logK|  vs M, gap fixed at 13.6, top 160
+        frac=0.10  M= 48   |d logK| =   0.2155   (per atom 0.00449)
+        frac=0.10  M= 96   |d logK| =   0.1505   (per atom 0.00157)
+        frac=0.10  M=192   |d logK| =   0.1238   (per atom 0.00064)
+  PASS  frac=0.10: per-atom drift DECREASES as M grows (prefactor, not rate)   0.00449 -> 0.00064
+        frac=0.30  M= 48   |d logK| =   1.3296   (per atom 0.02770)
+        frac=0.30  M= 96   |d logK| =   1.1792   (per atom 0.01228)
+        frac=0.30  M=192   |d logK| =   1.1172   (per atom 0.00582)
+  PASS  frac=0.30: per-atom drift DECREASES as M grows (prefactor, not rate)   0.02770 -> 0.00582
+    (b) gap-size change  |d logK|  vs M  (13.6 -> 4.9, the D-H-shaped gap)
+        M= 48   |d logK| =   6.6190   (per atom 0.13790)
+        M= 96   |d logK| =  16.1224   (per atom 0.16794)
+        M=192   |d logK| =  33.3749   (per atom 0.17383)
+  PASS  gap-size per-atom drift does NOT decay (a genuine rate change)  [PINNED]   0.13790 -> 0.17383
+  PASS  at the largest M the gap-size effect dominates the relocation effect   33.375 vs 1.117
+
+11/11 passed
