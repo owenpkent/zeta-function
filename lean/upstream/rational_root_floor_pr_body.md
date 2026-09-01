@@ -27,6 +27,15 @@ adaptations, and the body below reflects the rebased state.
    therefore in scope in `RationalRoot.lean`. The two headline theorems need only the file's
    existing `UniqueFactorizationMonoid A` context, matching the original staged generality. This
    resolves (in our favor) the review topic pre-flagged below in earlier drafts.
+3. **Pre-submission review pass (rebased onto master `cf0e3d8512`).** Three of the four helper
+   lemmas were made `private` and `den_mul_X_sub_C_num_pow_rootMultiplicity_dvd` kept public (see
+   the naming-topics list below), two docstrings were rewritten statement-first, and the
+   import-graph delta was measured and found to cost no Mathlib file an import. Re-verified after
+   the change: `lake build` green on both touched modules plus all three downstream importers
+   (2317 jobs), `lake exe lint-style` clean on both files, `lake exe runLinter` clean on both
+   modules, `#print axioms` = `[propext, Classical.choice, Quot.sound]` on all five public
+   declarations, and a guard `example` re-confirming that `den_dvd_of_is_root` follows from the new
+   theorem (via `rootMultiplicity_pos`, with the `p = 0` case split).
 
 ---
 
@@ -116,9 +125,9 @@ two deltas against that document). Summary:
 |---|---|---|
 | `Polynomial.IsPrimitive.pow` | `Content.lean` | powers of a primitive polynomial are primitive |
 | `Polynomial.isPrimitive_prod` | `Content.lean` | finite products of primitive polynomials are primitive |
-| `isPrimitive_den_mul_X_sub_C_num` | `RationalRoot.lean` | the reduced linear factor of `r` is primitive |
-| `map_den_mul_X_sub_C_num` | `RationalRoot.lean` | over `K`, that factor is a unit multiple of `X - C r` |
-| `leadingCoeff_den_mul_X_sub_C_num` | `RationalRoot.lean` | its leading coefficient is `den A r` |
+| `isPrimitive_den_mul_X_sub_C_num` (`private`) | `RationalRoot.lean` | the reduced linear factor of `r` is primitive |
+| `map_den_mul_X_sub_C_num` (`private`) | `RationalRoot.lean` | over `K`, that factor is a unit multiple of `X - C r` |
+| `leadingCoeff_den_mul_X_sub_C_num` (`private`) | `RationalRoot.lean` | its leading coefficient is `den A r` |
 | `den_mul_X_sub_C_num_pow_rootMultiplicity_dvd` | `RationalRoot.lean` | the `rootMultiplicity`-power of that factor divides `p` |
 | `den_pow_rootMultiplicity_dvd_leadingCoeff` | `RationalRoot.lean` | **headline**: single-point multiplicity floor |
 | `prod_den_pow_rootMultiplicity_dvd_leadingCoeff` | `RationalRoot.lean` | **headline**: multi-point product form |
@@ -130,10 +139,25 @@ two deltas against that document). Summary:
   themselves top-level, not inside `namespace Polynomial`), and was confirmed to build correctly
   this way. A maintainer could ask for `Polynomial.`-namespacing instead; the proofs are unaffected
   either way.
-- **Possible `private` on the four helper lemmas** (`isPrimitive_den_mul_X_sub_C_num` through
-  `den_mul_X_sub_C_num_pow_rootMultiplicity_dvd`): kept public here, matching this file's existing
-  precedent (`num_isRoot_scaleRoots_of_aeval_eq_zero` is public plumbing too), but a maintainer may
-  see them as implementation detail.
+- **Import-graph delta (CI will post one).** The three added `public import`s grow
+  `RationalRoot.lean`'s transitive closure by 30 modules (1614 -> 1644), essentially the
+  `FieldTheory.SplittingField` / `IntermediateField` / `Minpoly` cone that `GaussLemma.lean`
+  carries. It propagates to nothing: `RationalRoot.lean` has exactly three importers in Mathlib
+  (`RingTheory/Polynomial/IsIntegral.lean`, `RingTheory/DedekindDomain/Basic.lean`,
+  `NumberTheory/Niven.lean`) and all three already reach `GaussLemma` and
+  `SplittingField.Construction` transitively, so no Mathlib file gains an import from this PR.
+  Measured 2026-09-01 by transitive closure over the import graph. The fallback if a maintainer
+  wants `RationalRoot.lean` kept light is a new `RingTheory/Polynomial/RationalRootMultiplicity.lean`,
+  no proof change; the submitted body offers this explicitly.
+- **`private` on the helper lemmas: DECIDED 2026-09-01, three of four.**
+  `isPrimitive_den_mul_X_sub_C_num`, `map_den_mul_X_sub_C_num` and
+  `leadingCoeff_den_mul_X_sub_C_num` are `private`: they are statements about one anonymous
+  expression (`C (den A r) * X - C (num A r)`) with no use outside these proofs, and leaving them
+  in the public API invites the "this is implementation detail" review round.
+  `den_mul_X_sub_C_num_pow_rootMultiplicity_dvd` stays **public**: it is the `A[X]`-level
+  divisibility that both headline theorems are corollaries of, strictly stronger than either, and
+  a plausible thing for a downstream user to want. Build, `#print axioms` and both linters were
+  re-run after the change (see section 5).
 
 ---
 

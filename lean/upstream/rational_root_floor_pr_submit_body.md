@@ -7,7 +7,9 @@ This PR adds the rational root theorem with multiplicity to
 - `prod_den_pow_rootMultiplicity_dvd_leadingCoeff`: the multi-point version, `∏ r ∈ s, (den A r) ^
   rootMultiplicity r ∣ p.leadingCoeff` over any finite set `s : Finset K` (the denominators need
   **not** be pairwise coprime in `A`; the recombination happens on the polynomial side, where the
-  root factors at distinct points are pairwise coprime over `K`).
+  root factors at distinct points are pairwise coprime over `K`);
+- `den_mul_X_sub_C_num_pow_rootMultiplicity_dvd`: the `A`-level form both corollaries come from,
+  `(C (den A r) * X - C (num A r)) ^ m ∣ p` in `A[X]`.
 
 These generalize the existing multiplicity-one statement `den_dvd_of_is_root`: at `m = 1` the new
 theorem recovers it exactly (a guard `example` confirmed this against the branch). Two supporting
@@ -28,7 +30,10 @@ argument over a product of linear factors that are pairwise coprime over `K`
 **A hypothesis note.** `Polynomial.IsPrimitive.pow` / `Polynomial.isPrimitive_prod` are stated
 under `[NormalizedGCDMonoid R]`, matching the hypothesis level of their host section in
 `Content.lean` (neither proof needs anything UFD-specific). The six `RationalRoot.lean`
-declarations need only the file's existing `UniqueFactorizationMonoid A` context: where a
+declarations (three public, and three `private` helpers about the reduced linear factor:
+`isPrimitive_den_mul_X_sub_C_num`, `map_den_mul_X_sub_C_num`,
+`leadingCoeff_den_mul_X_sub_C_num`) need only the file's existing
+`UniqueFactorizationMonoid A` context: where a
 `NormalizedGCDMonoid A` instance is required to invoke the `Content.lean` lemmas, the proofs
 materialize one locally via `let : NormalizedGCDMonoid A := Nonempty.some inferInstance` (the
 `Nonempty` instance comes from `UniqueFactorizationMonoid A` through `IsGCDMonoid A`, in scope via
@@ -43,6 +48,17 @@ downstream importers rebuilt green. Three `public import`s are added to `Rationa
 (`RingTheory.Polynomial.GaussLemma`, `Algebra.Polynomial.BigOperators`,
 `RingTheory.Coprime.Lemmas`); each is used directly by the new proofs (`shake` no longer exists as
 a lake executable on current master, so no automated minimization pass was run).
+
+**Import-graph cost: zero downstream.** The three added imports grow `RationalRoot.lean`'s own
+transitive closure by 30 modules (1614 -> 1644), mostly the `FieldTheory.SplittingField` /
+`IntermediateField` / `Minpoly` cone that `GaussLemma.lean` pulls in. That growth does not
+propagate: `RationalRoot.lean` has exactly three importers in Mathlib
+(`RingTheory/Polynomial/IsIntegral.lean`, `RingTheory/DedekindDomain/Basic.lean`,
+`NumberTheory/Niven.lean`), and all three already import `GaussLemma` and
+`SplittingField.Construction` transitively today, so no file in Mathlib gains an import from this
+PR. If a maintainer would still rather keep `RationalRoot.lean` light, the six declarations move to
+a new `RingTheory/Polynomial/RationalRootMultiplicity.lean` without any proof change; I am happy to
+do that on request.
 
 ---
 

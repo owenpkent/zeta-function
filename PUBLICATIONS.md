@@ -454,10 +454,12 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   branch: `lake build` green, zero warnings, `#print axioms` = `[propext, Classical.choice, Quot.sound]`
   for all five new public declarations; one genuine fix made in the process (the two `Content.lean`
   helper lemmas relocated into each file's existing `NormalizedGCDMonoid` section to avoid an
-  instance-import cycle, a strict generalization, with a narrowly-scoped
-  `Nonempty (NormalizedGCDMonoid A)` hypothesis on just the two `RationalRoot.lean` theorems that need
-  it); master drift re-checked (none that touches the port; the depended-on declarations byte-identical;
-  zero competing PRs by fresh search). Staged:
+  instance-import cycle, a strict generalization, with a `NormalizedGCDMonoid A` instance
+  materialized inside the proofs that need it, `let : NormalizedGCDMonoid A := Nonempty.some inferInstance`,
+  the idiom `GaussLemma.lean` already uses, so no statement carries an extra hypothesis; an earlier
+  note here described this as a `Nonempty (NormalizedGCDMonoid A)` hypothesis on two theorems, which
+  the branch does not do); master drift re-checked (none that touches the port; the depended-on
+  declarations byte-identical; zero competing PRs by fresh search). Staged:
   [`rational_root_floor_pr_body.md`](lean/upstream/rational_root_floor_pr_body.md) +
   [`rational_root_floor_port.md`](lean/upstream/rational_root_floor_port.md) (exact verified code +
   remaining-steps checklist). Remaining = mechanical (fork branch off live master, paste the verified
@@ -472,8 +474,10 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   #RR-2 `prod_den_pow_rootMultiplicity_dvd_leadingCoeff` + PR-worthy supporting lemmas (`isPrimitive_pow`,
   `isPrimitive_prod`, one-sided `dvd_of_fraction_map_dvd`) in
   [`lean/ZetaRH/RationalRootFloor.lean`](lean/ZetaRH/RationalRootFloor.lean), sorry-free, axiom-clean,
-  build green. **Next:** open the mathlib4 PR (port to master, naming review expected) after P1/P2 review
-  bandwidth clears; optional `lcmUpto` corollary.
+  build green. Of those supporting lemmas the one-sided `dvd_of_fraction_map_dvd` was DROPPED before
+  submission: Mathlib generalized `IsPrimitive.dvd_of_fraction_map_dvd_fraction_map` to that form
+  independently, so the PR calls the existing lemma. Optional `lcmUpto` corollary deliberately not
+  bundled, to keep the PR to one idea.
 
 ### P11 {#p11}
 
