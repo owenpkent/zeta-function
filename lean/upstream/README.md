@@ -5,15 +5,17 @@ contribute upstream. Each is kernel-verified (sorry-free, `#print axioms` clean)
 **Lean/Mathlib v4.30.0** (toolchain `leanprover/lean4:v4.30.0`), and each has a ready-to-submit PR
 body. This README is the single entry point: do the one-time setup once, then submit each PR.
 
-Everything machine-checkable is done, and **both PRs are now OPEN** on Mathlib (ported to current
-master `v4.32.0-rc1` with the new module system, built green, `#print axioms` clean, CI-green, AI-use
-disclosed per Mathlib's contribution policy): digamma
-[mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) and `riemannZeta_conj`
-[mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133). The fork lives at
-`dev/mathlib4`. What remains is the **human review engagement**: introduce yourself on the Lean Zulip,
-mention the PRs, and respond to reviewers in your own words (Mathlib's AI policy forbids LLM-written
-review comments). The per-PR workflow below is retained as a record of how the PRs were prepared; there
-is no CLA step in current Mathlib.
+**Status (2026-09-01): two merged, one open.** `riemannZeta_conj`
+[mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133) was merged by Bors
+2026-07-07 and digamma [mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132)
+on 2026-09-01. The rational root theorem with multiplicity
+[mathlib4#43321](https://github.com/leanprover-community/mathlib4/pull/43321) was opened 2026-09-01 and
+is the live one. The fork lives at `dev/mathlib4-pr`. Every submission is ported to current master with
+the new module system, built green, `#print axioms` clean, both linters clean, and AI-use disclosed per
+Mathlib's contribution policy. What remains on #43321 is the **human review engagement**: respond to
+reviewers in your own words (Mathlib's AI policy forbids LLM-written review comments). The per-PR
+workflow below is retained as a record of how the PRs were prepared; there is no CLA step in current
+Mathlib.
 
 ## The staged contributions
 
@@ -22,18 +24,20 @@ is no CLA step in current Mathlib.
 | digamma: reflection, iterated recurrence, duplication | [`../ZetaRH/DigammaExtras.lean`](../ZetaRH/DigammaExtras.lean) | [`digamma_pr_body.md`](digamma_pr_body.md) | `Mathlib/Analysis/SpecialFunctions/Gamma/Digamma.lean` |
 | `riemannZeta_conj`: conjugation symmetry of ζ | [`../ZetaRH/RiemannZetaConj.lean`](../ZetaRH/RiemannZetaConj.lean) | [`riemann_zeta_conj_pr_body.md`](riemann_zeta_conj_pr_body.md) | `Mathlib/NumberTheory/LSeries/RiemannZeta.lean` |
 | ~~`Real.arcosh`~~ **DO NOT SUBMIT** (duplicate, see body) | [`Arcosh.lean`](Arcosh.lean) (staged record only, unwired) | [`arcosh_pr_body.md`](arcosh_pr_body.md) | already merged: `Mathlib/Analysis/SpecialFunctions/Arcosh.lean` (2026-03-23) |
+| rational root theorem with multiplicity **(OPEN: [#43321](https://github.com/leanprover-community/mathlib4/pull/43321))** | [`../ZetaRH/RationalRootFloor.lean`](../ZetaRH/RationalRootFloor.lean) | [`rational_root_floor_pr_body.md`](rational_root_floor_pr_body.md) (long record) + [`rational_root_floor_pr_submit_body.md`](rational_root_floor_pr_submit_body.md) (as submitted) | `Mathlib/RingTheory/Polynomial/RationalRoot.lean` + `Content.lean` |
 | Cohn's criterion for self-inversive polynomials | [`../ZetaRH/GaussLucas.lean`](../ZetaRH/GaussLucas.lean) + [`../ZetaRH/SchurCohn.lean`](../ZetaRH/SchurCohn.lean) (no new file; already proved in-repo) | [`cohn_criterion_pr_body.md`](cohn_criterion_pr_body.md) | new file, `Mathlib/Analysis/Complex/Polynomial/CohnCriterion.lean` (suggested) |
 
-The two open PRs are **independent** (different target files, no shared new lemmas), so they are two
-separate PRs and can go in either order. Suggested order: **digamma first** (it has been staged
-longest and its only open question is now resolved), then `riemannZeta_conj`.
+The three submitted PRs were **independent** (different target files, no shared new lemmas) and went in
+separately: `riemannZeta_conj` and digamma together in 2026-06, the rational-root floor once digamma
+merged.
 
 The `arcosh` package is **closed, not to be submitted**: a build-verified check against the pinned
 Mathlib this session found `Real.arcosh` already merged upstream (2026-03-23, before this project's
 own v4.30.0 pin), a superset of everything this package would have proposed. Full finding in
 [`arcosh_pr_body.md`](arcosh_pr_body.md). The Cohn's-criterion package is genuinely open (the absence
-was re-confirmed against the pin this session) but **queues after digamma and the P10
-rational-root-floor PR clear**, per the sequencing note at the top of
+was re-confirmed against the pin this session) and is now **next in the queue**: digamma has merged and
+the P10 rational-root-floor PR is open, so the Cohn body is the next thing to submit once #43321
+settles, per the sequencing note at the top of
 [`cohn_criterion_pr_body.md`](cohn_criterion_pr_body.md).
 
 Background notes: [`digamma_contribution.md`](digamma_contribution.md) (digamma context).

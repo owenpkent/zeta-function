@@ -114,7 +114,7 @@ the real standalone output.
 | [P7](#p7) | RH is Π⁰₁ + the Lean kernel witness | Expository note | Lean anchors; logical fact classical | 🟡 DEVELOPING | Note / bundle into P4 | evaluated |
 | [P8](#p8) | The stealth window quantified (e^{-4πx} wall, 370× cancellation, D-H-aware defect) | Analytic note | Numerical + prolate analysis | 🟡 DEVELOPING | Fold into P4 (no standalone) | lit-checked: rate is prior (Fuchs+Connes) |
 | [P9](#p9) | Paired-subtorus circle-rootedness: E over conjugate-paired phases of det(zI−DU), U unitary, is circle-rooted (all m) | Theorem (positive) | Elementary proof, every step numerically verified (50-digit) | 🟡 DEVELOPING | arXiv math.CV note (4-6 pp), cross-list math.CO/math.PR | novelty-passed; **draft written** ([`publications/paired_subtorus/`](publications/paired_subtorus/), 5 pp, compiles); gate: checker verdicts + MathSciNet (human) + citation pins |
-| [P10](#p10) | The Gauss-lemma height floor: minimal log-height of a prime-forced integer vanisher = ψ(x) exactly (the vF disc model has no Siegel-lemma slot); multiplicity rational-root floor absent from Mathlib | Negative (closed branch) + Formal | Lean, axiom-clean (#GF-1..#GF-5) + integer-exact Python; uniqueness clause numerics-only (#GF-6 candidate) | 🟡 DEVELOPING | Mathlib PR (generalized multiplicity rational-root floor); exposition folds into P4 counting-roads; no standalone note | novelty-passed 2026-07-02 |
+| [P10](#p10) | The Gauss-lemma height floor: minimal log-height of a prime-forced integer vanisher = ψ(x) exactly (the vF disc model has no Siegel-lemma slot); multiplicity rational-root floor absent from Mathlib | Negative (closed branch) + Formal | Lean, axiom-clean (#GF-1..#GF-5) + integer-exact Python; uniqueness clause numerics-only (#GF-6 candidate) | 🟢 SUBMITTED (2026-09-01) | Mathlib PR (generalized multiplicity rational-root floor); exposition folds into P4 counting-roads; no standalone note | [mathlib4#43321](https://github.com/leanprover-community/mathlib4/pull/43321) |
 | [P11](#p11) | The tameness trade: assembling the explicit formula's prime side is a tame/wild fault-line phenomenon (Leg A saturation PROVEN-but-orthogonal; Leg B "tame cannot carry primes" REFUTED via Kaplan-Shelah; archimedean-order invariant; C3 archimedean-injection RH-engine reading) | Expository (structural obstruction) | Synthesis of published corpus + PROVEN Lemma P3; keystone OPEN | 🟡 DEVELOPING | arXiv math.LO / math.NT note; companion to P4 §6.2 | draft written ([`publications/tameness_trade/`](publications/tameness_trade/)); gated on keystone staying OPEN |
 | [P12](#p12) | The localized Weil-form ground state, measured: the Gaussian-window margin law $4\sqrt{\pi}\sigma e^{-\gamma_1^2\sigma^2}$, the graded annihilation frontier, zero-side locking, the xi-shape transient at $a \approx 1$ with certified narrowing through $a = 4$, the kernel-groundstate proximity measurement, and the HORIZON: the $\Xi$-state's exact-vanishing energy bound undercuts every direct-minimization floor from $a = 1.5$ ((1.2) numerically undecidable beyond the accessible strip, priced at $2\pi e^{2a}/\ln 10$ digits) | Numerical study (measurement + instrumentation + one certified bound) | Numerical, certified: 50/80/110-digit protocols, per-rung convergence gates, tail + mixing certificates, the $10^{-73}$-verified vanishing identity, pre-registrations with refutations documented (including the one re-scoping the study's own headline trend) | 🔵 STRONG (SUBMISSION-READY: draft v0.3 with figures F1-F4, length pass, acknowledgments + repo pointer per Owen's 2026-08-25 decisions; courtesy drafts staged) | arXiv math.NT note (6-10 pp) | gate-scored 2026-08-20; measurement closed 2026-08-21 (e2av proximity + e2aw horizon); law-novelty pass + draft 2026-08-21; v0.3 SUBMISSION-READY 2026-08-25 (figures `make_figures.py`, length pass, Owen's decision sheet: math.NT+math.CA, acknowledgments with AI-methods disclosure, repo pointer filled, courtesy emails drafted at [`courtesy_emails.md`](publications/weil_ground_state/courtesy_emails.md), send at posting) ([`draft.md`](publications/weil_ground_state/draft.md)); LEARNINGS #180-#191 |
 
@@ -478,6 +478,23 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
   submission: Mathlib generalized `IsPrimitive.dvd_of_fraction_map_dvd_fraction_map` to that form
   independently, so the PR calls the existing lemma. Optional `lcmUpto` corollary deliberately not
   bundled, to keep the PR to one idea.
+  **SUBMITTED 2026-09-01 as [mathlib4#43321](https://github.com/leanprover-community/mathlib4/pull/43321)**
+  (branch `rational-root-floor`, one commit on master `cf0e3d8512`, toolchain v4.34.0-rc2; two files,
+  eight declarations). A pre-submission review pass ran first and changed three things: three of the
+  four helper lemmas were made `private` (`isPrimitive_den_mul_X_sub_C_num`,
+  `map_den_mul_X_sub_C_num`, `leadingCoeff_den_mul_X_sub_C_num`) while
+  `den_mul_X_sub_C_num_pow_rootMultiplicity_dvd` stayed public as the `A[X]`-level statement both
+  headline theorems are corollaries of; two docstrings were rewritten statement-first; and the
+  import-graph delta was measured and pre-empted in the body (+30 modules on `RationalRoot.lean`'s own
+  closure, but **zero** new imports for any Mathlib file, since all three of its importers already
+  reach `GaussLemma` and `SplittingField.Construction` transitively). Re-verified after the change:
+  build green (2317 jobs incl. all three downstream importers), `lake exe lint-style` and
+  `lake exe runLinter` clean on both modules, `#print axioms` = `[propext, Classical.choice, Quot.sound]`
+  on all five public declarations, and a guard `example` machine-confirming that `den_dvd_of_is_root`
+  follows from the new theorem (via `rootMultiplicity_pos`, with the `p = 0` split) -- a claim the
+  staged body had asserted but never checked. **Next: Owen's own-words review engagement** (Mathlib's
+  AI policy forbids LLM-written review replies; the body carries the AI-use disclosure). The Cohn
+  criterion body is now next in the PR queue.
 
 ### P11 {#p11}
 
@@ -539,24 +556,31 @@ Each dossier carries the six gate fields. `LEARNINGS #n` cross-references
 
 ## Human residual (Mathlib)
 
-Two Mathlib PRs are past the AI-authored stage and need Owen personally. Mathlib's AI policy forbids
-LLM-written review replies, and the predecessor #39743 was closed over AI-disclosure / reviewer-time
-concerns, so the round-1 replies must be posted in Owen's own words. GitHub was **not polled** this
-session; these statuses are recorded from prior sessions + one spot check and need Owen to confirm.
+**Current state (gh-polled 2026-09-01): one live PR, and it needs Owen personally.** Mathlib's AI
+policy forbids LLM-written review replies, and the predecessor #39743 was closed over AI-disclosure /
+reviewer-time concerns, so every review reply must be posted in Owen's own words.
+
+- **[mathlib4#43321](https://github.com/leanprover-community/mathlib4/pull/43321) (P10, rational root
+  theorem with multiplicity). OPEN, submitted 2026-09-01.** The only live item. Everything
+  machine-checkable is done (see the P10 entry: build, both linters, axioms, and the `m = 1` recovery
+  guard all green on master `cf0e3d8512`). What remains is human: watch for CI, then engage review in
+  Owen's own words. Expect the import-graph bot to post a delta; the body already answers it.
+
+The two older PRs are closed and need nothing:
 
 - **[mathlib4#41132](https://github.com/leanprover-community/mathlib4/pull/41132) (P2, digamma).**
   **MERGED BY BORS 2026-09-01** (see the P2 entry). No further action; the human-residual item is
   discharged. (The stale text below this bullet's original form is superseded: the round-1 reply,
   label flips, and the #42349 adaptation all completed between 2026-07-18 and 2026-08-26.)
 - **[mathlib4#41133](https://github.com/leanprover-community/mathlib4/pull/41133) (P1,
-  riemannZeta_conj).** **APPEARED CLOSED on a spot check** (not re-polled here). Owen needs to confirm
-  **merged vs closed** and update P1's status: SUBMITTED → published if merged, or withdrawn/reopen if
-  closed like #39743. If closed, the round-1 reply (also in `scratchpad/pr_replies.txt`) may need Owen to
-  re-engage or reopen.
+  riemannZeta_conj).** **MERGED BY BORS 2026-07-07** (see the P1 entry), the project's first
+  Mathlib-merged contribution. No further action; the human-residual item is discharged. (The earlier
+  "appeared closed on a spot check" reading was the bors merge signature misread; resolved by API poll
+  2026-07-17.)
 
-Registry tiers for P1/P2 are **left unchanged** pending Owen's confirmation: SYNTHESIZER records the last
-verified state, not a spot check. Note: `scratchpad/pr_replies.txt` was **not present on disk** this
-session (untracked, likely cleaned); Owen may need it regenerated before replying.
+P1 and P2 are both **confirmed MERGED by direct gh poll** (2026-07-17 and 2026-09-01 respectively), so
+the earlier "confirm merged vs closed" residual is discharged and their registry tiers are final. The
+`scratchpad/pr_replies.txt` note is moot: both PRs it was drafted for are merged.
 
 ---
 
@@ -705,6 +729,17 @@ Kept so they are not re-proposed as novel.
   replies still owed. (iv)
   Consistency fix: corrected the [PS14] attribution "Point-Schmidt" → "Palacin-Sklinos" in obstruction_map
   §6.2/§7 to match the verified-at-source attribution in the P11 note.
+
+- 2026-09-01: **P10 SUBMITTED as [mathlib4#43321](https://github.com/leanprover-community/mathlib4/pull/43321)**,
+  the project's third Mathlib PR and the first opened after two merges. Tier 🟡 DEVELOPING → 🟢 SUBMITTED.
+  A pre-submission review pass preceded it and is recorded in the P10 entry: three helper lemmas made
+  `private`, two docstrings rewritten statement-first, the import-graph delta measured (zero downstream
+  cost) and pre-empted in the body, and the body's previously-unchecked "recovers `den_dvd_of_is_root`"
+  claim machine-confirmed by a guard `example`. Also corrected two drift items in the P10 entry that the
+  branch had outrun: the `Nonempty (NormalizedGCDMonoid A)` hypothesis (the branch carries none; the
+  instance is materialized inside the proofs, the `GaussLemma.lean` idiom) and the one-sided
+  `dvd_of_fraction_map_dvd` (dropped, Mathlib generalized its own lemma to that form). Human residual
+  rewritten: P1/P2 discharged, #43321 the single live item. Cohn criterion is next in the PR queue.
 
 ### P12 {#p12}
 
