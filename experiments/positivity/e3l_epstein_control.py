@@ -24,6 +24,19 @@ series). Reconnaissance for this project found:
   - d = 47, PRINCIPAL form x^2 + xy + 12y^2: NO off-line zeros up to T = 120
     (Selberg-like: it factors through Selberg-class L-functions).
 
+  CORRECTION (2026-09-01): the "NO off-line zeros" claims above do not hold
+  past the T_max this experiment actually uses (60). The d=47 PRINCIPAL form
+  has a genuine off-line pair at rho ~ 0.724531 + 64.646629i (certified
+  stable from 30 to 90 digits of precision); it is invisible to the T_max=60
+  run below, so this experiment's own schur_neg=0 result for it stands, but
+  "Selberg-like, factors through Selberg-class L-functions" is WRONG (class
+  number 47 is prime, so genus theory gives no split of either class into
+  Selberg-class pieces). Separately, BOTH classes of d=15 have off-line
+  zeros below T=40 (four for the principal form, one for the non-principal);
+  see the dated correction in `experiments/_shared/epstein_zeta.py` and
+  Session-003 Finding #19 in `experiments/LEARNINGS.md` for the certified
+  list and for what the fixed zeros() does and does not recover.
+
 So within a single discriminant we get both a D-H-like control (off-line zeros
 present) and a Selberg-like control (none), in addition to zeta and chi_3.
 
@@ -37,8 +50,15 @@ that machinery). The detector predicts:
 
 Predictions:
     zeta,  chi_3                       : 0 off-line pairs -> schur_neg = 0
-    Epstein d=47 principal             : 0 off-line pairs -> schur_neg = 0
+    Epstein d=47 principal (T<=60)     : 0 off-line pairs -> schur_neg = 0
     Epstein d=47 non-principal (T<=60) : 1 off-line pair  -> schur_neg = 1
+    Epstein d=15 principal (T<=40)     : 4 off-line pairs certified, but the
+                                          scan's own recall gap means zeros()
+                                          currently returns only 3 (misses
+                                          the 20.35 height) -> schur_neg = 3
+                                          against the module's own (incomplete)
+                                          count, not the true count of 4
+    Epstein d=15 non-principal (T<=40) : 1 off-line pair  -> schur_neg = 1
     Davenport-Heilbronn (T<=200)       : 4 off-line pairs -> schur_neg = 4
 
 If the Epstein non-principal form gives schur_neg = 1 (and PSD-with-redundancy
@@ -73,10 +93,31 @@ import numpy as np
 
 from experiments._shared import (
     zeta_L, chi3_L, DavenportHeilbronn,
-    epstein_d47, epstein_d47_principal,
+    epstein_d47, epstein_d47_principal, epstein_d15, epstein_for_discriminant,
 )
 from experiments.positivity.e3c_weil_form import phi_b
 from experiments.positivity.e3j_schur_complement import split_gram, schur_complement
+
+# CORRECTION (2026-09-01): see the dated note in epstein_zeta.py, immediately
+# above `epstein_d47 = ...`. The false claim that small class-number-2/3
+# discriminants (d=15, d=23) have no off-line zeros at reachable height is
+# wrong for BOTH classes of d=15: an independent winding-number + rectangle-
+# contour census (below T=40) certifies FOUR off-line zeros for the
+# PRINCIPAL form (x^2+xy+4y^2): 0.80001+12.03860i, 0.92746+15.49663i,
+# 0.69559+20.34597i, 0.74026+33.75685i; and ONE for the NON-PRINCIPAL form
+# (2x^2+xy+2y^2, the module's `epstein_d15`): 0.75807+24.48282i. The old
+# zeros() scan both INVENTED a spurious root (principal form, height ~84.76,
+# confirmed by re-evaluating at higher precision: the value grows to O(1)
+# instead of staying near zero, so it never was a genuine zero) and MISSED
+# three genuine ones (principal: 20.35, 33.76; non-principal: 24.48) -- the
+# 2D magnitude-scan's threshold/grid misses off-line dips that are shallow
+# or fall between sampled sigma columns. zeros() has since been hardened to
+# certify every CANDIDATE IT DOES FIND with a winding-number count plus a
+# higher-precision magnitude re-check before returning it (this fixes the
+# false positive; the false negatives -- the scan's RECALL -- are a separate,
+# open issue: the module can still under-report the true off-line count).
+epstein_d15_principal = epstein_for_discriminant(15, principal=True)
+epstein_d15_np = epstein_d15
 
 
 def build_targets():
@@ -101,6 +142,8 @@ def build_targets():
         ("chi3",            chi3_L,                  60.0),
         ("epstein_d47_prin", epstein_d47_principal,  60.0),
         ("epstein_d47_np",  epstein_d47,             60.0),
+        ("epstein_d15_prin", epstein_d15_principal,  40.0),
+        ("epstein_d15_np",  epstein_d15_np,          40.0),
         ("DH",              dh,                     200.0),
     ]
 

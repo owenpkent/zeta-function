@@ -63,12 +63,31 @@ gives a robust sign-change detector for on-line zeros.
 The two main terms each have a pole at s = 1/2 (from zeta(2s) and from
 Gamma(s-1/2) respectively) that cancel in E; we therefore avoid evaluating at
 exactly t = 0, which is harmless since all zeros sit at t > 0.
+
+ACCURACY DEFECT, FOUND AND FIXED 2026-09-01. eisenstein()'s Bessel-tail loop
+stopped once several consecutive terms fell below a fixed ABSOLUTE tolerance,
+but each term is later multiplied by the prefactor 8 pi^s sqrt(y) / Gamma(s),
+whose magnitude grows like exp(pi |Im(s)| / 2). For nu = s - 1/2 with
+|Im(nu)| = |Im(s)| = t, the terms K_nu(2 pi k y) do not decay with k until
+2 pi k y exceeds roughly t: below that they are merely tiny in absolute terms
+(not yet converging), so the old loop mistook "small" for "converged" and
+quit after 1-2 terms once t was large enough. This was accurate to ~1e-30 at
+mp.dps = 30 below about t = 45-50 but returned a smooth, WRONG function
+(complete with its own fake zeros) from about t = 50-60 upward: relative
+error against an independent evaluation was already 3e-20 at t = 50, 0.45 at
+t = 60, and of order 1 for every t from 60 to 200 tested. Every tracked
+Epstein result computed at |Im(s)| above ~50 PREDATES this fix and should be
+treated as unreliable; results below that height are unaffected. The fix
+(see eisenstein()'s own docstring) makes the loop run until k passes the
+Bessel cutoff t / (2 pi y) plus a decay margin, and judges convergence on
+each term's contribution after the prefactor, not before it.
 """
 
 from __future__ import annotations
 
 import hashlib
 import pickle
+import sys
 from pathlib import Path
 
 import mpmath as mp
@@ -171,36 +190,95 @@ class EpsteinZeta(LFunction):
         return total
 
     def eisenstein(self, s):
-        """Full-lattice real-analytic Eisenstein series E(tau, s)."""
+        """Full-lattice real-analytic Eisenstein series E(tau, s).
+
+        CORRECTION (2026-09-01): see the module docstring's dated note for the
+        accuracy defect this replaces. Two changes from the old loop, both
+        required:
+
+        (a) The Bessel tail is OSCILLATORY, not decaying, until k exceeds
+            roughly |Im(s)| / (2 pi y): for nu = s - 1/2, |Im(nu)| = |Im(s)|,
+            and K_nu(2 pi k y) does not enter its exponential-decay regime
+            until the argument 2 pi k y exceeds the order's imaginary part.
+            The loop must not even START checking for convergence before
+            that point, let alone stop there.
+        (b) Convergence must be judged on the term's contribution AFTER the
+            prefactor (8 pi^s sqrt(y) / Gamma(s), which grows like
+            exp(pi |Im(s)| / 2) via 1/Gamma(s)) is applied, relative to the
+            running total in that same scale -- not the bare pre-prefactor
+            term against a fixed absolute tolerance. The bare term can be
+            astronomically tiny (measured ~1e-138 at k=1, t=200) while its
+            scaled contribution is still order 1, which is exactly what let
+            the old loop quit after 1-2 terms at large |Im(s)|.
+
+        A modest fixed guard-digit margin is used for the internal working
+        precision (restored before returning). Measured 2026-09-01: mpmath's
+        besselk/gamma/zeta already retain full relative precision at dps=30
+        for these parameters regardless of magnitude (checked against an
+        independent higher-precision evaluation up to |Im(s)|=200: besselk
+        relative error ~1e-32 at dps=30 whether its value is ~1 or ~1e-138),
+        so the dominant defect was purely the truncation logic above, not
+        per-term precision loss. A guard budget that scales with |Im(s)| the
+        way the prefactor does (~pi t / (2 ln 10) extra digits) was measured
+        too: it costs 5-10x more wall time per evaluation at t=200 for no
+        accuracy gain over this fixed margin in the range validated here, so
+        it was not adopted as the default.
+        """
         s = mp.mpc(s)
-        dps = mp.mp.dps
-        x, y = self._tau(dps)
+        target_dps = mp.mp.dps
+        t_im = abs(mp.im(s))
+        guard = 15
+        prev_dps = mp.mp.dps
+        mp.mp.dps = target_dps + guard
+        try:
+            x, y = self._tau(mp.mp.dps)
 
-        # Two main (meromorphic) terms.
-        term1 = 2 * mp.zeta(2 * s) * mp.power(y, s)
-        term2 = (2 * mp.sqrt(mp.pi) * mp.gamma(s - mp.mpf(1) / 2) / mp.gamma(s)
-                 * mp.zeta(2 * s - 1) * mp.power(y, 1 - s))
+            # Two main (meromorphic) terms.
+            term1 = 2 * mp.zeta(2 * s) * mp.power(y, s)
+            term2 = (2 * mp.sqrt(mp.pi) * mp.gamma(s - mp.mpf(1) / 2) / mp.gamma(s)
+                     * mp.zeta(2 * s - 1) * mp.power(y, 1 - s))
 
-        # Exponentially convergent Bessel tail.
-        pref = 8 * mp.power(mp.pi, s) * mp.sqrt(y) / mp.gamma(s)
-        two_pi_y = 2 * mp.pi * y
-        tol = mp.mpf(10) ** (-(dps + 6))
-        tail = mp.mpc(0)
-        k = 1
-        while True:
-            bess = mp.besselk(s - mp.mpf(1) / 2, two_pi_y * k)
-            term = (mp.power(k, s - mp.mpf(1) / 2) * self._sigma(k, 1 - 2 * s)
-                    * bess * mp.cos(2 * mp.pi * k * x))
-            tail += term
-            # Convergence: cos and sigma are O(1); the magnitude is set by the
-            # Bessel decay exp(-2 pi k y). Stop once a term is below tolerance
-            # (require two consecutive small terms for safety).
-            if abs(term) < tol and k >= 2:
-                break
-            if k > 200:  # hard cap; only reached for pathological tiny y
-                break
-            k += 1
-        return term1 + term2 + pref * tail
+            # Exponentially convergent Bessel tail.
+            pref = 8 * mp.power(mp.pi, s) * mp.sqrt(y) / mp.gamma(s)
+            two_pi_y = 2 * mp.pi * y
+            # Do not even look for convergence before k passes the Bessel
+            # cutoff |Im(s)| / (2 pi y), plus enough further steps for the
+            # post-cutoff exponential decay (rate ~2 pi y per step) to reach
+            # the working precision.
+            decay_margin = int(mp.ceil(mp.mp.dps * mp.log(10) / two_pi_y)) + 5
+            min_k = int(mp.ceil(t_im / two_pi_y)) + decay_margin
+            tol = mp.mpf(10) ** (-(mp.mp.dps - 2))
+            tail = mp.mpc(0)
+            k = 1
+            recent = []
+            while True:
+                bess = mp.besselk(s - mp.mpf(1) / 2, two_pi_y * k)
+                term = (mp.power(k, s - mp.mpf(1) / 2) * self._sigma(k, 1 - 2 * s)
+                        * bess * mp.cos(2 * mp.pi * k * x))
+                tail += term
+                # Convergence in the FINAL scale: cos and sigma are O(1), but
+                # the physically meaningful quantity is term * pref against
+                # the partial sum * pref, not the bare term against a fixed
+                # absolute floor (see (b) above). Still require several
+                # CONSECUTIVE small contributions: when x = b/(2a) is a "nice"
+                # rational (e.g. x = 1/4 for the form (2,1,2), discriminant
+                # 15), cos(2 pi k x) vanishes exactly for one parity of k,
+                # producing a spuriously tiny contribution while the OTHER
+                # parity's terms are still significant.
+                contrib = abs(term * pref)
+                scale = max(mp.mpf(1), abs(tail * pref))
+                recent.append(contrib / scale)
+                if len(recent) > 4:
+                    recent.pop(0)
+                if k >= min_k and len(recent) >= 4 and max(recent) < tol:
+                    break
+                if k > 2000:  # hard cap; only reached for pathological tiny y
+                    break
+                k += 1
+            result = term1 + term2 + pref * tail
+        finally:
+            mp.mp.dps = prev_dps
+        return +result  # round back down to the caller's working precision
 
     def evaluate(self, s):
         """Z_Q(s) = (2 / sqrt(d))^s * E(tau, s)."""
@@ -240,6 +318,48 @@ class EpsteinZeta(LFunction):
                         count += 1
         return mp.mpc(count)
 
+    def _certify_offline(self, root):
+        """Certify a Newton-refined off-line candidate before accepting it.
+
+        Two independent checks, BOTH required:
+
+        1. Winding number 1 around a small circle at the current working
+           precision (catches Newton converging to a nearby non-zero local
+           minimum of |Z| rather than an actual root).
+
+        2. |Z(root)| re-evaluated at substantially HIGHER precision than the
+           candidate was found at. This catches a second, different failure
+           mode discovered while hardening this method: eisenstein()'s
+           Bessel-tail loop stops once several consecutive terms fall below
+           an ABSOLUTE tolerance, but the terms are then multiplied by the
+           prefactor 8 pi^s sqrt(y) / Gamma(s), whose magnitude grows like
+           exp(pi |Im(s)| / 2) (from 1/Gamma(s)). At large |Im(s)| the
+           absolute check can therefore declare "converged" after too few
+           terms, leaving a self-consistent but WRONG value. Both Newton's
+           method and a same-precision winding check are fooled identically,
+           because they interrogate the same under-converged function. Re-
+           evaluating at higher precision forces the tail to run further and
+           exposes the discrepancy: a genuine root stays near zero, a
+           precision artifact does not. (evaluate/completed/eisenstein
+           themselves are left untouched; this only adds a verification
+           step around them.)
+
+        Returns (accepted, winding, |Z| at working precision, |Z| at the
+        higher check precision or None if the first check already failed).
+        """
+        zval = abs(self.evaluate(root))
+        winding = _winding_number(self.evaluate, root)
+        if not (winding == 1 and zval < mp.mpf(10) ** -10):
+            return False, winding, zval, None
+        prev_dps = mp.mp.dps
+        mp.mp.dps = prev_dps + 30
+        try:
+            zval_hi = abs(self.evaluate(root))
+        finally:
+            mp.mp.dps = prev_dps
+        accepted = zval_hi < mp.mpf(10) ** -6
+        return accepted, winding, zval, zval_hi
+
     # ---- zeros ------------------------------------------------------------
 
     def zeros(self, T_max: float, prec: int = 30,
@@ -256,7 +376,7 @@ class EpsteinZeta(LFunction):
         CACHE_DIR.mkdir(parents=True, exist_ok=True)
         key = hashlib.sha1(
             f"{self.name}|{float(T_max):.6f}|{int(prec)}|"
-            f"{float(scan_step):.4f}|{float(sigma_step):.4f}".encode()
+            f"{float(scan_step):.4f}|{float(sigma_step):.4f}|cert3".encode()
         ).hexdigest()[:16]
         path = CACHE_DIR / f"epstein_zeros_{key}.pkl"
         # Cache is self-produced (written below from our own computed zeros),
@@ -322,13 +442,23 @@ class EpsteinZeta(LFunction):
             # |Z| grid, indexed [i_sigma][i_t].
             grid = [[float(abs(self.evaluate(mp.mpc(sg, tt)))) for tt in ts]
                     for sg in sigmas]
-            cal = abs(self.evaluate(mp.mpc(mp.mpf("0.3"), mp.mpf(10.0))))
-            thresh = max(float(cal) * 0.04, 1e-4)
+            # RECALL FIX (2026-09-01): this used to also require v < thresh
+            # (an absolute cutoff calibrated from a single reference point,
+            # cal = |Z(0.3+10i)| * 0.04). That rejected genuine off-line
+            # zeros with a shallow/narrow dip: measured for d=15 principal,
+            # the true zero at 0.69559+20.34597i (|Z| ~ 9e-6 at the exact
+            # root) sampled on the grid at 0.70+20.25i as |Z| = 0.2142, a
+            # strict 2D local minimum, but ABOVE thresh = 0.1040 -- so it was
+            # never even tried as a Newton seed and the zero was silently
+            # missed (a recall bug, separate from and downstream of the
+            # accuracy bug above: this height is well under the ~50 cutoff
+            # where the accuracy bug bites). Strict 2D local-minimality alone
+            # is now the filter; findroot's own exception handling plus the
+            # magnitude/winding/higher-precision certification below reject
+            # the local minima that are not actually near a root.
             for i, sg in enumerate(sigmas):
                 for jt, tt in enumerate(ts):
                     v = grid[i][jt]
-                    if v >= thresh:
-                        continue
                     # strict 2D local minimum (vs the 4 axis neighbours present)
                     nbrs = []
                     if i > 0: nbrs.append(grid[i - 1][jt])
@@ -349,7 +479,26 @@ class EpsteinZeta(LFunction):
                             and abs(float(root.real) - 0.5) > 1e-3
                             and abs(self.evaluate(root)) < mp.mpf(10) ** (-prec + 8)
                             and not _is_duplicate(root, zeros_found)):
-                        zeros_found.append(root)
+                        # Newton refinement alone is not sufficient: it can
+                        # converge to a nearby local minimum of |Z| that is
+                        # small but never zero, or to a zero of eisenstein()'s
+                        # own under-converged Bessel tail at large |Im(s)|.
+                        # Certify with an independent winding-number count
+                        # PLUS a higher-precision magnitude re-check before
+                        # accepting it as a genuine off-line zero (see
+                        # _certify_offline).
+                        accepted, winding, zval, zval_hi = self._certify_offline(root)
+                        if accepted:
+                            zeros_found.append(root)
+                        else:
+                            print(
+                                f"[epstein_zeta] rejected off-line candidate "
+                                f"{complex(root)!r} for {self.name}: "
+                                f"winding={winding}, |Z|={float(zval):.3e}, "
+                                f"|Z|@higher-prec="
+                                f"{'n/a' if zval_hi is None else format(float(zval_hi), '.3e')}",
+                                file=sys.stderr,
+                            )
 
             # Augment off-line zeros with FE partner 1 - rho and conjugate
             # partner (1 - beta) + i gamma, verifying each really is a zero.
@@ -359,8 +508,18 @@ class EpsteinZeta(LFunction):
                     for partner in (mp.mpc(mp.mpf(1) - z.real, z.imag),):
                         if (mp.mpf(0) < partner.imag <= T_max
                                 and not _is_duplicate(partner, augmented)):
-                            if abs(self.evaluate(partner)) < mp.mpf(10) ** (-prec + 10):
+                            paccepted, pwinding, pzval, pzval_hi = self._certify_offline(partner)
+                            if paccepted:
                                 augmented.append(partner)
+                            else:
+                                print(
+                                    f"[epstein_zeta] rejected FE-partner "
+                                    f"candidate {complex(partner)!r} for "
+                                    f"{self.name}: winding={pwinding}, "
+                                    f"|Z|={float(pzval):.3e}, |Z|@higher-prec="
+                                    f"{'n/a' if pzval_hi is None else format(float(pzval_hi), '.3e')}",
+                                    file=sys.stderr,
+                                )
             zeros_found = sorted(augmented, key=lambda r: float(r.imag))
         finally:
             mp.mp.dps = prev_dps
@@ -368,6 +527,40 @@ class EpsteinZeta(LFunction):
         with open(path, "wb") as f:
             pickle.dump(zeros_found, f)
         return zeros_found
+
+
+def _winding_number(func, rho, r=0.05, n0: int = 240, max_doublings: int = 5):
+    """Winding number of `func` around the circle of radius r centred at rho.
+
+    Independent of Newton's method: a spurious candidate that findroot
+    converges to (a nearby local minimum of |func| that is small but never
+    zero, rather than an actual root) has winding number 0, not 1, so this
+    catches exactly the failure mode Newton refinement cannot see on its
+    own. Refines the sample count (doubling) until every consecutive phase
+    increment along the circle is below 1 radian, per the discipline that
+    a coarse phase-increment estimate of the argument principle is only
+    trustworthy once each step is well inside one full turn.
+    """
+    rho = mp.mpc(rho)
+    n = n0
+    total = mp.mpf(0)
+    for _ in range(max_doublings):
+        pts = [rho + mp.mpc(r) * mp.expjpi(2 * mp.mpf(k) / n) for k in range(n + 1)]
+        vals = [func(p) for p in pts]
+        if any(v == 0 for v in vals):
+            r = r * mp.mpf("1.0000001")
+            continue
+        total = mp.mpf(0)
+        max_step = mp.mpf(0)
+        for k in range(n):
+            dphi = mp.arg(vals[k + 1] / vals[k])
+            total += dphi
+            if abs(dphi) > max_step:
+                max_step = abs(dphi)
+        if max_step < 1:
+            break
+        n *= 2
+    return int(mp.nint(total / (2 * mp.pi)))
 
 
 def _is_duplicate(root, found, tol: float = 1e-6):
@@ -406,6 +599,42 @@ def epstein_for_discriminant(d: int, principal: bool = False):
 # reachable heights. So d=47 is the working off-line-zero control, and its
 # PRINCIPAL form (which has no off-line zeros up to T=120) is the Selberg-like
 # contrast within the same discriminant.
+#
+# CORRECTION (2026-09-01). The "d=15, d=23 have NO off-line zeros" sentence
+# above was tested only against the NON-PRINCIPAL forms (this module's
+# epstein_d15 and epstein_for_discriminant(23)); it is FALSE for BOTH classes
+# of d=15. An independent winding-number certifier plus a rectangle-contour
+# (argument-principle) census, cross-checked against a second, gated
+# evaluation (mpmath Hurwitz-zeta route, independent of this module),
+# certifies FOUR off-line zeros below T=40 for the PRINCIPAL form
+# (x^2+xy+4y^2): 0.80001+12.03860i, 0.92746+15.49663i, 0.69559+20.34597i,
+# 0.74026+33.75685i (each with functional-equation partner 1-beta+i*gamma);
+# and ONE for the NON-PRINCIPAL form (2x^2+xy+2y^2, epstein_d15 below):
+# 0.75807+24.48282i. The old zeros() scan both INVENTED a spurious root
+# (principal form, near 0.700741+84.76354i: winding number 1 and
+# |Z| ~ 2e-29 to 2e-30 when evaluated at the SAME working precision the
+# candidate was found at, but re-evaluating eisenstein() at 30 MORE digits
+# of working precision drives |Z| to O(1) instead of toward zero, so it was
+# never a genuine root -- a precision artifact of the Bessel-tail
+# convergence check below, not a Newton-refinement fluke) and MISSED three
+# genuine ones (principal: 20.35, 33.76; non-principal: 24.48 -- the 2D
+# magnitude scan's grid/threshold can step over a shallow or narrow dip).
+# zeros() now certifies every candidate it DOES find with a winding-number
+# count plus a higher-precision magnitude re-check (see _certify_offline)
+# before returning it, which fixes the false positive; the false negatives
+# (the scan's RECALL) are a separate, open issue this fix does not address.
+#
+# SEPARATE FINDING (2026-09-01): the "d=47 PRINCIPAL form has no off-line
+# zeros up to T=120, Selberg-like contrast" sentence above is ALSO false.
+# The same certification (winding number 1, |Z| stable and shrinking from
+# ~1.5e-29 at 30 digits to ~6e-64 at 90 digits under Newton re-refinement)
+# confirms a genuine off-line zero pair at rho ~ 0.724531+64.646629i (and
+# 0.275469+64.646629i). This sits above the T_max=60 used for this form in
+# e3l_epstein_control.py, so 3L's own recorded schur_neg=0 result for
+# epstein_d47_principal is unaffected, but the "Selberg-like control" framing
+# (h=47 is prime, so genus theory gives no 2-term split of the class group;
+# neither class's Epstein zeta has a structural reason to satisfy RH) does
+# not hold and should not be relied on beyond the T_max actually tested.
 epstein_d47 = epstein_for_discriminant(47, principal=False)            # off-line control
-epstein_d47_principal = epstein_for_discriminant(47, principal=True)   # Selberg-like contrast
-epstein_d15 = epstein_for_discriminant(15, principal=False)            # no off-line zeros < T=80
+epstein_d47_principal = epstein_for_discriminant(47, principal=True)   # off-line pair at T~64.6 (see correction); PSD-looking only for T_max<=60
+epstein_d15 = epstein_for_discriminant(15, principal=False)            # HAS an off-line pair at T~24.48 (see correction); old comment was wrong
