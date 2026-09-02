@@ -64,6 +64,58 @@ The two main terms each have a pole at s = 1/2 (from zeta(2s) and from
 Gamma(s-1/2) respectively) that cancel in E; we therefore avoid evaluating at
 exactly t = 0, which is harmless since all zeros sit at t > 0.
 
+BESSEL-K CONVERGENCE HOLE, FOUND AND FIXED 2026-09-02. Overnight runs of six
+experiments using the d=47 forms (class number 5; y = sqrt(47)/(2a) is small
+enough at both a=1 and a=2 that 2 pi y ~ 10.8-21.5 is comparable to the
+|Im(s)| values zeros() explores up to T_max=60) all died with
+`mpmath.libmp.libhyper.NoConvergence` raised from inside mp.besselk, called
+from eisenstein()'s Bessel tail. Root cause: mp.besselk picks its algorithm
+from |x| ALONE (mpmath/functions/bessel.py: once mag(x) >= 1 it always uses
+the large-argument asymptotic 2F0 series), with no regard for |nu|; that
+series is only numerically valid once x is large relative to |nu| (past the
+Bessel function's turning point), and mpmath correctly refuses to converge
+below it rather than return a wrong answer. This module's own well-behaved
+(nu, x) grid (any (sigma, t) actually swept by zeros(), t up to 200, sigma in
+[-1, 2]) never hits this: it only surfaces when zeros()'s off-line findroot
+refinement (Pass 2, the 2D-scan candidate refinement) overshoots its seed
+during Newton/secant iteration, since x = 2 pi k y is pinned by k alone while
+nu = s - 1/2 can pick up an excursion-driven |Im(nu)| or |Re(nu)| far outside
+anything a sample grid would visit. Fix: `_besselk_robust()` tries
+mp.besselk first (unchanged cost on the overwhelmingly common success path)
+and, only on `NoConvergence`/`ValueError`/`ZeroDivisionError`, falls back to
+the reflection formula
+
+    K_nu(x) = (pi / 2) * (I_{-nu}(x) - I_nu(x)) / sin(pi nu),
+
+built entirely from mp.besseli, whose series (DLMF 10.25.2) is
+UNCONDITIONALLY convergent for every nu and x (no algorithm-selection blind
+spot: mpmath uses the same series regardless of |x|). A first attempt at
+this fallback used the more obvious DLMF 10.32.10 integral representation
+K_nu(x) = int_0^inf exp(-x cosh t) cosh(nu t) dt instead; it was WRONG twice
+over before landing on besseli, each time silently (no exception, just a
+confidently wrong number), which is worth recording so nobody re-walks the
+same path: (1) a plain `mp.quad(f, [0, U])` under-resolves the oscillation
+in cosh(nu t) once |Im(nu)| is large (measured 45% relative error at
+nu=60j, x=21.5) -- fixed by handing mp.quad explicit breakpoints spaced
+within a fraction of one oscillation period; but (2) the integral itself
+then turned out to need up to ~32 extra decimal guard digits at nu=60j,
+x=21.5 (the pointwise integrand peaks around 1e-10 while the converged
+integral is ~1e-42: that gap IS the cancellation, and no amount of
+breakpoint refinement recovers digits the guard budget never allocated).
+The besseli reflection formula sidesteps both failure modes directly: I_nu
+and I_{-nu} are individually LARGE and only mildly cancel in the regime
+where besselk's asymptotic series fails (verified 2026-09-02: lost digits
+~0 at nu=60j/x=21.5 and nu=(200+200j)/x=10.77) -- which is exactly the
+regime `_besselk_robust` calls this fallback in, since besselk's own
+asymptotic series already succeeds everywhere else. The formula has its own
+(mirror-image) cancellation regime -- I_nu and I_{-nu} become large and
+NEARLY EQUAL once x is large relative to |nu| (measured ~34+ lost digits at
+nu=60j, x=300, worse than a single precision-boost pass can safely recover)
+-- but that is exactly the regime besselk's own asymptotic series already
+handles correctly, so `_besselk_robust` never reaches the fallback there.
+See `_besselk_robust`/`_besselk_via_besseli` below for the implementation,
+the self-measured cancellation guard, and further validation notes.
+
 ACCURACY DEFECT, FOUND AND FIXED 2026-09-01. eisenstein()'s Bessel-tail loop
 stopped once several consecutive terms fell below a fixed ABSOLUTE tolerance,
 but each term is later multiplied by the prefactor 8 pi^s sqrt(y) / Gamma(s),
@@ -96,6 +148,113 @@ from .lfunction import LFunction
 
 
 CACHE_DIR = Path(__file__).resolve().parent / "_cache"
+
+# Counts how many times _besselk_robust has had to fall back to
+# _besselk_via_besseli (see the module docstring's 2026-09-02 note). Stays 0
+# on every well-behaved evaluation; only fires on findroot's rare excursions.
+_BESSELK_FALLBACK_COUNT = 0
+
+# How many decimal digits of self-measured cancellation to tolerate from the
+# fallback's first pass before re-deriving it at boosted precision. Set from
+# the validated regime (see module docstring): a genuine fallback call
+# (besselk already failed, so we are below the turning point) measured
+# ~0 lost digits; double-digit loss would mean we somehow landed in the
+# fallback's own hard regime (x large relative to |nu|), which should be
+# unreachable since besselk succeeds there on its own.
+_BESSELK_FALLBACK_MAX_LOST_DIGITS = 10
+
+
+def _besselk_via_besseli(nu, x):
+    """K_nu(x) via the reflection formula, built entirely from mp.besseli.
+
+        K_nu(x) = (pi / 2) * (I_{-nu}(x) - I_nu(x)) / sin(pi nu)
+
+    mp.besseli's series (DLMF 10.25.2) is UNCONDITIONALLY convergent for
+    every complex nu and x: unlike mp.besselk, it does not branch to a
+    divergent asymptotic series based on |x| alone (see the module
+    docstring), so it has none of besselk's algorithm-selection blind spot.
+
+    This has its own cancellation regime, but the MIRROR IMAGE of besselk's:
+    I_{-nu}(x) and I_nu(x) are individually large and nearly equal (so their
+    difference cancels badly) once x is large relative to |nu| -- exactly
+    the regime where besselk's own asymptotic series already succeeds, so
+    `_besselk_robust` never calls this path there. It is well conditioned
+    exactly in the complementary regime (x small relative to |nu|) that
+    besselk fails in and this function exists to cover.
+
+    Returns (value, lost_digits): lost_digits is a cheap self-diagnostic,
+    the decimal digits apparently consumed by cancellation in
+    I_{-nu}(x) - I_nu(x) relative to max(|I_nu|, |I_{-nu}|), so the caller
+    can detect (and react to) landing outside the well-conditioned regime
+    instead of silently trusting a cancelled-out result.
+    """
+    Ip = mp.besseli(nu, x)
+    Im_ = mp.besseli(-nu, x)
+    diff = Im_ - Ip
+    scale = max(abs(Ip), abs(Im_), mp.mpf(1))
+    lost_digits = mp.mp.dps if diff == 0 else max(
+        0, int(mp.ceil(mp.log10(scale / abs(diff))))
+    )
+    sinpi = mp.sin(mp.pi * nu)
+    return mp.pi / 2 * diff / sinpi, lost_digits
+
+
+def _besselk_robust(nu, x):
+    """K_nu(x), falling back to _besselk_via_besseli on non-convergence.
+
+    See the module docstring's 2026-09-02 note for why mp.besselk can raise
+    NoConvergence here even though the underlying Bessel function is
+    perfectly well defined. The try is free on the success path (the
+    overwhelming majority of calls); only a failing call pays the fallback's
+    cost. A ValueError/ZeroDivisionError guard is included alongside
+    NoConvergence because the same underlying cause (an ill-conditioned
+    hypergeometric evaluation) has been observed to surface as either in
+    mpmath depending on which internal code path is hit.
+
+    The fallback re-derives its own answer at boosted precision if its
+    self-measured cancellation (see _besselk_via_besseli) exceeds
+    _BESSELK_FALLBACK_MAX_LOST_DIGITS: this should not trigger in practice
+    (see that function's docstring) but is cheap insurance against landing
+    outside the validated regime, rather than silently returning a
+    cancelled-out value. If even the boosted pass does not clear the bar,
+    the best available estimate is returned with a loud stderr warning
+    (any resulting bad root candidate is still caught downstream by
+    zeros()'s own independent, higher-precision _certify_offline check).
+    """
+    global _BESSELK_FALLBACK_COUNT
+    try:
+        return mp.besselk(nu, x)
+    except (mp.libmp.NoConvergence, ValueError, ZeroDivisionError):
+        _BESSELK_FALLBACK_COUNT += 1
+        if _BESSELK_FALLBACK_COUNT == 1:
+            print(
+                f"[epstein_zeta] besselk fallback to besseli's reflection "
+                f"formula engaged (nu={complex(nu)!r}, x={float(x)!r}); see "
+                f"module docstring, 2026-09-02 note.",
+                file=sys.stderr,
+            )
+        val, lost_digits = _besselk_via_besseli(nu, x)
+        if lost_digits <= _BESSELK_FALLBACK_MAX_LOST_DIGITS:
+            return val
+        prev_dps = mp.mp.dps
+        try:
+            mp.mp.dps = prev_dps + 2 * lost_digits + 20
+            val2, lost2 = _besselk_via_besseli(mp.mpc(nu), mp.mpf(x))
+            val2 = +val2
+        finally:
+            mp.mp.dps = prev_dps
+        if lost2 > _BESSELK_FALLBACK_MAX_LOST_DIGITS:
+            print(
+                f"[epstein_zeta] WARNING: besselk fallback could not clear "
+                f"its cancellation guard at nu={complex(nu)!r}, "
+                f"x={float(x)!r} (lost_digits={lost_digits} then {lost2} "
+                f"after boosting precision by {2 * lost_digits + 20} "
+                f"digits); returning the best available estimate. This "
+                f"regime was not exercised by the module's 2026-09-02 "
+                f"validation -- see module docstring.",
+                file=sys.stderr,
+            )
+        return val2
 
 
 # A few standard reduced forms, labelled by discriminant d = |D| and class
@@ -252,7 +411,7 @@ class EpsteinZeta(LFunction):
             k = 1
             recent = []
             while True:
-                bess = mp.besselk(s - mp.mpf(1) / 2, two_pi_y * k)
+                bess = _besselk_robust(s - mp.mpf(1) / 2, two_pi_y * k)
                 term = (mp.power(k, s - mp.mpf(1) / 2) * self._sigma(k, 1 - 2 * s)
                         * bess * mp.cos(2 * mp.pi * k * x))
                 tail += term
