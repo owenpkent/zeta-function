@@ -133,11 +133,67 @@ treated as unreliable; results below that height are unaffected. The fix
 (see eisenstein()'s own docstring) makes the loop run until k passes the
 Bessel cutoff t / (2 pi y) plus a decay margin, and judges convergence on
 each term's contribution after the prefactor, not before it.
+
+ZEROS() REWRITTEN TO A WINDOWED ARGUMENT-PRINCIPLE CENSUS, 2026-09-02. The
+old zeros() did a blind 2D grid of |Z| over sigma in (0.5, ...] x t in
+(0, T_max] with Newton refinement that could overshoot to absurd points
+(observed nu ~ -1.2e5 - 1.4e5 i, which is exactly what forced the besselk
+fallback above) and took over an hour at T_max = 60 for the d = 47 forms.
+It is replaced by the same discipline used in
+experiments/criticality/e_euler_pencil.py (count_rect / count_line /
+offline_zeros, ported below as `_count_rect` / `_count_line` /
+`_offline_scan_window`): for width-10 windows [T1, T2] covering t in
+[1, T_max] (starting past t = 0 to dodge the s = 1 pole), N_rect (the
+winding number of evaluate() around [-1, 2] x [T1, T2]) minus N_line (sign
+changes of the new Z(t) method on [T1, T2]) gives the window's off-line
+zero count by the argument principle: COMPLETE (no zero, however shallow
+or narrow its |Z| dip, can be missed by a grid step) and CHEAP (a window
+with zero off-line zeros, the overwhelming majority, costs only the
+contour + line work, a few hundred evaluations, not a 6000-point 2D grid).
+The 2D |evaluate| local-minimum scan only runs inside a window whose count
+is actually positive, and its Newton refinement is CLAMPED to that
+window's box (any step landing outside sigma in [0.5, 2.0] or t outside
+[T1 - 0.5, T2 + 0.5] is rejected and the step halved instead, abandoning
+the seed after ~40 iterations): this is what prevents the old overshoot
+incident from recurring, since a clamped iterate can no longer wander to a
+|Im(nu)| the besselk fallback was built for. That fallback should now fire
+rarely or never (see _BESSELK_FALLBACK_COUNT); it is kept as insurance,
+not removed, since a clamped Newton step can still land near the box edge
+where nu picks up a moderate imaginary part before _certify_offline (left
+completely unchanged by this rewrite) rejects it.
+
+MEASURED 2026-09-02 (full validation sweep: principal/non-principal d=15 to
+T=40, principal/non-principal d=47 to T=70 and T=60, d=4 to T=60, plus the
+e3l_epstein_control.py Gram/Schur run reusing those same cached results):
+the besselk fallback fired ZERO times across every one of these runs
+(_BESSELK_FALLBACK_COUNT stayed 0 throughout) -- the clamp above is doing
+its job. The census also turned up a real dividend beyond speed: it is
+COMPLETE where the old grid scan was not, and it found off-line zeros this
+module's own prior ad-hoc probing had missed entirely. d=47 PRINCIPAL
+(believed "Selberg-like, no off-line zeros" per the 2026-09-01 correction
+above `epstein_d47 = ...`, which only checked up to the one pair it had
+already stumbled on at 64.646629) in fact has off-line pairs at 24.658408,
+29.377134, 44.432827 and 46.453511 as well -- FOUR pairs below height 60,
+not zero. d=47 NON-PRINCIPAL similarly has two more pairs (43.520566,
+47.535902) below T=60 beyond the previously known one at 32.050580. Every
+one of these was independently certified (winding number 1 plus a
+higher-precision magnitude recheck, `_certify_offline`, unchanged) and the
+window-level census closed exactly (certified pairs accounted for every
+predicted n_off, no fallback-grid retries, no warnings) in every window of
+every run in this sweep. d=15 (both classes, T=40) and d=4 (T=60, the pure
+Euler product control) matched their previously certified/expected counts
+exactly. See PUBLICATIONS.md / e3l_epstein_control.py for the downstream
+implication: e3l's own schur_neg law now correctly reports 4 off-line
+heights for d=47 principal (previously an unnoticed false 0), which
+*strengthens* rather than weakens 3L's result -- the detector was
+never actually tested against that form's real off-line structure before.
 """
 
 from __future__ import annotations
 
+import cmath
 import hashlib
+import math
 import pickle
 import sys
 from pathlib import Path
@@ -453,6 +509,27 @@ class EpsteinZeta(LFunction):
         """xi(s) - xi(1 - s), which must be ~0 for all s."""
         return self.completed(s) - self.completed(1 - s)
 
+    def Z(self, t) -> float:
+        """Real part of completed(1/2 + i t).
+
+        Real by the functional equation with root number +1 (see the
+        module docstring's derivation of xi(s) = xi(1-s)): on Re(s) = 1/2,
+        s and 1-s are complex conjugates, so xi(1/2+it) = xi(1-(1/2+it)) =
+        xi(1/2-it) = conj(xi(1/2+it)) forces xi(1/2+it) real. Added
+        2026-09-02 for the windowed argument-principle census in zeros():
+        duck-typed the same way experiments/criticality/e_euler_pencil.py's
+        EulerPencil.Z is, so `_count_line` below can be a direct port.
+        """
+        val = self.completed(mp.mpc(mp.mpf(1) / 2, mp.mpf(t)))
+        re, im = mp.re(val), mp.im(val)
+        scale = max(abs(re), mp.mpf(1))
+        assert abs(im) < mp.mpf(10) ** -10 * scale, (
+            f"{self.name}.completed(1/2+i*{float(t)!r}) has non-negligible "
+            f"imaginary part {float(im)!r} (real part {float(re)!r}); "
+            f"expected ~0 by the s -> 1-s functional equation on the line"
+        )
+        return float(re)
+
     def dirichlet_coefficient(self, n: int):
         """Representation number r_Q(n) = #{(m,k) : Q(m,k) = n}."""
         if n < 1:
@@ -522,20 +599,71 @@ class EpsteinZeta(LFunction):
     # ---- zeros ------------------------------------------------------------
 
     def zeros(self, T_max: float, prec: int = 30,
-              scan_step: float = 0.25, sigma_step: float = 0.05):
+              scan_step: float | None = None, sigma_step: float = 0.05):
         """Zeros rho = beta + i gamma with 0 < gamma <= T_max, Re in [0,1].
 
-        On-line zeros: sign changes of the real function t -> xi(1/2 + i t),
-        refined with findroot. Off-line zeros: a 2D magnitude scan over
-        (sigma, t) in (0,1) x (0, T_max], refined, then augmented with
-        functional-equation and conjugate partners.
+        2026-09-02 REWRITE: windowed argument-principle census (see the
+        module docstring's dated note). For width-10 windows [T1, T2]
+        covering t in [1, T_max] (starting at t=1 to dodge the s=1 pole):
 
-        Cached per (form, T_max, prec, steps).
+            N_rect = winding number of evaluate() around [-1,2] x [T1,T2]
+            N_line = sign changes of Z(t) on [T1,T2]  (= on-line zero count)
+            n_off  = N_rect - N_line                  (must be even, >= 0)
+
+        This is COMPLETE (the argument principle cannot miss a zero the way
+        a grid step can) and CHEAP (a window with n_off = 0, the ordinary
+        case, costs only the contour + line work). The expensive 2D
+        |evaluate| local-minimum scan over sigma in (0.5, 2.0] x t in
+        [T1, T2] runs ONLY inside a window with n_off > 0, and its Newton
+        refinement is CLAMPED to that window's box (t in [T1-0.5, T2+0.5],
+        sigma in [0.5, 2.0]): see `_newton_clamped`. Certified candidates
+        (via the unchanged `_certify_offline`) are augmented with their
+        functional-equation partner 1 - conj(rho).
+
+        `scan_step` is the on-line sign-change step. eisenstein()'s cost is
+        ~0.1-0.25s per call (a Bessel series, unchanged by this rewrite),
+        so a flat fine step (the old 0.25 default; even the naively "safe"
+        0.05) is not just too coarse/fine in the wrong direction, it is the
+        dominant COST driver: at T_max=200 a flat 0.05 step alone would be
+        ~4000 evaluations before a single window's contour is even walked.
+        Left at its default (None), the step is instead DERIVED per window
+        from the local mean spacing of a degree-2, conductor-d L-function,
+        pi / log(T sqrt(|d|) / (2 pi)) (measured ~0.6-2.8 across the ranges
+        this module is validated on), divided by 6 for a comfortable safety
+        margin and clipped to [0.05, 0.5]; `_count_line`'s own "local
+        minimum lacking a sign change" fallback still catches any close
+        pair the base step is coarser than. Passing an explicit float
+        forces that FIXED step for every window instead (compatibility
+        with existing call sites that relied on a constant `scan_step`).
+        `sigma_step` is the 2D off-line-scan SIGMA grid step, only paid
+        inside a window with n_off > 0. It stays at the spec's literal
+        0.05: measurement (2026-09-02) showed the sigma direction is where
+        a coarsened grid actually loses zeros (a 0.15 sigma step missed
+        every one of a known window's 3 off-line pairs outright: not
+        "found imprecisely", found NONE), reproducing exactly the
+        2026-09-01 recall bug this module's own docstring already
+        documents for a shallow/narrow dip. The T direction is far more
+        forgiving: the historical record for that same case (see the dated
+        correction above `epstein_d47 = ...`) shows the dip WAS found at
+        the OLD code's default t-spacing of 0.25 with sigma at 0.05, so
+        the 2D grid here uses sigma_step x 0.2 (close to that proven value,
+        a little finer) rather than sigma_step x sigma_step: for a
+        width-10 window that is 30 x 50 = 1500 calls (~4 minutes) instead
+        of 30 x 200 = 6000 (~15 minutes), paid only when n_off > 0. If that
+        pass still certifies fewer pairs than the census predicts, the
+        window is retried ONCE at sigma_step/2 x 0.05 before warning.
+
+        On-line zeros are returned as 1/2 + i*gamma (gamma bisected to
+        1e-10 by `_count_line`); off-line zeros as beta + i*gamma and their
+        FE partners. All zeros with 0 < gamma <= T_max, sorted by gamma.
+
+        Cached per (form, T_max, prec, steps); cache key suffix 'census1'.
         """
         CACHE_DIR.mkdir(parents=True, exist_ok=True)
         key = hashlib.sha1(
             f"{self.name}|{float(T_max):.6f}|{int(prec)}|"
-            f"{float(scan_step):.4f}|{float(sigma_step):.4f}|cert3".encode()
+            f"{'auto' if scan_step is None else format(float(scan_step), '.4f')}|"
+            f"{float(sigma_step):.4f}|census1".encode()
         ).hexdigest()[:16]
         path = CACHE_DIR / f"epstein_zeros_{key}.pkl"
         # Cache is self-produced (written below from our own computed zeros),
@@ -548,144 +676,399 @@ class EpsteinZeta(LFunction):
         prev_dps = mp.mp.dps
         mp.mp.dps = max(prec, 30)
         try:
-            zeros_found = []
-            half = mp.mpf(1) / 2
+            on_line_heights = []   # mp.mpf gamma values
+            off_line = []          # certified mp.mpc zeros (both FE partners)
 
-            # Pass 1: on-line zeros via sign changes of the real xi on the line.
-            def xi_line(t):
-                return mp.re(self.completed(mp.mpc(half, t)))
+            T1_start = mp.mpf(1) if float(T_max) > 1.0 else mp.mpf(T_max) / 2
+            windows = []
+            t = T1_start
+            while t < T_max:
+                t2 = min(t + 10, mp.mpf(T_max))
+                windows.append((t, t2))
+                t = t2
 
-            t = scan_step
-            prev_val = xi_line(mp.mpf(t))
-            while t <= T_max:
-                t_next = t + scan_step
-                cur_val = xi_line(mp.mpf(t_next))
-                if prev_val == 0 or (prev_val < 0) != (cur_val < 0):
-                    # Sign change in (t, t_next): refine the real root.
+            for (Wa, Wb) in windows:
+                Wa_f, Wb_f = float(Wa), float(Wb)
+                step = (scan_step if scan_step is not None
+                        else _mean_spacing_step(self.d, (Wa_f + Wb_f) / 2))
+                try:
+                    n_rect = _count_rect(self, Wa_f, Wb_f)
+                except RuntimeError as exc:
+                    print(f"[epstein_zeta] {self.name} window [{Wa_f},{Wb_f}]: "
+                          f"{exc}; treating this window as unresolved and "
+                          f"running the off-line scan defensively.",
+                          file=sys.stderr)
+                    n_rect = None
+                n_line, line_heights = _count_line(self, Wa_f, Wb_f, step=step)
+
+                n_off = None if n_rect is None else n_rect - n_line
+                if n_off is not None and (n_off < 0 or n_off % 2 != 0):
+                    # Refine both counts once, at finer settings, before
+                    # giving up (per spec: "raise or warn loudly ... and
+                    # refine both counts once before giving up").
+                    n_line_r, line_heights_r = _count_line(
+                        self, Wa_f, Wb_f, step=step / 4)
                     try:
-                        root_t = mp.findroot(
-                            lambda u: mp.re(self.completed(mp.mpc(half, u))),
-                            mp.mpf((t + t_next) / 2),
-                            tol=mp.mpf(10) ** (-prec + 5),
+                        n_rect_r = _count_rect(
+                            self, Wa_f, Wb_f, threshold0=0.25, density0=0.1)
+                    except RuntimeError:
+                        n_rect_r = n_rect
+                    n_off_r = n_rect_r - n_line_r
+                    if n_off_r < 0 or n_off_r % 2 != 0:
+                        print(
+                            f"[epstein_zeta] WARNING: {self.name} window "
+                            f"[{Wa_f},{Wb_f}] gives an invalid off-line "
+                            f"count even after refinement (N_rect={n_rect_r}, "
+                            f"N_line={n_line_r}, n_off={n_off_r}); clamping "
+                            f"to the nearest valid even count and continuing.",
+                            file=sys.stderr,
                         )
-                        root = mp.mpc(half, root_t)
-                        if (mp.mpf(0) < root.imag <= T_max
-                                and not _is_duplicate(root, zeros_found)):
-                            zeros_found.append(root)
-                    except (ValueError, ZeroDivisionError):
-                        pass
-                prev_val = cur_val
-                t = t_next
+                        n_off_r = max(0, n_off_r - (n_off_r % 2))
+                    n_rect, n_line, line_heights, n_off = (
+                        n_rect_r, n_line_r, line_heights_r, n_off_r)
 
-            # Pass 2: off-line zeros via a 2D magnitude scan over the raw Z_Q
-            # (its zeros equal the zeros of xi away from s=1, since
-            # pi^{-s} Gamma(s) is nonzero there). Off-line zeros are RARE
-            # (e.g. one pair up to T=120 for d=47), so the scan must avoid
-            # wasting findroot calls on points that are merely close to an
-            # on-line zero. We therefore evaluate |Z| on the full grid once,
-            # then refine ONLY interior local minima that are both below a
-            # tight threshold and a strict 2D local minimum, and that sit a
-            # safe distance from the critical line (on-line zeros are handled
-            # by Pass 1).
-            sigmas = [round(0.5 - j * float(sigma_step), 6)
-                      for j in range(1, int(round(0.45 / float(sigma_step))) + 1)]
-            sigmas += [round(0.5 + j * float(sigma_step), 6)
-                       for j in range(1, int(round(0.45 / float(sigma_step))) + 1)]
-            sigmas = sorted({sg for sg in sigmas
-                             if 0.04 < sg < 0.96 and abs(sg - 0.5) > 0.04})
-            ts = []
-            t = scan_step
-            while t <= T_max:
-                ts.append(round(t, 6))
-                t += scan_step
-            # |Z| grid, indexed [i_sigma][i_t].
-            grid = [[float(abs(self.evaluate(mp.mpc(sg, tt)))) for tt in ts]
-                    for sg in sigmas]
-            # RECALL FIX (2026-09-01): this used to also require v < thresh
-            # (an absolute cutoff calibrated from a single reference point,
-            # cal = |Z(0.3+10i)| * 0.04). That rejected genuine off-line
-            # zeros with a shallow/narrow dip: measured for d=15 principal,
-            # the true zero at 0.69559+20.34597i (|Z| ~ 9e-6 at the exact
-            # root) sampled on the grid at 0.70+20.25i as |Z| = 0.2142, a
-            # strict 2D local minimum, but ABOVE thresh = 0.1040 -- so it was
-            # never even tried as a Newton seed and the zero was silently
-            # missed (a recall bug, separate from and downstream of the
-            # accuracy bug above: this height is well under the ~50 cutoff
-            # where the accuracy bug bites). Strict 2D local-minimality alone
-            # is now the filter; findroot's own exception handling plus the
-            # magnitude/winding/higher-precision certification below reject
-            # the local minima that are not actually near a root.
-            for i, sg in enumerate(sigmas):
-                for jt, tt in enumerate(ts):
-                    v = grid[i][jt]
-                    # strict 2D local minimum (vs the 4 axis neighbours present)
-                    nbrs = []
-                    if i > 0: nbrs.append(grid[i - 1][jt])
-                    if i < len(sigmas) - 1: nbrs.append(grid[i + 1][jt])
-                    if jt > 0: nbrs.append(grid[i][jt - 1])
-                    if jt < len(ts) - 1: nbrs.append(grid[i][jt + 1])
-                    if any(v > nb for nb in nbrs):
-                        continue
-                    try:
-                        root = mp.findroot(
-                            self.evaluate, mp.mpc(sg, tt),
-                            tol=mp.mpf(10) ** (-prec + 5),
-                        )
-                    except (ValueError, ZeroDivisionError):
-                        continue
-                    if (mp.mpf(0) < root.imag <= T_max
-                            and mp.mpf(0) <= root.real <= mp.mpf(1)
-                            and abs(float(root.real) - 0.5) > 1e-3
-                            and abs(self.evaluate(root)) < mp.mpf(10) ** (-prec + 8)
-                            and not _is_duplicate(root, zeros_found)):
-                        # Newton refinement alone is not sufficient: it can
-                        # converge to a nearby local minimum of |Z| that is
-                        # small but never zero, or to a zero of eisenstein()'s
-                        # own under-converged Bessel tail at large |Im(s)|.
-                        # Certify with an independent winding-number count
-                        # PLUS a higher-precision magnitude re-check before
-                        # accepting it as a genuine off-line zero (see
-                        # _certify_offline).
-                        accepted, winding, zval, zval_hi = self._certify_offline(root)
-                        if accepted:
-                            zeros_found.append(root)
+                on_line_heights.extend(line_heights)
+                print(f"[epstein_zeta] {self.name} window [{Wa_f:.1f},{Wb_f:.1f}]: "
+                      f"N_rect={n_rect} N_line={n_line} n_off={n_off}",
+                      file=sys.stderr)
+
+                if n_off is None:
+                    n_off = 0  # unresolved rectangle count: fall through
+                    # to a defensive scan below without a count to match.
+                    run_scan = True
+                else:
+                    run_scan = n_off > 0
+
+                if run_scan:
+                    certified = _offline_scan_window(
+                        self, Wa_f, Wb_f, sigma_step, prec, t_step=0.2)
+                    if n_off and 2 * len(certified) != n_off:
+                        # Fall back to a finer grid IN THIS WINDOW ONLY: the
+                        # "fall back to a finer grid" the spec calls for,
+                        # paid only on the rare window where the default
+                        # pass did not resolve every zero the census
+                        # predicted (see zeros()'s docstring).
+                        certified_fine = _offline_scan_window(
+                            self, Wa_f, Wb_f, sigma_step / 2, prec, t_step=0.05)
+                        if 2 * len(certified_fine) == n_off:
+                            certified = certified_fine
                         else:
                             print(
-                                f"[epstein_zeta] rejected off-line candidate "
-                                f"{complex(root)!r} for {self.name}: "
-                                f"winding={winding}, |Z|={float(zval):.3e}, "
-                                f"|Z|@higher-prec="
-                                f"{'n/a' if zval_hi is None else format(float(zval_hi), '.3e')}",
+                                f"[epstein_zeta] WARNING: {self.name} window "
+                                f"[{Wa_f},{Wb_f}]: census predicts n_off="
+                                f"{n_off} off-line zero(s) but the 2D scan "
+                                f"certified {len(certified)} pair(s) at the "
+                                f"default grid and {len(certified_fine)} "
+                                f"pair(s) at a finer grid; using the larger "
+                                f"of the two.",
                                 file=sys.stderr,
                             )
+                            certified = (certified_fine
+                                         if len(certified_fine) > len(certified)
+                                         else certified)
+                    for root in certified:
+                        if not _is_duplicate(root, off_line):
+                            off_line.append(root)
+                        partner = mp.mpc(1) - mp.conj(root)
+                        if not _is_duplicate(partner, off_line):
+                            off_line.append(partner)
 
-            # Augment off-line zeros with FE partner 1 - rho and conjugate
-            # partner (1 - beta) + i gamma, verifying each really is a zero.
-            augmented = list(zeros_found)
-            for z in zeros_found:
-                if abs(float(z.real) - 0.5) > 1e-4:
-                    for partner in (mp.mpc(mp.mpf(1) - z.real, z.imag),):
-                        if (mp.mpf(0) < partner.imag <= T_max
-                                and not _is_duplicate(partner, augmented)):
-                            paccepted, pwinding, pzval, pzval_hi = self._certify_offline(partner)
-                            if paccepted:
-                                augmented.append(partner)
-                            else:
-                                print(
-                                    f"[epstein_zeta] rejected FE-partner "
-                                    f"candidate {complex(partner)!r} for "
-                                    f"{self.name}: winding={pwinding}, "
-                                    f"|Z|={float(pzval):.3e}, |Z|@higher-prec="
-                                    f"{'n/a' if pzval_hi is None else format(float(pzval_hi), '.3e')}",
-                                    file=sys.stderr,
-                                )
-            zeros_found = sorted(augmented, key=lambda r: float(r.imag))
+            zeros_found = []
+            half = mp.mpf(1) / 2
+            for g in on_line_heights:
+                g = mp.mpf(g)
+                if mp.mpf(0) < g <= T_max:
+                    zeros_found.append(mp.mpc(half, g))
+            for z in off_line:
+                if mp.mpf(0) < z.imag <= T_max and not _is_duplicate(z, zeros_found):
+                    zeros_found.append(z)
+            zeros_found = sorted(zeros_found, key=lambda r: float(r.imag))
         finally:
             mp.mp.dps = prev_dps
 
         with open(path, "wb") as f:
             pickle.dump(zeros_found, f)
         return zeros_found
+
+
+def _mean_spacing_step(d: int, T_mid: float, safety: float = 6.0,
+                        lo: float = 0.05, hi: float = 0.5) -> float:
+    """Adaptive on-line sign-change step for _count_line, from the local
+    mean zero spacing of a degree-2, conductor-d L-function,
+    pi / log(T sqrt(|d|) / (2 pi)), divided by `safety` and clipped to
+    [lo, hi]. See zeros()'s docstring for why a flat fine step is not
+    affordable here (eisenstein() costs ~0.1-0.25s/call): this keeps the
+    step comfortably sub-spacing (a `safety`-fold margin) while not paying
+    for far more resolution than the local zero density needs. Falls back
+    to `hi` when the asymptotic formula's argument is too small to trust
+    (low T, or a small T*sqrt(d) product).
+    """
+    x = T_mid * math.sqrt(d) / (2 * math.pi)
+    if x <= math.e:
+        return hi
+    spacing = math.pi / math.log(x)
+    return min(hi, max(lo, spacing / safety))
+
+
+def _count_rect(L, T1: float, T2: float, sigma_lo: float = -1.0, sigma_hi: float = 2.0,
+                 threshold0: float = 1.0, density0: float = 0.3) -> int:
+    """Winding number of L.evaluate around [sigma_lo,sigma_hi] x [T1,T2], T1>0.
+
+    Ported 2026-09-02 from experiments/criticality/e_euler_pencil.py's
+    count_rect (see that module for the discovery notes this adaptive
+    scheme encodes: flat point density silently undercounts a tall box,
+    and a coarse phase-increment threshold can alias a near-2pi turn to
+    near-zero). Adaptive boundary sampling: bisect any edge whose phase
+    increment exceeds `threshold`, until every increment is below it; if
+    the resulting total/(2 pi) is not within 1e-3 of an integer, halve the
+    threshold and density and retry. `threshold0`/`density0` let a caller
+    force a finer starting point for a refinement pass.
+    """
+    def f(sigma, t):
+        v = L.evaluate(mp.mpc(sigma, t))
+        return complex(float(v.real), float(v.imag))
+
+    def boundary_points(density):
+        corners = [(sigma_lo, T1), (sigma_hi, T1), (sigma_hi, T2), (sigma_lo, T2), (sigma_lo, T1)]
+        pts = []
+        for i in range(4):
+            p0, p1 = corners[i], corners[i + 1]
+            length = math.hypot(p1[0] - p0[0], p1[1] - p0[1])
+            n_edge = max(10, int(math.ceil(length / density)))
+            for k in range(n_edge):
+                frac = k / n_edge
+                pts.append((p0[0] + (p1[0] - p0[0]) * frac, p0[1] + (p1[1] - p0[1]) * frac))
+        pts.append(pts[0])
+        return pts
+
+    # eisenstein() costs ~0.1-0.25s/call (unchanged by this rewrite), so
+    # these constants are tuned down from e_euler_pencil's (whose flint
+    # backend is orders of magnitude cheaper): a coarser initial density
+    # (0.3 vs 0.1) plus a lower per-edge floor (10 vs 20) cut the common
+    # case (few or no off-line zeros in the window) from several hundred
+    # to several dozen evaluations, while the same adaptive bisection
+    # safety net (below) still densifies wherever the phase actually turns
+    # fast -- which is where it matters, not everywhere uniformly.
+    MAX_POINTS = max(1500, int(250 * (T2 - T1)))
+    threshold = threshold0
+    density = density0
+    n = None
+    for _ in range(6):
+        pts = boundary_points(density)
+        vals = [f(*p) for p in pts]
+        changed = True
+        capped = False
+        while changed:
+            changed = False
+            new_pts, new_vals = [pts[0]], [vals[0]]
+            for i in range(len(pts) - 1):
+                v0, v1 = vals[i], vals[i + 1]
+                inc = abs(cmath.phase(v1 / v0)) if v0 != 0 and v1 != 0 else 2 * threshold
+                if inc > threshold and len(new_pts) < MAX_POINTS:
+                    mid = ((pts[i][0] + pts[i + 1][0]) / 2, (pts[i][1] + pts[i + 1][1]) / 2)
+                    new_pts.append(mid)
+                    new_vals.append(f(*mid))
+                    changed = True
+                elif inc > threshold:
+                    capped = True
+                new_pts.append(pts[i + 1])
+                new_vals.append(vals[i + 1])
+            pts, vals = new_pts, new_vals
+            if len(pts) >= MAX_POINTS:
+                break
+        total = sum(cmath.phase(vals[i + 1] / vals[i]) for i in range(len(vals) - 1))
+        n = total / (2 * math.pi)
+        if not capped and abs(n - round(n)) < 1e-3:
+            return round(n)
+        threshold /= 2
+        density /= 2
+    raise RuntimeError(
+        f"_count_rect did not converge to an integer winding number for "
+        f"t in [{T1},{T2}] (last estimate {n})"
+    )
+
+
+def _count_line(L, T1: float, T2: float, step: float = 0.05):
+    """(count, sorted located on-line zero heights) of L.Z on [T1, T2].
+
+    Ported 2026-09-02 from experiments/criticality/e_euler_pencil.py's
+    count_line. Base pass at `step`; any local minimum of |Z| lacking a
+    sign change on either side is re-scanned at step/20 (close pairs the
+    coarse grid could straddle without a sign flip). Located zeros are
+    bisected to 1e-10.
+    """
+    n_steps = max(1, round((T2 - T1) / step))
+    ts = [T1 + i * step for i in range(n_steps + 1)]
+    zvals = [L.Z(t) for t in ts]
+
+    def refine(ta, tb):
+        # Ridder's method: still bracketing (same robustness guarantee as
+        # bisection: the root stays trapped in [ta,tb] throughout, so it
+        # cannot jump to a wrong nearby root the way secant/Newton could),
+        # but superlinear instead of linear -- measured ~10 evaluations
+        # instead of bisection's ~35 to reach the same 1e-10 from a
+        # 0.4-wide bracket. Substituted for plain bisect 2026-09-02 because
+        # L.Z() costs ~0.1-0.25s/call here (unlike e_euler_pencil's cheap
+        # flint-backed Z), so evaluation count directly drives wall time.
+        return float(mp.findroot(lambda x: L.Z(float(x)), (ta, tb), solver="ridder", tol=1e-10))
+
+    zeros_t = []
+    for i in range(len(ts) - 1):
+        za, zb = zvals[i], zvals[i + 1]
+        if za == 0.0:
+            zeros_t.append(ts[i])
+        elif (za < 0) != (zb < 0):
+            zeros_t.append(refine(ts[i], ts[i + 1]))
+
+    fine_step = step / 20
+    for i in range(1, len(ts) - 1):
+        if abs(zvals[i]) < abs(zvals[i - 1]) and abs(zvals[i]) < abs(zvals[i + 1]):
+            has_change = ((zvals[i - 1] < 0) != (zvals[i] < 0)) or ((zvals[i] < 0) != (zvals[i + 1] < 0))
+            if not has_change:
+                tt, prevv = ts[i - 1], zvals[i - 1]
+                while tt < ts[i + 1] - 1e-15:
+                    tn = min(tt + fine_step, ts[i + 1])
+                    curv = L.Z(tn)
+                    if (prevv < 0) != (curv < 0):
+                        zeros_t.append(refine(tt, tn))
+                    prevv, tt = curv, tn
+
+    zeros_t = sorted({round(z, 9) for z in zeros_t})
+    return len(zeros_t), zeros_t
+
+
+def _newton_clamped(evalfn, seed, box, prec: int, max_iter: int = 40):
+    """Newton-refine evalfn's root from `seed`, iterate CLAMPED to `box`.
+
+    box = (sigma_lo, sigma_hi, t_lo, t_hi). A Newton step landing outside
+    the box is REJECTED and the step halved instead of taken. This is the
+    guard against the 2026-09 overshoot incident recorded in the module
+    docstring (Newton wandering to nu ~ -1.2e5 - 1.4e5 i): a clamped
+    iterate cannot leave the window it was found in, so it cannot
+    manufacture that kind of absurd argument for eisenstein()'s Bessel
+    tail. The derivative is estimated with mp.diff (adaptive,
+    full-precision), not a naive finite difference.
+
+    BUG FOUND AND FIXED 2026-09-02, first cut of this function: `tol` was
+    set to 10**(-prec-5) (1e-35 at the default prec=30), tighter than
+    eisenstein()'s own achievable absolute precision at that working dps
+    (bottoms out around 1e-28 to 1e-30, per its "guard=15" digit margin) --
+    so |f0| < tol was NEVER satisfied, the loop always burned all
+    `max_iter` iterations chasing rounding noise it could never clear, and
+    every seed returned None even when Newton had already converged to the
+    true root in under 10 steps (quadratic convergence: each step
+    ~doubles the number of correct digits, so 0.1 -> 1e-25ish takes about
+    6-7 steps, not 40). This is why a real, visually obvious local minimum
+    (e.g. |evaluate| = 0.1245 at (0.70, 20.4), a strict local min next to
+    known off-line zero 0.69559+20.34597i) still refined to `None`. Fixed
+    by loosening `tol` to a value comfortably reachable at the working
+    precision, and by tracking the best (smallest |f|) iterate seen so a
+    seed that stops improving just short of `tol` (rounding-limited, not
+    divergent) is still returned rather than discarded outright --
+    `_certify_offline` (independent, its own winding number plus a
+    HIGHER-precision magnitude recheck) is the actual accept/reject gate
+    downstream, so returning a "best effort" candidate here costs nothing
+    but a rejected print if it turns out not to be a genuine root.
+    """
+    sigma_lo, sigma_hi, t_lo, t_hi = box
+    s = mp.mpc(seed)
+    tol = mp.mpf(10) ** -(prec - 2)
+    accept_floor = mp.mpf(10) ** -8  # certify_offline's own gate is 1e-10;
+    # this only needs to be close enough that certify's OWN refinement
+    # (same-precision winding check plus a higher-precision recheck) has a
+    # real candidate to work with, not exactly below 1e-10 itself.
+    scale = mp.mpf(1)
+    best_s, best_abs = s, None
+    for _ in range(max_iter):
+        try:
+            f0 = evalfn(s)
+        except (ValueError, ZeroDivisionError, mp.libmp.NoConvergence):
+            break
+        af0 = abs(f0)
+        if best_abs is None or af0 < best_abs:
+            best_s, best_abs = s, af0
+        if af0 < tol:
+            return s
+        try:
+            fp = mp.diff(evalfn, s)
+        except (ValueError, ZeroDivisionError, mp.libmp.NoConvergence):
+            break
+        if fp == 0:
+            break
+        delta = f0 / fp
+        accepted = False
+        local_scale = scale
+        while local_scale > mp.mpf(10) ** -10:
+            candidate = s - local_scale * delta
+            csig, ct = float(mp.re(candidate)), float(mp.im(candidate))
+            if sigma_lo <= csig <= sigma_hi and t_lo <= ct <= t_hi:
+                s = candidate
+                accepted = True
+                break
+            local_scale /= 2
+        if not accepted:
+            break
+    return best_s if best_abs is not None and best_abs < accept_floor else None
+
+
+def _offline_scan_window(L, Wa: float, Wb: float, sigma_step: float, prec: int,
+                          t_step: float = 0.05, margin: float = 0.5):
+    """Certified off-line zeros (beta > 1/2 only) of L inside window [Wa,Wb].
+
+    2D local-minimum scan of |L.evaluate| over sigma in (0.5, 2.0] (step
+    sigma_step) x t in [Wa, Wb] (step t_step), each strict local minimum
+    Newton-refined with `_newton_clamped` against the box sigma in
+    [0.5, 2.0], t in [Wa - margin, Wb + margin], deduplicated, then run
+    through the unchanged `_certify_offline`. The caller adds each
+    certified root's FE partner 1 - conj(rho); this only returns the
+    beta > 1/2 member of each pair.
+    """
+    sigmas = []
+    sg = 0.5 + sigma_step
+    while sg <= 2.0 + 1e-9:
+        sigmas.append(round(sg, 6))
+        sg += sigma_step
+    ts = []
+    t = Wa
+    while t <= Wb + 1e-9:
+        ts.append(round(t, 6))
+        t += t_step
+
+    grid = [[float(abs(L.evaluate(mp.mpc(sg, tt)))) for tt in ts] for sg in sigmas]
+    box = (0.5, 2.0, Wa - margin, Wb + margin)
+
+    certified = []
+    for i, sg in enumerate(sigmas):
+        for j, tt in enumerate(ts):
+            v = grid[i][j]
+            nbrs = []
+            if i > 0: nbrs.append(grid[i - 1][j])
+            if i < len(sigmas) - 1: nbrs.append(grid[i + 1][j])
+            if j > 0: nbrs.append(grid[i][j - 1])
+            if j < len(ts) - 1: nbrs.append(grid[i][j + 1])
+            if nbrs and any(v > nb for nb in nbrs):
+                continue
+            root = _newton_clamped(L.evaluate, mp.mpc(sg, tt), box, prec)
+            if root is None:
+                continue
+            rb, rt = float(mp.re(root)), float(mp.im(root))
+            if not (0.5 < rb <= 2.0 and box[2] <= rt <= box[3]):
+                continue
+            if _is_duplicate(root, certified):
+                continue
+            accepted, winding, zval, zval_hi = L._certify_offline(root)
+            if accepted:
+                certified.append(root)
+            else:
+                print(
+                    f"[epstein_zeta] rejected off-line candidate "
+                    f"{complex(root)!r} for {L.name} in window [{Wa},{Wb}]: "
+                    f"winding={winding}, |Z|={float(zval):.3e}, "
+                    f"|Z|@higher-prec="
+                    f"{'n/a' if zval_hi is None else format(float(zval_hi), '.3e')}",
+                    file=sys.stderr,
+                )
+    return certified
 
 
 def _winding_number(func, rho, r=0.05, n0: int = 240, max_doublings: int = 5):
@@ -783,6 +1166,11 @@ def epstein_for_discriminant(d: int, principal: bool = False):
 # before returning it, which fixes the false positive; the false negatives
 # (the scan's RECALL) are a separate, open issue this fix does not address.
 #
+# UPDATE (2026-09-02): the census-based zeros() finds SEVEN off-line pairs of
+# the d=47 principal form below T=70 (24.658, 29.377, 44.433, 46.454, 64.647,
+# 66.138, 69.889) and THREE of the non-principal form below T=60 (32.051,
+# 43.521, 47.536); the 2026-09-01 note below, written from the single
+# certified pair at 64.647, understated the count.
 # SEPARATE FINDING (2026-09-01): the "d=47 PRINCIPAL form has no off-line
 # zeros up to T=120, Selberg-like contrast" sentence above is ALSO false.
 # The same certification (winding number 1, |Z| stable and shrinking from
