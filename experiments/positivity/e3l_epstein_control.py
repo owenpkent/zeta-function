@@ -51,6 +51,12 @@ that machinery). The detector predicts:
 Predictions:
     zeta,  chi_3                       : 0 off-line pairs -> schur_neg = 0
     Epstein d=47 principal (T<=60)     : 0 off-line pairs -> schur_neg = 0
+      [CORRECTION 2026-09-02: with the census-based zeros() the principal form
+       has FOUR off-line pairs below T=60 (heights 24.658, 29.377, 44.433,
+       46.454; seven below 70 incl. 64.647, 66.138, 69.889) and the
+       non-principal form THREE (32.051, 43.521, 47.536); the detector
+       reports schur_neg = 4 and 3 respectively, so the counting law holds
+       against the complete lists. The old grid finder had missed them.]
     Epstein d=47 non-principal (T<=60) : 1 off-line pair  -> schur_neg = 1
     Epstein d=15 principal (T<=40)     : 4 off-line pairs certified, but the
                                           scan's own recall gap means zeros()

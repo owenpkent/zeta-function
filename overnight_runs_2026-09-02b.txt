@@ -1,0 +1,5 @@
+J2 e3n_li_signature T=120 | PID 38795 | log experiments/positivity/_cache/e3n_overnight_2026-09-02b.log | timeout 43200s | expect ~3-4 h; does the RH-true-but-fails contrast survive with the corrected label
+J3 e3m_place_type_balance | PID 38797 | log experiments/positivity/_cache/e3m_place_overnight_2026-09-02b.log | timeout 43200s | expect ~5 h; the Selberg-like contrast row is now an RH-false object
+J4 e2u_rosati_balance_M2 | PID 38799 | log experiments/arithmetic_geometric/_cache/e2u_overnight_2026-09-02b.log | timeout 43200s | expect ~5 h; the balance >= 1 verdict on the principal form
+J5 e2v_rosati_balance_M2_5 | PID 38801 | log experiments/arithmetic_geometric/_cache/e2v_overnight_2026-09-02b.log | timeout 43200s | expect ~5-10 h (multi-T validation); A_bomb residual convergence
+J6 e2w_rosati_fourway_M2_6 T_hi=300 | PID 38803 | log experiments/arithmetic_geometric/_cache/e2w_overnight_2026-09-02b.log | timeout 43200s | expect ~8 h; T_hi=300 not 500, say so in any write-up
