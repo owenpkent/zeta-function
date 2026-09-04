@@ -283,8 +283,11 @@ in finite groups, root numbers) determines a signature at most mod 8; M4 needs t
 exact integer. This is a reusable disqualifier for the breadth battery
 ([`breadth_program.md`](breadth_program.md)): a candidate whose value group is
 torsion, or whose real-valued exports are entropic (nonnegative by construction),
-caps at $\sigma \bmod 8$ and cannot carry the polarization. Proposed for the
-disqualifier list rather than silently added to the tested corpus module.
+caps at $\sigma \bmod 8$ and cannot carry the polarization. Proposed here
+2026-08-19; BANKED 2026-09-04 as screen 14 (the `export_type` dimension of
+`breadth_corpus.py`, suite 26/26; LEARNINGS #218) after the density-matrix costume
+measured the entropic half on the controls
+([`e3ac_entropic_exports.md`](../../experiments/positivity/e3ac_entropic_exports.md)).
 
 **The entanglement caveat, stated honestly.** The corpus's one real-valued export
 (Chung-Kim-Kim-Park-Yoo 2023, arXiv:2312.17138) is the von Neumann entanglement

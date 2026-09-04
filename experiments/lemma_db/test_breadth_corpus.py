@@ -197,6 +197,43 @@ def test_m4_has_full_fingerprint():
         assert hasattr(M4, key)
 
 
+def test_entropic_export_screen_fires():
+    """#218: a real-valued export that is nonnegative by construction (an entropy) or torsion-valued
+    (a linking form) has no sign to flip; the screen must fire, kill candidacy, and debit the score."""
+    gibbs = _S(0, 0, 0, 0, 0, "unconditional", 1, "realization", 1, "Re(s)>1", "na",
+               export_type="entropic")
+    linking = _S(0, 0, 1, 0, 0, "unconditional", 1, "realization", 0, "na", "na",
+                 export_type="torsion")
+    for sk in (gibbs, linking):
+        assert any("#218" in r for r in battery(sk))
+        assert screen(sk)["transfer_candidate"] is False
+    signed = _S(0, 0, 0, 0, 0, "unconditional", 1, "realization", 1, "Re(s)>1", "na",
+                export_type="signed")
+    assert not any("#218" in r for r in battery(signed))
+    assert match_score(gibbs) < match_score(signed)
+
+
+def test_signed_export_keeps_master_column():
+    """#218 must not touch a signed export: the master column, whose export IS the S5 signature,
+    keeps its transfer candidacy when tagged 'signed'."""
+    weil = _S(1, 1, 1, 1, 1, "contingent", 1, "signature", 1, "all-heights", "complex",
+              "line", "prohibitive", "output-indefinite", weil_consumption="signature",
+              export_type="signed")
+    assert not any("#218" in r for r in battery(weil))
+    assert screen(weil)["transfer_candidate"] is True
+
+
+def test_e3ac_corpus_rows_disqualified():
+    """#218 is on file: the density-matrix row and the arithmetic Chern-Simons row are DISQUALIFIED
+    with the #218 rule, fire the export screen, and sit below the M4 target."""
+    for key in ("Bost-Connes Gibbs state", "Chern-Simons"):
+        row = next(e for e in CORPUS if key in e.phenomenon)
+        assert row.verdict == "DISQUALIFIED"
+        assert "#218" in row.rule
+        assert any("#218" in r for r in battery(row.skel))
+        assert match_score(row.skel) < match_score(M4)
+
+
 def test_rank_orders_targets_above_disqualified():
     """A TARGET/TRANSFER-CANDIDATE row should outrank a DISQUALIFIED wrong-polarity row."""
     ranked = rank()

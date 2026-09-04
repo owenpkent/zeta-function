@@ -39,6 +39,19 @@ product states, a MIXTURE, which is a product state iff the constituents coincid
     but is NECESSARY-NOT-SUFFICIENT for RH. It sharpens the 2A_R1 D-H exclusion from "D-H is a linear
     combination" to "D-H provably has no equilibrium product state," without being a route to RH.
 
+  CORRECTION (2026-09-04, LEARNINGS #217/#218). Part C's witness is retired: Epstein-d47-principal is
+    RH-FALSE (seven off-line pairs below height 70, certified 2026-09-02 after the Chowla-Selberg tail
+    repair), so "non-multiplicative but RH-TRUE" no longer holds for any Epstein form in the repo (by
+    Voronin, no class-number >= 2 Epstein zeta is RH-true). The necessary-not-sufficient reading
+    survives on a better witness (e3ac_entropic_exports): the Euler pencil f_lambda is non-
+    multiplicative for every lambda != 0 while its lowest off-line height climbs without bound as
+    lambda -> 0, and L(chi_-3)L(chi_5) is an Euler product (RH under GRH) whose Gibbs weights are
+    SIGNED, so it is not a state at all. Part B's "statistical MIXTURE" needs the same sign caveat:
+    D-H's weights c1 a^(1) + c2 a^(2) are signed, so D-H is not a state; Epstein IS a state and is a
+    signed combination a_A +- a_B of two product functionals, one of which (a_B) is not a state.
+    Separability is automatic for every diagonal state and carries no information; the entropy
+    version of this defect (total correlation across prime modes) is measured in e3ac.
+
 Outputs:
   - e3z_multiplicativity_obstruction.npz : defect per control, sample coprime-pair table
   - e3z_multiplicativity_obstruction.png : defect bar chart (Euler vs non-Euler, RH status)
@@ -131,13 +144,15 @@ def run(N: int = 400, out_dir: Path = None):
     dz = results["zeta"]["d"]; dc = results["chi3"]["d"]
     dd = results["D-H"]["d"]; de = results["Eps47-principal"]["d"]
     print(f"  Euler products: zeta d={dz:.1e}, chi3 d={dc:.1e}  -> 0 (multiplicative, product state)")
-    print(f"  Non-Euler:      D-H  d={dd:.3f} (RH-FALSE), Eps47-principal d={de:.3f} (RH-TRUE)")
-    print(f"  --> d > 0 for BOTH the RH-false (D-H) and the RH-true (Epstein) non-Euler controls,")
+    print(f"  Non-Euler:      D-H  d={dd:.3f} (RH-FALSE), Eps47-principal d={de:.3f} (RH-FALSE since #217; see docstring CORRECTION)")
+    print(f"  --> d > 0 for both non-Euler controls (both RH-false since #217; the necessary-not-sufficient")
+    print(f"      witness is now the Euler pencil, e3ac: non-multiplicative at every lambda != 0, T* unbounded),")
     print(f"      so the multiplicativity defect detects NON-EULER-ness (= no equilibrium product")
     print(f"      state), NOT RH-failure. It is the Bost-Connes form of the K2 firewall:")
     print(f"      non-circular, D-H-discriminating, but NECESSARY-NOT-SUFFICIENT for RH.")
     print(f"      Sharpens 2A_R1: D-H is not merely 'a linear combination' -- it provably has NO")
-    print(f"      equilibrium product state (it is a KMS mixture c1 phi^(1) + c2 phi^(2)).")
+    print(f"      equilibrium product state (its weights c1 a^(1) + c2 a^(2) are signed: not a Gibbs state;")
+    print(f"      see the docstring CORRECTION and e3ac).")
 
     np.savez_compressed(
         out_dir / "e3z_multiplicativity_obstruction.npz",

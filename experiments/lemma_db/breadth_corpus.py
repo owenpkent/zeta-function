@@ -57,6 +57,22 @@ examples (graph-RH's sign is operator-sourced even though LPS graphs consume Del
 Falsifier: an analytic argument importing the Hodge-index inequality itself. See
 docs/03_research/parity_vs_polarization.md (the #146 dossier + ADVERSARY resolution).
 
+THE ENTROPIC/TORSION-EXPORT SCREEN (#218, e3ac 2026-09-04) banks the disqualifier the
+arithmetic-Chern-Simons door proposed (#177): a candidate whose real-valued export is nonnegative
+by construction (an entropy, a mutual information, a relative entropy, a partition function) or
+whose value group is torsion (a linking form, a root number) caps at sigma mod 8 or at zero sign
+and cannot carry the polarization. Measured on the density-matrix costume itself: the literal
+Gibbs state rho_beta = sum a_n n^{-beta} |n><n| / L(beta) is DIAGONAL (von Neumann = Shannon,
+every such state separable), exists exactly where the coefficients are nonnegative (the Euler
+pencil's segment [-1, 1] between the two Epstein forms of d = -15, RH-false at every census point
+|lambda| >= 0.01 below height 200), and its one invariant, the total correlation across prime modes = the relative-
+entropy distance to the Euler-product manifold, reads the Euler axis of the control cube and
+nothing else (zeta, Beurling: 0; Epstein: 0.13 to 0.58 nats; D-H and L(chi_-3)L(chi_5): signed
+weights, in opposite RH classes, B's under GRH). The rank-one state sum a_n n^{-s}|n> reaches
+sigma > 1/2 for every control, D-H included, and its entanglement across prime modes reads the same
+axis and is exactly t-blind (n^{-it} is a product of local unitaries). Encoded as the `export_type` dimension ('entropic' and
+'torsion' fire; 'signed' does not). Probe: experiments/positivity/e3ac_entropic_exports.py.
+
 Run:
   python -m experiments.lemma_db.breadth_corpus
 """
@@ -104,6 +120,16 @@ class Skeleton:
                                    # Weil's Hodge-index route) |
                                    # 'producer' (produces purity with no polarization,
                                    # the Weil I engine, #148) | 'na'
+    # #218 dimension: what KIND of real-valued object the candidate exports.
+    export_type: str = "na"        # 'entropic' (nonnegative by construction: entropies, mutual
+                                   # information, relative entropy, partition functions) |
+                                   # 'torsion' (value group torsion: linking forms, root numbers;
+                                   # caps at sigma mod 8) |
+                                   # 'signed' (a genuinely signed real invariant) | 'na'
+                                   # Scope: tag the object HANDED TO M4 as the polarization, not an
+                                   # internal intermediate (a sum rule with an entropic term is 'signed'
+                                   # if its export is the signed identity: the Killip-Simon register);
+                                   # 'signed' is provisional until the #48 polarity is measured on the cube.
 
 
 @dataclass
@@ -126,9 +152,10 @@ M4 = Skeleton(
 
 
 def _S(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root,
-       axis="na", flip="na", side="na", order_source="na", weil_consumption="na"):
+       axis="na", flip="na", side="na", order_source="na", weil_consumption="na",
+       export_type="na"):
     return Skeleton(lef, pri, dua, tsl, sig, pol, ncirc, prod, dh, reg, root,
-                    axis, flip, side, order_source, weil_consumption)
+                    axis, flip, side, order_source, weil_consumption, export_type)
 
 
 # ---------------------------------------------------------------------------
@@ -255,6 +282,19 @@ CORPUS = [
           "by type (no Euler product = nothing to sieve), so dh_engages=1 records the structural "
           "precondition, not discrimination leverage; yields the sharpened R1 WATCH trigger "
           "(variety-free power-saving bilinear mu cancellation near sqrt x)"),
+    # --- #218: the entropic/torsion-export kill (the density-matrix costume, e3ac 2026-09-04) ---
+    Entry("Bost-Connes Gibbs state: prime-mode total correlation (e3ac)", "quantum information / operator algebras",
+          _S(0,0,0,0,0,"unconditional",1,"realization",1,"Re(s)>1","na", export_type="entropic"),
+          "DISQUALIFIED", "e3r polarity (#48) + entropic export (#218); regime Re(s)>1 (the #121 tier, by hand)",
+          "the literal density matrix: diagonal (von Neumann = Shannon), C = D(p || nearest product state) = "
+          "distance to Euler-product-ness; zeta/Beurling 0, Epstein 0.13-0.58 nats, D-H signed; the fold "
+          "C(+0.05) = C(-0.0491) with census T* 43.4 vs 13.8 and one T* pair across a 19x range of C: neither "
+          "determines the other; the rank-one state reaches sigma > 1/2 and is exactly t-blind"),
+    Entry("Arithmetic Chern-Simons linking forms + entanglement entropy (#177)", "arithmetic topology",
+          _S(0,0,1,0,0,"unconditional",1,"realization",0,"na","na", export_type="torsion"),
+          "DISQUALIFIED", "D-H unposable (no L-function consumed) + torsion export (#218)",
+          "linking layer torsion-valued (caps at sigma mod 8); its one real export (2312.17138) is an entropy; "
+          "no L-function enters, disciplines unposable"),
     # --- realization / K1 / perfectness rows (earlier sweeps) ---
     Entry("Hirzebruch signature operator", "index theory",
           _S(1,1,1,0,1,"na",1,"realization",0,"all-heights","na"),
@@ -342,6 +382,9 @@ def match_score(s: Skeleton, target: Skeleton = M4) -> int:
     # #146: a sign-free Weil/Deligne import can never source the signature
     if s.weil_consumption == "sign-free":
         score -= 2
+    # #218: an entropic or torsion-valued export has no sign to flip
+    if s.export_type in ("entropic", "torsion"):
+        score -= 2
     return score
 
 
@@ -391,6 +434,15 @@ def battery(s: Skeleton) -> list:
                      "signature never crosses the border and cannot be re-emitted, so the technology is "
                      "not an M4 SOURCE; it stays alive as a purity/R1 consumer, and as an ingredient in "
                      "assemblies whose sign is sourced elsewhere, per the #143 operator branch)")
+    # #218 export screen (the density-matrix costume measured, e3ac; the #177 proposal banked)
+    if s.export_type in ("entropic", "torsion"):
+        fired.append(f"entropic/torsion-export screen #218 (the export is {s.export_type}: "
+                     + ("nonnegative by construction (an entropy, a mutual information, a relative entropy, "
+                        "a partition function), so it has no sign to flip; the literal Gibbs density matrix is "
+                        "diagonal and its one invariant reads only the Euler axis of the control cube"
+                        if s.export_type == "entropic" else
+                        "torsion-valued (a linking form, a root number), so it caps at sigma mod 8")
+                     + "; M4 needs the exact signed integer)")
     return fired
 
 

@@ -85,7 +85,7 @@ A persistent, structured atlas of every place in mathematics and physics where a
 polarization / forced-middle" phenomenon appears, indexed by the skeleton above so it is **queryable by
 structure**. This is the organ that makes memory compound; it lives at
 [`experiments/lemma_db/`](../../experiments/lemma_db/) (reuse the existing lemma DB substrate) with a
-companion human-readable index at [`breadth_corpus.md`](breadth_corpus.md).
+companion human-readable index at [`breadth_corpus.md`](../../experiments/lemma_db/breadth_corpus.md).
 
 **Schema (one row per phenomenon).**
 
@@ -185,7 +185,7 @@ more screens:
 The counting-side frame audit (2026-07-01, #145/#146) added one more screen and a new flavor of an old one.
 Both passed the requested ADVERSARY pass on 2026-07-02 (**upheld with corrections**; resolution section in
 [`parity_vs_polarization.md`](parity_vs_polarization.md)) and are now **machine-enforced** in
-`breadth_corpus.py` (suite 23/23; the "16/16" previously recorded here was stale, the suite was already
+`breadth_corpus.py` (suite 26/26 since #218, 23/23 at the time; the "16/16" previously recorded here was stale, the suite was already
 19/19 after #143):
 
 13. **The modulus-only-consumer screen (#146, machine-enforced 2026-07-02).** If a technology consumes a
@@ -207,6 +207,31 @@ Both passed the requested ADVERSARY pass on 2026-07-02 (**upheld with correction
 Screen 8 (wrong-axis) also gains a **fourth shadow-axis flavor**, machine-enforced with the same pass: the
 **level of distribution** ($\theta \in [1/2, 1]$, the sieve frame's native averaged modulus-range axis,
 `axis="level"`), joining spacing / central-rank / strip-width (#146).
+
+The density-matrix round (2026-09-04, LEARNINGS #218) banked the disqualifier the arithmetic Chern-Simons door
+had proposed (#177), machine-enforced as the `export_type` skeleton dimension (suite 26/26):
+
+14. **The entropic/torsion-export screen (#218).** What KIND of real-valued object does the candidate export?
+    If it is **nonnegative by construction** (an entropy, a mutual information, a relative entropy, a partition
+    function) there is no sign to flip; if its **value group is torsion** (a linking form, a root number) it caps
+    at $\sigma \bmod 8$; M4 needs the exact signed integer. Scope: the tag applies to the object HANDED to M4 as
+    the polarization, not to an internal intermediate (a sum rule with an entropic term, the Killip-Simon
+    register, is 'signed' if its export is the signed identity), and 'signed' is provisional until the #48
+    polarity is measured on the control cube. Measured on the costume itself in
+    [`e3ac_entropic_exports.md`](../../experiments/positivity/e3ac_entropic_exports.md): the Gibbs density
+    matrix $\rho_\beta = \sum_n a_n n^{-\beta}|n\rangle\langle n|/L(\beta)$ is diagonal (von Neumann = Shannon,
+    the quantum inert), exists exactly where the coefficients are nonnegative (the Euler pencil's segment
+    $[-1, 1]$ between the two Epstein forms of $d = -15$, RH-false at every census point $|\lambda| \geq 0.01$
+    below height 200, while $L(\chi_{-3})L(\chi_5)$ is an Euler product satisfying RH under GRH whose weights are
+    signed), and its one invariant, the total correlation across prime modes = the relative-entropy distance to
+    the Euler-product manifold, reads the Euler axis of the control cube and nothing else ($\zeta$ and the
+    Beurling fake $0$, Epstein $0.13$ to $0.58$ nats, D-H undefined; the fold $C(+0.05) = C(-0.0491)$ pairs
+    census lowest off-line heights $43.4$ and $13.8$, and one height persists across a 25x range of $C$). The
+    rank-one state $\sum_n a_n n^{-s}|n\rangle$ reaches $\sigma > 1/2$ for every control, D-H included, and its
+    entanglement reads the same axis and is exactly $t$-blind (a product of local unitaries). Two machine screens
+    fire on it (#48 unconditional, #218), with the $\beta > 1$ regime the #121 tier by hand; pushed to where it
+    could act at the zeros it is costume 2 of the trojan ledger at a temperature. 'entropic' and 'torsion' fire;
+    'signed' does not.
 
 **The M4 polarity fingerprint (the acq1 yield, sharpened by acq2).** Screens 2 + 8 + 9 + 10 + 11 compose
 into a near necessary-and-sufficient profile: a contingent positivity is a transfer candidate iff it is
@@ -254,8 +279,8 @@ connect to RH. Six mechanisms, in increasing order of how non-obvious they are.
 4. **Deliberate distance sampling.** Each cadence, deliberately sample $k$ fields *far* from number theory
    and run the skeleton query, regardless of apparent relevance. The four-area sweep (SUSY, condensed,
    index theory, Lorentzian) was a hand-run instance; institutionalize it as a standing draw from a
-   maintained list of "distant fields not yet swept" (current queue: quantum information / entanglement
-   monogamy and the positivity of relative entropy; integrable systems / the tau-function and Riemann-Hilbert;
+   maintained list of "distant fields not yet swept" (current queue: quantum information: the density-matrix /
+   entropy face SWEPT 2026-09-04 (LEARNINGS #218, e3ac, screen 14), entanglement monogamy still undrawn; integrable systems / the tau-function and Riemann-Hilbert;
    free probability / the subordination and the Brown measure; optimal transport / displacement convexity;
    topological recursion / the spectral curve; the c-/a-theorem monotonicity in QFT; persistent homology /
    the stability of the signature under perturbation; error-correcting codes / the MacWilliams duality as a
