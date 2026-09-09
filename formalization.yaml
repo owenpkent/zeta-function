@@ -1,0 +1,144 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+
+# formalization.yaml (v0.4): repo-root metadata for formalization projects.
+# Scope note: describes ONLY the Lean artifact under lean/ (library ZetaRH).
+# The experimental/computational tracks live in experiments/ and are not
+# formalized. Findings are numbered in LEARNINGS.md; Lean gaps are numbered
+# separately as VERIFIER target IDs (#XX-N).
+version: "v0.4"
+
+project:
+  name: "zeta-function"
+  description: >-
+    Lean 4 substrate for an AI-augmented proof program on the Riemann
+    Hypothesis. This is Phase 1 scaffolding, not a proof: it fixes the types
+    and statements of the classical RH-equivalence criteria so they can be
+    attacked individually, and machine-checks a small set of elementary
+    results around them.
+  authors:
+    - "Owen Kent"
+  license: "see repository"
+
+classification:
+  msc2020:
+    - "11M26"  # nonreal zeros of zeta and L-functions, RH
+    - "11M06"  # zeta and L-functions on the critical line
+    - "11G05"  # elliptic curves over global fields
+
+status:
+  scope: >-
+    Typed scaffolding. NONE of the headline classical RH-equivalence criteria
+    are proved: Li, Robin, Lagarias, Mertens, Nyman-Beurling and Weil
+    positivity are all `sorry`-stated targets. What IS machine-checked is a
+    small set of elementary results one step removed from RH, plus one
+    function-field (Hasse-Weil) chain conditioned on a single named axiom.
+    Read `known_gaps` and `vacuous_or_weakened` before citing anything here.
+
+  # Ground truth from the source, not from the README registry. Naive
+  # `grep -c sorry` reports ~140 across 33 files because this codebase's prose
+  # discusses sorries constantly ("sorry-free", "sorryAx"). Comment-stripped,
+  # the real figure is:
+  sorry_count: 33          # genuine `sorry` tactic invocations
+  sorry_files: 11          # of 47 library files
+  sorry_in_definitions: 0
+
+  axioms_beyond_standard:
+    - name: "frobeniusTateData_exists"
+      file: "lean/ZetaRH/FrobeniusExistence.lean"
+      states: >-
+        For a Weierstrass curve with good reduction, a rank-2 integer Frobenius
+        matrix exists on the Tate module with prescribed determinant and trace
+        and non-negative isogeny degrees. Silverman III.8.6: a true classical
+        fact that Mathlib lacks the scheme-theoretic API to prove.
+      honest: >-
+        It does NOT assume RH. Non-vacuity is witnessed in-file by
+        `frobeniusTateData_companion`. Anything downstream names it under
+        `#print axioms`, by design.
+
+  main_results:
+    - description: >-
+        RH is equivalent to every nontrivial zero satisfying 1 - rho = conj rho.
+        An algebraic reformulation via the functional equation. The file's own
+        docstring notes the deep content is elsewhere.
+      declaration: "riemannHypothesis_zeta_iff_fe_polarization"
+      file: "lean/ZetaRH/ArithmeticPolarization.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+    - description: >-
+        For prime p >= 2 the local Euler factor 1 - p^(-s) is nonzero on
+        Re(s) > 0. Elementary analytic proof.
+      declaration: "localFactor_ne_zero"
+      file: "lean/ZetaRH/VT_NP1.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+    - description: >-
+        Finite Euler-product truncations are zero-free on Re(s) > 0 for every
+        finite set of primes. The file scopes this explicitly as NOT touching
+        the infinite-product obstruction.
+      declaration: "np1_reduction"
+      file: "lean/ZetaRH/VT_NP1.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+    - description: >-
+        Function-field (Hasse-Weil) RH for one elliptic curve's local factor.
+        Sorry-free modulo the single named axiom above. Says nothing about the
+        classical Riemann Hypothesis for zeta.
+      declaration: "functionfield_RH_localPolynomial"
+      file: "lean/ZetaRH/FrobeniusExistence.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound", "frobeniusTateData_exists"]
+
+  # Stated but NOT proved. Each carries a VERIFIER target ID; the registry in
+  # lean/README.md tracks status.
+  known_gaps:
+    - {id: "#LI-1", declaration: "li_criterion",              file: "lean/ZetaRH/RHEquivalences.lean"}
+    - {id: "#NB-1", declaration: "nymanBeurling_criterion",   file: "lean/ZetaRH/RHEquivalences.lean"}
+    - {id: "#RB-1", declaration: "robin_criterion",           file: "lean/ZetaRH/RHEquivalences.lean"}
+    - {id: "#LG-1", declaration: "lagarias_criterion",        file: "lean/ZetaRH/RHEquivalences.lean"}
+    - {id: "#MT-1", declaration: "mertens_criterion",         file: "lean/ZetaRH/RHEquivalences.lean"}
+    - {id: "#EF-1", declaration: "weil_explicit_formula_zeta", file: "lean/ZetaRH/ExplicitFormula.lean"}
+    - {id: "#EF-2", declaration: "weil_positivity_criterion",  file: "lean/ZetaRH/ExplicitFormula.lean"}
+    - {id: "#Fejer-1", declaration: "fejer_ceiling",           file: "lean/ZetaRH/LineRestriction.lean"}
+
+  # Declarations that COMPILE but do not carry the mathematical content their
+  # names suggest. Each is documented as such in its own source comments; this
+  # list exists so the fact survives without reading the source.
+  vacuous_or_weakened:
+    - declaration: "line_restriction_lemma"
+      file: "lean/ZetaRH/LineRestriction.lean"
+      why: >-
+        States `exists c1eff, c1eff <= 2 * fejerMax ...` and discharges it by
+        taking the witness to BE the bound. Trivially true as stated. The
+        intended content, the restriction-to-1D operator, is VERIFIER target
+        #LR-2 and is not captured by the statement.
+    - declarations: ["Q1_well_defined", "Q2_finite_dimensional", "Q3_poincare_duality",
+                     "Q4_cycle_class", "Q5_kunneth", "Q3b_cup_is_polarization_iff_RH"]
+      file: "lean/ZetaRH/PrismaticCohomology.lean"
+      why: "Stated as `: True := by sorry`. The statement itself is vacuous, not merely unproved."
+    - declarations: ["hodge_index_theorem_open", "hodge_index_escapes_K1"]
+      file: "lean/ZetaRH/HodgeIndex.lean"
+      why: "Stated as `: True := by sorry`. Same pattern."
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/Millenium/RiemannHypothesis.lean"
+    relationship: "related"
+    note: >-
+      Formal Conjectures carries a third-party statement of RH, and
+      Wikipedia/RiemannZetaValues.lean. Not yet diffed against this project's
+      own `nonTrivialZeros` / `riemannHypothesis` definitions. Restating the
+      equivalence criteria against the upstream statement would give an
+      independence guarantee that self-authored statements cannot.
+
+automation:
+  methods:
+    - method: "agent"
+      note: >-
+        AI-augmented under human direction, with explicit BUILDER / VERIFIER /
+        SYNTHESIZER roles per lean/README.md. Model attribution is not tracked
+        per-declaration.
+
+review:
+  status: "self-assessed"
